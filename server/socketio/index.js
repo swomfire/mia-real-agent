@@ -59,7 +59,7 @@ class SocketIOServer {
           TicketService.handleTicketOffline(user);
           const timer = closeTicketTimeOut(user);
           DisconnectQueue.addTimer(timer, id);
-          ConversationRoomQueue.removeUser(id);
+          ConversationRoomQueue.userDisconnect(id);
         });
         connected[socketId] = socket;
         DisconnectQueue.destroyTimer(id);
@@ -71,7 +71,9 @@ class SocketIOServer {
           Logger.info(`[Socket.io]: The Foul [${email}] has join the fray`);
         }
         register(id.toString(), socket);
-        TicketService.handleTicketOnline(user);
+        const tickets = await TicketService.handleTicketOnline(user);
+        const conversations = tickets.map(({ conversationId }) => conversationId);
+        ConversationRoomQueue.userOnline(id, conversations);
       });
   }
 

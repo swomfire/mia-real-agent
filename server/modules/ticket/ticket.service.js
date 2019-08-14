@@ -105,7 +105,8 @@ class TicketService extends BaseService {
         { assignee: _id },
       ],
     };
-    const tickets = await this.collection.updateMany(query, { status: TICKET_STATUS.IDLE }).exec();
+    const tickets = await this.collection.find(query).exec();
+    await this.collection.updateMany(query, { status: TICKET_STATUS.IDLE }).exec();
     return tickets;
   }
 

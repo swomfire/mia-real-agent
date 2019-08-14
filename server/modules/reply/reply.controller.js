@@ -7,7 +7,10 @@ import Logger from '../../logger';
 import IdleQueue from '../queue/idleQueue';
 import ConversationService from '../conversation/conversation.service';
 import TicketService from '../ticket/ticket.service';
-import { TICKET_STATUS } from '../../../common/enums';
+import { TICKET_STATUS, SOCKET_EMIT } from '../../../common/enums';
+import { checkContext } from './reply.utils';
+import { getSocketByUser } from '../../socketio';
+import userQueue from '../queue/userQueue';
 
 class ReplyController extends BaseController {
   constructor() {
@@ -29,7 +32,11 @@ class ReplyController extends BaseController {
 
       // Get mia full fillment text
       const { data: { queryResult } } = miaReply;
-      const { fulfillmentText } = queryResult;
+      const { fulfillmentText, outputContexts } = queryResult;
+      if (checkContext(outputContexts)) {
+        const socket = userQueue.getUser(from);
+        socket.emit(SOCKET_EMIT.FOUND_SOLUTION, { conversationId });
+      }
 
       const reply = {
         conversationId,

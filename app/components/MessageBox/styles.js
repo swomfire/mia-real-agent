@@ -1,8 +1,8 @@
 import { Divider } from 'antd';
+import { DefaultButton } from 'components/Generals/General.styled';
 import styled, { css, keyframes } from 'styled-components';
 import FormInput from '../FormInput/FormInput';
 import { COLOR_BY_STATUS } from '../../../common/enums';
-
 
 export const MessageBoxWrapper = styled.div`
   display: flex;
@@ -260,4 +260,11 @@ export const IsTypingWrapper = styled.div`
   ::before{
     content: 'Typing...'
   }
+`;
+
+export const FindAgentButton = styled(DefaultButton)`
+  border-radius: 15px;
+  margin-left: 10px;
+  margin-right: -8px;
+  padding: 3px 10px;
 `;

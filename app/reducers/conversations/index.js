@@ -25,7 +25,15 @@ export const OTHER_USER_TYPING = 'conversations/OTHER_USER_TYPING';
 
 export const SYSTEM_MESSAGE = 'conversations/SYSTEM_MESSAGE';
 
+export const FOUND_SOLUTION = 'chat/FOUND_SOLUTION';
+
 // action creator
+export const foundSolution = conversationId => ({
+  type: FOUND_SOLUTION,
+  payload: {
+    conversationId,
+  },
+});
 
 const userJoinConversation = conversationId => ({
   type: USER_JOIN_CONVERSATION,
@@ -179,6 +187,8 @@ export const getSystemMessage = ({ conversations }) => conversations.get('system
 
 export const getOtherUserTyping = ({ conversations }) => conversations.get('otherUserTyping').toJS();
 
+export const getSolution = ({ conversations }) => conversations.get('solution').toJS();
+
 const initialState = fromJS({
   byId: {},
   allIds: new ISet(),
@@ -189,10 +199,18 @@ const initialState = fromJS({
   currentConversation: null,
   systemMessage: {},
   otherUserTyping: {},
+  solution: [],
 });
 
 function conversationReducer(state = initialState, action) {
   switch (action.type) {
+    case FOUND_SOLUTION: {
+      const { conversationId } = action.payload;
+      const solution = state.get('solution').push(conversationId);
+      return state
+        .set('solution', fromJS(solution));
+    }
+
     case SYSTEM_MESSAGE: {
       const { systemMessage, conversationId } = action.payload;
       const sentAt = new Date();
@@ -276,6 +294,8 @@ function conversationReducer(state = initialState, action) {
 export default conversationReducer;
 
 export const actions = {
+  foundSolution,
+
   fetchConversation,
   fetchConversationSuccess,
   fetchConversationFailed,

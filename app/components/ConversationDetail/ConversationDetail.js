@@ -11,6 +11,7 @@ import {
   NoInformationText,
 } from './styles';
 import { ROLES } from '../../../common/enums';
+import TimerWrapper from './Timer';
 
 const scrollStyle = {
   height: 'calc(100vh - 125px)',
@@ -71,15 +72,16 @@ export default class ConversationDetail extends Component {
     } = ticket;
     return (
       <ConversationInfoWrapper>
+        <TimerWrapper />
         <Descriptions column={5}>
-          <Descriptions.Item label="Ticket">{title}</Descriptions.Item>
-          <Descriptions.Item label="Description">{description}</Descriptions.Item>
-          <Descriptions.Item label="Owner">{this.renderOwnerInfo()}</Descriptions.Item>
-          <Descriptions.Item label="Assignee">{this.renderAssigneeInfo()}</Descriptions.Item>
           <Descriptions.Item label="Status">
             <TicketStatus status={status} />
             {status}
           </Descriptions.Item>
+          <Descriptions.Item label="Ticket">{title}</Descriptions.Item>
+          <Descriptions.Item label="Description">{description}</Descriptions.Item>
+          <Descriptions.Item label="Owner">{this.renderOwnerInfo()}</Descriptions.Item>
+          <Descriptions.Item label="Assignee">{this.renderAssigneeInfo()}</Descriptions.Item>
         </Descriptions>
       </ConversationInfoWrapper>
     );

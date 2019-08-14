@@ -136,6 +136,46 @@ function* otherLeftConversation() {
   }
 }
 
+function* otherOnlineConversation() {
+  const socketChannel = yield call(createSocketChannel, socketConnection, SOCKET_EMIT.USER_ONLINE);
+
+  // watch message and relay the action
+  while (true) {
+    const { conversationId, userId } = yield take(socketChannel);
+    const conversation = yield select(getConverationById, conversationId);
+    const currentUser = yield select(getUserId);
+    if (currentUser !== userId) {
+      // eslint-disable-next-line no-underscore-dangle
+      if (conversation && conversationId === conversation._id) {
+        const { owner, ticketId } = conversation;
+        const role = (owner === userId) ? 'User' : 'Agent';
+        yield put(CONVERSATION_ACTIONS.notifiSystemMessage(`${role} has online`, conversationId));
+        yield put(TICKET_ACTIONS.getAction(ticketId));
+      }
+    }
+  }
+}
+
+function* otherDisconnectConversation() {
+  const socketChannel = yield call(createSocketChannel, socketConnection, SOCKET_EMIT.USER_OFFLINE);
+
+  // watch message and relay the action
+  while (true) {
+    const { conversationId, userId } = yield take(socketChannel);
+    const conversation = yield select(getConverationById, conversationId);
+    const currentUser = yield select(getUserId);
+    if (currentUser !== userId) {
+      // eslint-disable-next-line no-underscore-dangle
+      if (conversation && conversationId === conversation._id) {
+        const { owner, ticketId } = conversation;
+        const role = (owner === userId) ? 'User' : 'Agent';
+        yield put(CONVERSATION_ACTIONS.notifiSystemMessage(`${role} has disconnected`, conversationId));
+        yield put(TICKET_ACTIONS.getAction(ticketId));
+      }
+    }
+  }
+}
+
 function* observeUserTypingConversation() {
   const socketChannel = yield call(createSocketChannel, socketConnection, SOCKET_EMIT.RECEIVE_USER_TYPING);
 
@@ -153,6 +193,16 @@ function* removeRequest() {
   while (true) {
     const { ticketId } = yield take(socketChannel);
     yield put(REQUEST_ACTIONS.removeRequest(ticketId));
+  }
+}
+
+function* foundSolution() {
+  const socketChannel = yield call(createSocketChannel, socketConnection, SOCKET_EMIT.FOUND_SOLUTION);
+
+  // watch message and relay the action
+  while (true) {
+    const { conversationId } = yield take(socketChannel);
+    yield put(CONVERSATION_ACTIONS.foundSolution(conversationId));
   }
 }
 
@@ -178,7 +228,10 @@ function* connectFlow() {
     requestConfirm(),
     otherJoinConversation(),
     otherLeftConversation(),
+    otherOnlineConversation(),
+    otherDisconnectConversation(),
     observeUserTypingConversation(),
+    foundSolution(),
     removeRequest(),
     closeTicketNotification(),
   ]);

@@ -20,6 +20,7 @@ import {
   actions as CONVERSATION_ACTIONS,
   getSystemMessage,
   getOtherUserTyping,
+  getSolution,
 } from '../../reducers/conversations';
 import {
   isFindingAgent,
@@ -29,7 +30,7 @@ import MessageBox from '../../components/MessageBox';
 
 const mapStateToProps = (state) => {
   const conversationId = getCurrentConveration(state);
-
+  const solutionFound = getSolution(state).includes(conversationId);
   return ({
     conversationId,
     userId: getUserId(state),
@@ -44,6 +45,7 @@ const mapStateToProps = (state) => {
     userRole: getUserRole(state),
     systemMessage: getSystemMessage(state),
     otherUserTyping: getOtherUserTyping(state),
+    solutionFound,
   });
 };
 

@@ -29,6 +29,7 @@ import {
   MessageBoxSystemNotification,
   IsTypingWrapper,
   MessageBoxItemIsTyping,
+  FindAgentButton,
 } from './styles';
 import LoadingSpin from '../Loading';
 import ConversationDetail from '../ConversationDetail/ConversationDetail';
@@ -56,6 +57,7 @@ export default class MessageBox extends Component {
     currentConversation: PropTypes.object,
     currentTicket: PropTypes.object,
     isFetchingReplies: PropTypes.bool,
+    solutionFound: PropTypes.bool,
     isFindingAgent: PropTypes.bool,
     replyMessages: PropTypes.arrayOf(PropTypes.shape()),
     sendingMessages: PropTypes.arrayOf(PropTypes.shape()),
@@ -105,6 +107,24 @@ export default class MessageBox extends Component {
       }
     }
   }
+
+  renderFindAgentForSolution = () => (
+    <MessageBoxItem left key="solution">
+      <Avatar icon="user" size={35} />
+      <MessageText>
+        <p key="solution">
+          Not satisfy with MIA solution ?
+          <FindAgentButton
+            key="button"
+            type="primary"
+            onClick={this.handleFindAgent}
+          >
+            Find Agent
+          </FindAgentButton>
+        </p>
+      </MessageText>
+    </MessageBoxItem>
+  )
 
   renderOtherUserMessageContent = (msgId, contents) => (
     <MessageBoxItem left key={msgId}>
@@ -257,21 +277,8 @@ export default class MessageBox extends Component {
     return (
       <ConversationHeaderTitle>
         <ConversationTitle>
-          <ConversationTitleInfo>
-            <TicketStatus status={status} />
-            <span>{title}</span>
-          </ConversationTitleInfo>
-          {!isAgent(userRole) && _isEmpty(assignee)
-            && (
-              <Button
-                loading={isFindingAgent}
-                key="button"
-                type="primary"
-                onClick={this.handleFindAgent}
-              >
-                Find Agent
-              </Button>
-            )}
+          <TicketStatus status={status} />
+          <span>{title}</span>
         </ConversationTitle>
       </ConversationHeaderTitle>
     );
@@ -325,9 +332,9 @@ export default class MessageBox extends Component {
     const {
       isFetchingReplies, isFindingAgent, otherUserTyping,
       replyMessages, currentTicket, systemMessage,
-      conversationId,
+      conversationId, solutionFound, userRole,
     } = this.props;
-    const { status } = currentTicket || {};
+    const { status, assignee } = currentTicket || {};
     const hasChatData = !_isEmpty(replyMessages)
       || shouldShowSystemMessage(systemMessage, conversationId)
       || !_isEmpty(otherUserTyping);
@@ -347,6 +354,8 @@ export default class MessageBox extends Component {
                   ? <MessageEmpty>No Chat Data</MessageEmpty>
                   : this.renderMessageContent()
                 }
+                {solutionFound && !isAgent(userRole) && _isEmpty(assignee)
+                  && this.renderFindAgentForSolution()}
                 {this.renderPendingMessageContent()}
                 <div ref={this.messagesEndRef} />
               </ShadowScrollbars>

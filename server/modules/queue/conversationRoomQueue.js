@@ -55,16 +55,56 @@ class ConversationRoomQueue {
     Object.keys(this.queue).forEach(
       (conversationId) => {
         const room = this.getRoom(conversationId);
-        const { [userId]: _, ...otherUser } = room;
-        if (!_isEmpty(otherUser)) {
-          this.queue[conversationId] = otherUser;
-          Object.keys(room).forEach((otherUserId) => {
-            const otherSocket = room[otherUserId];
-            otherSocket.emit(SOCKET_EMIT.OTHER_LEFT_ROOM, { conversationId, userId });
-          });
-        } else {
-          const { [conversationId]: removeConversation, ...rest } = this.queue;
-          this.queue = rest;
+        if (!_isEmpty(room[userId])) {
+          const { [userId]: _, ...otherUser } = room;
+          if (!_isEmpty(otherUser)) {
+            this.queue[conversationId] = otherUser;
+            Object.keys(room).forEach((otherUserId) => {
+              const otherSocket = room[otherUserId];
+              otherSocket.emit(SOCKET_EMIT.OTHER_LEFT_ROOM, { conversationId, userId });
+            });
+          } else {
+            const { [conversationId]: removeConversation, ...rest } = this.queue;
+            this.queue = rest;
+          }
+        }
+      }
+    );
+  }
+
+  userOnline = (userId, conversations = []) => {
+    conversations.forEach(
+      (conversationId) => {
+        const room = this.getRoom(conversationId);
+        if (!_isEmpty(room)) {
+          const { [userId]: _, ...otherUser } = room;
+          if (!_isEmpty(otherUser)) {
+            Object.keys(room).forEach((otherUserId) => {
+              const otherSocket = room[otherUserId];
+              otherSocket.emit(SOCKET_EMIT.USER_ONLINE, { conversationId, userId });
+            });
+          }
+        }
+      }
+    );
+  }
+
+  userDisconnect = (userId) => {
+    Object.keys(this.queue).forEach(
+      (conversationId) => {
+        const room = this.getRoom(conversationId);
+        if (!_isEmpty(room[userId])) {
+          const { [userId]: _, ...otherUser } = room;
+          if (!_isEmpty(otherUser)) {
+            this.queue[conversationId] = otherUser;
+            Object.keys(room).forEach((otherUserId) => {
+              const otherSocket = room[otherUserId];
+              otherSocket.emit(SOCKET_EMIT.USER_OFFLINE, { conversationId, userId });
+            });
+          } else {
+            const { [conversationId]: removeConversation, ...rest } = this.queue;
+            this.queue = rest;
+          }
         }
       }
     );

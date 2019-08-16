@@ -125,6 +125,6 @@ export const SelectStyled = { width: '100%' };
 
 export const InputWrapper = styled.div`
   margin: 0 20px 20px 10px;
-  max-height: 450px;
-  overflow: overlay;
+  /* max-height: 450px;
+  overflow: overlay; */
 `;

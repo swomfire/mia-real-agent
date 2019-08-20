@@ -12,6 +12,7 @@ import {
   sendChangePasswordMail,
   sendUpdateProfileMail,
 } from '../../mail';
+import { send, buildContent } from '../../mail-sparkpost/sparkpost';
 
 class UserController extends BaseController {
   constructor() {
@@ -155,6 +156,16 @@ class UserController extends BaseController {
         password,
       );
       return res.status(httpStatus.OK).send({ confirmed });
+    } catch (error) {
+      return super.handleError(res, error);
+    }
+  }
+
+  async sendTestMail(req, res) {
+    try {
+      send(buildContent('test', 'testing'),
+        [{ address: 'vucuongjim@gmail.com' }]);
+      return res.status(httpStatus.OK).send();
     } catch (error) {
       return super.handleError(res, error);
     }

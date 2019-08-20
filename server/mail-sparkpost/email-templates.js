@@ -13,10 +13,6 @@ const userPasswordChanged = getTemplate('user-password-changed');
 const userPasswordCreated = getTemplate('user-password-created');
 const userProfileUpdated = getTemplate('user-profile-updated');
 const userRegisterSucceed = getTemplate('user-register-succeed');
-const userVerify = getTemplate('user-verify');
-const orderContent = getTemplate('order-content');
-const orderStatusChanged = getTemplate('order-status-changed');
-const SubscriptionNotification = getTemplate('subscription-notification');
 
 const applyDefaultTemplate = content => defaultTemplate.replace('[MAIN_CONTENT]', content);
 
@@ -41,21 +37,5 @@ export default {
     subject:
       'MIA-Consult Wellcome - You have registered MIA-Consult account successfully!',
     html: applyDefaultTemplate(userRegisterSucceed),
-  },
-  userVerifyMail: {
-    subject: 'MIA-Consult - Verify Your Account',
-    html: applyDefaultTemplate(userVerify),
-  },
-  checkoutSuccessMail: {
-    subject: 'MIA-Consult - Thank you for your checkout',
-    html: applyDefaultTemplate(orderContent),
-  },
-  orderStatusChangedMail: {
-    subject: 'MIA-Consult - Order status changed',
-    html: applyDefaultTemplate(orderStatusChanged),
-  },
-  subscriptionNotificationMail: {
-    subject: 'MIA-Consult - Notification',
-    html: applyDefaultTemplate(SubscriptionNotification),
   },
 };

@@ -1,6 +1,5 @@
 import BaseRouter from '../base/base.route';
 import UserController from './user.controller';
-import { send, buildContent } from '../../mail-sparkpost/sparkpost';
 
 class UserRouter extends BaseRouter {
   constructor() {
@@ -27,10 +26,7 @@ class UserRouter extends BaseRouter {
     );
     this.router.post(
       '/mail',
-      () => {
-        send(buildContent('test', 'testing'),
-          [{ address: 'vucuongjim@gmail.com' }]);
-      },
+      UserController.sendTestMail,
     );
   }
 }

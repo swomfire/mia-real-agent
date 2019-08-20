@@ -30,6 +30,7 @@ import {
   actions as userActions,
 } from 'reducers/user';
 import * as UserAPI from 'api/user';
+import { USER_SEND_MAIL } from '../../reducers/user';
 
 function* queryUsers(action) {
   const userPayload = {};
@@ -153,12 +154,23 @@ function* userRemove({ userId }) {
   }
 }
 
+function* sendMail() {
+  const { error } = yield call(UserAPI.sendMail);
+  if (error) {
+    const errMsg = _get(error, 'response.data.message', error.message);
+    notification.error({ message: errMsg });
+  } else {
+    notification.success({ message: 'Send Mail success' });
+  }
+}
+
 function* userFlow() {
   yield takeEvery([USER_SORTING, USER_CHANGE_PAGE], queryUsers);
   yield takeEvery(USER_ADD_NEW, addNewUser);
   yield takeEvery(USER_FETCH_SINGLE, userFetchSingle);
   yield takeEvery(USER_UPDATE, userUpdate);
   yield takeEvery(USER_REMOVE, userRemove);
+  yield takeEvery(USER_SEND_MAIL, sendMail);
   while (1) {
     const action = yield take(USER_FETCH_LIST);
     yield call(fetchList, action);

@@ -81,3 +81,10 @@ export const getUserSummary = () => axios
   .get('admin/users/dashboard/summary')
   .then(response => ({ response }))
   .catch(handleError);
+
+export const sendMail = ticketId => axios
+  .post('users/mail', {
+    ticketId,
+  })
+  .then(response => ({ response }))
+  .catch(handleError);

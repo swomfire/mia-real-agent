@@ -1,0 +1,272 @@
+<div class="es-wrapper-color">
+  <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0">
+    <tbody>
+      <tr>
+        <td class="esd-email-paddings" valign="top">
+          <table class="es-content" cellspacing="0" cellpadding="0">
+            <tbody>
+              <tr>
+                <td class="esd-stripe" align="center">
+                  <table
+                    class="es-content-body"
+                    width="600"
+                    cellspacing="0"
+                    cellpadding="0"
+                    bgcolor="#ffffff"
+                    align="center"
+                  >
+                    <tbody>
+                      <tr>
+                        <td
+                          class="esd-structure es-p40t es-p35r es-p35l"
+                          align="left"
+                        >
+                          <table width="100%" cellspacing="0" cellpadding="0">
+                            <tbody>
+                              <tr>
+                                <td
+                                  class="esd-container-frame"
+                                  width="530"
+                                  valign="top"
+                                  align="center"
+                                >
+                                  <table
+                                    width="100%"
+                                    cellspacing="0"
+                                    cellpadding="0"
+                                  >
+                                    <tbody>
+                                      <tr>
+                                        <td
+                                          class="esd-block-text es-p10b"
+                                          align="center"
+                                        >
+                                          <h2 style="text-align: center;color: #5a5a5a;">Thank You For Your Purchase</h2>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td
+                                          class="esd-block-text es-p15t es-p20b"
+                                          align="left"
+                                        >
+                                          <p
+                                            style="font-size: 16px; color: #777777;"
+                                          >
+                                            Dear <b>{{ user.fullName }}</b>, please check your order below:
+                                            <br /><br />
+                                          </p>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="es-content" cellspacing="0" cellpadding="0">
+            <tbody>
+              <tr>
+                <td class="esd-stripe" align="center">
+                  <table
+                    class="es-content-body"
+                    width="600"
+                    cellspacing="0"
+                    cellpadding="0"
+                    bgcolor="#ffffff"
+                    align="center"
+                  >
+                    <tbody>
+                      <tr>
+                        <td
+                          class="esd-structure es-p20t es-p35r es-p35l"
+                          align="left"
+                        >
+                          <table width="100%" cellspacing="0" cellpadding="0">
+                            <tbody>
+                              <tr>
+                                <td
+                                  class="esd-container-frame"
+                                  width="530"
+                                  valign="top"
+                                  align="center"
+                                >
+                                  <table
+                                    width="100%"
+                                    cellspacing="0"
+                                    cellpadding="0"
+                                  >
+                                    <tbody>
+                                      <tr>
+                                        <td
+                                          class="esd-block-text es-p10t es-p10b es-p10r es-p10l"
+                                          bgcolor="#eeeeee"
+                                          align="left"
+                                        >
+                                          <table
+                                            style="width: 500px;"
+                                            class="cke_show_border"
+                                            cellspacing="1"
+                                            cellpadding="1"
+                                            border="0"
+                                            align="left"
+                                          >
+                                            <tbody>
+                                              <tr>
+                                                <td width="80%">
+                                                  <h4>Order Confirmation #</h4>
+                                                </td>
+                                                <td width="20%">
+                                                  <h4>{{ order.orderId }}</h4>
+                                                </td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="esd-structure es-p35r es-p35l" align="left">
+                          <table width="100%" cellspacing="0" cellpadding="0">
+                            <tbody>
+                              <tr>
+                                <td
+                                  class="esd-container-frame"
+                                  width="530"
+                                  valign="top"
+                                  align="center"
+                                >
+                                  <table
+                                    width="100%"
+                                    cellspacing="0"
+                                    cellpadding="0"
+                                  >
+                                    <tbody>
+                                      <tr>
+                                        <td
+                                          class="esd-block-text es-p10t es-p10b es-p10r es-p10l"
+                                          align="left"
+                                        >
+                                          <table
+                                            style="width: 500px;"
+                                            class="cke_show_border"
+                                            cellspacing="1"
+                                            cellpadding="1"
+                                            border="0"
+                                            align="left"
+                                          >
+                                            <tbody>
+                                              {{#order.items}}
+                                              <tr>
+                                                <td
+                                                  style="padding: 5px 10px 5px 0"
+                                                  width="80%"
+                                                  align="left"
+                                                >
+                                                  <p>
+                                                    {{ description }}
+                                                    {{#quantity}} ({{ quantity }})
+                                                    {{/quantity}}
+                                                  </p>
+                                                </td>
+                                                <td
+                                                  style="padding: 5px 0"
+                                                  width="20%"
+                                                  align="left"
+                                                >
+                                                  <p>{{order.currency}}{{ amount }}</p>
+                                                </td>
+                                              </tr>
+                                              {{/order.items}}
+                                            </tbody>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          class="esd-structure es-p10t es-p35r es-p35l"
+                          align="left"
+                        >
+                          <table width="100%" cellspacing="0" cellpadding="0">
+                            <tbody>
+                              <tr>
+                                <td
+                                  class="esd-container-frame"
+                                  width="530"
+                                  valign="top"
+                                  align="center"
+                                >
+                                  <table
+                                    style="border-top: 3px solid rgb(238, 238, 238); border-bottom: 3px solid rgb(238, 238, 238);"
+                                    width="100%"
+                                    cellspacing="0"
+                                    cellpadding="0"
+                                  >
+                                    <tbody>
+                                      <tr>
+                                        <td
+                                          class="esd-block-text es-p15t es-p15b es-p10r es-p10l"
+                                          align="left"
+                                        >
+                                          <table
+                                            style="width: 500px;"
+                                            class="cke_show_border"
+                                            cellspacing="1"
+                                            cellpadding="1"
+                                            border="0"
+                                            align="left"
+                                          >
+                                            <tbody>
+                                              <tr>
+                                                <td width="80%">
+                                                  <h4>TOTAL</h4>
+                                                </td>
+                                                <td width="20%">
+                                                  <h4>{{order.currency}}{{ order.totalPrice }}</h4>
+                                                </td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

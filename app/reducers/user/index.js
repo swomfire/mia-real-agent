@@ -30,6 +30,15 @@ export const USER_REMOVE_FAIL = 'user/USER_REMOVE_FAIL';
 // change page
 export const USER_CHANGE_PAGE = 'user/CHANGE_PAGE';
 
+// send Mail
+export const USER_SEND_MAIL = 'user/USER_SEND_MAIL';
+
+function sendMail() {
+  return {
+    type: USER_SEND_MAIL,
+  };
+}
+
 function updateUser(payload) {
   return {
     type: USER_UPDATE,
@@ -170,6 +179,8 @@ export const actions = {
   removeUser,
   removeUserSuccess,
   removeUserFail,
+
+  sendMail,
 };
 
 // initialState

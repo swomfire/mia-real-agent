@@ -126,7 +126,7 @@ class Login extends Component {
             <LoginFooterText>
               {toI18n('LOGIN_DONT_HAVE_AN_ACCOUNT')}
             </LoginFooterText>
-            <LoginFooterLink href="/register">
+            <LoginFooterLink to="/register">
               {toI18n('LOGIN_REGISTER_NOW')}
             </LoginFooterLink>
           </LoginFooter>
@@ -134,7 +134,14 @@ class Login extends Component {
             <LoginFooterText>
               {toI18n('LOGIN_WANT_TO_BE_AN_AGENT')}
             </LoginFooterText>
-            <LoginFooterLink href="/application">
+            <LoginFooterLink to="/application">
+              {toI18n('LOGIN_CLICK_HERE')}
+            </LoginFooterLink>
+            <div />
+            <LoginFooterText>
+              {toI18n('LOGIN_FORGOT_PASSWORD')}
+            </LoginFooterText>
+            <LoginFooterLink to="/forgot">
               {toI18n('LOGIN_CLICK_HERE')}
             </LoginFooterLink>
           </LoginFooter>

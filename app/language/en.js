@@ -8,12 +8,14 @@ const en = {
     MENU: 'Menu',
     CLOSE: 'Close',
     CANCEL: 'Cancel',
+    CLICK_HERE: 'Click here!',
     // Form
     FORM_BACK: 'Back',
     FORM_NEXT: 'Next',
     FORM_CANCEL: 'Cancel',
     FORM_RETURN: 'Return',
     FORM_SUBMIT: 'Submit',
+    FORM_SUBMITTING: 'Submitting..',
     FORM_ADD: 'Add',
     FORM_SAVE: 'Save',
     FORM_YES: 'Yes',
@@ -82,6 +84,7 @@ const en = {
     LOGIN_CLICK_HERE: 'Click here!',
     LOGIN_LOGGING_IN: 'Logging in',
     LOGIN_LOGIN: 'Login',
+    LOGIN_FORGOT_PASSWORD: 'Forgot password?',
     // Register
     REGISTER: '',
     REGISTER_WHO_ARE_YOU: 'WHO ARE YOU?',
@@ -328,6 +331,9 @@ const en = {
     CANNED_RESPONSE_FORM_CONTENT: 'Content',
     CANNED_RESPONSE_FORM_UPDATE_BTN: 'Update',
     CANNED_RESPONSE_FORM_CREATE_BTN: 'Create',
+    // Forgot password form
+    FORGOT_PASSWORD_EMAIL: 'Please input your account \'s email',
+    FORGOT_PASSWORD_TO_LOGIN: 'Back to login',
   },
 };
 

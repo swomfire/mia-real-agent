@@ -32,6 +32,7 @@ import CannedResponseManagement from './pages/CannedResponseManagement';
 import AdminDashboard from './pages/AdminDashboard';
 import ApplicationForm from './pages/Application';
 import AdminRoute from './containers/Route/AdminRoute';
+import ForgotPassword from './pages/ForgotPassword';
 
 class Router extends React.PureComponent {
   static propTypes = {
@@ -73,6 +74,7 @@ class Router extends React.PureComponent {
         <UnauthRoute exact path="/register/business" component={RegistrationBusiness} />
         <UnauthRoute exact path="/greeting" component={ThankForRegistering} />
         <UnauthRoute exact path="/application" component={ApplicationForm} />
+        <UnauthRoute exact path="/forgot" component={ForgotPassword} />
         <UnauthRoute
           path="/login/callback/:token/:userId/:email/:verifiedAt"
           component={LoginCallBackPage}
@@ -82,8 +84,10 @@ class Router extends React.PureComponent {
             <AuthenticatedRoute exact path="/conversation/:id?/:ticketId?" component={ChatbotComponent} />
             <AuthenticatedRoute exact path="/profile" component={Profile} />
             <AuthenticatedRoute exact path="/dashboard/:tab?/:page?" component={Dashboard} />
+            <AuthenticatedRoute path="/" component={() => <Redirect to="/dashboard" />} />
           </Switch>
         </MainLayout>
+        <UnauthRoute path="/" component={() => <Redirect to="/login" />} />
       </Switch>
     );
   }

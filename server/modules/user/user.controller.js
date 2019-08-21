@@ -1,8 +1,8 @@
 import httpStatus from 'http-status';
 import jwt from 'jsonwebtoken';
+import AWS from 'aws-sdk';
 import BaseController from '../base/base.controller';
 import UserService from './user.service';
-
 import APIError, { ERROR_MESSAGE } from '../../utils/APIError';
 import check from '../../utils/validate';
 import { VALIDATION_TYPE } from '../../../common/enums';
@@ -169,6 +169,31 @@ class UserController extends BaseController {
     } catch (error) {
       return super.handleError(res, error);
     }
+  }
+
+  async upload(req, res) {
+    const { filename, filetype } = req.body;
+    const s3 = new AWS.S3({
+      accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY,
+      useAccelerateEndpoint: true,
+    });
+    const fileurls = [];
+
+    const signedUrlExpireSeconds = 60 * 60;
+    const myBucket = 'mia-consult';
+    const myKey = filename;
+    const params = {
+      Bucket: myBucket, Key: myKey, Expires: signedUrlExpireSeconds, ContentType: filetype, ACL: 'bucket-owner-full-control',
+    };
+    s3.getSignedUrl('putObject', params, (err, url) => {
+      if (err) {
+        res.json({ success: false, message: 'Pre- Signed URL error', urls: fileurls });
+      } else {
+        fileurls[0] = url;
+        res.json({ success: true, message: 'AWS SDK S3 Pre- signed urls generated successfully.', urls: fileurls });
+      }
+    });
   }
 }
 

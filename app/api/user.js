@@ -85,6 +85,9 @@ export const getUserSummary = () => axios
 export const sendMail = ticketId => axios
   .post('users/mail', {
     ticketId,
-  })
+  });
+
+export const getUploadSignedUrl = data => axios
+  .get('/users/upload', data)
   .then(response => ({ response }))
   .catch(handleError);

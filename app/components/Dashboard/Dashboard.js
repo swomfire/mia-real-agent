@@ -12,6 +12,7 @@ import {
   DashboardItem,
 } from './Dashboard.styled';
 import { isAgent, toI18n } from '../../utils/func-utils';
+import DropUpload from '../DropUpload';
 
 const { TabPane } = Tabs;
 
@@ -73,6 +74,7 @@ export default class Dashboard extends Component {
 
   renderTicketItem = () => (
     <TabPane tab="Ticket" key={TAB.Ticket}>
+      <DropUpload />
       <TicketTab />
     </TabPane>
   )

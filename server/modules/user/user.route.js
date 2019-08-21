@@ -28,6 +28,10 @@ class UserRouter extends BaseRouter {
       '/mail',
       UserController.sendTestMail,
     );
+    this.router.post(
+      '/upload',
+      UserController.upload,
+    );
   }
 }
 

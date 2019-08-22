@@ -26,6 +26,7 @@ import TicketManagement from './pages/TicketManagement';
 import TicketDetail from './containers/TicketDetail';
 import ApplicationManagement from './pages/ApplicationManagement';
 import ApplicationDetail from './containers/ApplicationDetail';
+import IntentManagement from './pages/IntentManagement';
 
 import AdminDashboard from './pages/AdminDashboard';
 import ApplicationForm from './pages/Application';
@@ -56,6 +57,7 @@ class Router extends React.PureComponent {
               <AdminRoute path="/admin/tickets/:id" component={TicketDetail} />
               <AdminRoute exact path="/admin/applications" component={ApplicationManagement} />
               <AdminRoute path="/admin/applications/:id" component={ApplicationDetail} />
+              <AdminRoute exact path="/admin/intents" component={IntentManagement} />
               <AdminRoute exact path="/admin/user" component={UserManagement} />
               <AdminRoute path="/admin/user/:id" component={UserDetail} />
               <AdminRoute exact path="/admin" component={() => <Redirect to="/admin/user" />} />

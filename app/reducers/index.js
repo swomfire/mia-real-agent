@@ -16,6 +16,7 @@ import system from './system';
 import conversations from './conversations';
 import replies from './replies';
 import requests from './requests';
+import intent from './intent';
 
 export const REHYDRATE_COMPLETE = 'root/REHYDRATE_COMPLETE';
 export const CLEAR_TRANSACTION = 'root/CLEAR_TRANSACTION';
@@ -30,6 +31,7 @@ export default function createReducer(injectedReducers = {}) {
     ticket,
     modal,
     user,
+    intent,
     admin,
     application,
     system,

@@ -43,6 +43,13 @@ const TABS_MENU = [
     icon: 'mia-user',
     link: '/admin/user',
   },
+  {
+    key: 'users',
+    type: 'container',
+    label: toI18n('ADMIN_LEFT_NAV_INTENTS'),
+    icon: 'mia-filter',
+    link: '/admin/intents',
+  },
 ];
 
 const paths = _reduce(

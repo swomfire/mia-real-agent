@@ -167,6 +167,7 @@ const en = {
     ADMIN_LEFT_NAV_TICKETS: 'Tickets',
     ADMIN_LEFT_NAV_APPLICATIONS: 'Applications',
     ADMIN_LEFT_NAV_USERS: 'Users',
+    ADMIN_LEFT_NAV_INTENTS: 'Intents',
     // Admin users table
     ADMIN_USERS_TABLE_ALL_USERS: 'All Users',
     ADMIN_USERS_TABLE_USERNAME: 'Username',
@@ -250,6 +251,8 @@ const en = {
     ADMIN_TICKET_DETAIL_CREATED_AT: 'Created at',
     ADMIN_TICKET_DETAIL_OWNER: 'Owner',
     ADMIN_TICKET_DETAIL_ASSIGNEE: 'Assignee',
+    // Admin ticket table
+    ADMIN_INTENT_TABLE_DISPLAY_NAME: 'Name',
     // Profile
     PROFILE_USERNAME: 'Username',
     PROFILE_EMAIL: 'Email',

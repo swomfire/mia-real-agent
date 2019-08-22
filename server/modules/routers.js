@@ -8,6 +8,8 @@ import AgentRouter from './agent/agent.route';
 import ConversationRouter from './conversation/conversation.route';
 import AdminRouter from './admin/routers';
 import ReplyRouter from './reply/reply.route';
+import IntentRouter from './intent/intent.route';
+import ResponseRouter from './intentResponse/intentResponse.route';
 
 const router = express.Router();
 
@@ -20,5 +22,7 @@ export default () => {
   router.use('/conversations', ConversationRouter.router);
   router.use('/admin', AdminRouter.router);
   router.use('/reply', ReplyRouter.router);
+  router.use('/intents', IntentRouter.router);
+  router.use('/responses', ResponseRouter.router);
   return router;
 };

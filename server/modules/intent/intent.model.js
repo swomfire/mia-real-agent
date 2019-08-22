@@ -3,7 +3,10 @@ const { Schema } = mongoose;
 
 const intentSchema = new Schema(
   {
-    intentId: String,
+    intentId: {
+      type: String,
+      required: true,
+    },
     parameters: {
       type: [String],
       required: true,

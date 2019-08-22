@@ -16,7 +16,7 @@ const intentResponseSchema = new Schema(
   {
     parameters: {
       type: [String],
-      default: [],
+      required: true,
     },
     response: responseSchema,
     createdAt: {

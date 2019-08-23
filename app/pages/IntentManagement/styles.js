@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Button } from 'antd';
 
 export const IntentPageWrapper = styled.div`
   width: 100%;
@@ -15,8 +16,15 @@ export const IntentDetailWrapper = styled.div`
 export const IntentHeaderWrapper = styled.div`
   padding: 10px;
   background: #dfdfdf;
+  position: relative;
   h2 {
     text-align: center;
     font-weight: 600;
   }
+`;
+
+export const AddResponseButton = styled(Button)`
+  position: absolute !important;
+  top: 7px;
+  right: 15px;
 `;

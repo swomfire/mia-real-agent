@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { shape, arrayOf } from 'prop-types';
+import { Tabs } from 'antd';
 import { ResponseItemWrapper, ResponseParameterWrapper, ResponseValueWrapper } from './styles';
+
+const { TabPane } = Tabs;
 
 export class ResponseItem extends Component {
   static propTypes = {
@@ -11,7 +14,16 @@ export class ResponseItem extends Component {
   renderResponse = () => {
     const { response: item } = this.props;
     const { response } = item;
-    return (<h2>{response.en}</h2>);
+    return (
+      <Tabs defaultActiveKey="1">
+        <TabPane tab="EN" key="1">
+          <h2>{response.en}</h2>
+        </TabPane>
+        <TabPane tab="VN" key="2">
+          <h2>{response.vn}</h2>
+        </TabPane>
+      </Tabs>
+    );
   }
 
   renderParameters = () => {

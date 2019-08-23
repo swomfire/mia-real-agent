@@ -59,7 +59,10 @@ const ItemManagementHoc = (ItemsManagementTable) => {
     currentSorting: PropTypes.object.isRequired,
     sortItems: PropTypes.array.isRequired,
     createEndpoint: PropTypes.string,
-    title: PropTypes.string,
+    title: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape(),
+    ]),
     shouldRenderNewButton: PropTypes.bool,
     shouldRenderSendEmailButton: PropTypes.bool,
     openModal: PropTypes.func,

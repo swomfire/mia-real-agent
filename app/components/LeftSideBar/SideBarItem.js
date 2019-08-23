@@ -23,7 +23,10 @@ export default class SideBarItem extends React.PureComponent {
 
 SideBarItem.propTypes = {
   icon: PropTypes.string,
-  text: PropTypes.string.isRequired,
+  text: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.shape(),
+  ]).isRequired,
   link: PropTypes.string.isRequired,
   isActive: PropTypes.bool.isRequired,
   isToggle: PropTypes.bool,

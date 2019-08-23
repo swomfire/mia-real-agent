@@ -31,9 +31,6 @@ const getResponseIdList = createSelector(
 
 const getResponseById = ({ response }, _id) => (response.get('responses').get(_id) || fromJS({})).toJS();
 
-const getResponseIsArchiving = ({ response }) => response.get('isArchiving');
-const getResponseArchiveError = ({ response }) => response.get('archiveError');
-
 const getFetchingContext = ({ response }) => response.get('fetching', fetchingObj).toJS();
 
 const getSelectedPage = ({ response }) => response.getIn(['pagination', 'selectedPage'], 1);
@@ -87,8 +84,6 @@ export {
   getResponseGetResponseError,
   getResponsesList,
   getFetchingContext,
-  getResponseIsArchiving,
-  getResponseArchiveError,
   getIsFetching,
   getFetchingError,
   getResponseIdList,

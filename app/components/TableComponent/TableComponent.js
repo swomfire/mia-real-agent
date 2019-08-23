@@ -11,7 +11,10 @@ export const TableContent = ({ value, children, ...props }) => (
 );
 
 TableHeader.propTypes = {
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.shape(),
+  ]),
   children: PropTypes.node,
 };
 

@@ -139,7 +139,10 @@ HeaderContainer.propTypes = {
   handleSort: PropTypes.func,
   sortItem: PropTypes.array,
   url: PropTypes.string,
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.shape(),
+  ]),
   shouldRenderNewButton: PropTypes.bool,
   shouldRenderSendEmailButton: PropTypes.bool,
   openModal: PropTypes.func,

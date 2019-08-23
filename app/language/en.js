@@ -257,6 +257,12 @@ const en = {
     // Admin intent detail
     ADMIN_INTENT_DETAIL_PLEASE_SELECT_AN_INTENT: 'Please select an intent',
     ADMIN_INTENT_DETAIL_NO_RESPONSES: 'No responses',
+    // Admin add response
+    ADMIN_INTENT_ADD_RESPONSE_EN: 'Response in EN',
+    ADMIN_INTENT_ADD_RESPONSE_VN: 'Response in VN',
+    ADMIN_INTENT_ADD_PARAMETER_ID: 'Parameter type',
+    ADMIN_INTENT_ADD_PARAMETER_VALUE: 'Parameter value',
+    ADMIN_RESPONSE_ADD_SUCCESS: 'Response Added',
     // Profile
     PROFILE_USERNAME: 'Username',
     PROFILE_EMAIL: 'Email',

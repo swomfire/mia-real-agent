@@ -554,7 +554,6 @@ class FormInput extends React.Component {
         validateStatus = 'error';
       }
     }
-
     return (
       <InputWrapperStyled
         label={fieldLabel}

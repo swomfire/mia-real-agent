@@ -44,7 +44,7 @@ const TABS_MENU = [
     link: '/admin/user',
   },
   {
-    key: 'users',
+    key: 'intents',
     type: 'container',
     label: toI18n('ADMIN_LEFT_NAV_INTENTS'),
     icon: 'mia-filter',

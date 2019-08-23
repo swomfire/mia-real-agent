@@ -7,6 +7,7 @@ import SpinnerLoading from 'components/PageLoading';
 import ShadowScrollbars from 'components/Scrollbar';
 import MediaQuery from 'react-responsive';
 import ResponseItem from './ResponseItem';
+import { toI18n } from '../../utils/func-utils';
 
 const widthBreakpoint = 768;
 const scrollStyle = {
@@ -43,7 +44,7 @@ export class ResponseList extends Component {
   renderResponseList = () => {
     const { responseList } = this.props;
     if (_isEmpty(responseList)) {
-      return (<h2>No responses</h2>);
+      return (<h2>{toI18n('ADMIN_INTENT_DETAIL_NO_RESPONSES')}</h2>);
     }
     return (
       <MediaQuery maxWidth={widthBreakpoint}>

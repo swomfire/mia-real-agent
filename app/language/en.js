@@ -251,9 +251,12 @@ const en = {
     ADMIN_TICKET_DETAIL_CREATED_AT: 'Created at',
     ADMIN_TICKET_DETAIL_OWNER: 'Owner',
     ADMIN_TICKET_DETAIL_ASSIGNEE: 'Assignee',
-    // Admin ticket table
+    // Admin intent table
     ADMIN_INTENT_TABLE_DISPLAY_NAME: 'Name',
     ADMIN_INTENT_TABLE_ALL_INTENT: 'All Intent',
+    // Admin intent detail
+    ADMIN_INTENT_DETAIL_PLEASE_SELECT_AN_INTENT: 'Please select an intent',
+    ADMIN_INTENT_DETAIL_NO_RESPONSES: 'No responses',
     // Profile
     PROFILE_USERNAME: 'Username',
     PROFILE_EMAIL: 'Email',

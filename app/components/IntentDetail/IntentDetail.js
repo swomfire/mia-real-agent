@@ -3,8 +3,9 @@ import { number, func, shape } from 'prop-types';
 import { Pagination } from 'antd';
 import _isNumber from 'lodash/isNumber';
 import ResponseList from '../../containers/ResponseList/ResponseList';
-import { ResponsePaginationWrapper } from './styles';
+import { ResponsePaginationWrapper, PleaseSelectIntent } from './styles';
 import { PAGE_SIZE } from '../../../common/enums';
+import { toI18n } from '../../utils/func-utils';
 
 export class IntentDetail extends Component {
   state = {
@@ -75,6 +76,11 @@ export class IntentDetail extends Component {
   }
 
   render() {
+    const { match } = this.props;
+    const { id } = match.params;
+    if (!id) {
+      return (<PleaseSelectIntent>{toI18n('ADMIN_INTENT_DETAIL_PLEASE_SELECT_AN_INTENT')}</PleaseSelectIntent>);
+    }
     return (
       <>
         <ResponseList />

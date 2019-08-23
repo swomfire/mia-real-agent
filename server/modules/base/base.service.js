@@ -40,7 +40,7 @@ export default class BaseService {
       $and: [condition, notDeletedCondition],
     };
     const totalRecordPromise = this.collection
-      .find(queryCondition, null, options)
+      .find(queryCondition, null)
       .count();
     const resultPromise = this.collection
       .find(queryCondition, null, options)

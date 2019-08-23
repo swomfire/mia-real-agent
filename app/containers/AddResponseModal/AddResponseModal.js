@@ -7,8 +7,8 @@ import { toI18n } from '../../utils/func-utils';
 
 const mapStateToProps = state => ({
   currentIntent: getIntentDetailFromRoute(state),
-  isCreating: getResponseIsCreating(state),
-  createError: getResponseCreateError(state),
+  isSubmitting: getResponseIsCreating(state),
+  submitError: getResponseCreateError(state),
   title: toI18n('ADMIN_RESPONSE_ADD_TITLE'),
   initialValues: null,
 });

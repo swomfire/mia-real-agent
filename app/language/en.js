@@ -264,6 +264,9 @@ const en = {
     ADMIN_INTENT_ADD_PARAMETER_VALUE: 'Parameter value',
     ADMIN_RESPONSE_ADD_SUCCESS: 'Response Added',
     ADMIN_RESPONSE_ADD_TITLE: 'Create Response for',
+    ADMIN_RESPONSE_EDIT_TITLE: 'Edit Response for',
+    ADMIN_RESPONSE_EDIT_SUCCESS: 'Response Editted',
+
     // Profile
     PROFILE_USERNAME: 'Username',
     PROFILE_EMAIL: 'Email',

@@ -25,11 +25,14 @@ const scrollStyleMobile = {
 export class ResponseList extends Component {
   state = {
     editResponseModalVisible: false,
+    selectedId: null,
   }
 
-  toggleEditResponseModal = (isOpen) => {
+  toggleEditResponseModal = (isOpen, selectedId) => {
+    console.log(selectedId);
     this.setState({
       editResponseModalVisible: isOpen,
+      selectedId,
     });
   }
 
@@ -42,7 +45,7 @@ export class ResponseList extends Component {
         key={_id}
         response={response}
         parameters={parameters}
-        onEdit={() => this.toggleEditResponseModal(true)}
+        onEdit={() => this.toggleEditResponseModal(true, _id)}
       />
     );
   }
@@ -64,7 +67,7 @@ export class ResponseList extends Component {
   }
 
   render() {
-    const { editResponseModalVisible } = this.state;
+    const { editResponseModalVisible, selectedId } = this.state;
     const { isFetchingList = {} } = this.props;
     if (isFetchingList) {
       return <SpinnerLoading />;
@@ -73,6 +76,7 @@ export class ResponseList extends Component {
       <div>
         {this.renderResponseList()}
         <EditResponseModal
+          responseId={selectedId}
           isOpen={editResponseModalVisible}
           handleClose={() => this.toggleEditResponseModal(false)}
         />

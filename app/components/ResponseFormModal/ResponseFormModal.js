@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _isEmpty from 'lodash/isEmpty';
 import {
   Form, Row, Col, Button, Icon, notification,
 } from 'antd';
@@ -42,28 +43,31 @@ const initialState = {
   selectedParameters: [],
 };
 
-class AddResponseModal extends Component {
+class ResponseFormModal extends Component {
   state = initialState
 
   static propTypes = {
     submitAction: func.isRequired,
     handleClose: func.isRequired,
     isOpen: bool.isRequired,
-    isCreating: bool.isRequired,
-    createError: string,
+    isSubmitting: bool.isRequired,
+    submitError: string,
     title: shape(),
     initialValues: shape(),
     currentIntent: shape(),
   }
 
-  componentDidUpdate = ({ isCreating: prevIsCreating }) => {
-    const { isCreating, createError } = this.props;
-    if (prevIsCreating && !isCreating) {
-      if (!createError) {
-        notification.success({ message: toI18n('ADMIN_RESPONSE_ADD_SUCCESS') });
+  componentDidUpdate = ({ isSubmitting: prevIsCreating, initialValues: prevInitialValues }) => {
+    const { isSubmitting, submitError, initialValues: response } = this.props;
+    if (_isEmpty(prevInitialValues) && !_isEmpty(response)) {
+      this.responseFormik.getFormikContext().setValues(response);
+      return;
+    }
+    if (prevIsCreating && !isSubmitting) {
+      if (!submitError) {
         this.handleCancel();
       } else {
-        notification.error({ message: createError });
+        notification.error({ message: submitError });
       }
     }
   }
@@ -148,7 +152,7 @@ class AddResponseModal extends Component {
     });
   }
 
-  handleRenderAddedParameter = ({ parameters: choosedParams }) => {
+  handleRenderAddedParameter = ({ parameters: choosedParams = [] }) => {
     const { currentIntent } = this.props;
     const { parameters = [] } = currentIntent || {};
     return choosedParams.map(
@@ -217,7 +221,7 @@ class AddResponseModal extends Component {
   render() {
     const { isAdding } = this.state;
     const {
-      isOpen, currentIntent, isCreating, title,
+      isOpen, currentIntent, isSubmitting, title,
       initialValues: reponse,
     } = this.props;
     const { displayName } = currentIntent || {};
@@ -227,7 +231,7 @@ class AddResponseModal extends Component {
         initialValues={reponse || initialValues}
         validationSchema={responseSchema}
         onSubmit={this.handleOnSubmit}
-        confirmLoading={isCreating}
+        confirmLoading={isSubmitting}
       >
         {({ handleSubmit, values, errors: { parameters: paramError } }) => (
           <ModalStyled
@@ -283,4 +287,4 @@ class AddResponseModal extends Component {
   }
 }
 
-export default AddResponseModal;
+export default ResponseFormModal;

@@ -17,6 +17,8 @@ import {
   AUTH_LOGIN_SUCCESS,
 } from '../../reducers/auth';
 import * as ResponseApi from '../../api/response';
+import { notification } from 'antd';
+import { toI18n } from '../../utils/func-utils';
 
 function* queryResponses(action) {
   const responsePayload = {};
@@ -55,6 +57,7 @@ function* createResponse({ payload }) {
   }
 
   const { data } = response;
+  notification.success({ message: toI18n('ADMIN_RESPONSE_ADD_SUCCESS') });
   yield put(actions.createCompleteAction(data));
 }
 
@@ -86,6 +89,7 @@ function* updateResponse({ payload }) {
     return;
   }
   const { data } = result;
+  notification.success({ message: toI18n('ADMIN_RESPONSE_EDIT_SUCCESS') });
   yield put(actions.updateCompleteAction(data));
 }
 

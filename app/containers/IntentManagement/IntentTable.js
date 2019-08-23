@@ -42,13 +42,8 @@ const mapStateToProps = (state) => {
   return {
     ...structureSelector,
     columns: ticketColumns,
-<<<<<<< HEAD
     onClick: ({ _id }) => { history.push(`/admin/intents/${_id}`); },
     endpoint: 'admin/intents',
-=======
-    onClick: ({ _id }) => { history.push(`/admin/tickets/${_id}`); },
-    endpoint: 'admin/tickets',
->>>>>>> Basic UI List
   };
 };
 

@@ -3,9 +3,14 @@ import { number, func, shape } from 'prop-types';
 import { Pagination } from 'antd';
 import _isNumber from 'lodash/isNumber';
 import ResponseList from '../../containers/ResponseList/ResponseList';
+<<<<<<< HEAD
 import { ResponsePaginationWrapper, PleaseSelectIntent } from './styles';
 import { PAGE_SIZE } from '../../../common/enums';
 import { toI18n } from '../../utils/func-utils';
+=======
+import { ResponsePaginationWrapper } from './styles';
+import { PAGE_SIZE } from '../../../common/enums';
+>>>>>>> Render resposne list with UI
 
 export class IntentDetail extends Component {
   state = {

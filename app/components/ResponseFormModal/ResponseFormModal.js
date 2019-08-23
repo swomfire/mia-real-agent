@@ -12,8 +12,10 @@ import { toI18n } from '../../utils/func-utils';
 import { ModalStyled, ErrorMessage } from './styles';
 
 const initialValues = {
-  en: '',
-  vn: '',
+  response: {
+    en: '',
+    vn: '',
+  },
   parameters: [],
 };
 const initialParameterValues = {
@@ -27,8 +29,10 @@ const parameterSchema = Yup.object().shape({
 });
 
 const responseSchema = Yup.object().shape({
-  en: Yup.string().trim().required(toI18n('FORM_REQUIRED')),
-  vn: Yup.string().trim().required(toI18n('FORM_REQUIRED')),
+  response: Yup.object().shape({
+    en: Yup.string().trim().required(toI18n('FORM_REQUIRED')),
+    vn: Yup.string().trim().required(toI18n('FORM_REQUIRED')),
+  }).required(toI18n('FORM_REQUIRED')),
   parameters: Yup.array().of(parameterSchema).required(toI18n('FORM_REQUIRED')),
 });
 
@@ -42,11 +46,13 @@ class AddResponseModal extends Component {
   state = initialState
 
   static propTypes = {
-    createResponse: func.isRequired,
+    submitAction: func.isRequired,
     handleClose: func.isRequired,
     isOpen: bool.isRequired,
     isCreating: bool.isRequired,
     createError: string,
+    title: shape(),
+    initialValues: shape(),
     currentIntent: shape(),
   }
 
@@ -128,6 +134,20 @@ class AddResponseModal extends Component {
     });
   }
 
+  removeParameter = (parameterId) => {
+    const { selectedParameters } = this.state;
+    const context = this.responseFormik.getFormikContext();
+    const formData = context.values;
+    const { parameters } = formData;
+    context.setValues({
+      ...formData,
+      parameters: parameters.filter(({ parameterId: itemId }) => itemId !== parameterId),
+    });
+    this.setState({
+      selectedParameters: selectedParameters.filter(({ parameterId: itemId }) => itemId !== parameterId),
+    });
+  }
+
   handleRenderAddedParameter = ({ parameters: choosedParams }) => {
     const { currentIntent } = this.props;
     const { parameters = [] } = currentIntent || {};
@@ -135,7 +155,12 @@ class AddResponseModal extends Component {
       ({ parameterId, value }) => {
         const { displayName } = parameters.find(({ parameterId: itemId }) => parameterId === itemId);
         return (
-          <h2>{`[${displayName}]: ${value}`}</h2>
+          <h2>
+            {`[${displayName}]: ${value}`}
+            <Button onClick={() => this.removeParameter(parameterId)}>
+              <Icon type="close" />
+            </Button>
+          </h2>
         );
       }
     );
@@ -180,40 +205,43 @@ class AddResponseModal extends Component {
     </Formik>
   )
 
-  handleSubmit = ({ parameters, en, vn }) => {
-    const { createResponse, currentIntent } = this.props;
+  handleOnSubmit = (values) => {
+    const { submitAction, currentIntent } = this.props;
     const { _id: intentId } = currentIntent;
-    createResponse({
-      parameters,
+    submitAction({
+      ...values,
       intentId,
-      response: {
-        en,
-        vn,
-      },
     });
   }
 
   render() {
     const { isAdding } = this.state;
     const {
-      isOpen, currentIntent, isCreating,
+      isOpen, currentIntent, isCreating, title,
+      initialValues: reponse,
     } = this.props;
     const { displayName } = currentIntent || {};
     return (
       <Formik
         ref={(formik) => { this.responseFormik = formik; }}
-        initialValues={initialValues}
+        initialValues={reponse || initialValues}
         validationSchema={responseSchema}
-        onSubmit={this.handleSubmit}
+        onSubmit={this.handleOnSubmit}
         confirmLoading={isCreating}
-        okText={toI18n('FORM_SUBMIT')}
       >
         {({ handleSubmit, values, errors: { parameters: paramError } }) => (
           <ModalStyled
-            title={`Create Response for ${displayName}`}
+            title={(
+              <div>
+                {title}
+                {' '}
+                {displayName}
+              </div>
+            )}
             visible={isOpen}
             onOk={handleSubmit}
             onCancel={this.handleCancel}
+            okText={toI18n('FORM_SUBMIT')}
           >
             {isAdding ? this.renderAddParameters() : (
               <Button onClick={() => this.toggleAddParameter(true)}>
@@ -221,7 +249,7 @@ class AddResponseModal extends Component {
               </Button>
             )}
             <ErrorMessage>{paramError}</ErrorMessage>
-            <Form onSubmit={handleSubmit}>
+            <Form>
               <Row gutter={32}>
                 <Col sm={24} xs={24}>
                   {this.handleRenderAddedParameter(values)}
@@ -230,7 +258,7 @@ class AddResponseModal extends Component {
               <Row gutter={32}>
                 <Col sm={24} xs={24}>
                   <FormInput
-                    name="en"
+                    name="response.en"
                     type="text"
                     label={toI18n('ADMIN_INTENT_ADD_RESPONSE_EN')}
                     login={1}
@@ -240,7 +268,7 @@ class AddResponseModal extends Component {
               <Row gutter={32}>
                 <Col sm={24} xs={24}>
                   <FormInput
-                    name="vn"
+                    name="response.vn"
                     type="text"
                     label={toI18n('ADMIN_INTENT_ADD_RESPONSE_VN')}
                     login={1}

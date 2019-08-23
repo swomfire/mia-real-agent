@@ -1,17 +1,20 @@
 import { connect } from 'react-redux';
 import { getIntentDetailFromRoute } from '../../selectors/intent';
 import { actions } from '../../reducers/response';
-import AddResponseModal from '../../components/AddResponseModal';
+import ResponseFormModal from '../../components/ResponseFormModal';
 import { getResponseIsCreating, getResponseCreateError } from '../../selectors/response';
+import { toI18n } from '../../utils/func-utils';
 
 const mapStateToProps = state => ({
   currentIntent: getIntentDetailFromRoute(state),
   isCreating: getResponseIsCreating(state),
   createError: getResponseCreateError(state),
+  title: toI18n('ADMIN_RESPONSE_ADD_TITLE'),
+  initialValues: null,
 });
 
 const mapDispatchToProps = {
-  createResponse: actions.createAction,
+  submitAction: actions.createAction,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddResponseModal);
+export default connect(mapStateToProps, mapDispatchToProps)(ResponseFormModal);

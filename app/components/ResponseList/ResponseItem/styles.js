@@ -9,9 +9,13 @@ export const ResponseItemWrapper = styled.div`
 `;
 
 export const ResponseParameterWrapper = styled.div`
-  flex: 0 0 50%;
+  flex: 0 0 40%;
 `;
 
 export const ResponseValueWrapper = styled.div`
-  flex: 0 0 50%;
+  flex: 0 0 40%;
+`;
+
+export const ResponseActionWrapper = styled.div`
+  flex: auto;
 `;

@@ -8,6 +8,7 @@ import ShadowScrollbars from 'components/Scrollbar';
 import MediaQuery from 'react-responsive';
 import ResponseItem from './ResponseItem';
 import { toI18n } from '../../utils/func-utils';
+import EditResponseModal from '../../containers/EditResponseModal';
 
 const widthBreakpoint = 768;
 const scrollStyle = {
@@ -22,22 +23,27 @@ const scrollStyleMobile = {
 
 // eslint-disable-next-line react/prefer-stateless-function
 export class ResponseList extends Component {
-  // handleSelectResponse = (conversationId) => {
-  //   const { selectConversation } = this.props;
-  //   const { location } = history;
-  //   const url = `/conversation/${conversationId}`;
-  //   if (url !== location.pathname) {
-  //     selectConversation(conversationId);
-  //     history.push(url);
-  //   }
-  // }
+  state = {
+    editResponseModalVisible: false,
+  }
+
+  toggleEditResponseModal = (isOpen) => {
+    this.setState({
+      editResponseModalVisible: isOpen,
+    });
+  }
 
   renderResponseItem = (response) => {
     const { currentIntent } = this.props;
     const { parameters } = currentIntent;
     const { _id } = response;
     return (
-      <ResponseItem key={_id} response={response} parameters={parameters} />
+      <ResponseItem
+        key={_id}
+        response={response}
+        parameters={parameters}
+        onEdit={() => this.toggleEditResponseModal(true)}
+      />
     );
   }
 
@@ -58,6 +64,7 @@ export class ResponseList extends Component {
   }
 
   render() {
+    const { editResponseModalVisible } = this.state;
     const { isFetchingList = {} } = this.props;
     if (isFetchingList) {
       return <SpinnerLoading />;
@@ -65,6 +72,10 @@ export class ResponseList extends Component {
     return (
       <div>
         {this.renderResponseList()}
+        <EditResponseModal
+          isOpen={editResponseModalVisible}
+          handleClose={() => this.toggleEditResponseModal(false)}
+        />
       </div>
     );
   }

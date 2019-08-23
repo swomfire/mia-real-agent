@@ -253,6 +253,7 @@ const en = {
     ADMIN_TICKET_DETAIL_ASSIGNEE: 'Assignee',
     // Admin ticket table
     ADMIN_INTENT_TABLE_DISPLAY_NAME: 'Name',
+    ADMIN_INTENT_TABLE_ALL_INTENT: 'All Intent',
     // Profile
     PROFILE_USERNAME: 'Username',
     PROFILE_EMAIL: 'Email',

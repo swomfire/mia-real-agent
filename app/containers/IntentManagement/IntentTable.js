@@ -19,7 +19,7 @@ const ticketColumns = [
     dataKey: 'displayName',
     columnAttr: {
       value: toI18n('ADMIN_INTENT_TABLE_DISPLAY_NAME'),
-      percent: 10,
+      percent: 100,
     },
   },
 ];
@@ -42,8 +42,8 @@ const mapStateToProps = (state) => {
   return {
     ...structureSelector,
     columns: ticketColumns,
-    onClick: ({ _id }) => { history.push(`/admin/tickets/${_id}`); },
-    endpoint: 'admin/tickets',
+    onClick: ({ _id }) => { history.push(`/admin/intents/${_id}`); },
+    endpoint: 'admin/intents',
   };
 };
 

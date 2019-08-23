@@ -1,1 +1,1 @@
-export { default } from '../../containers/IntentManagement';
+export { default } from './IntentManagement';

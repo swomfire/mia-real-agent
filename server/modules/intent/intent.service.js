@@ -50,8 +50,7 @@ class IntentService extends BaseService {
         const intentId = getIntentId(name);
         // Map entity values with parameter
         const paramWithValues = parameters.map((param) => {
-          const { entityTypeDisplayName } = param;
-
+          const { entityTypeDisplayName, name: parameterId } = param;
           const entity = entityTypes.find(({
             displayName: entityName,
           }) => `@${entityName}` === entityTypeDisplayName);
@@ -59,6 +58,7 @@ class IntentService extends BaseService {
           const { values = [] } = entity || {};
           return {
             ...param,
+            parameterId,
             values,
           };
         });

@@ -45,7 +45,7 @@ const reselectIntents = createSelector(
 );
 
 const getIntentIdFromRoute = createSelector(
-  getRouteMatch(ROUTE_DETAIL.APPLICATION_DETAIL_ROUTER),
+  getRouteMatch(ROUTE_DETAIL.INTENT_DETAIL_ROUTER),
   match => _get(match, 'params.id', null),
 );
 

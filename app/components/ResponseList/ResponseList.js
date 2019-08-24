@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import _isEmpty from 'lodash/isEmpty';
 import {
-  shape, arrayOf, bool,
+  shape, arrayOf, bool, func,
 } from 'prop-types';
 import SpinnerLoading from 'components/PageLoading';
 import ShadowScrollbars from 'components/Scrollbar';
@@ -29,7 +29,6 @@ export class ResponseList extends Component {
   }
 
   toggleEditResponseModal = (isOpen, selectedId) => {
-    console.log(selectedId);
     this.setState({
       editResponseModalVisible: isOpen,
       selectedId,
@@ -37,7 +36,7 @@ export class ResponseList extends Component {
   }
 
   renderResponseItem = (response) => {
-    const { currentIntent } = this.props;
+    const { currentIntent, removeAction } = this.props;
     const { parameters } = currentIntent;
     const { _id } = response;
     return (
@@ -46,6 +45,7 @@ export class ResponseList extends Component {
         response={response}
         parameters={parameters}
         onEdit={() => this.toggleEditResponseModal(true, _id)}
+        onRemove={() => removeAction(_id)}
       />
     );
   }
@@ -89,6 +89,7 @@ ResponseList.propTypes = {
   isFetchingList: bool,
   currentIntent: shape(),
   responseList: arrayOf(shape()).isRequired,
+  removeAction: func.isRequired,
 };
 
 export default ResponseList;

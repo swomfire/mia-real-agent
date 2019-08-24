@@ -4,9 +4,6 @@ import {
   actions,
 } from '../../reducers/response';
 import {
-  selectConversation,
-} from '../../reducers/conversations';
-import {
   getResponsesList,
   getIsFetching,
 } from '../../selectors/response';
@@ -20,9 +17,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  selectConversation,
-  getAllTicketAction: actions.getAllTicketAction,
-  closeAction: actions.closeAction,
+  removeAction: actions.removeAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResponseList);

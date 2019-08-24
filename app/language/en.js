@@ -266,6 +266,7 @@ const en = {
     ADMIN_RESPONSE_ADD_TITLE: 'Create Response for',
     ADMIN_RESPONSE_EDIT_TITLE: 'Edit Response for',
     ADMIN_RESPONSE_EDIT_SUCCESS: 'Response Editted',
+    ADMIN_RESPONSE_REMOVE_SUCCESS: 'Response Removed',
 
     // Profile
     PROFILE_USERNAME: 'Username',

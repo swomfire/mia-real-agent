@@ -13,6 +13,10 @@ export const RESPONSE_UPDATE = 'response/UPDATE';
 export const RESPONSE_UPDATE_SUCCESS = 'response/UPDATE_SUCCESS';
 export const UPDATE_FAIL = 'response/UPDATE_FAIL';
 
+export const RESPONSE_REMOVE = 'response/REMOVE';
+export const RESPONSE_REMOVE_SUCCESS = 'response/REMOVE_SUCCESS';
+export const RESPONSE_REMOVE_FAIL = 'response/REMOVE_FAIL';
+
 export const RESPONSE_SORTING = 'response/RESPONSE_SORTING';
 export const RESPONSE_CHANGE_PAGE = 'response/RESPONSE_CHANGE_PAGE';
 export const RESPONSE_FILTER = 'response/RESPONSE_FILTER';
@@ -31,6 +35,26 @@ const createCompleteAction = payload => ({
 
 const createFailAction = errorMessage => ({
   type: RESPONSE_CREATE_FAIL,
+  payload: {
+    errorMessage,
+  },
+});
+
+const removeAction = responseId => ({
+  type: RESPONSE_REMOVE,
+  payload: {
+    responseId,
+  },
+});
+
+
+const removeCompleteAction = payload => ({
+  type: RESPONSE_REMOVE_SUCCESS,
+  payload,
+});
+
+const removeFailAction = errorMessage => ({
+  type: RESPONSE_REMOVE_FAIL,
   payload: {
     errorMessage,
   },
@@ -131,6 +155,18 @@ function responseReducer(state = initialState, action) {
       return state.set('isCreating', false)
         .set('createError', action.errorMessage);
 
+    case RESPONSE_REMOVE_SUCCESS: {
+      const { payload } = action;
+      const { _id } = payload;
+      const visibleResponseIds = state.get('visibleResponseIds').toJS();
+      const totalRecord = state.get('totalRecord');
+      const newVisibleResponseIds = visibleResponseIds.filter(id => id !== _id);
+      return state
+        .set('isCreating', false)
+        .set('totalRecord', totalRecord - 1)
+        .setIn(['responses', _id], fromJS({}))
+        .set('visibleResponseIds', fromJS(newVisibleResponseIds));
+    }
     case RESPONSE_UPDATE:
       return state.set('isUpdating', true)
         .set('updateError', '');
@@ -181,6 +217,10 @@ export const actions = {
   createAction,
   createCompleteAction,
   createFailAction,
+
+  removeAction,
+  removeFailAction,
+  removeCompleteAction,
 
   getAllResponseAction,
   getAllResponseCompleteAction,

@@ -255,6 +255,7 @@ const en = {
     ADMIN_INTENT_TABLE_DISPLAY_NAME: 'Name',
     ADMIN_INTENT_TABLE_ALL_INTENT: 'All Intent',
     // Admin intent detail
+    ADMIN_INTENT_DETAIL_TITLE: 'Responses for',
     ADMIN_INTENT_DETAIL_PLEASE_SELECT_AN_INTENT: 'Please select an intent',
     ADMIN_INTENT_DETAIL_NO_RESPONSES: 'No responses',
     // Admin add response

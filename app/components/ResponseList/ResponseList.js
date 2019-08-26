@@ -9,6 +9,7 @@ import MediaQuery from 'react-responsive';
 import ResponseItem from './ResponseItem';
 import { toI18n } from '../../utils/func-utils';
 import EditResponseModal from '../../containers/EditResponseModal';
+import { NoResposne, SpinningWrapper } from './styles';
 
 const widthBreakpoint = 768;
 const scrollStyle = {
@@ -53,7 +54,7 @@ export class ResponseList extends Component {
   renderResponseList = () => {
     const { responseList } = this.props;
     if (_isEmpty(responseList)) {
-      return (<h2>{toI18n('ADMIN_INTENT_DETAIL_NO_RESPONSES')}</h2>);
+      return (<NoResposne>{toI18n('ADMIN_INTENT_DETAIL_NO_RESPONSES')}</NoResposne>);
     }
     return (
       <MediaQuery maxWidth={widthBreakpoint}>
@@ -70,7 +71,11 @@ export class ResponseList extends Component {
     const { editResponseModalVisible, selectedId } = this.state;
     const { isFetchingList = {} } = this.props;
     if (isFetchingList) {
-      return <SpinnerLoading />;
+      return (
+        <SpinningWrapper>
+          <SpinnerLoading />
+        </SpinningWrapper>
+      );
     }
     return (
       <div>

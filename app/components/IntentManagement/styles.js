@@ -28,3 +28,10 @@ export const AddResponseButton = styled(Button)`
   top: 7px;
   right: 15px;
 `;
+
+export const PleaseSelectIntent = styled.div`
+  flex: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

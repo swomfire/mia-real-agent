@@ -24,7 +24,7 @@ import {
 import { toI18n } from '../../utils/func-utils';
 
 const initialValues = {
-  email: '',
+  usernameOrEmail: '',
   password: '',
 };
 
@@ -52,9 +52,9 @@ class Login extends Component {
   }
 
   login = (values) => {
-    const { email, password } = values;
+    const { usernameOrEmail, password } = values;
     const { login } = this.props;
-    login({ ...values, email, password });
+    login({ ...values, usernameOrEmail: usernameOrEmail.trim(), password });
   }
 
   renderLoginBtn = () => {

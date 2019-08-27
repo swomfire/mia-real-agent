@@ -9,11 +9,10 @@ import { func } from 'prop-types';
 import FormInput from '../FormInput/FormInput';
 import {
   ApplicationBtnWrap,
-  ArrayTagWrapper,
-  ActionFormRegister,
-  ArrayInputWrapper, TagAction, DescriptionNumber, ArrayWrapper,
+  ApplicationBtn, ArrayTagWrapper,
+  ArrayInputWrapper, ArrayAddButton, TagAction, ArrayWrapper, DescriptionNumber,
 } from './styles';
-import { POSITION_OPTIONS, FIELD_OF_STUDY } from '../../../common/enums';
+import { FIELD_OF_STUDY } from '../../../common/enums';
 import { toI18n } from '../../utils/func-utils';
 import { ButtonCancel, ButtonSubmit, ArrayAddButton } from '../../stylesheets/Button.style';
 
@@ -31,7 +30,7 @@ const initialValues = {
 const educationValidationSchema = Yup.object().shape({
   school: Yup.string().trim().required('Required'),
   degree: Yup.string().trim().required('Required'),
-  certificate: Yup.string().trim().required('Required'),
+  certificate: Yup.array().of(Yup.object()).required('Required'),
   fieldOfStudies: Yup.array().of(Yup.string()),
   gpa: Yup.number().min(0).max(5),
 });
@@ -66,6 +65,7 @@ export class EducationForm extends Component {
   };
 
   handleAddExperience = (experience) => {
+    console.log(experience);
     const { editIndex } = this.state;
     const { formik } = this;
     const context = formik.getFormikContext();
@@ -148,12 +148,18 @@ export class EducationForm extends Component {
                 <Col sm={24} xs={24}>
                   <FormInput
                     name="certificate"
-                    type="text"
+                    type="upload"
+                    multiple
                     label={toI18n('APPLICATION_EDUCATION_FORM_CERTIFICATE')}
                     login={1}
                   />
                 </Col>
               </Row>
+              {/* <Row gutter={32}>
+                <Col sm={24} xs={24}>
+                  <DropUpload />
+                </Col>
+              </Row> */}
               <Row gutter={32}>
                 <Col sm={24} xs={24}>
                   <ActionFormRegister>
@@ -195,11 +201,11 @@ export class EducationForm extends Component {
                 {gpa}
               </DescriptionNumber>
             </div>
-            <div>
+            {/* <div>
               {!_isEmpty(certificate) && (
                 <a href={certificate}>{certificate}</a>
               )}
-            </div>
+            </div> */}
           </div>
           <div>
             <TagAction>

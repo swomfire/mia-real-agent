@@ -22,6 +22,8 @@ const en = {
     FORM_REQUIRED: 'Required',
     FORM_INVALID_MAIL: 'Invalid Email',
     FORM_PASSWORD_MUST_MATCH: 'Passwords must match',
+    // Form input
+    FORM_INPUT_UPLOAD_PLACEHOLDER: 'Upload',
     // Dashboard
     DB_REQUEST: 'Requests',
     DB_TICKET: 'Ticket',

@@ -215,3 +215,25 @@ export const RateWrapper = styled.div`
   display: flex;
   justify-content: center;
 `;
+
+export const UploadWrapper = styled.div`
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed grey;
+  p {
+    margin-bottom: 0;
+  }
+`;
+
+export const UploadHolder = styled.aside`
+  p {
+    margin-bottom: 0;
+    font-weight: 600;
+    height: 25px;
+  }
+  ul {
+    margin-bottom: 0;
+  }
+`;

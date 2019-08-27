@@ -7,7 +7,8 @@ import {
   Input, Checkbox, Select,
   DatePicker, Radio, InputNumber, Switch, Slider, Rate,
 } from 'antd'; // eslint-disable-line import/named
-import { InputStyled, InputWrapperStyled, RateWrapper } from './styles';
+import { InputStyled, InputWrapperStyled, RateWrapper, UploadWrapper, UploadHolder } from './styles';
+import Upload from './Upload';
 
 export const INPUT_TYPES = {
   TEXT: 'text',
@@ -21,7 +22,11 @@ export const INPUT_TYPES = {
   TEXT_AREA: 'textarea',
   SWITCH: 'switch',
   RATE: 'rate',
+<<<<<<< HEAD
   RICH_EDITOR: 'rich_editor',
+=======
+  UPLOAD: 'upload',
+>>>>>>> Add upload for FormInput
 };
 
 const FORM_LAYOUT = {
@@ -49,6 +54,9 @@ class FormInput extends React.Component {
     this.input = input;
     refInput(input);
   }
+
+  renderUploadInput = props => Upload(props);
+
 
   renderTextInput = ({
     field, // { name, value, onChange, onBlur }
@@ -664,6 +672,8 @@ class FormInput extends React.Component {
         return (
           <DraftEditor {...props} />
         );
+      case INPUT_TYPES.UPLOAD:
+        return this.renderUploadInput(props);
       default:
         return this.renderTextInput(props);
     }

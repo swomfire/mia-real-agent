@@ -27,6 +27,7 @@ const UploadInput = ({
     label,
     formLayout,
     onChange,
+    ...rest
   } = props;
 
   let errorMessage = '';
@@ -53,7 +54,7 @@ const UploadInput = ({
         {
           t => (
             <div>
-              <Upload {...uploadProps} onChange={handleChange}>
+              <Upload {...uploadProps} {...rest} onChange={handleChange}>
                 <Button>
                   <Icon type="upload" />
                   {t('FORM_INPUT_UPLOAD_PLACEHOLDER')}

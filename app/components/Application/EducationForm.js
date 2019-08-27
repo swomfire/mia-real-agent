@@ -149,7 +149,6 @@ export class EducationForm extends Component {
                   <FormInput
                     name="certificate"
                     type="upload"
-                    multiple
                     label={toI18n('APPLICATION_EDUCATION_FORM_CERTIFICATE')}
                     login={1}
                   />

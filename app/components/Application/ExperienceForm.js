@@ -12,8 +12,8 @@ import {
   ArrayTagWrapper,
   ArrayInputWrapper, ArrayWrapper, TagAction,
 } from './styles';
-import { ButtonCancel, ButtonSubmit, ArrayAddButton } from '../../stylesheets/Button.style';
-import { POSITION_OPTIONS, CATEGORY_OPTIONS } from '../../../common/enums';
+import { CATEGORY_OPTIONS } from '../../../common/enums';
+import { DATE_TIME_FORMAT } from '../../utils/constants';
 import { toI18n } from '../../utils/func-utils';
 
 const experienceInititalValues = {

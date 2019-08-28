@@ -4,6 +4,7 @@ export const ERROR_MESSAGE = {
   CONTENT_NOT_FOUND: 'No content available',
   BAD_REQUEST: 'Invalid request',
   EMAIL_EXIST: 'Email is exist',
+  EMAIL_NOT_EXIST: 'Email not exist',
   PASSWORD_INCORRECT: 'Current password is not correct',
   UNAUTHORIZED: 'Unauthorized',
 

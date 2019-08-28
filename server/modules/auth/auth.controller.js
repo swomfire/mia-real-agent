@@ -7,6 +7,8 @@ import UserModel from '../user/user.model';
 import UserService from '../user/user.service';
 import check from '../../utils/validate';
 import { VALIDATION_TYPE } from '../../../common/enums';
+import APIError, { ERROR_MESSAGE } from '../../utils/APIError';
+import { sendEmailResetPassword } from '../../mail-sparkpost/sparkpost';
 import { hashFunc } from '../../utils/bcrypt';
 // import {
 //   sendUserRegisterSuccessMail,
@@ -226,6 +228,27 @@ class AuthController {
       return res.status(error.status).send({
         error,
       });
+    }
+  }
+
+  async forgotPassword(req, res) {
+    try {
+      const { email } = req.body;
+      await check(email, VALIDATION_TYPE.STRING);
+      const user = await UserService.getOneByQuery({ email });
+      if (!user) {
+        const { EMAIL_NOT_EXIST } = ERROR_MESSAGE;
+        throw new APIError(EMAIL_NOT_EXIST, httpStatus.NOT_FOUND);
+      }
+      // Gen expire token
+      const { _id } = user;
+      const domain = process.env.DOMAIN;
+      const forgotToken = jwt.sign({ _id }, process.env.SECRET_KEY_JWT,
+        { expiresIn: 60 * 5 });
+      sendEmailResetPassword(email, forgotToken, `${domain}/reset-password`);
+      return res.status(httpStatus.OK).send();
+    } catch (error) {
+      return super.handleError(res, error);
     }
   }
 }

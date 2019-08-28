@@ -31,3 +31,13 @@ export const createPassword = newPassword => axios
   })
   .then(response => ({ response }))
   .catch(handleError);
+
+export const forgotPassword = email => axios
+  .post('/auth/forgotPassword', { email })
+  .then(response => ({ response }))
+  .catch(handleError);
+
+export const resetPassword = (newPassword, token) => axios
+  .post('/auth/forgotPassword', { newPassword, token })
+  .then(response => ({ response }))
+  .catch(handleError);

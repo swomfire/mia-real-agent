@@ -59,6 +59,18 @@ export const sendEmailApplicationApproved = (application, password) => {
   }, [{ address: application.email }]);
 };
 
+export const sendEmailResetPassword = (email, token, url) => {
+  const content = createContentFromTemplate(
+    emailTemplates.resetPassword,
+    { token, url }
+  );
+  return send({
+    from: SPARK_POST_DOMAIN,
+    subject: content.subject,
+    html: content.html,
+  }, [{ address: email }]);
+};
+
 export const buildContent = (subject, text) => {
   if (!SPARK_POST_DOMAIN) {
     Logger.error('SPARK_POST_DOMAIN not found');

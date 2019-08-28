@@ -1,5 +1,6 @@
 import styled, { css, keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
+import { LoginBtn } from '../../stylesheets/Button.style';
 
 export const ForgotWrapper = styled.div`
   height: 100vh;
@@ -64,23 +65,8 @@ export const ForgotLabel = styled.div`
   color: ${props => props.theme.textColor};
 `;
 
-export const ForgotBtn = styled.button`
-  height: 50px;
-  width: 100%;
-  border-radius: 50px;
-  border: 1px solid ${props => props.theme.textColor};
-  transition: .3s ease;
-  background: ${props => props.theme.textColor};
-  color: ${props => props.theme.secondaryColor};
-  cursor: pointer;
-  margin-bottom: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  &:hover {
-    background: ${props => props.theme.secondaryColor};
-    color: ${props => props.theme.textColor};
-  }
+export const ForgotBtn = styled(LoginBtn)`
+
 `;
 
 export const ForgotFBBtn = styled(ForgotBtn)`

@@ -334,6 +334,10 @@ const en = {
     // Forgot password form
     FORGOT_PASSWORD_EMAIL: 'Please input your account \'s email',
     FORGOT_PASSWORD_TO_LOGIN: 'Back to login',
+    // Reset password form
+    RESET_PASSWORD_NEW_PASSWORD: 'Please input your account \'s new Password',
+    RESET_PASSWORD_CONFIRM_PASSWORD: 'Confirm Password',
+    RESET_PASSWORD_CONFIRM_PASSWORD_ERROR: 'Confirm Password not match',
   },
 };
 

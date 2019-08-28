@@ -33,6 +33,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import ApplicationForm from './pages/Application';
 import AdminRoute from './containers/Route/AdminRoute';
 import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 class Router extends React.PureComponent {
   static propTypes = {
@@ -75,6 +76,7 @@ class Router extends React.PureComponent {
         <UnauthRoute exact path="/greeting" component={ThankForRegistering} />
         <UnauthRoute exact path="/application" component={ApplicationForm} />
         <UnauthRoute exact path="/forgot" component={ForgotPassword} />
+        <UnauthRoute exact path="/reset-password/:token" component={ResetPassword} />
         <UnauthRoute
           path="/login/callback/:token/:userId/:email/:verifiedAt"
           component={LoginCallBackPage}

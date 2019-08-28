@@ -2,6 +2,7 @@
  * Created by vienpn on 21/08/19.
  */
 import styled, { css, keyframes } from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const spin = keyframes`
   100% {
@@ -161,7 +162,7 @@ export const LoginFooterText = styled.span`
   font-size: ${props => props.theme.fontSize.MediumFontSize};
 `;
 
-export const LoginFooterLink = styled.a`
+export const LoginFooterLink = styled(Link)`
   font-size: ${props => props.theme.fontSize.MediumFontSize};
   margin-left: .5em;
   text-decoration: none;

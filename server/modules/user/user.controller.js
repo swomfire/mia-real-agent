@@ -101,7 +101,6 @@ class UserController extends BaseController {
     }
   }
 
-
   async changePassword(req, res) {
     try {
       const { model: user } = req;

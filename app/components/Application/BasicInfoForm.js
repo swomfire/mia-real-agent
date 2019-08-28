@@ -85,7 +85,6 @@ export class BasicInfoForm extends Component {
 
   handleCancel = () => {
     const { onCancel } = this.props;
-    console.log('ad');
     onCancel();
   }
 

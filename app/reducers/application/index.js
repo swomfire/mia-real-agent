@@ -33,9 +33,9 @@ export const APPLICATION_FETCH_SINGLE = 'application/APPLICATION_FETCH_SINGLE';
 export const APPLICATION_FETCH_SINGLE_COMPLETE = 'application/APPLICATION_FETCH_SINGLE_COMPLETE';
 export const APPLICATION_FETCH_SINGLE_FAIL = 'application/APPLICATION_FETCH_SINGLE_FAIL';
 
-export const APPLICATION_CHECK_NICKNAME = 'application/APPLICATION_CHECK_NICKNAME';
-export const APPLICATION_CHECK_NICKNAME_COMPLETE = 'application/APPLICATION_CHECK_NICKNAME_COMPLETE';
-export const APPLICATION_CHECK_NICKNAME_FAIL = 'application/APPLICATION_CHECK_NICKNAME_FAIL';
+export const APPLICATION_CHECK_INFO = 'application/APPLICATION_CHECK_INFO';
+export const APPLICATION_CHECK_INFO_COMPLETE = 'application/APPLICATION_CHECK_INFO_COMPLETE';
+export const APPLICATION_CHECK_INFO_FAIL = 'application/APPLICATION_CHECK_INFO_FAIL';
 
 export const APPLICATION_FORM_VALIDATE_STEP = 'application/APPLICATION_FORM_VALIDATE_STEP';
 export const APPLICATION_FORM_VALIDATE_STEP_COMPLETE = 'application/APPLICATION_FORM_VALIDATE_STEP_COMPLETE';
@@ -66,22 +66,23 @@ const applicationFormValidateStepFailAction = errorMessage => ({
   errorMessage,
 });
 
-const checkNicknameAction = ({ nickname }) => ({
-  type: APPLICATION_CHECK_NICKNAME,
+const checkInfoAction = ({ nickname, email }) => ({
+  type: APPLICATION_CHECK_INFO,
   payload: {
     nickname,
+    email,
   },
 });
 
-const checkNicknameCompleteAction = nicknameFound => ({
-  type: APPLICATION_CHECK_NICKNAME_COMPLETE,
+const checkInfoCompleteAction = nicknameFound => ({
+  type: APPLICATION_CHECK_INFO_COMPLETE,
   payload: {
     nicknameFound,
   },
 });
 
-const checkNicknameFailAction = errorMessage => ({
-  type: APPLICATION_CHECK_NICKNAME_FAIL,
+const checkInfoFailAction = errorMessage => ({
+  type: APPLICATION_CHECK_INFO_FAIL,
   payload: {
     errorMessage,
   },
@@ -358,9 +359,9 @@ export const actions = {
   fetchApplicationSingleComplete,
   fetchApplicationSingleFail,
 
-  checkNicknameAction,
-  checkNicknameCompleteAction,
-  checkNicknameFailAction,
+  checkInfoAction,
+  checkInfoCompleteAction,
+  checkInfoFailAction,
 
   applicationFormValidateStepAction,
   applicationFormValidateStepCompleteAction,

@@ -25,7 +25,7 @@ const { TabPane } = Tabs;
 
 export class ApplicationForm extends Component {
   static propTypes = {
-    checkNicknameExist: func.isRequired,
+    checkInfoAction: func.isRequired,
     onSubmit: func.isRequired,
     isSubmitting: bool.isRequired,
     submitError: string.isRequired,
@@ -78,7 +78,7 @@ export class ApplicationForm extends Component {
 
   handleNextStep = (data) => {
     const { step } = this.state;
-    const { checkNicknameExist } = this.props;
+    const { checkInfoAction } = this.props;
     switch (step) {
       case 0:
         this.setState({
@@ -86,7 +86,7 @@ export class ApplicationForm extends Component {
         });
         break;
       case 1:
-        checkNicknameExist(data.nickname);
+        checkInfoAction(data.nickname, data.email);
         this.setState({
           basicData: data,
           waitValidate: true,
@@ -114,6 +114,7 @@ export class ApplicationForm extends Component {
 
     this.setState({
       step: step - 1,
+      nextStep: step - 1,
     });
   }
 

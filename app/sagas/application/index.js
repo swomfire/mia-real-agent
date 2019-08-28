@@ -12,12 +12,12 @@ import {
   APPLICATION_ADMIN_GET_ALL, APPLICATION_SORTING,
   APPLICATION_APPROVE, APPLICATION_REJECT, APPLICATION_REVIEW,
   APPLICATION_FETCH_SINGLE,
+  APPLICATION_CHECK_INFO, APPLICATION_FORM_VALIDATE_STEP,
 } from 'reducers/application';
-import { getSkipLimit } from 'utils/func-utils';
+import { getSkipLimit, toI18n } from 'utils/func-utils';
 import { getSelectedPage, getSizePerPage, reselectSorting } from 'selectors/application';
 import * as ApplicationApi from '../../api/application';
 import * as UploadApi from '../../api/upload';
-import { APPLICATION_CHECK_NICKNAME, APPLICATION_FORM_VALIDATE_STEP } from '../../reducers/application';
 
 function* uploadApplicationFile(file) {
   const { error, response } = yield call(UploadApi.uploadFile, file);
@@ -196,21 +196,23 @@ function* applicationFetchSingle({ id }) {
   }
 }
 
-function* checkNickname({ payload }) {
-  const { nickname } = payload;
+function* checkBasicInfomation({ payload }) {
+  const { nickname, email } = payload;
   try {
-    const { response } = yield call(ApplicationApi.checkNicknameExisted, nickname);
+    const { response } = yield call(ApplicationApi.checkBasicInfomationExisted, nickname, email);
     const data = _get(response, 'data', {});
-    const { result } = data;
-    if (result === 0) {
-      yield put(actions.checkNicknameCompleteAction(data));
+    const { nicknameResult, emailResult } = data;
+    if (nicknameResult !== 0) {
+      throw new Error('APPLICATION_BASIC_INFO_FORM_NICKNAME_EXISTED');
+    } else if (emailResult !== 0) {
+      throw new Error('APPLICATION_BASIC_INFO_FORM_EMAIL_EXISTED');
     } else {
-      throw new Error('nickname existed');
+      yield put(actions.checkInfoCompleteAction(data));
     }
   } catch (error) {
     const errMsg = _get(error, 'response.data.message', error.message);
-    yield put(actions.checkNicknameFailAction(errMsg));
-    notification.error({ message: errMsg });
+    yield put(actions.checkInfoFailAction(errMsg));
+    notification.error({ message: toI18n(errMsg) });
   }
 }
 
@@ -241,7 +243,7 @@ function* ticketFlow() {
   yield takeEvery(APPLICATION_REJECT, rejectApplication);
   yield takeEvery(APPLICATION_REVIEW, reviewApplication);
   yield takeEvery(APPLICATION_FETCH_SINGLE, applicationFetchSingle);
-  yield takeEvery(APPLICATION_CHECK_NICKNAME, checkNickname);
+  yield takeEvery(APPLICATION_CHECK_INFO, checkBasicInfomation);
   yield takeEvery(APPLICATION_FORM_VALIDATE_STEP, validateFormStep);
 }
 

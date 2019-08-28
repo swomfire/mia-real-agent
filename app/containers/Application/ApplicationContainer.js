@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import {
   selectors, actions,
-  APPLICATION_CHECK_NICKNAME_COMPLETE, APPLICATION_CHECK_NICKNAME_FAIL, APPLICATION_CHECK_NICKNAME,
+  APPLICATION_CHECK_INFO_COMPLETE, APPLICATION_CHECK_INFO_FAIL,
 } from '../../reducers/application';
 import ApplicationForm from '../../components/Application';
 
@@ -14,12 +14,12 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onSubmit: data => dispatch(actions.submitAction(data)),
-  checkNicknameExist: nickname => dispatch(
+  checkInfoAction: (nickname, email) => dispatch(
     actions.applicationFormValidateStepAction(
-      actions.checkNicknameAction,
-      { nickname },
-      APPLICATION_CHECK_NICKNAME_COMPLETE,
-      APPLICATION_CHECK_NICKNAME_FAIL
+      actions.checkInfoAction,
+      { nickname, email },
+      APPLICATION_CHECK_INFO_COMPLETE,
+      APPLICATION_CHECK_INFO_FAIL
     )
   ),
 });

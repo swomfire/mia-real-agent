@@ -32,6 +32,10 @@ class UserService extends BaseService {
     return userCollection.findOne({ _id: id }).exec();
   }
 
+  countDocument(filter) {
+    return userCollection.countDocuments(filter);
+  }
+
   async getUserProfile(user) {
     const { password } = user;
     const isNewlyLoginAsSocialNetwork = !password;

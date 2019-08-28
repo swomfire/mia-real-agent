@@ -36,7 +36,7 @@ export const getApplicationSummary = () => axios
   .then(response => ({ response }))
   .catch(handleError);
 
-export const checkNicknameExisted = nickname => axios
-  .get(`applications/nickname/check?nickname=${nickname}`)
+export const checkBasicInfomationExisted = (nickname, email) => axios
+  .get(`applications/info/check?nickname=${nickname}&email=${email}`)
   .then(response => ({ response }))
   .catch(handleError);

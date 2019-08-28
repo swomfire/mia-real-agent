@@ -7,7 +7,7 @@ class ApplicationRouter extends BaseRouter {
     this.router.post('/:id/approve', this.controller.approveApplication);
     this.router.post('/:id/reject', this.controller.rejectApplication);
     this.router.post('/:id/review', this.controller.reviewApplication);
-    this.router.get('/nickname/check', this.controller.checkNicknameExisted);
+    this.router.get('/info/check', this.controller.checkBasicInfomationExisted);
   }
 }
 

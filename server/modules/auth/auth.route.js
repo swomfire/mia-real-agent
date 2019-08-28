@@ -29,6 +29,10 @@ class AuthRouter {
       '/forgotPassword',
       AuthController.forgotPassword,
     );
+    this.router.post(
+      '/resetPassword',
+      AuthController.resetPassword,
+    );
   }
 }
 

@@ -18,6 +18,8 @@ import {
   getToken,
   getUserId,
   getVerifyingEmail,
+  AUTH_FORGOT_PASSWORD,
+  AUTH_RESET_PASSWORD,
 } from '../../reducers/auth';
 
 // login handler
@@ -138,6 +140,38 @@ export function* checkToken() {
   }));
 }
 
+
+function* sendForgotPassword({ payload }) {
+  const { email } = payload;
+  const { error } = yield call(
+    AuthApi.forgotPassword,
+    email,
+  );
+  if (error) {
+    const message = _get(error, 'response.data.message', DEFAULT_ERROR_MESSAGE); // this line of code needs to refactor
+    yield put(authActions.forgotPasswordFailAction(message));
+    return;
+  }
+
+  yield put(authActions.forgotPasswordSuccessAction());
+}
+
+
+function* sendResetPassword({ payload }) {
+  const { newPassword, token } = payload;
+  const { error } = yield call(
+    AuthApi.resetPassword,
+    newPassword, token,
+  );
+  if (error) {
+    const message = _get(error, 'response.data.message', DEFAULT_ERROR_MESSAGE); // this line of code needs to refactor
+    yield put(authActions.resetPasswordFailAction(message));
+    return;
+  }
+
+  yield put(authActions.resetPasswordSuccessAction());
+}
+
 function* authFlow() {
   yield all([
     call(checkToken),
@@ -149,6 +183,8 @@ function* authFlow() {
     takeLatest(AUTH_REGISTER, register),
     takeLatest(AUTH_CREATE_PASSWORD, createPassword),
     takeLatest(AUTH_SEND_VERICATION_EMAIL, sendVericationEmail),
+    takeLatest(AUTH_FORGOT_PASSWORD, sendForgotPassword),
+    takeLatest(AUTH_RESET_PASSWORD, sendResetPassword),
   ]);
 }
 

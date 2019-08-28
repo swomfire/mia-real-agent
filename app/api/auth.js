@@ -38,6 +38,6 @@ export const forgotPassword = email => axios
   .catch(handleError);
 
 export const resetPassword = (newPassword, token) => axios
-  .post('/auth/forgotPassword', { newPassword, token })
+  .post('/auth/resetPassword', { newPassword, token })
   .then(response => ({ response }))
   .catch(handleError);

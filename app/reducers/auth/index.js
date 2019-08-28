@@ -253,6 +253,10 @@ export const actions = {
   sendVericationEmail,
   sendVericationEmailSuccess,
   sendVericationEmailFail,
+  forgotPasswordSuccessAction,
+  forgotPasswordFailAction,
+  resetPasswordSuccessAction,
+  resetPasswordFailAction,
 };
 
 // selector

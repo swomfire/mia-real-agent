@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { func, bool, string } from 'prop-types';
+import {
+  func, bool, string, shape,
+} from 'prop-types';
 import { Form, Row, Col } from 'antd';
 import FormInput from '../FormInput/FormInput';
 import {
@@ -30,12 +32,14 @@ export class ResetPassword extends Component {
     onSubmit: func.isRequired,
     isLoading: bool.isRequired,
     errorMessage: string.isRequired,
+    match: shape().isRequired,
   }
 
   handleResetPassword = (values) => {
-    const { onSubmit } = this.props;
-    const { email } = values;
-    onSubmit(email);
+    const { onSubmit, match } = this.props;
+    const { params } = match;
+    const { password } = values;
+    onSubmit(password, params.token);
     this.setState({
       submitted: true,
     });
@@ -64,6 +68,7 @@ export class ResetPassword extends Component {
   render() {
     const { submitted } = this.state;
     const { errorMessage } = this.props;
+    console.log(this.props);
     if (!errorMessage && submitted) {
       return (
         <div>cc</div>

@@ -8,9 +8,8 @@ import * as Yup from 'yup';
 import { func } from 'prop-types';
 import FormInput from '../FormInput/FormInput';
 import {
-  ApplicationBtnWrap,
-  ApplicationBtn, ArrayTagWrapper,
-  ArrayInputWrapper, ArrayAddButton, TagAction, ArrayWrapper, DescriptionNumber,
+  ArrayTagWrapper,
+  ArrayInputWrapper, TagAction, ArrayWrapper, DescriptionNumber, ActionFormRegister,
 } from './styles';
 import { FIELD_OF_STUDY } from '../../../common/enums';
 import { toI18n } from '../../utils/func-utils';

@@ -15,6 +15,7 @@ import {
 import { CATEGORY_OPTIONS } from '../../../common/enums';
 import { DATE_TIME_FORMAT } from '../../utils/constants';
 import { toI18n } from '../../utils/func-utils';
+import { ButtonCancel, ButtonSubmit, ArrayAddButton } from '../../stylesheets/Button.style';
 
 const experienceInititalValues = {
   title: '',

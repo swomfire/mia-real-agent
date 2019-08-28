@@ -16,6 +16,7 @@ class ApplicationController extends BaseController {
     this.rejectApplication = this.rejectApplication.bind(this);
     this.reviewApplication = this.reviewApplication.bind(this);
     this.updateStatus = this.updateStatus.bind(this);
+    this.checkNicknameExisted = this.checkNicknameExisted.bind(this);
   }
 
   async approveApplication(req, res) {
@@ -72,6 +73,17 @@ class ApplicationController extends BaseController {
     application.set({ status });
     const result = await application.save();
     return result;
+  }
+
+  async checkNicknameExisted(req, res) {
+    try {
+      const { query } = req;
+      const { nickname } = query;
+      const result = await this.service.countDocument({ nickname });
+      return res.status(httpStatus.OK).send({ result });
+    } catch (error) {
+      return this.handleError(res, error);
+    }
   }
 }
 

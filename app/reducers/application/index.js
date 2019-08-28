@@ -33,7 +33,61 @@ export const APPLICATION_FETCH_SINGLE = 'application/APPLICATION_FETCH_SINGLE';
 export const APPLICATION_FETCH_SINGLE_COMPLETE = 'application/APPLICATION_FETCH_SINGLE_COMPLETE';
 export const APPLICATION_FETCH_SINGLE_FAIL = 'application/APPLICATION_FETCH_SINGLE_FAIL';
 
+export const APPLICATION_CHECK_NICKNAME = 'application/APPLICATION_CHECK_NICKNAME';
+export const APPLICATION_CHECK_NICKNAME_COMPLETE = 'application/APPLICATION_CHECK_NICKNAME_COMPLETE';
+export const APPLICATION_CHECK_NICKNAME_FAIL = 'application/APPLICATION_CHECK_NICKNAME_FAIL';
+
+export const APPLICATION_FORM_VALIDATE_STEP = 'application/APPLICATION_FORM_VALIDATE_STEP';
+export const APPLICATION_FORM_VALIDATE_STEP_COMPLETE = 'application/APPLICATION_FORM_VALIDATE_STEP_COMPLETE';
+export const APPLICATION_FORM_VALIDATE_STEP_FAIL = 'application/APPLICATION_FORM_VALIDATE_STEP_FAIL';
+
 // action creator
+const applicationFormValidateStepAction = (
+  validateFuncAction,
+  payload,
+  completeActionType,
+  failActionType,
+) => ({
+  type: APPLICATION_FORM_VALIDATE_STEP,
+  payload: {
+    validateFuncAction,
+    payload,
+    completeActionType,
+    failActionType,
+  },
+});
+
+const applicationFormValidateStepCompleteAction = () => ({
+  type: APPLICATION_FORM_VALIDATE_STEP_COMPLETE,
+});
+
+const applicationFormValidateStepFailAction = errorMessage => ({
+  type: APPLICATION_FORM_VALIDATE_STEP_FAIL,
+  errorMessage,
+});
+
+const checkNicknameAction = ({ nickname }) => ({
+  type: APPLICATION_CHECK_NICKNAME,
+  payload: {
+    nickname,
+  },
+});
+
+const checkNicknameCompleteAction = nicknameFound => ({
+  type: APPLICATION_CHECK_NICKNAME_COMPLETE,
+  payload: {
+    nicknameFound,
+  },
+});
+
+const checkNicknameFailAction = errorMessage => ({
+  type: APPLICATION_CHECK_NICKNAME_FAIL,
+  payload: {
+    errorMessage,
+  },
+});
+
+
 const submitAction = application => ({
   type: SUBMIT,
   payload: {
@@ -162,6 +216,9 @@ function fetchApplicationSingleComplete(payload) {
 const getApplicationIsSubmitting = ({ application }) => application.get('isSubmitting');
 const getApplicationSubmitError = ({ application }) => application.get('submitError');
 
+const getApplicationIsValidating = ({ application }) => application.get('isValidating');
+const getApplicationValidateError = ({ application }) => application.get('validateError');
+
 export const fetchingObj = {
   isFetching: false,
   errorMsg: '',
@@ -185,10 +242,22 @@ const initialState = fromJS({
     order: -1,
   }),
   fetching: fetchingObj,
+
+  isValidating: false,
+  validateError: '',
 });
 
 function applicationReducer(state = initialState, action) {
   switch (action.type) {
+    case APPLICATION_FORM_VALIDATE_STEP:
+      return state.set('isValidating', true)
+        .set('validateError', '');
+    case APPLICATION_FORM_VALIDATE_STEP_COMPLETE:
+      return state.set('isValidating', false);
+    case APPLICATION_FORM_VALIDATE_STEP_FAIL:
+      return state.set('isValidating', false)
+        .set('validateError', action.errorMessage);
+
     case SUBMIT:
       return state.set('isSubmitting', true)
         .set('submitError', '');
@@ -288,9 +357,20 @@ export const actions = {
   fetchApplicationSingle,
   fetchApplicationSingleComplete,
   fetchApplicationSingleFail,
+
+  checkNicknameAction,
+  checkNicknameCompleteAction,
+  checkNicknameFailAction,
+
+  applicationFormValidateStepAction,
+  applicationFormValidateStepCompleteAction,
+  applicationFormValidateStepFailAction,
 };
 
 export const selectors = {
   getApplicationIsSubmitting,
   getApplicationSubmitError,
+
+  getApplicationIsValidating,
+  getApplicationValidateError,
 };

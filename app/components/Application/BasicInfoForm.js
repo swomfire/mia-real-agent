@@ -11,6 +11,7 @@ import { ButtonCancel, ButtonSubmit } from '../../stylesheets/Button.style';
 import { ActionFormRegister } from './styles';
 
 const initialValues = {
+  nickname: '',
   firstName: '',
   lastName: '',
   email: '',
@@ -20,14 +21,44 @@ const initialValues = {
   phoneNumber: '',
 };
 
+const matchString = (string, match) => {
+  if (string.includes(match) || match.includes(string)) {
+    return true;
+  }
+  return false;
+};
+
+// eslint-disable-next-line func-names
+Yup.addMethod(Yup.string, 'checkNickname', function (firstNameRef, lastNameRef) {
+  const message = toI18n('APPLICATION_BASIC_INFO_FORM_NICKNAME_CANNOT_MATCH');
+  // eslint-disable-next-line func-names
+  return this.test('test-checkNickname', message, function (value) {
+    const { path, createError } = this;
+    const firstName = this.resolve(firstNameRef);
+    const lastName = this.resolve(lastNameRef);
+    if (firstName && lastName && value) {
+      const upFN = firstName.toUpperCase();
+      const upLN = lastName.toUpperCase();
+      const upValue = value.toUpperCase();
+      if (matchString(upValue, upFN) || matchString(upValue, upLN)) {
+        return createError({ path, message });
+      }
+    }
+    return true;
+  });
+});
+
 const validationSchema = Yup.object().shape({
-  firstName: Yup.string().trim().required('Required'),
-  lastName: Yup.string().trim().required('Required'),
-  email: Yup.string().email('Invalid Email').trim().required('Required'),
-  country: Yup.string().trim().required('Required'),
-  postcode: Yup.string().trim().required('Required'),
-  address: Yup.string().trim().required('Required'),
-  phoneNumber: Yup.string().trim().required('Required'),
+  nickname: Yup
+    .string().trim().required(toI18n('FORM_REQUIRED'))
+    .checkNickname(Yup.ref('firstName'), Yup.ref('lastName')),
+  firstName: Yup.string().trim().required(toI18n('FORM_REQUIRED')),
+  lastName: Yup.string().trim().required(toI18n('FORM_REQUIRED')),
+  email: Yup.string().email(toI18n('FORM_INVALID_MAIL')).trim().required(toI18n('FORM_REQUIRED')),
+  country: Yup.string().trim().required(toI18n('FORM_REQUIRED')),
+  postcode: Yup.string().trim().required(toI18n('FORM_REQUIRED')),
+  address: Yup.string().trim().required(toI18n('FORM_REQUIRED')),
+  phoneNumber: Yup.string().trim().required(toI18n('FORM_REQUIRED')),
 });
 
 export class BasicInfoForm extends Component {
@@ -71,6 +102,16 @@ export class BasicInfoForm extends Component {
       >
         {({ handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
+            <Row gutter={32}>
+              <Col sm={24} xs={24}>
+                <FormInput
+                  name="nickname"
+                  type="text"
+                  label={toI18n('APPLICATION_BASIC_INFO_FORM_NICKNAME')}
+                  login={1}
+                />
+              </Col>
+            </Row>
             <Row gutter={32}>
               <Col sm={12} xs={24}>
                 <FormInput

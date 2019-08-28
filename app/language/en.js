@@ -120,6 +120,8 @@ const en = {
     APPLICATION_FORM_EDUCATION_TAB: 'Education',
     APPLICATION_FORM_ADDITIONAL_TAB: 'Additional',
     // Application Basic info Form
+    APPLICATION_BASIC_INFO_FORM_NICKNAME: 'Nickname',
+    APPLICATION_BASIC_INFO_FORM_NICKNAME_CANNOT_MATCH: 'Nickname cannot have First name or Last name',
     APPLICATION_BASIC_INFO_FORM_FIRST_NAME: 'First name',
     APPLICATION_BASIC_INFO_FORM_LASTNAME: 'Last name',
     APPLICATION_BASIC_INFO_FORM_EMAIL: 'Email',

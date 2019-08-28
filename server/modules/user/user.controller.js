@@ -184,14 +184,23 @@ class UserController extends BaseController {
     const myBucket = 'mia-consult';
     const myKey = filename;
     const params = {
-      Bucket: myBucket, Key: myKey, Expires: signedUrlExpireSeconds, ContentType: filetype, ACL: 'bucket-owner-full-control',
+      Bucket: myBucket,
+      Key: myKey,
+      Expires: signedUrlExpireSeconds,
+      ContentType: filetype,
+      ACL: 'public-read',
     };
     s3.getSignedUrl('putObject', params, (err, url) => {
       if (err) {
         res.json({ success: false, message: 'Pre- Signed URL error', urls: fileurls });
       } else {
         fileurls[0] = url;
-        res.json({ success: true, message: 'AWS SDK S3 Pre- signed urls generated successfully.', urls: fileurls });
+        res.json({
+          success: true,
+          message: 'AWS SDK S3 Pre- signed urls generated successfully.',
+          urls: fileurls,
+          fileUrl: `https://${myBucket}.${process.env.AWS_S3_URL}/${myKey}`,
+        });
       }
     });
   }

@@ -17,11 +17,56 @@ import { getSkipLimit } from 'utils/func-utils';
 import { getSelectedPage, getSizePerPage, reselectSorting } from 'selectors/application';
 import { getToken } from 'reducers/auth';
 import * as ApplicationApi from '../../api/application';
+import * as UploadApi from '../../api/upload';
 import { configToken } from '../../api/config';
+
+function* uploadApplicationFile(file) {
+  const { error, response } = yield call(UploadApi.uploadFile, file);
+  if (error) {
+    const message = _get(
+      error, 'response.data.message', DEFAULT_ERROR_MESSAGE
+    );
+    yield put(actions.submitFailAction(message));
+    return null;
+  }
+  const { fileUrl } = response;
+  return {
+    url: fileUrl,
+  };
+}
+
+function* handleExperienceCertificate(educations) {
+  const mappedEducations = [];
+  // eslint-disable-next-line no-restricted-syntax
+  for (const education of educations) {
+    const { certificate, ...rest } = education;
+    const certificateUrls = [];
+    // eslint-disable-next-line no-restricted-syntax
+    for (const certificateFile of certificate) {
+      const { url } = yield uploadApplicationFile(certificateFile);
+      certificateUrls.push(url);
+    }
+    mappedEducations.push({ ...rest, certificate: certificateUrls });
+  }
+  return mappedEducations;
+}
 
 function* submitApplication({ payload }) {
   const { application } = payload;
-  const { error, response } = yield call(ApplicationApi.createApplication, application);
+  const { cv, educations, ...rest } = application;
+  const cvUrls = [];
+  // eslint-disable-next-line no-restricted-syntax
+  for (const cvFile of cv) {
+    const { url } = yield uploadApplicationFile(cvFile);
+    cvUrls.push(url);
+  }
+
+  const mappedEducations = yield handleExperienceCertificate(educations);
+  const { error, response } = yield call(ApplicationApi.createApplication, {
+    ...rest,
+    cv: cvUrls,
+    educations: mappedEducations,
+  });
   if (error) {
     const message = _get(
       error, 'response.data.message', DEFAULT_ERROR_MESSAGE

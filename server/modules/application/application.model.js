@@ -41,7 +41,7 @@ const applicationSchema = new Schema(
         degree: { type: String, trim: true },
         fieldOfStudy: [String],
         gpa: Number,
-        certificate: { type: String, trim: true },
+        certificate: [String],
       },
     ],
     skills: [String],
@@ -62,7 +62,7 @@ const applicationSchema = new Schema(
         overall: Number,
       },
     ],
-    cv: String,
+    cv: [String],
     social: {
       linkedin: String,
       facebook: String,

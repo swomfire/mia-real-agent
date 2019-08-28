@@ -65,7 +65,6 @@ export class EducationForm extends Component {
   };
 
   handleAddExperience = (experience) => {
-    console.log(experience);
     const { editIndex } = this.state;
     const { formik } = this;
     const context = formik.getFormikContext();
@@ -138,7 +137,7 @@ export class EducationForm extends Component {
                 <Col sm={24} xs={24}>
                   <FormInput
                     name="gpa"
-                    type="text"
+                    type="number"
                     label={toI18n('APPLICATION_EDUCATION_FORM_GPA')}
                     login={1}
                   />

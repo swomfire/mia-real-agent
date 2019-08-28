@@ -9,7 +9,7 @@ import FormInput from '../FormInput/FormInput';
 import {
   ActionFormRegister,
   ArrayTagWrapper,
-  ArrayInputWrapper, 
+  ArrayInputWrapper,
   ArrayWrapper,
   TagAction,
 
@@ -226,7 +226,7 @@ export class AdditionalForm extends Component {
                     >
                       {toI18n('FORM_CANCEL')}
                     </ButtonCancel>
-                    <ButtonSubmit>
+                    <ButtonSubmit type="submit">
                       {editIndex >= 0 ? toI18n('FORM_SAVE') : toI18n('FORM_ADD')}
                     </ButtonSubmit>
                   </ActionFormRegister>
@@ -316,12 +316,13 @@ export class AdditionalForm extends Component {
   renderRegisterBtn = () => (
     <ActionFormRegister>
       <ButtonCancel
+        type="button"
         onClick={this.handleCancel}
       >
         <i className="mia-chevron-left" />
         <span>{toI18n('FORM_BACK')}</span>
       </ButtonCancel>
-      <ButtonSubmit>
+      <ButtonSubmit type="submit">
         <span>{toI18n('FORM_NEXT')}</span>
         <i className="mia-chevron-right" />
       </ButtonSubmit>

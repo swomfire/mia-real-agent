@@ -165,7 +165,7 @@ export class EducationForm extends Component {
                     >
                       {toI18n('FORM_CANCEL')}
                     </ButtonCancel>
-                    <ButtonSubmit>
+                    <ButtonSubmit type="submit">
                       {editIndex >= 0 ? toI18n('FORM_SAVE') : toI18n('FORM_ADD')}
                     </ButtonSubmit>
                   </ActionFormRegister>
@@ -230,12 +230,13 @@ export class EducationForm extends Component {
   renderRegisterBtn = () => (
     <ActionFormRegister>
       <ButtonCancel
+        type="button"
         onClick={this.handleCancel}
       >
         <i className="mia-chevron-left" />
         {toI18n('FORM_BACK')}
       </ButtonCancel>
-      <ButtonSubmit>
+      <ButtonSubmit type="submit">
         {toI18n('FORM_NEXT')}
         <i className="mia-chevron-right" />
       </ButtonSubmit>

@@ -70,12 +70,13 @@ export class BasicInfoForm extends Component {
   renderRegisterBtn = () => (
     <ActionFormRegister>
       <ButtonCancel
+        type="button"
         onClick={this.handleCancel}
       >
         <i className="mia-chevron-left" />
         <span>{toI18n('FORM_BACK')}</span>
       </ButtonCancel>
-      <ButtonSubmit>
+      <ButtonSubmit type="submit">
         <span>{toI18n('FORM_NEXT')}</span>
         <i className="mia-chevron-right" />
       </ButtonSubmit>

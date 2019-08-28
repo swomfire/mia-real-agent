@@ -301,7 +301,7 @@ const en = {
     PROFILE_DETAIL_COMPANY: 'Company',
     PROFILE_DETAIL_COMPANY_SIZE: 'Company Size',
     PROFILE_DETAIL_COMPANY_FIELDS: 'Company fields',
-    // Profile Individial Form
+    // Profile In5dividial Form
     PROFILE_INDIVIDIAL_FORM_FIRST_NAME: 'First name',
     PROFILE_INDIVIDIAL_FORM_LAST_NAME: 'Last name',
     PROFILE_INDIVIDIAL_FORM_DOB: 'Date of birth',

@@ -11,6 +11,7 @@ const userSchema = new Schema(
     role: { type: String, default: ROLES.INDIVIDUAL },
     categories: { type: [String] },
     token: String, // for login
+    forgotToken: String, // for reset password
     profile: {
       // profile for individual customer
       firstName: { type: String, trim: true },

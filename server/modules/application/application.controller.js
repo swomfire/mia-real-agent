@@ -7,6 +7,7 @@ import ApplicationService from './application.service';
 import UserService from '../user/user.service';
 // import { randomPassword } from '../../utils/utils';
 import { hashFunc } from '../../utils/bcrypt';
+import { sendEmailApplicationApproved } from '../../mail-sparkpost/sparkpost';
 import { APPLICATION_STATUS } from '../../../common/enums';
 
 class ApplicationController extends BaseController {
@@ -43,6 +44,10 @@ class ApplicationController extends BaseController {
       const user = await UserService.insert(newUserPayload);
       UserService.provideAccessToken(user);
       const result = await this.updateStatus(application, APPLICATION_STATUS.APPROVED);
+
+      // Send Email included password
+      sendEmailApplicationApproved(application, passwordString);
+
       return res.status(httpStatus.OK).send(result);
     } catch (error) {
       return this.handleError(res, error);

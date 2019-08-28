@@ -60,7 +60,7 @@ export class ApplicationForm extends Component {
       }
       return;
     }
-    if (step !== nextStep) {
+    if (step !== nextStep && step !== 5) {
       if (!waitValidate) {
         this.setState({
           step: nextStep,
@@ -69,6 +69,7 @@ export class ApplicationForm extends Component {
       }
       if (prevProps.isValidating && !isValidating && !validateError) {
         this.setState({
+          waitValidate: false,
           step: nextStep,
         });
       }

@@ -48,6 +48,17 @@ export const sendEmailTrascript = (user, ticket, messages) => {
   }, [{ address: user.email }]);
 };
 
+export const sendEmailApplicationApproved = (application, password) => {
+  const content = createContentFromTemplate(
+    emailTemplates.applicationAccepted, { application, password }
+  );
+  return send({
+    from: SPARK_POST_DOMAIN,
+    subject: content.subject,
+    html: content.html,
+  }, [{ address: application.email }]);
+};
+
 export const buildContent = (subject, text) => {
   if (!SPARK_POST_DOMAIN) {
     Logger.error('SPARK_POST_DOMAIN not found');

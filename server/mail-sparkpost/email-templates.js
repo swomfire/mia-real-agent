@@ -14,6 +14,7 @@ const userPasswordCreated = getTemplate('user-password-created');
 const userProfileUpdated = getTemplate('user-profile-updated');
 const userRegisterSucceed = getTemplate('user-register-succeed');
 const transcriptConversation = getTemplate('transcript-conversation');
+const applicationAccepted = getTemplate('application-accepted');
 
 
 const applyDefaultTemplate = content => defaultTemplate.replace('[MAIN_CONTENT]', content);
@@ -22,6 +23,10 @@ export default {
   transcriptConverstion: {
     subject: 'Mia Consults - Conversation history',
     html: applyDefaultTemplate(transcriptConversation),
+  },
+  applicationAccepted: {
+    subject: 'Mia Consults - Application Accepted',
+    html: applyDefaultTemplate(applicationAccepted),
   },
   contactMessagePostedMail: {
     subject: 'MIA-Consult - Question box',

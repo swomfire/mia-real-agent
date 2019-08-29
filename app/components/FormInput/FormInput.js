@@ -22,11 +22,8 @@ export const INPUT_TYPES = {
   TEXT_AREA: 'textarea',
   SWITCH: 'switch',
   RATE: 'rate',
-<<<<<<< HEAD
   RICH_EDITOR: 'rich_editor',
-=======
   UPLOAD: 'upload',
->>>>>>> Add upload for FormInput
 };
 
 const FORM_LAYOUT = {

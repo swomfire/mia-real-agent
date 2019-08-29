@@ -16,10 +16,10 @@ import { toI18n } from '../../utils/func-utils';
 const ticketColumns = [
   {
     type: COLUMN_TYPE.TEXT,
-    dataKey: 'ticketId',
+    dataKey: '_id',
     columnAttr: {
       value: toI18n('ADMIN_TICKET_TABLE_TICKET_ID'),
-      percent: 10,
+      percent: 15,
     },
   },
   {
@@ -34,7 +34,7 @@ const ticketColumns = [
     dataKey: 'category',
     columnAttr: {
       value: toI18n('ADMIN_TICKET_TABLE_CATEGORY'),
-      percent: 10,
+      percent: 15,
     },
   },
   {

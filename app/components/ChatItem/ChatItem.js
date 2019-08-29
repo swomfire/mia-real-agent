@@ -12,7 +12,18 @@ import {
 import { ROLES } from '../../../common/enums';
 import { toI18n } from '../../utils/func-utils';
 
-const renderTime = time => moment(time).format('hh:mm');
+const renderTime = (time) => {
+  if (moment().diff(time, 'days') === 0) {
+    return moment(time).format('hh:mm');
+  }
+  if (moment().diff(time, 'weeks') === 0) {
+    return moment(time).format('dddd hh:mm');
+  }
+  if (moment().diff(time, 'months') === 0) {
+    return moment(time).format('MMMM D hh:mm');
+  }
+  return moment(time).format('MMMM D hh:mm YYYY');
+};
 
 
 export const userChat = (msgId, contents, isPending = false) => (

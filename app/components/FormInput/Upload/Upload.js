@@ -1,16 +1,16 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { getIn } from 'formik';
-import { Upload, Button, Icon } from 'antd';
+import { Upload, Button, Icon, message } from 'antd';
 import _ from 'lodash';
 import { Translation } from 'react-i18next';
 import { InputWrapperStyled } from '../styles';
 import { UploadError } from './styles';
+import { toI18n } from '../../../utils/func-utils';
 
 const beforeUpload = () => false;
 
 const uploadProps = {
-  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
   listType: 'picture',
   accept: 'image/*,.pdf',
   beforeUpload,
@@ -41,9 +41,19 @@ const UploadInput = ({
     if (_.isFunction(onChange)) {
       onChange(e);
     }
-    const { fileList } = e;
-    form.setFieldValue(field.name, fileList);
+    const { file, fileList } = e;
+    const { size, type } = file;
+    if (size > 10000000) {
+      message.error(toI18n('FORM_INPUT_UPLOAD_MAX_SIZE'));
+      return;
+    }
+    if (type.includes('pdf') || type.includes('image')) {
+      form.setFieldValue(field.name, fileList);
+      return;
+    }
+    message.error(toI18n('FORM_INPUT_UPLOAD_FILE_TYPE'));
   };
+  const fileList = form.values[field.name];
   return (
     <InputWrapperStyled
       label={label}
@@ -54,7 +64,12 @@ const UploadInput = ({
         {
           t => (
             <div>
-              <Upload {...uploadProps} {...rest} onChange={handleChange}>
+              <Upload
+                {...uploadProps}
+                {...rest}
+                onChange={handleChange}
+                fileList={fileList}
+              >
                 <Button>
                   <Icon type="upload" />
                   {t('FORM_INPUT_UPLOAD_PLACEHOLDER')}

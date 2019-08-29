@@ -152,11 +152,6 @@ export class EducationForm extends Component {
                   />
                 </Col>
               </Row>
-              {/* <Row gutter={32}>
-                <Col sm={24} xs={24}>
-                  <DropUpload />
-                </Col>
-              </Row> */}
               <Row gutter={32}>
                 <Col sm={24} xs={24}>
                   <ActionFormRegister>

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { handleError } from './utils';
 
 export const uploadFile = file => axios
-  .post('http://localhost:3000/api/users/upload', {
+  .post('/users/upload', {
     filename: file.name,
     filetype: file.type,
   })

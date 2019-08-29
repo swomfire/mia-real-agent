@@ -24,6 +24,8 @@ const en = {
     FORM_PASSWORD_MUST_MATCH: 'Passwords must match',
     // Form input
     FORM_INPUT_UPLOAD_PLACEHOLDER: 'Upload',
+    FORM_INPUT_UPLOAD_MAX_SIZE: 'Upload file cannot exceed 10MB',
+    FORM_INPUT_UPLOAD_FILE_TYPE: 'File type not supported',
     // Dashboard
     DB_REQUEST: 'Requests',
     DB_TICKET: 'Ticket',

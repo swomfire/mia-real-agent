@@ -1,8 +1,7 @@
-import { Divider } from 'antd';
 import { DefaultButton } from 'components/Generals/General.styled';
-import styled, { css, keyframes } from 'styled-components';
+import styled, { css } from 'styled-components';
 import FormInput from '../FormInput/FormInput';
-import { COLOR_BY_STATUS, COLOR_BY_ACTION } from '../../../common/enums';
+import { COLOR_BY_STATUS } from '../../../common/enums';
 
 export const MessageBoxWrapper = styled.div`
   display: flex;
@@ -89,32 +88,6 @@ export const ConversationTitle = styled.div`
   span {
     font-weight: 600;
   }
-`;
-
-export const ConversationTitleInfo = styled.div`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  span{
-    font-size: 1.3em;
-    margin: 0 .5em;
-    font-weight: 600;
-  }
-`;
-export const MessageText = styled.div`
-  width: fit-content;
-  max-width: 60%;
-  display: flex;
-  flex-direction: column;
-  p{
-    margin-left: 10px;  
-  }
-`;
-
-export const UserMessage = styled.p`
-  /* margin-right: 10px; */
-  background-color: ${({ pending }) => pending && '#f78b5f !important'};
 `;
 
 export const MessageInputWrapper = styled.div`
@@ -235,30 +208,6 @@ export const TicketStatus = styled.div`
   background: ${({ status }) => [COLOR_BY_STATUS[status]]};
 `;
 
-export const TicketActionStatus = styled(TicketStatus)`
-  margin: 0 5px;
-`;
-
-export const TicketActionStatusTitle = styled.span`
-  font-weight: 600;
-  font-style: italic;
-  color: ${({ status }) => [COLOR_BY_STATUS[status]]};
-`;
-
-export const TicketRatingScore = styled.span`
-  font-weight: 600;
-  font-style: italic;
-  color: #ffd400;
-  font-size: 1.5em;
-  margin: 0 5px;
-`;
-
-export const UserAction = styled.span`
-  font-weight: 600;
-  font-style: italic;
-  color: ${({ action }) => [COLOR_BY_ACTION[action]]};
-`;
-
 export const MessageBoxSystemNotification = styled.span`
   display: flex;
   align-items: center;
@@ -269,42 +218,6 @@ export const MessageBoxSystemNotification = styled.span`
   color: #828282;
   opacity: .7;
   font-style: italic;
-`;
-export const LineDivider = styled.span`
-    display: flex;
-    align-items: center;
-    flex: 0 0 20%;
-    background-color: #b9b9b9;
-    justify-content: center;
-    font-size: 0.75em;
-    color: #b9b9b9;
-    margin: 0 2em;
-    height: 1px;
-    opacity: .7;
-`;
-
-const loading = keyframes`
-  0% {
-    color: #828282;
-  }
-
-  50% {
-    color: #ffff;
-  }
-`;
-
-export const MessageBoxItemIsTyping = styled(MessageBoxItem)`
-  img{
-    margin-bottom: 20px;
-  }
-`;
-
-export const IsTypingWrapper = styled.div`
-  animation: ${loading} 2s linear infinite;
-  margin-left: 5px;
-  ::before{
-    content: 'Typing...'
-  }
 `;
 
 export const FindAgentWrapper = styled.div`
@@ -331,16 +244,4 @@ export const FindAgentButton = styled(DefaultButton)`
   :hover{
     box-shadow: none;
   }
-`;
-
-export const ProfileImageStyled = styled.img`
-  height: 35px;
-  cursor: pointer;
-  border-radius: 100%;
-`;
-
-export const CommentWrapper = styled.div`
-  text-align: center;
-  color: #7a7a7a;
-  font-weight: 600;
 `;

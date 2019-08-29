@@ -8,9 +8,11 @@ import { ItemDetailInfoWrapper } from 'components/Generals/ItemDetail.styled';
 import ErrorContent from 'components/ErrorContent';
 import TicketDetailInfoContent from './TicketDetailInfoContent';
 import TicketDetailInfoHeader from './TicketDetailInfoHeader';
+import { conversationTranscript } from './TicketDetailConversationLog';
+import { ConversationLogWrapper } from './styles';
 
 const scrollStyle = {
-  height: 'calc(100vh - 90px)',
+  height: 'calc(100vh - 120px)',
   width: '100%',
 };
 
@@ -22,17 +24,27 @@ class TicketDetailInfo extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { ticketId, fetchTicketSingle } = this.props;
-    const { ticketId: prevticketId } = prevProps;
+    const {
+      ticketId, ticketDetail,
+      fetchTicketSingle, fetchConversationLog,
+    } = this.props;
+    const { ticketId: prevticketId, ticketDetail: prevTicketDetail } = prevProps;
 
     if (prevticketId !== ticketId) {
       fetchTicketSingle(ticketId);
+      const { conversationId } = ticketDetail || {};
+      fetchConversationLog(conversationId);
+      return;
+    }
+    const { conversationId } = ticketDetail || {};
+    const { conversationId: prevConversationId } = prevTicketDetail || {};
+    if (conversationId !== prevConversationId) {
+      fetchConversationLog(conversationId);
     }
   }
 
   render() {
-    const { ticketDetail } = this.props;
-
+    const { ticketDetail, conversationLog } = this.props;
     if (_isEmpty(ticketDetail) || ticketDetail.isLoading) {
       return (
         <ItemDetailInfoWrapper>
@@ -56,6 +68,10 @@ class TicketDetailInfo extends PureComponent {
         <TicketDetailInfoHeader title={title} status={status} />
         <Scrollbar autoHide style={scrollStyle}>
           <TicketDetailInfoContent ticketDetail={ticketDetail} />
+          <ConversationLogWrapper>
+            <p>Conversation log:</p>
+            {conversationTranscript(conversationLog)}
+          </ConversationLogWrapper>
         </Scrollbar>
       </ItemDetailInfoWrapper>
     );
@@ -65,7 +81,9 @@ class TicketDetailInfo extends PureComponent {
 TicketDetailInfo.propTypes = {
   ticketId: PropTypes.string.isRequired,
   fetchTicketSingle: PropTypes.func.isRequired,
+  fetchConversationLog: PropTypes.func.isRequired,
   ticketDetail: PropTypes.object.isRequired,
+  conversationLog: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 export default TicketDetailInfo;

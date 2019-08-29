@@ -31,12 +31,13 @@ import LoadingSpin from '../Loading';
 import ConversationDetail from '../ConversationDetail/ConversationDetail';
 import { REPLY_TYPE, CLOSED_TICKET_STATUSES, TICKET_STATUS } from '../../../common/enums';
 import FormInput from '../FormInput/FormInput';
-import { combineChat } from './utils';
-import { shouldShowSystemMessage, isAgent, toI18n } from '../../utils/func-utils';
+import {
+  shouldShowSystemMessage, isAgent, toI18n, combineChat,
+} from '../../utils/func-utils';
 import { ProfileImageStyled } from '../TopNavBar/TopNavBar.styled';
 import {
   userChat, otherChat, otherTyping, botChat, ticketStatus, userAction, ticketRating,
-} from './ChatItem';
+} from '../ChatItem';
 import RichEditor from '../FormInput/RichEditor/RichEditor';
 
 const scrollStyle = {
@@ -66,7 +67,6 @@ export default class MessageBox extends Component {
     sendingMessageErrors: PropTypes.objectOf(PropTypes.any),
     otherUserTyping: PropTypes.object,
     fetchCannedResponseForUser: PropTypes.func.isRequired,
-    t: PropTypes.func,
     findAgentRequest: PropTypes.func.isRequired,
     sendReplyMessage: PropTypes.func.isRequired,
     setCurrentTicket: PropTypes.func.isRequired,
@@ -168,7 +168,7 @@ export default class MessageBox extends Component {
 
   renderMessageContent = () => {
     const {
-      replyMessages, userId, userRole, currentTicket,
+      replyMessages, userId, userRole,
     } = this.props;
     const refinedMessages = combineChat(replyMessages);
     return [refinedMessages.map(({
@@ -178,11 +178,11 @@ export default class MessageBox extends Component {
         case REPLY_TYPE.TICKET_STATUS:
           return ticketStatus(msgId, params, sentAt);
         case REPLY_TYPE.USER_ACTION:
-          return userAction(msgId, currentTicket, from, params, sentAt);
+          return userAction(msgId, from, params, sentAt);
         case REPLY_TYPE.BOT_RESPONSE:
           return botChat(msgId, contents);
         case REPLY_TYPE.RATING_ACTION:
-          return ticketRating(msgId, currentTicket, params, sentAt);
+          return ticketRating(msgId, from, params, sentAt);
         default:
           if (from === userId) {
             return userChat(msgId, contents, false, isAgent(userRole));

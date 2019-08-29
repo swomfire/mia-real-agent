@@ -13,7 +13,9 @@ class ReplyService extends BaseService {
   getByConversation(conversationId) {
     const replies = this.collection.find({
       conversationId,
-    }).exec();
+    })
+      .populate({ path: 'from', select: ['_id', 'profile', 'role', 'username'] })
+      .exec();
     return replies;
   }
 

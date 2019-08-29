@@ -20,8 +20,8 @@ class TicketService extends BaseService {
 
   getByCondition(condition) {
     return this.collection.findOne(condition)
-      .populate({ path: 'owner', select: ['_id', 'profile', 'role'] }) // only get _id and username of owner
-      .populate({ path: 'assignee', select: ['_id', 'profile', 'rating'] });
+      .populate({ path: 'owner', select: ['_id', 'profile', 'role', 'username'] }) // only get _id and username of owner
+      .populate({ path: 'assignee', select: ['_id', 'profile', 'rating', 'username'] });
   }
 
   getAllByConditionWithPopulationInfo(condition, population) {

@@ -1,11 +1,11 @@
 import httpStatus from 'http-status';
 // lodash
 import _get from 'lodash/get';
-
+import APIError, { ERROR_MESSAGE } from '../../../utils/APIError';
 import BaseController from '../../base/base.controller';
 import TicketService from '../../ticket/ticket.service';
 import { TICKET_STATUS, CLOSED_TICKET_STATUSES } from '../../../../common/enums';
-
+const { CONTENT_NOT_FOUND } = ERROR_MESSAGE;
 const emptyObjString = '{}';
 
 class AdminTicketController extends BaseController {
@@ -28,6 +28,34 @@ class AdminTicketController extends BaseController {
       const query = JSON.parse(_get(params, 'query', emptyObjString));
       const result = await this.service.getAllForAdmin(query, option);
       return res.status(httpStatus.OK).send(result);
+    } catch (error) {
+      return this.handleError(res, error);
+    }
+  }
+
+  async load(req, res, next, id) {
+    try {
+      const { user } = req;
+      if (!user) {
+        throw new APIError(ERROR_MESSAGE.UNAUTHORIZED, httpStatus.UNAUTHORIZED);
+      }
+      const model = await this.service.getByCondition({ _id: id });
+
+      if (model == null) {
+        throw new APIError(CONTENT_NOT_FOUND, httpStatus.NOT_FOUND);
+      }
+      req.model = model;
+      return next();
+    } catch (error) {
+      return this.handleError(res, error);
+    }
+  }
+
+  async get(req, res) {
+    try {
+      const { model } = req;
+
+      return res.status(httpStatus.OK).send(model);
     } catch (error) {
       return this.handleError(res, error);
     }

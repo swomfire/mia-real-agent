@@ -437,9 +437,9 @@ function ticketReducer(state = initialState, action) {
     case TICKET_FETCH_SINGLE_SUCCESS: {
       const { payload } = action;
       const { _id } = payload;
-      const tmpTicket = state.get('tickets').get(_id).toJS();
+      const tmpTicket = state.get('tickets').get(_id) || fromJS({});
       return state
-        .setIn(['tickets', _id], fromJS({ ...tmpTicket, ...payload }));
+        .setIn(['tickets', _id], fromJS({ ...tmpTicket.toJS(), ...payload }));
     }
 
     case TICKET_FETCH_SINGLE_FAIL: {

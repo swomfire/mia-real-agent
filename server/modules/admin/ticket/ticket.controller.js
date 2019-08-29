@@ -26,7 +26,7 @@ class AdminTicketController extends BaseController {
         option.sort = sortObj;
       }
       const query = JSON.parse(_get(params, 'query', emptyObjString));
-      const result = await this.service.getAllWithUserData(query, option);
+      const result = await this.service.getAllForAdmin(query, option);
       return res.status(httpStatus.OK).send(result);
     } catch (error) {
       return this.handleError(res, error);

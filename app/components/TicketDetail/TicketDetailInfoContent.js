@@ -37,7 +37,7 @@ class TicketDetailInfoContent extends PureComponent {
         {this.renderOverviewInfo(toI18n('ADMIN_TICKET_DETAIL_DESCRIPTION'), description)}
         {this.renderOverviewInfo(toI18n('ADMIN_TICKET_DETAIL_CREATED_AT'), moment(createdAt).format(DATE_TIME_FORMAT.DATE))}
         {this.renderOverviewInfo(toI18n('ADMIN_TICKET_DETAIL_OWNER'), owner.username)}
-        {assignee && this.renderOverviewInfo('ADMIN_TICKET_DETAIL_ASSIGNEE', assignee.username)}
+        {assignee && this.renderOverviewInfo(toI18n('ADMIN_TICKET_DETAIL_ASSIGNEE'), assignee.username)}
       </OverviewLeftSectionWrapper>
     );
   };

@@ -7,6 +7,7 @@ import { getHistoryTicketUpdate } from '../../utils/utils';
 import { sendEmailTrascript } from '../../mail-sparkpost/sparkpost';
 import UserService from '../user/user.service';
 import { conversationTranscript } from '../../mail-sparkpost/dynamicTemplate';
+import { ticketAdminAggregration } from './ticket.utils';
 
 class TicketService extends BaseService {
   constructor(collection) {
@@ -42,6 +43,27 @@ class TicketService extends BaseService {
     return true;
   }
 
+  async getAllForAdmin(condition, options) {
+    const { skip = 0, limit = 10, sort = { createdAt: -1 } } = options;
+    const notDeletedCondition = {
+      deletedAt: null,
+    };
+    const notArchivedCondition = {
+      archivedAt: null,
+    };
+    const queryCondition = {
+      $and: [condition, notDeletedCondition, notArchivedCondition],
+    };
+    console.log(typeof skip);
+    const resultPromise = this.collection
+      .aggregate(ticketAdminAggregration(queryCondition, Number(limit), Number(skip), sort))
+      .exec();
+    return {
+      result: await resultPromise,
+      totalRecord: await this.countDocument(queryCondition),
+    };
+  }
+
   async getAllWithUserData(condition, options) {
     const { skip = 0, limit = 10, sort = { createdAt: -1 } } = options;
     const notDeletedCondition = {
@@ -53,11 +75,10 @@ class TicketService extends BaseService {
     const queryCondition = {
       $and: [condition, notDeletedCondition, notArchivedCondition],
     };
-
     const resultPromise = this.collection
       .find(queryCondition, null, options)
-      .populate({ path: 'owner', select: ['_id', 'profile', 'role'] }) // only get _id and username of owner
-      .populate({ path: 'assignee', select: ['_id', 'profile', 'rating'] }) // only get _id and username of assignee
+      .populate({ path: 'owner', select: ['_id', 'profile', 'role', 'username'] }) // only get _id and username of owner
+      .populate({ path: 'assignee', select: ['_id', 'profile', 'rating', 'username'] }) // only get _id and username of assignee
       .sort(sort)
       .skip(+skip)
       .limit(+limit || 10)

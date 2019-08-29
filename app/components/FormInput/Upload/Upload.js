@@ -7,6 +7,7 @@ import { Translation } from 'react-i18next';
 import { InputWrapperStyled } from '../styles';
 import { UploadError } from './styles';
 import { toI18n } from '../../../utils/func-utils';
+import { MAX_UPLOAD_SIZE } from '../../../../common/enums';
 
 const beforeUpload = () => false;
 
@@ -43,7 +44,7 @@ const UploadInput = ({
     }
     const { file, fileList } = e;
     const { size, type } = file;
-    if (size > 10000000) {
+    if (size > MAX_UPLOAD_SIZE) {
       message.error(toI18n('FORM_INPUT_UPLOAD_MAX_SIZE'));
       return;
     }

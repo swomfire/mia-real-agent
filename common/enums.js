@@ -607,3 +607,4 @@ export const NEW_BUTTONS_TYPE = {
   LINK: 'LINK',
   BUTTON: 'BUTTON',
 };
+export const MAX_UPLOAD_SIZE = 10000000;

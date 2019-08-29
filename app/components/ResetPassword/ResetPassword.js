@@ -8,7 +8,7 @@ import { Form, Row, Col } from 'antd';
 import FormInput from '../FormInput/FormInput';
 import {
   ResetBtn, ResetSpinner, ResetWrapper,
-  ResetItem, ResetLogo, ResetErrorMessage, ResetFooterText, ResetFooterLink, ResetFooter,
+  ResetItem, ResetLogo, ResetErrorMessage, ResetFooterText, ResetFooterLink, ResetFooter, SubmitSuccess,
 } from './styles';
 import { toI18n } from '../../utils/func-utils';
 
@@ -31,7 +31,7 @@ export class ResetPassword extends Component {
   static propTypes = {
     onSubmit: func.isRequired,
     isLoading: bool.isRequired,
-    errorMessage: string.isRequired,
+    errorMessage: string,
     match: shape().isRequired,
   }
 
@@ -68,10 +68,31 @@ export class ResetPassword extends Component {
   render() {
     const { submitted } = this.state;
     const { errorMessage } = this.props;
-    console.log(this.props);
     if (!errorMessage && submitted) {
       return (
-        <div>cc</div>
+        <ResetWrapper>
+          <ResetItem>
+            <ResetLogo>
+              <img className="img" src="/assets/images/logo-small-black.png" alt="logo mia" />
+            </ResetLogo>
+            <Row gutter={32}>
+              <Col>
+                <SubmitSuccess>
+                  <i className="mia-check" />
+                  {toI18n('RESET_PASSWORD_COMPLETE')}
+                </SubmitSuccess>
+              </Col>
+            </Row>
+            <ResetFooter>
+              <ResetFooterText>
+                {toI18n('FORGOT_PASSWORD_TO_LOGIN')}
+              </ResetFooterText>
+              <ResetFooterLink to="/login">
+                {toI18n('CLICK_HERE')}
+              </ResetFooterLink>
+            </ResetFooter>
+          </ResetItem>
+        </ResetWrapper>
       );
     }
     return (

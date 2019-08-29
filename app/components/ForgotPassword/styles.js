@@ -15,7 +15,7 @@ export const ForgotWrapper = styled.div`
 `;
 
 export const ForgotItem = styled.div`
-  width: 32.250em;
+  width: 40.250em;
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
@@ -126,4 +126,20 @@ export const ForgotErrorMessage = styled.div`
   color: crimson;
   text-align: center;
   margin-bottom: 15px;
+`;
+
+export const SubmitSuccess = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  min-height: 120px;
+  color: #28a745;
+  i {
+    margin-right: 10px;
+    font-size: 18px;
+    border: 1px solid #28a745;
+    border-radius: 100%;
+    padding: 5px;
+  }
 `;

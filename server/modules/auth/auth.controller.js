@@ -269,9 +269,7 @@ class AuthController {
         const { _id } = jwt.verify(token, process.env.SECRET_KEY_JWT);
         const user = await UserService.getOneByQuery({ _id, forgotToken: token });
         if (!user) {
-          return res.status(httpStatus.NOT_FOUND).send({
-            TOKEN_NOT_MATCH,
-          });
+          return res.status(httpStatus.NOT_FOUND).send({ error: TOKEN_NOT_MATCH });
         }
         const newToken = jwt.sign({ _id }, process.env.SECRET_KEY_JWT);
         const hash = await hashFunc(newPassword);
@@ -279,9 +277,9 @@ class AuthController {
       } catch (err) {
         const { name } = err;
         if (name === 'TokenExpiredError') {
-          return res.status(httpStatus.NOT_FOUND).send(TOKEN_EXPIRED);
+          return res.status(httpStatus.NOT_FOUND).send({ error: TOKEN_EXPIRED });
         }
-        return res.status(httpStatus.NOT_FOUND).send(name);
+        return res.status(httpStatus.NOT_FOUND).send({ error: name });
       }
       return res.status(httpStatus.OK).send();
     } catch (error) {

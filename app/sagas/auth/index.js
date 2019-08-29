@@ -21,6 +21,7 @@ import {
   AUTH_FORGOT_PASSWORD,
   AUTH_RESET_PASSWORD,
 } from '../../reducers/auth';
+import { notification } from 'antd';
 
 // login handler
 function* login({ payload }) {
@@ -143,12 +144,13 @@ export function* checkToken() {
 
 function* sendForgotPassword({ payload }) {
   const { email } = payload;
-  const { error } = yield call(
+  const { error, data } = yield call(
     AuthApi.forgotPassword,
     email,
   );
   if (error) {
-    const message = _get(error, 'response.data.message', DEFAULT_ERROR_MESSAGE); // this line of code needs to refactor
+    const message = _get(data, 'error', DEFAULT_ERROR_MESSAGE); // this line of code needs to refactor
+    notification.error({ message });
     yield put(authActions.forgotPasswordFailAction(message));
     return;
   }
@@ -159,12 +161,13 @@ function* sendForgotPassword({ payload }) {
 
 function* sendResetPassword({ payload }) {
   const { newPassword, token } = payload;
-  const { error } = yield call(
+  const { error, data } = yield call(
     AuthApi.resetPassword,
     newPassword, token,
   );
   if (error) {
-    const message = _get(error, 'response.data.message', DEFAULT_ERROR_MESSAGE); // this line of code needs to refactor
+    const message = _get(data, 'error', DEFAULT_ERROR_MESSAGE); // this line of code needs to refactor
+    notification.error({ message });
     yield put(authActions.resetPasswordFailAction(message));
     return;
   }

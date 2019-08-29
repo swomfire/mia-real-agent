@@ -333,11 +333,13 @@ const en = {
     CANNED_RESPONSE_FORM_CREATE_BTN: 'Create',
     // Forgot password form
     FORGOT_PASSWORD_EMAIL: 'Please input your account \'s email',
+    FORGOT_PASSWORD_COMPLETE: 'We had send an reset email to your email address',
     FORGOT_PASSWORD_TO_LOGIN: 'Back to login',
     // Reset password form
     RESET_PASSWORD_NEW_PASSWORD: 'Please input your account \'s new Password',
     RESET_PASSWORD_CONFIRM_PASSWORD: 'Confirm Password',
     RESET_PASSWORD_CONFIRM_PASSWORD_ERROR: 'Confirm Password not match',
+    RESET_PASSWORD_COMPLETE: 'Your password had been reset',
   },
 };
 

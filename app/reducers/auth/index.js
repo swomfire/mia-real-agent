@@ -47,7 +47,7 @@ const initialState = fromJS({
   verifyError: null,
   verifyingEmail: null,
 
-  isForgeting: false,
+  isForgetting: false,
   forgotError: null,
 
   isResetting: false,
@@ -69,7 +69,7 @@ export const forgotPasswordSuccessAction = () => ({
 
 export const forgotPasswordFailAction = errorMessage => ({
   type: AUTH_FORGOT_PASSWORD_FAIL,
-  payload: errorMessage,
+  errorMessage,
 });
 
 
@@ -88,7 +88,7 @@ export const resetPasswordSuccessAction = () => ({
 
 export const resetPasswordFailAction = errorMessage => ({
   type: AUTH_RESET_PASSWORD_FAIL,
-  payload: errorMessage,
+  errorMessage,
 });
 
 
@@ -294,6 +294,11 @@ export const getIsSendingEmail = ({ auth }) => auth.get('isVerifing', false);
 export const getVerifyEmailError = ({ auth }) => auth.get('verifyError');
 export const getVerifyingEmail = ({ auth }) => auth.get('verifyingEmail');
 
+export const getIsForgetting = ({ auth }) => auth.get('isForgetting');
+export const getForgotError = ({ auth }) => auth.get('forgotError');
+export const getIsResetting = ({ auth }) => auth.get('isResetting');
+export const getResetError = ({ auth }) => auth.get('resetError');
+
 // reducer
 function authReducer(state = initialState, action) {
   switch (action.type) {
@@ -320,6 +325,32 @@ function authReducer(state = initialState, action) {
 
     case AUTH_LOGOUT:
       return initialState;
+
+    // forgot actions
+    case AUTH_FORGOT_PASSWORD:
+      return state.set('isForgetting', true);
+
+    case AUTH_FORGOT_PASSWORD_SUCCESS:
+      return state
+        .set('isForgetting', false)
+        .set('forgotError', '');
+
+    case AUTH_FORGOT_PASSWORD_FAIL:
+      return state.set('isForgetting', false)
+        .set('forgotError', action.errorMessage);
+
+    // reset actions
+    case AUTH_RESET_PASSWORD:
+      return state.set('isResetting', true);
+
+    case AUTH_RESET_PASSWORD_SUCCESS:
+      return state
+        .set('isResetting', false)
+        .set('resetError', '');
+
+    case AUTH_RESET_PASSWORD_FAIL:
+      return state.set('isResetting', false)
+        .set('resetError', action.errorMessage);
 
     // register actions
     case AUTH_REGISTER:

@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import ResetPassword from '../../components/ResetPassword';
-import { resetPasswordAction } from '../../reducers/auth';
+import { resetPasswordAction, getIsResetting, getResetError } from '../../reducers/auth';
 
 const mapStateToProps = state => ({
-
+  isLoading: getIsResetting(state),
+  errorMessage: getResetError(state),
 });
 
 const mapDispatchToProps = {

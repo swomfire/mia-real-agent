@@ -3,7 +3,7 @@ export const handleError = (error) => {
   if (response) {
     const { data, status } = response;
     // Request made and server responded
-    return { error: `[${status}] ${data}` };
+    return { error: `[${status}] ${data}`, data };
   }
   if (request) {
     // The request was made but no response was received

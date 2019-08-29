@@ -6,7 +6,7 @@ import { Form, Row, Col } from 'antd';
 import FormInput from '../FormInput/FormInput';
 import {
   ForgotBtn, ForgotSpinner, ForgotWrapper,
-  ForgotItem, ForgotLogo, ForgotErrorMessage, ForgotFooterText, ForgotFooterLink, ForgotFooter,
+  ForgotItem, ForgotLogo, ForgotErrorMessage, ForgotFooterText, ForgotFooterLink, ForgotFooter, SubmitSuccess,
 } from './styles';
 import { toI18n } from '../../utils/func-utils';
 
@@ -27,7 +27,7 @@ export class ForgotPassword extends Component {
   static propTypes = {
     onSubmit: func.isRequired,
     isLoading: bool.isRequired,
-    errorMessage: string.isRequired,
+    errorMessage: string,
   }
 
   handleForgotPassword = (values) => {
@@ -64,7 +64,29 @@ export class ForgotPassword extends Component {
     const { errorMessage } = this.props;
     if (!errorMessage && submitted) {
       return (
-        <div>cc</div>
+        <ForgotWrapper>
+          <ForgotItem>
+            <ForgotLogo>
+              <img className="img" src="/assets/images/logo-small-black.png" alt="logo mia" />
+            </ForgotLogo>
+            <Row gutter={32}>
+              <Col>
+                <SubmitSuccess>
+                  <i className="mia-check" />
+                  {toI18n('FORGOT_PASSWORD_COMPLETE')}
+                </SubmitSuccess>
+              </Col>
+            </Row>
+            <ForgotFooter>
+              <ForgotFooterText>
+                {toI18n('FORGOT_PASSWORD_TO_LOGIN')}
+              </ForgotFooterText>
+              <ForgotFooterLink to="/login">
+                {toI18n('CLICK_HERE')}
+              </ForgotFooterLink>
+            </ForgotFooter>
+          </ForgotItem>
+        </ForgotWrapper>
       );
     }
     return (

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import _isEmpty from 'lodash/isEmpty';
 import Scrollbar from 'components/Scrollbar';
 import SpinnerLoading from 'components/PageLoading/SpinnerLoading';
-import { ItemDetailInfoWrapper } from 'components/Generals/ItemDetail.styled';
+import { AdminDetailsContainer } from 'components/Generals/ItemDetail.styled';
 import ErrorContent from 'components/ErrorContent';
 import TicketDetailInfoHeader from './TicketWarningInfoHeader';
 import { conversationTranscript } from './TicketWarningConversationLog';
@@ -15,7 +15,7 @@ const conversationScrollStyle = {
   width: '100%',
 };
 
-class TicketDetailInfo extends PureComponent {
+class TicketWarningInfo extends PureComponent {
   componentDidMount() {
     const { ticketId, fetchTicketSingle } = this.props;
 
@@ -46,36 +46,36 @@ class TicketDetailInfo extends PureComponent {
     const { ticketDetail, conversationLog } = this.props;
     if (_isEmpty(ticketDetail) || ticketDetail.isLoading) {
       return (
-        <ItemDetailInfoWrapper>
+        <AdminDetailsContainer>
           <SpinnerLoading />
-        </ItemDetailInfoWrapper>
+        </AdminDetailsContainer>
       );
     }
 
     if (ticketDetail.error) {
       return (
-        <ItemDetailInfoWrapper>
+        <AdminDetailsContainer>
           <ErrorContent error={ticketDetail.error} />
-        </ItemDetailInfoWrapper>
+        </AdminDetailsContainer>
       );
     }
 
     const { title, status } = ticketDetail;
 
     return (
-      <ItemDetailInfoWrapper>
+      <AdminDetailsContainer>
         <TicketDetailInfoHeader title={title} status={status} />
         <ConversationLogWrapper>
           <Scrollbar autoHide style={conversationScrollStyle}>
             {conversationTranscript(conversationLog)}
           </Scrollbar>
         </ConversationLogWrapper>
-      </ItemDetailInfoWrapper>
+      </AdminDetailsContainer>
     );
   }
 }
 
-TicketDetailInfo.propTypes = {
+TicketWarningInfo.propTypes = {
   ticketId: PropTypes.string.isRequired,
   fetchTicketSingle: PropTypes.func.isRequired,
   fetchConversationLog: PropTypes.func.isRequired,
@@ -83,4 +83,4 @@ TicketDetailInfo.propTypes = {
   conversationLog: PropTypes.arrayOf(PropTypes.shape()),
 };
 
-export default TicketDetailInfo;
+export default TicketWarningInfo;

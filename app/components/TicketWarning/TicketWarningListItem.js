@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   ItemDetailListItem,
-  ItemDetailInput,
+  ItemsListsName,
   ItemDetailName,
   ItemStatus,
 } from 'components/Generals/ItemDetail.styled';
@@ -23,12 +23,11 @@ class UserListItem extends React.PureComponent {
 
     return (
       <ItemDetailListItem active={active} onClick={this.onClick}>
-        <ItemDetailInput>
-          <input type="checkbox" />
-        </ItemDetailInput>
         <ItemDetailName>
-          {title}
-          <ItemStatus>
+          <ItemsListsName>
+            {title}
+          </ItemsListsName>
+          <ItemStatus status={status}>
             {status}
           </ItemStatus>
         </ItemDetailName>

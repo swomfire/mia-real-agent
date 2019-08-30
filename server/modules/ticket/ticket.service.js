@@ -7,7 +7,7 @@ import { getHistoryTicketUpdate } from '../../utils/utils';
 import { sendEmailTrascript } from '../../mail-sparkpost/sparkpost';
 import UserService from '../user/user.service';
 import { conversationTranscript } from '../../mail-sparkpost/dynamicTemplate';
-import { ticketAdminAggregration } from './ticket.utils';
+import { ticketAdminAggregration, ticketWarningAdminAggregration } from './ticket.utils';
 
 class TicketService extends BaseService {
   constructor(collection) {
@@ -54,9 +54,28 @@ class TicketService extends BaseService {
     const queryCondition = {
       $and: [condition, notDeletedCondition, notArchivedCondition],
     };
-    console.log(typeof skip);
     const resultPromise = this.collection
       .aggregate(ticketAdminAggregration(queryCondition, Number(limit), Number(skip), sort))
+      .exec();
+    return {
+      result: await resultPromise,
+      totalRecord: await this.countDocument(queryCondition),
+    };
+  }
+
+  async getAllWarningForAdmin(condition, options) {
+    const { skip = 0, limit = 10, sort = { createdAt: -1 } } = options;
+    const notDeletedCondition = {
+      deletedAt: null,
+    };
+    const notArchivedCondition = {
+      archivedAt: null,
+    };
+    const queryCondition = {
+      $and: [condition, notDeletedCondition, notArchivedCondition],
+    };
+    const resultPromise = this.collection
+      .aggregate(ticketWarningAdminAggregration(queryCondition, Number(limit), Number(skip), sort))
       .exec();
     return {
       result: await resultPromise,

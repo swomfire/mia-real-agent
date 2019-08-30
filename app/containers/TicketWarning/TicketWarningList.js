@@ -1,16 +1,16 @@
 import itemDetailListHoc from 'hoc/ItemDetailHoc/ItemDetailListHoc';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { actions } from 'reducers/ticket';
+import { actions } from 'reducers/ticketWarning';
 import {
   reselectSorting,
   getIsFetching,
   reselectTickets,
-  getTicketIdFromRoute,
+  getTicketIdFromWarningRoute,
   getTotalCount,
   getSelectedPage,
   getSizePerPage,
-} from 'selectors/ticket';
+} from 'selectors/ticketWarning';
 import { SORT } from 'utils/constants';
 import TicketWarningListItem from 'components/TicketWarning/TicketWarningListItem';
 import { toI18n } from '../../utils/func-utils';
@@ -19,7 +19,7 @@ const { USER_SORT } = SORT;
 const structureSelectorFunc = createStructuredSelector({
   currentSorting: reselectSorting,
   isLoading: getIsFetching,
-  selectedId: getTicketIdFromRoute,
+  selectedId: getTicketIdFromWarningRoute,
   items: reselectTickets,
   totalCount: getTotalCount,
   selectedPage: getSelectedPage,
@@ -38,7 +38,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   handleSort: actions.ticketSorting,
-  fetchList: actions.ticketAdminGetAll,
+  fetchList: actions.ticketWarningAdminGetAll,
   changePage: actions.changePage,
 };
 

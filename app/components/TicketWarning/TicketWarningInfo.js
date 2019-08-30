@@ -8,7 +8,8 @@ import { AdminDetailsContainer } from 'components/Generals/ItemDetail.styled';
 import ErrorContent from 'components/ErrorContent';
 import TicketDetailInfoHeader from './TicketWarningInfoHeader';
 import { conversationTranscript } from './TicketWarningConversationLog';
-import { ConversationLogWrapper } from './styles';
+import { ConversationLogWrapper, ActionWrapper } from './styles';
+import { ButtonPrimary } from '../../stylesheets/Button.style';
 
 const conversationScrollStyle = {
   height: 'calc(100vh - 220px)',
@@ -66,9 +67,15 @@ class TicketWarningInfo extends PureComponent {
       <AdminDetailsContainer>
         <TicketDetailInfoHeader title={title} status={status} />
         <ConversationLogWrapper>
+          <h2>Violation Messages:</h2>
           <Scrollbar autoHide style={conversationScrollStyle}>
             {conversationTranscript(conversationLog)}
           </Scrollbar>
+          <ActionWrapper>
+            <ButtonPrimary type="primary">
+              Contact Agent
+            </ButtonPrimary>
+          </ActionWrapper>
         </ConversationLogWrapper>
       </AdminDetailsContainer>
     );

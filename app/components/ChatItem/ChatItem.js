@@ -7,7 +7,7 @@ import {
   MessageBoxSystemNotification, LineDivider,
   MessageBoxItemIsTyping, IsTypingWrapper,
   TicketActionStatus, UserAction, TicketActionStatusTitle,
-  TicketRatingScore, CommentWrapper,
+  TicketRatingScore, CommentWrapper, UserWarning,
 } from './styles';
 import { ROLES } from '../../../common/enums';
 import { toI18n } from '../../utils/func-utils';
@@ -130,6 +130,40 @@ export const userAction = (msgId, from, params, sentAt) => {
         <UserAction action={action}>{action}</UserAction>
       </Tooltip>
       <LineDivider />
+    </MessageBoxSystemNotification>
+  );
+};
+
+export const warningAction = (msgId, from, contents, sentAt) => {
+  let messageOwner = '';
+  // eslint-disable-next-line no-underscore-dangle
+  const { role, profile = {} } = from;
+  const { firstName, lastName, company = 'N/A' } = profile;
+  switch (role) {
+    case ROLES.INDIVIDUAL:
+      messageOwner = `${firstName} ${lastName}`;
+      break;
+    case ROLES.BUSINESS:
+      messageOwner = company;
+      break;
+    default:
+      messageOwner = `${firstName} ${lastName}`;
+      break;
+  }
+  return (
+    <MessageBoxSystemNotification key={`status${msgId}`}>
+      <LineDivider warning />
+      <UserWarning>
+        <Tooltip placement="top" title={renderTime(sentAt)}>
+          {
+            `${messageOwner} `
+          }
+          {toI18n('CONV_MESSAGE_BOX_USER_IS')}
+          {' '}
+          {contents.map(({ messages }) => messages)}
+        </Tooltip>
+      </UserWarning>
+      <LineDivider warning />
     </MessageBoxSystemNotification>
   );
 };

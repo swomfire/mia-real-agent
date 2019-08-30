@@ -73,7 +73,6 @@ class ReplyController extends BaseController {
       const reply = req.body;
       await this.service.insert({
         ...reply,
-        messages: 'warning',
         type: REPLY_TYPE.WARNING_ACTION,
       });
       return res.status(httpStatus.OK).send({ reply });

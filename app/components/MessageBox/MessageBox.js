@@ -171,6 +171,7 @@ export default class MessageBox extends Component {
       replyMessages, userId, userRole,
     } = this.props;
     const refinedMessages = combineChat(replyMessages);
+    console.log(refinedMessages);
     return [refinedMessages.map(({
       from, _id: msgId, contents, type, params, sentAt,
     }) => {
@@ -184,7 +185,7 @@ export default class MessageBox extends Component {
         case REPLY_TYPE.RATING_ACTION:
           return ticketRating(msgId, from, params, sentAt);
         case REPLY_TYPE.USER_NORMAL:
-          if (from === userId) {
+          if (from._id === userId) {
             return userChat(msgId, contents, false, isAgent(userRole));
           }
           return this.renderOtherUserMessageContent(msgId, contents, from);

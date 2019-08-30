@@ -109,10 +109,10 @@ export const LineDivider = styled.span`
     display: flex;
     align-items: center;
     flex: 0 0 20%;
-    background-color: #b9b9b9;
+    background-color:  ${({ warning }) => warning ? 'red' : '#b9b9b9'};
     justify-content: center;
     font-size: 0.75em;
-    color: #b9b9b9;
+    color:  ${({ warning }) => warning ? 'red' : '#b9b9b9'};
     margin: 0 2em;
     height: 1px;
     opacity: .7;
@@ -152,4 +152,10 @@ export const CommentWrapper = styled.div`
   text-align: center;
   color: #7a7a7a;
   font-weight: 600;
+`;
+
+export const UserWarning = styled.span`
+  font-weight: 600;
+  font-style: italic;
+  color: red;
 `;

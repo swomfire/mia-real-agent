@@ -10,11 +10,13 @@ import {
   REPLIES_SEND_WARNING,
   sendReplyWarningSuccess,
   sendReplyWarningFailed,
+  sendReplyWarning as sendWarningAction,
 } from '../../reducers/replies';
 import { actions as TICKET_ACTIONS } from '../../reducers/ticket';
 import { getConverationById } from '../../reducers/conversations';
 import { getUserId } from '../../reducers/auth';
 import * as ReplyMessageAPI from '../../api/reply';
+import { validateMessage } from './utils';
 
 function* sendReplyMessage({ payload }) {
   const {
@@ -25,6 +27,10 @@ function* sendReplyMessage({ payload }) {
   const { owner, members, ticketId } = yield select(getConverationById, conversationId);
   const userId = yield select(getUserId);
   const to = userId !== owner ? owner : members[0];
+  // Validate messages
+  if (validateMessage(messages)) {
+    yield put(sendWarningAction(conversationId, messages));
+  }
   // from, to, conversation, message
   try {
     const { response, error } = yield call(ReplyMessageAPI.sendReplyMessage, userId, to, conversationId, messages);
@@ -42,10 +48,11 @@ function* sendReplyMessage({ payload }) {
 function* sendReplyWarning({ payload }) {
   const {
     conversationId,
+    messages,
   } = payload;
   const userId = yield select(getUserId);
   try {
-    const { error } = yield call(ReplyMessageAPI.sendWarningMessage, userId, conversationId);
+    const { error } = yield call(ReplyMessageAPI.sendWarningMessage, userId, conversationId, messages);
     if (error) throw new Error(error);
     yield put(sendReplyWarningSuccess(conversationId));
   } catch (error) {

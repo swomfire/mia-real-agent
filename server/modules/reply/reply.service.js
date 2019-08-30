@@ -47,8 +47,12 @@ class ReplyService extends BaseService {
       { $match: { operationType: 'insert' } },
     ]).on('change', async (data) => {
       const { fullDocument } = data;
-      const { conversationId } = fullDocument;
-      ConversationRoomQueue.conversationNewMessage(conversationId, fullDocument);
+      const { _id, conversationId } = fullDocument;
+      const reply = await this.collection.findOne({
+        _id,
+      })
+        .populate({ path: 'from', select: ['_id', 'profile', 'role', 'username'] });
+      ConversationRoomQueue.conversationNewMessage(conversationId, reply);
     });
   }
 }

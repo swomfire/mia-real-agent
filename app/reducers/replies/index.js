@@ -19,10 +19,11 @@ export const REPLIES_SEND_WARNING_FAILED = 'replies/REPLIES_SEND_WARNING_FAILED'
 export const REPLIES_ADD_MESSAGE = 'replies/REPLIES_ADD_MESSAGE';
 
 // action creator
-export const sendReplyWarning = conversationId => ({
+export const sendReplyWarning = (conversationId, messages) => ({
   type: REPLIES_SEND_WARNING,
   payload: {
     conversationId,
+    messages,
   },
 });
 

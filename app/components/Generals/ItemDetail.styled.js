@@ -204,7 +204,7 @@ export const InfoContentBlock = styled.div`
 
 export const OverviewLeftSectionWrapper = styled.div`
   flex: 1;
-  padding-bottom: 30px;
+  /* padding-bottom: 30px; */
 `;
 
 export const OverviewRightSectionWrapper = styled.div`
@@ -220,10 +220,10 @@ export const OverviewProduct = styled.div`
   display: flex;
   align-items: flex-start;
   line-height: 21px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   label {
     color: #666;
-    flex: 0 0 25%;
+    flex: 0 0 35%;
   }
   span {
     flex: 1;

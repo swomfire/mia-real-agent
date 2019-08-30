@@ -264,6 +264,7 @@ const en = {
     ADMIN_TICKET_DETAIL_CREATED_AT: 'Created at',
     ADMIN_TICKET_DETAIL_OWNER: 'Owner',
     ADMIN_TICKET_DETAIL_ASSIGNEE: 'Assignee',
+    ADMIN_TICKET_DETAIL_CONVERSATION_LOG: 'Conversation log:',
     // Admin intent table
     ADMIN_INTENT_TABLE_DISPLAY_NAME: 'Name',
     ADMIN_INTENT_TABLE_ALL_INTENT: 'All Intent',

@@ -11,8 +11,13 @@ import TicketDetailInfoHeader from './TicketDetailInfoHeader';
 import { conversationTranscript } from './TicketDetailConversationLog';
 import { ConversationLogWrapper } from './styles';
 
-const scrollStyle = {
-  height: 'calc(100vh - 120px)',
+const detailScrollStyle = {
+  height: 'calc(100vh - 600px)',
+  width: '100%',
+};
+
+const conversationScrollStyle = {
+  height: 'calc(100vh - 470px)',
   width: '100%',
 };
 
@@ -66,13 +71,12 @@ class TicketDetailInfo extends PureComponent {
     return (
       <ItemDetailInfoWrapper>
         <TicketDetailInfoHeader title={title} status={status} />
-        <Scrollbar autoHide style={scrollStyle}>
-          <TicketDetailInfoContent ticketDetail={ticketDetail} />
-          <ConversationLogWrapper>
-            <p>Conversation log:</p>
+        <TicketDetailInfoContent ticketDetail={ticketDetail} />
+        <ConversationLogWrapper>
+          <Scrollbar autoHide style={conversationScrollStyle}>
             {conversationTranscript(conversationLog)}
-          </ConversationLogWrapper>
-        </Scrollbar>
+          </Scrollbar>
+        </ConversationLogWrapper>
       </ItemDetailInfoWrapper>
     );
   }

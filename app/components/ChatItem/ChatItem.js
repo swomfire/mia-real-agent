@@ -7,10 +7,10 @@ import {
   MessageBoxSystemNotification, LineDivider,
   MessageBoxItemIsTyping, IsTypingWrapper,
   TicketActionStatus, UserAction, TicketActionStatusTitle,
-  TicketRatingScore, CommentWrapper, UserWarning,
+  TicketRatingScore, CommentWrapper, UserWarning, UserLabelWarning,
 } from './styles';
 import { ROLES } from '../../../common/enums';
-import { toI18n } from '../../utils/func-utils';
+import { toI18n, isAgent } from '../../utils/func-utils';
 
 const renderTime = (time) => {
   if (moment().diff(time, 'days') === 0) {
@@ -138,6 +138,7 @@ export const warningAction = (msgId, from, contents, sentAt) => {
   let messageOwner = '';
   // eslint-disable-next-line no-underscore-dangle
   const { role, profile = {} } = from;
+  console.log(from);
   const { firstName, lastName, company = 'N/A' } = profile;
   switch (role) {
     case ROLES.INDIVIDUAL:
@@ -150,21 +151,42 @@ export const warningAction = (msgId, from, contents, sentAt) => {
       messageOwner = `${firstName} ${lastName}`;
       break;
   }
-  return (
-    <MessageBoxSystemNotification key={`status${msgId}`}>
-      <LineDivider warning />
-      <UserWarning>
-        <Tooltip placement="top" title={renderTime(sentAt)}>
+  if (isAgent(from.role)) {
+    return (
+      <MessageBoxItem left key={msgId}>
+        <MessageText>
           {
-            `${messageOwner} `
+            contents.map(({ _id, messages }) => (
+              <Tooltip placement="left" title={renderTime(sentAt)}>
+                <UserLabelWarning>
+                  {messageOwner}
+                </UserLabelWarning>
+                <p key={_id}>
+                  {messages}
+                </p>
+              </Tooltip>
+            ))
           }
-          {toI18n('CONV_MESSAGE_BOX_USER_IS')}
-          {' '}
-          {contents.map(({ messages }) => messages)}
-        </Tooltip>
-      </UserWarning>
-      <LineDivider warning />
-    </MessageBoxSystemNotification>
+        </MessageText>
+      </MessageBoxItem>
+    );
+  }
+  return (
+    <MessageBoxItem right key={msgId}>
+      <MessageText>
+        {contents.map(({ _id, messages }) => (
+          <Tooltip placement="right" title={renderTime(sentAt)}>
+            <UserLabelWarning user>
+              {messageOwner}
+            </UserLabelWarning>
+            <UserMessage key={_id}>
+              {messages}
+            </UserMessage>
+          </Tooltip>
+        ))
+        }
+      </MessageText>
+    </MessageBoxItem>
   );
 };
 

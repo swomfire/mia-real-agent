@@ -11,7 +11,7 @@ import { conversationTranscript } from './TicketWarningConversationLog';
 import { ConversationLogWrapper } from './styles';
 
 const conversationScrollStyle = {
-  height: 'calc(100vh - 470px)',
+  height: 'calc(100vh - 220px)',
   width: '100%',
 };
 
@@ -27,7 +27,6 @@ class TicketDetailInfo extends PureComponent {
       ticketId, ticketDetail,
       fetchTicketSingle, fetchConversationLog,
     } = this.props;
-    console.log(ticketDetail)
     const { ticketId: prevticketId, ticketDetail: prevTicketDetail } = prevProps;
 
     if (prevticketId !== ticketId) {

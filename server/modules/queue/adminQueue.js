@@ -24,10 +24,11 @@ class AdminQueue {
     this.queue = queue.filter(({ socketId: removeSocketId }) => removeSocketId !== socketId);
   }
 
-  sendWarningMessage = (ticketId) => {
+  sendWarningMessage = (ticketId, conversationId) => {
     this.queue.forEach(({ socketId }) => {
       const socket = getSocketByUser({ socketId });
-      socket.emit(SOCKET_EMIT.TICKET_WARNING, { ticketId });
+      console.log('object');
+      socket.emit(SOCKET_EMIT.TICKET_WARNING, { ticketId, conversationId });
     });
   }
 }

@@ -171,7 +171,6 @@ export default class MessageBox extends Component {
       replyMessages, userId, userRole,
     } = this.props;
     const refinedMessages = combineChat(replyMessages);
-    console.log(refinedMessages);
     return [refinedMessages.map(({
       from, _id: msgId, contents, type, params, sentAt,
     }) => {

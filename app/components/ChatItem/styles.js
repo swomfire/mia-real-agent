@@ -154,8 +154,10 @@ export const CommentWrapper = styled.div`
   font-weight: 600;
 `;
 
-export const UserWarning = styled.span`
+export const UserLabelWarning = styled.div`
   font-weight: 600;
   font-style: italic;
-  color: red;
+  color: #9a9a9a;
+  width: 100%;
+  text-align: ${({ user }) => user ? 'end' : 'start'};
 `;

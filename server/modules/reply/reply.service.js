@@ -54,7 +54,7 @@ class ReplyService extends BaseService {
         const { _id: ticketId } = await TicketService.getByCondition({
           conversationId,
         });
-        AdminQueue.sendWarningMessage(ticketId);
+        AdminQueue.sendWarningMessage(ticketId, conversationId);
       } else {
         const reply = await this.collection.findOne({
           _id,

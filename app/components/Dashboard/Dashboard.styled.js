@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 
 export const DashboardContainer = styled.section`
-  background-color: #f5f6f7;
   height: 100%;
   width: 100%;
-  padding: 20px;
+  padding: 1.5em;
 `;
 
 export const DashboardItem = styled.div`

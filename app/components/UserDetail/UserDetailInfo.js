@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import _isEmpty from 'lodash/isEmpty';
 import Scrollbar from 'components/Scrollbar';
 import SpinnerLoading from 'components/PageLoading/SpinnerLoading';
-import { ItemDetailInfoWrapper } from 'components/Generals/ItemDetail.styled';
+import { AdminDetailsContainer } from 'components/Generals/ItemDetail.styled';
 import ErrorContent from 'components/ErrorContent';
 import UserDetailInfoContent from './UserDetailInfoContent';
 import UserDetailInfoHeader from './UserDetailInfoHeader';
@@ -35,29 +35,29 @@ class UserDetailInfo extends PureComponent {
 
     if (_isEmpty(userDetail) || userDetail.isLoading) {
       return (
-        <ItemDetailInfoWrapper>
+        <AdminDetailsContainer>
           <SpinnerLoading />
-        </ItemDetailInfoWrapper>
+        </AdminDetailsContainer>
       );
     }
 
     if (userDetail.error) {
       return (
-        <ItemDetailInfoWrapper>
+        <AdminDetailsContainer>
           <ErrorContent error={userDetail.error} />
-        </ItemDetailInfoWrapper>
+        </AdminDetailsContainer>
       );
     }
 
     const { _id, username } = userDetail;
 
     return (
-      <ItemDetailInfoWrapper>
+      <AdminDetailsContainer>
         <UserDetailInfoHeader userId={_id} username={username} removeUser={removeUser} />
         <Scrollbar autoHide style={scrollStyle}>
           <UserDetailInfoContent userDetail={userDetail} />
         </Scrollbar>
-      </ItemDetailInfoWrapper>
+      </AdminDetailsContainer>
     );
   }
 }

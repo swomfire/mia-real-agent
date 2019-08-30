@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 import _isEmpty from 'lodash/isEmpty';
 import Scrollbar from 'components/Scrollbar';
 import SpinnerLoading from 'components/PageLoading/SpinnerLoading';
-import { ItemDetailInfoWrapper } from 'components/Generals/ItemDetail.styled';
+import {
+  AdminDetailsContainer,
+} from 'components/Generals/ItemDetail.styled';
 import ErrorContent from 'components/ErrorContent';
 import TicketDetailInfoContent from './TicketDetailInfoContent';
 import TicketDetailInfoHeader from './TicketDetailInfoHeader';
@@ -52,24 +54,24 @@ class TicketDetailInfo extends PureComponent {
     const { ticketDetail, conversationLog } = this.props;
     if (_isEmpty(ticketDetail) || ticketDetail.isLoading) {
       return (
-        <ItemDetailInfoWrapper>
+        <AdminDetailsContainer>
           <SpinnerLoading />
-        </ItemDetailInfoWrapper>
+        </AdminDetailsContainer>
       );
     }
 
     if (ticketDetail.error) {
       return (
-        <ItemDetailInfoWrapper>
+        <AdminDetailsContainer>
           <ErrorContent error={ticketDetail.error} />
-        </ItemDetailInfoWrapper>
+        </AdminDetailsContainer>
       );
     }
 
     const { title, status } = ticketDetail;
 
     return (
-      <ItemDetailInfoWrapper>
+      <AdminDetailsContainer>
         <TicketDetailInfoHeader title={title} status={status} />
         <TicketDetailInfoContent ticketDetail={ticketDetail} />
         <ConversationLogWrapper>
@@ -77,7 +79,7 @@ class TicketDetailInfo extends PureComponent {
             {conversationTranscript(conversationLog)}
           </Scrollbar>
         </ConversationLogWrapper>
-      </ItemDetailInfoWrapper>
+      </AdminDetailsContainer>
     );
   }
 }

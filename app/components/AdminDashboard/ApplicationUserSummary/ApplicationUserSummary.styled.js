@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 export const TicketActivityWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: #f7f7f8;
   border-bottom: 1px solid ${props => props.theme.colorStyled.ColorBorder};
   @media (max-width: 1024px) {
     flex-wrap: wrap;

@@ -113,6 +113,9 @@ export const TicketWrapper = styled.div`
   height: calc(100vh - 300px);
   margin-bottom: 20px;
 `;
+export const TicketFrontWrapper = styled.div`
+  height: calc(100vh - 300px);
+`;
 
 export const TicketPaginationWrapper = styled.div`
   padding: 0 16px;

@@ -5,11 +5,15 @@ import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
-  ItemDetailInfoHeaderWrapper,
-  ItemDetailInfoActionGroup,
-  ItemDetailInfoHeadTitle,
+  TitleDetailsHead,
+  AdminHeadActionGroup,
+  HeaderTextDetails,
+  ItemStatus,
 } from 'components/Generals/ItemDetail.styled';
-import { Icon, Button } from 'antd';
+import {
+  ButtonApprove,
+  ButtonReject,
+} from '../../stylesheets/Button.style';
 import { APPLICATION_STATUS } from '../../../common/enums';
 
 class ApplicationDetailInfoHeader extends PureComponent {
@@ -26,23 +30,30 @@ class ApplicationDetailInfoHeader extends PureComponent {
   render() {
     const { firstName, lastName, status } = this.props;
     return (
-      <ItemDetailInfoHeaderWrapper>
-        <ItemDetailInfoHeadTitle>{`${firstName} ${lastName} [${status}]`}</ItemDetailInfoHeadTitle>
-        <ItemDetailInfoActionGroup noTitle>
-          {status === APPLICATION_STATUS.PENDING && [(<Button
-            type="primary"
-            onClick={this.handleApprove}
-          >
-            Approve
-          </Button>),
-          (<Button onClick={this.handleReject}>
-            Reject
-          </Button>)]}
-          <Link to="/admin/applications" className="close-action">
-            <Icon type="close" />
-          </Link>
-        </ItemDetailInfoActionGroup>
-      </ItemDetailInfoHeaderWrapper>
+      <TitleDetailsHead>
+        <HeaderTextDetails>
+          <span>
+            {firstName}
+            {' '}
+            {lastName}
+          </span>
+          <ItemStatus status={status}>{`  - ${status}`}</ItemStatus>
+        </HeaderTextDetails>
+        <AdminHeadActionGroup>
+          {status === APPLICATION_STATUS.PENDING && [(
+            <ButtonApprove
+              onClick={this.handleApprove}
+            >
+              <i className="mia-check" />
+              <span>Approve</span>
+            </ButtonApprove>),
+          (<ButtonReject onClick={this.handleReject}>
+            <i className="mia-close" />
+            <span>Reject</span>
+          </ButtonReject>)]}
+
+        </AdminHeadActionGroup>
+      </TitleDetailsHead>
     );
   }
 }

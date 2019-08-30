@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AdminTopNavBar from 'components/AdminTopNavBar';
+
 import LeftSideBar from 'containers/LeftSideBar';
 import {
   AdminPageWrapper,
@@ -12,7 +12,6 @@ const AdminMainLayout = ({ children, toggleLeftSideBar }) => (
   <AdminPageWrapper>
     <LeftSiderBarAdmin isToggle={toggleLeftSideBar}>
       <LeftSideBar />
-      <AdminTopNavBar />
     </LeftSiderBarAdmin>
     <AdminContentGroup>{children}</AdminContentGroup>
   </AdminPageWrapper>

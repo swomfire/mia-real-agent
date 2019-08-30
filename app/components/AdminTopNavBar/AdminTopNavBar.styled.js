@@ -2,26 +2,28 @@ import styled from 'styled-components';
 
 export const HeaderAdminStyled = styled.div`
   position: relative;
-  width: 100%;
-  
+  width: 100%;  
   z-index: 1;
-  background-color: ${props => props.theme.colorStyled.ColorWhite};
-  border-bottom: 1px solid ${props => props.theme.colorStyled.ColorBorder};
   display: flex;
 `;
 
 export const TopbarRightAdmin = styled.div`
   display: flex;
   flex: 1;
-  justify-content: flex-end;
-  height: 3.750em;
+  height:  ${props => props.theme.heightSite.heightHeadAdmin};
 `;
-
+export const UserNameAdmin = styled.span`
+  color: ${props => props.theme.colorStyled.ColorWhite};
+  margin-left: 0.4em;
+  
+`;
 export const ProfileStyled = styled.div`
   display: flex;
   align-items: center;
   text-align: center;
-  padding: 0px 20px;
+  margin: 0px 1em;
+  flex: 0 0 calc(100% - 2em);
+  border-bottom: 1px solid ${props => props.theme.colorStyled.ColorXLightGrey};
   position: relative;
 `;
 
@@ -46,7 +48,7 @@ export const ActionsStyled = styled.div`
   justify-content: center;
   i {
     line-height: 21px;
-    font-size: 18px;
+    font-size: ${props => props.theme.fontSize.HeadingH5FontSize};
     margin-left: 15px;
     cursor: pointer;
     &:hover {

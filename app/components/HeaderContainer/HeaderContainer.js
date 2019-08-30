@@ -5,19 +5,13 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
-import SortContainer from 'containers/HeaderContainer/SortContainer';
-import FilterContainer from './FilterContainer';
 import {
-  TableHeaderWrapper,
-  TableHeaderLeftWrapper,
-  TableHeaderRightWrapper,
-  TableHeaderAddNewButton,
-  TableHeaderSortButton,
-  TableHeaderLeftTitle,
+  HeaderAdminWrapper,
+  TitleAdminHead,
+  HeaderActionWrapper,
+  TitleAdminMain,
 } from '../Generals/TableHeader.styled';
-import { PopupOverlayStyled } from '../Generals/General.styled';
-import { NEW_BUTTONS_TYPE } from '../../../common/enums';
-
+import { ButtonPrimary } from '../../stylesheets/Button.style';
 
 class HeaderContainer extends PureComponent {
   state = {
@@ -48,125 +42,47 @@ class HeaderContainer extends PureComponent {
     const { title } = this.props;
 
     return (
-      <TableHeaderLeftWrapper>
-        <TableHeaderLeftTitle>{title}</TableHeaderLeftTitle>
-      </TableHeaderLeftWrapper>
+      <TitleAdminHead>
+        <TitleAdminMain>{title}</TitleAdminMain>
+      </TitleAdminHead>
     );
   };
 
-  renderHeaderLeftWithFilter = () => {
-    const { filterItems, handleFilter, filtering } = this.props;
-    const { isFilterOpen } = this.state;
-    const { title } = filtering;
-
-    return (
-      <TableHeaderLeftWrapper>
-        <TableHeaderLeftTitle onClick={this.onToggleFilter}>
-          {title}
-          <i className="icon-caret-down" />
-        </TableHeaderLeftTitle>
-        {isFilterOpen && (
-          <React.Fragment>
-            <PopupOverlayStyled onClick={this.onToggleFilter} />
-            <FilterContainer
-              filterItems={filterItems}
-              handleFilter={handleFilter}
-            />
-          </React.Fragment>
-        )}
-      </TableHeaderLeftWrapper>
-    );
-  };
-
-  renderOrderHeaderRight = () => {
-    const { isSortOpen } = this.state;
+  renderHeaderAction = () => {
     const {
-      sorting,
-      handleSort,
-      sortItem,
       url = '',
-      shouldRenderNewButton = true,
-      shouldRenderSendEmailButton = false,
-      newButtonType,
-      onClickAddButton = () => {},
     } = this.props;
     return (
-      <TableHeaderRightWrapper>
-        <ReactTooltip effect="solid" />
-        {shouldRenderNewButton && newButtonType === NEW_BUTTONS_TYPE.LINK && (
-          <Link to={url}>
-            <TableHeaderAddNewButton data-tip="Create Ticket">
-              <i className="icon-add" />
-              New
-            </TableHeaderAddNewButton>
-          </Link>
-        )}
-        {shouldRenderNewButton && newButtonType === NEW_BUTTONS_TYPE.BUTTON && (
-          <TableHeaderAddNewButton onClick={onClickAddButton}>
-            <i className="icon-add" />
-              New
-          </TableHeaderAddNewButton>
-        )}
-        {shouldRenderSendEmailButton && (
-          <TableHeaderAddNewButton
-            onClick={this.openSendEmailModal}
-            data-tip="Send Emails"
-          >
-            Send Email
-          </TableHeaderAddNewButton>
-        )}
-        <TableHeaderSortButton className="mia-menu" onClick={this.onToggleSort}>
-          {isSortOpen && (
-            <React.Fragment>
-              <PopupOverlayStyled onClick={this.onToggleSort} />
-              <SortContainer
-                sortItem={sortItem}
-                sorting={sorting}
-                handleSort={handleSort}
-              />
-            </React.Fragment>
-          )}
-        </TableHeaderSortButton>
-      </TableHeaderRightWrapper>
+      <HeaderActionWrapper>
+        <ButtonPrimary data-tip="Create Ticket">
+          <i className="mia-add" />
+          <span>Add New</span>
+        </ButtonPrimary>
+        <ButtonPrimary data-tip="Export Excel">
+          <i className="mia-hr-export" />
+          <span>Export Excel</span>
+        </ButtonPrimary>
+      </HeaderActionWrapper>
     );
   };
 
   render() {
-    const { shouldRenderFilter = false } = this.props;
     return (
-      <TableHeaderWrapper>
-        {shouldRenderFilter
-          ? this.renderHeaderLeftWithFilter()
-          : this.renderHeaderLeftWithoutFilter()}
-        {this.renderOrderHeaderRight()}
-      </TableHeaderWrapper>
+      <HeaderAdminWrapper>
+        {this.renderHeaderLeftWithoutFilter()}
+        {this.renderHeaderAction()}
+      </HeaderAdminWrapper>
     );
   }
 }
 
 HeaderContainer.propTypes = {
-  sorting: PropTypes.object,
-  handleSort: PropTypes.func,
-  sortItem: PropTypes.array,
   url: PropTypes.string,
   title: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.shape(),
   ]),
-  shouldRenderNewButton: PropTypes.bool,
-  shouldRenderSendEmailButton: PropTypes.bool,
   openModal: PropTypes.func,
-  handleFilter: PropTypes.func,
-  filterItems: PropTypes.array,
-  filtering: PropTypes.object,
-  shouldRenderFilter: PropTypes.bool,
-  newButtonType: PropTypes.string,
-  onClickAddButton: PropTypes.func,
-};
-
-HeaderContainer.defaultProps = {
-  newButtonType: NEW_BUTTONS_TYPE.LINK,
-  newButtonType: () => {},
 };
 
 export default HeaderContainer;

@@ -1,8 +1,8 @@
 /*Fonts icon */
 @font-face {
   font-family: 'icomoon';
-  src: url('./icomoon.eot?vw1295');
-  src: local('icomoon'), url('./icomoon.eot?vw1295#iefix') format('embedded-opentype'), url('./icomoon.ttf?vw1295') format('truetype'), url('./icomoon.woff?vw1295') format('woff'), url('./icomoon.svg?vw1295#icomoon') format('svg');
+  src: url('./icomoon.eot?kdxgf4');
+  src: local('icomoon'), url('./icomoon.eot?kdxgf4#iefix') format('embedded-opentype'), url('./icomoon.ttf?kdxgf4') format('truetype'), url('./icomoon.woff?kdxgf4') format('woff'), url('./icomoon.svg?kdxgf4#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -23,171 +23,419 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.mia-dashboard:before {
-  content: "\e900";
+.mia-hr-export-all:before {
+  content: "\e93a";
 }
 
-.mia-idea:before {
-  content: "\e901";
+.mia-hr-close-all:before {
+  content: "\e93c";
 }
 
-.mia-tickets:before {
-  content: "\e902";
+.mia-hr-printer:before {
+  content: "\e93d";
 }
 
-.mia-slack:before {
-  content: "\e913";
+.mia-hr-mail:before {
+  content: "\e93b";
 }
 
-.mia-twitter:before {
-  content: "\e921";
+.mia-hr-confirm-import-all:before {
+  content: "\e938";
 }
 
-.mia-facebook:before {
-  content: "\e912";
+.mia-hr-delete-all:before {
+  content: "\e939";
 }
 
-.mia-close1:before {
-  content: "\e918";
+.mia-hr-president-active:before {
+  content: "\e935";
 }
 
-.mia-google:before {
-  content: "\e922";
+.mia-hr-president-outline:before {
+  content: "\e936";
 }
 
-.mia-user-circle-o:before {
-  content: "\e903";
+.mia-hr-trade-union:before {
+  content: "\e937";
 }
 
-.mia-filter:before {
-  content: "\e90d";
+.mia-hr-folder:before {
+  content: "\e933";
 }
 
-.mia-ticket:before {
-  content: "\e924";
+.mia-hr-employee-single:before {
+  content: "\e934";
 }
 
-.mia-dashboard1:before {
+.mia-hr-action-del:before {
+  content: "\e92e";
+}
+
+.mia-hr-action-edit:before {
+  content: "\e92f";
+}
+
+.mia-hr-add-child:before {
+  content: "\e930";
+}
+
+.mia-hr-add-employee:before {
+  content: "\e931";
+}
+
+.mia-hr-employee-info:before {
+  content: "\e932";
+}
+
+.mia-hr-update-employee:before {
+  content: "\e92d";
+}
+
+.mia-hr-holiday:before {
+  content: "\e92b";
+}
+
+.mia-hr-pending:before {
+  content: "\e92c";
+}
+
+.mia-hr-calendar-view:before {
+  content: "\e90c";
+}
+
+.mia-hr-list-view:before {
   content: "\e925";
 }
 
-.mia-user:before {
-  content: "\e926";
+.mia-hr-timesheet:before {
+  content: "\e92a";
 }
 
-.mia-enter:before {
-  content: "\e923";
+.mia-hr-workspace-custom:before {
+  content: "\e929";
 }
 
-.mia-camera:before {
-  content: "\e91d";
+.mia-hr-admin:before {
+  content: "\e911";
 }
 
-.mia-folder:before {
-  content: "\e91e";
+.mia-hr-caculate:before {
+  content: "\e912";
 }
 
-.mia-gallery:before {
-  content: "\e91f";
+.mia-hr-check:before {
+  content: "\e913";
 }
 
-.mia-happiness:before {
-  content: "\e920";
+.mia-hr-close:before {
+  content: "\e914";
 }
 
-.mia-promotion:before {
+.mia-hr-date:before {
+  content: "\e915";
+}
+
+.mia-hr-done:before {
+  content: "\e916";
+}
+
+.mia-hr-done-processing:before {
+  content: "\e917";
+}
+
+.mia-hr-edit:before {
+  content: "\e918";
+}
+
+.mia-hr-employee-ds:before {
   content: "\e919";
 }
 
+.mia-hr-export-light:before {
+  content: "\e91a";
+}
+
+.mia-hr-file:before {
+  content: "\e91b";
+}
+
+.mia-hr-import:before {
+  content: "\e91c";
+}
+
+.mia-hr-leave-ds:before {
+  content: "\e91d";
+}
+
+.mia-hr-loading:before {
+  content: "\e91e";
+}
+
+.mia-hr-more:before {
+  content: "\e91f";
+}
+
+.mia-hr-next:before {
+  content: "\e920";
+}
+
+.mia-hr-play:before {
+  content: "\e921";
+}
+
+.mia-hr-pre:before {
+  content: "\e922";
+}
+
+.mia-hr-pre-light:before {
+  content: "\e923";
+}
+
+.mia-hr-run-details:before {
+  content: "\e924";
+}
+
+.mia-hr-step:before {
+  content: "\e926";
+}
+
+.mia-hr-warning:before {
+  content: "\e927";
+}
+
+.mia-login-hr:before {
+  content: "\e928";
+}
+
+.mia-hr-down-bold:before {
+  content: "\e901";
+}
+
+.mia-hr-down:before {
+  content: "\e902";
+}
+
+.mia-hr-plus:before {
+  content: "\e903";
+}
+
+.mia-hr-up-bold:before {
+  content: "\e904";
+}
+
+.mia-hr-up:before {
+  content: "\e905";
+}
+
+.mia-hr-dashboard:before {
+  content: "\e906";
+}
+
+.mia-hr-delete:before {
+  content: "\e907";
+}
+
+.mia-hr-employee:before {
+  content: "\e908";
+}
+
+.mia-hr-export:before {
+  content: "\e909";
+}
+
+.mia-hr-leave:before {
+  content: "\e90a";
+}
+
+.mia-hr-logo:before {
+  content: "\e90b";
+}
+
+.mia-hr-search:before {
+  content: "\e90d";
+}
+
+.mia-hr-settings:before {
+  content: "\e90e";
+}
+
+.mia-hr-setup:before {
+  content: "\e90f";
+}
+
+.mia-hr-triangle:before {
+  content: "\e910";
+}
+
+.mia-hr-subtract:before {
+  content: "\e900";
+}
+
+.mia-dashboard:before {
+  content: "\e93e";
+}
+
+.mia-idea:before {
+  content: "\e93f";
+}
+
+.mia-tickets:before {
+  content: "\e940";
+}
+
+.mia-slack:before {
+  content: "\e941";
+}
+
+.mia-twitter:before {
+  content: "\e942";
+}
+
+.mia-facebook:before {
+  content: "\e943";
+}
+
+.mia-close1:before {
+  content: "\e944";
+}
+
+.mia-google:before {
+  content: "\e945";
+}
+
+.mia-user-circle-o:before {
+  content: "\e946";
+}
+
+.mia-filter:before {
+  content: "\e947";
+}
+
+.mia-ticket:before {
+  content: "\e948";
+}
+
+.mia-dashboard1:before {
+  content: "\e949";
+}
+
+.mia-user:before {
+  content: "\e94a";
+}
+
+.mia-enter:before {
+  content: "\e94b";
+}
+
+.mia-camera:before {
+  content: "\e94c";
+}
+
+.mia-folder:before {
+  content: "\e94d";
+}
+
+.mia-gallery:before {
+  content: "\e94e";
+}
+
+.mia-happiness:before {
+  content: "\e94f";
+}
+
+.mia-promotion:before {
+  content: "\e950";
+}
+
 .mia-twitter1:before {
-  content: "\e911";
+  content: "\e951";
   color: #1da1f2;
 }
 
 .mia-cart:before {
-  content: "\e904";
+  content: "\e952";
 }
 
 .mia-edit:before {
-  content: "\e91c";
+  content: "\e953";
 }
 
 .mia-more:before {
-  content: "\e91a";
+  content: "\e954";
 }
 
 .mia-bag:before {
-  content: "\e915";
+  content: "\e955";
 }
 
 .mia-check:before {
-  content: "\e910";
+  content: "\e956";
 }
 
 .mia-trash:before {
-  content: "\e90f";
+  content: "\e957";
 }
 
 .mia-arrow-right-thin:before {
-  content: "\e90e";
+  content: "\e958";
 }
 
 .mia-notifications:before {
-  content: "\e90a";
+  content: "\e959";
 }
 
 .mia-person:before {
-  content: "\e90b";
+  content: "\e95a";
 }
 
 .mia-arrow-right:before {
-  content: "\e905";
+  content: "\e95b";
 }
 
 .mia-log-in:before {
-  content: "\e906";
+  content: "\e95c";
 }
 
 .mia-add:before {
-  content: "\e907";
+  content: "\e95d";
 }
 
 .mia-search:before {
-  content: "\e908";
+  content: "\e95e";
 }
 
 .mia-shopping-bag:before {
-  content: "\e91b";
+  content: "\e95f";
 }
 
 .mia-chevron-left:before {
-  content: "\e917";
+  content: "\e960";
 }
 
 .mia-chevron-right:before {
-  content: "\e916";
+  content: "\e961";
 }
 
 .mia-cheveron-down:before {
-  content: "\e909";
+  content: "\e962";
 }
 
 .mia-menu:before {
-  content: "\e90c";
+  content: "\e963";
 }
 
 .mia-close:before {
-  content: "\e914";
+  content: "\e964";
 }
 
 .mia-payment:before {
-  content: "\e927";
+  content: "\e965";
 }
 
 .mia-exit:before {
-  content: "\e928";
+  content: "\e966";
 }
 
 .mia-user-plus:before {
-  content: "\e929";
+  content: "\e967";
 }

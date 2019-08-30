@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import moment from 'moment/min/moment-with-locales';
 import { object, number } from 'prop-types';
-import { Icon } from 'antd';
 import {
   DashboardTitle,
   DashboardStatus,

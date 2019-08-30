@@ -7,7 +7,7 @@ import TableHeaderComponent from './TableHeaderComponent';
 import TableRow from './TableRow';
 
 const scrollStyle = {
-  height: 'calc(100vh - 210px)',
+  height: 'calc(100vh - 150px)',
   width: '100%',
 };
 
@@ -64,6 +64,7 @@ class TableManagement extends React.PureComponent {
     const size = items.length;
     return (
       <TableBorder
+        pageName="table-management"
         size={size}
         isLoading={isLoading}
         totalCount={totalCount}

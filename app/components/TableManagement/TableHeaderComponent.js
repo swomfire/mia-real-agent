@@ -16,8 +16,7 @@ class TableHeaderComponent extends React.PureComponent {
     const { columns } = this.props;
 
     return (
-      <TableHeadWrapper>
-        <TableHeader size="40" />
+      <TableHeadWrapper className="vienpn-head-admin-details">
         <TableHeadItemGroup>
           {columns.map(this.renderColumn)}
         </TableHeadItemGroup>

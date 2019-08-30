@@ -146,7 +146,12 @@ class TableRow extends React.PureComponent {
     const { item } = this.props;
     const { dataKey } = column;
     const value = _get(item, dataKey);
-    return <TableStatusContent status={value}>{value}</TableStatusContent>;
+    return (
+      <TableStatusContent status={value}>
+        <i className={`type-${value}`} />
+        {value}
+      </TableStatusContent>
+    );
   };
 
   renderRoleButtonGroupColumn = () => (
@@ -213,9 +218,6 @@ class TableRow extends React.PureComponent {
     return (
       <TableContentWrapper>
         <TableContentItem onClick={this.onClick}>
-          <TableContent size="40" checkbox>
-            <input type="checkbox" />
-          </TableContent>
           <TableContentItemGroup isPointer={isPointer}>
             {columns.map(this.renderColumn)}
           </TableContentItemGroup>

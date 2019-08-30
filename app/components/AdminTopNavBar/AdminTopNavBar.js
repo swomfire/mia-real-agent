@@ -6,6 +6,7 @@ import {
   TopbarRightAdmin,
   ProfileStyled,
   ProfileImageStyled,
+  UserNameAdmin,
   ActionsStyled,
   SettingIcon,
 } from './AdminTopNavBar.styled';
@@ -29,20 +30,16 @@ class AdminTopNavBar extends PureComponent {
     return (
       <HeaderAdminStyled>
         <TopbarRightAdmin>
-          <ActionsStyled>
-            {this.renderSettingIcon()}
-          </ActionsStyled>
           <ProfileStyled>
             <ProfileImageStyled
               src="/assets/images/user.svg"
               onClick={this.onToggleUserInfo}
             />
+            <UserNameAdmin>admin@gmail.com</UserNameAdmin>
             {isUserInfoOpen && (
               <React.Fragment>
                 <PopupOverlayStyled onClick={this.onToggleUserInfo} />
-                <ProfileUser
-                  onToggleUserInfo={this.onToggleUserInfo}
-                />
+                <ProfileUser onToggleUserInfo={this.onToggleUserInfo} />
               </React.Fragment>
             )}
           </ProfileStyled>

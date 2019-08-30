@@ -1,37 +1,32 @@
 import styled, { css } from 'styled-components';
 
-export const TableBorderWrapperStyled = styled.div`
+export const MainConentAdmin = styled.div.attrs({
+  className: 'main-content-admin',
+})`
   display: flex;
   flex-direction: column;
+  padding: 1.5em;
+  background: ${props => props.theme.colorStyled.ColorXXXLightGrey};
 `;
 
-export const TableBorderTopHeader = styled.div`
-  box-shadow: 0px 0px 10px -6px #000;
-  padding: 15px 20px;
-  position: relative;
-  z-index: 1;
+export const PaginationGroups = styled.div`
+  box-shadow: ${props => props.theme.boxShandow.loginPage};
+  padding: 0.75em 1em;
+  display: flex;
+  background: ${props => props.theme.colorStyled.ColorWhite};
+  justify-content: flex-end;
+  border-top: 1px solid  ${props => props.theme.colorStyled.ColorBorder};
 `;
 
-export const TableBorderContent = styled.div`
+export const TableCustomizeAdmin = styled.div`
   flex: 1;
   position: relative;
+   background: ${props => props.theme.colorStyled.ColorWhite};
 `;
 
-export const HeaderTitle = styled.div`
-  display: inline;
-  margin-right: 20px;
-  ${({ left }) => left
-    && css`
-      float: right;
-    `};
-`;
 
 export const PaginationBlockStyled = styled.div`
   display: flex;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 `;
 
 export const TableLoadingStyled = styled.div`
@@ -47,6 +42,5 @@ export const PaginationInfoStyled = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 130px;
-  width: 70px;
+  flex: 1;
 `;

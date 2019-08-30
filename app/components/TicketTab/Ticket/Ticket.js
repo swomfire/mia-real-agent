@@ -5,10 +5,11 @@ import PropTypes from 'prop-types';
 import SpinnerLoading from 'components/PageLoading';
 import ShadowScrollbars from 'components/Scrollbar';
 import TicketItem from './TicketItem/TicketItem';
-import { TicketWrapper } from '../TicketTab.styles';
+import { TicketFrontWrapper } from '../TicketTab.styles';
 import {
   TableContentWrapper,
   TableEmptyContent,
+  TicketItemGroup,
 } from '../../TableComponent/TableComponent.styled';
 import { toI18n } from '../../../utils/func-utils';
 
@@ -36,7 +37,7 @@ class Ticket extends Component {
 
     if (isFetching) {
       return (
-        <TableContentWrapper bgTable>
+        <TableContentWrapper>
           <SpinnerLoading />
         </TableContentWrapper>
       );
@@ -48,7 +49,7 @@ class Ticket extends Component {
         autoHide
         style={scrollStyle}
       >
-        <TableContentWrapper bgTable>
+        <TicketItemGroup>
 
           {isNoTicket
             ? (
@@ -58,16 +59,16 @@ class Ticket extends Component {
             )
             : ticketList.map(this.renderTicketItem)
           }
-        </TableContentWrapper>
+        </TicketItemGroup>
       </ShadowScrollbars>
     );
   }
 
   render() {
     return (
-      <TicketWrapper>
+      <TicketFrontWrapper className="ticket-user">
         {this.renderTicketTableContent()}
-      </TicketWrapper>
+      </TicketFrontWrapper>
     );
   }
 }

@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import PaginationBar from 'components/PaginationBar';
 import TableLoading from './TableLoading';
 import {
-  TableBorderWrapperStyled,
-  TableBorderTopHeader,
-  TableBorderContent,
-  HeaderTitle,
+  MainConentAdmin,
+  PaginationGroups,
+  TableCustomizeAdmin,
   PaginationBlockStyled,
   PaginationInfoStyled,
 } from './TableBorder.styled';
@@ -50,6 +49,7 @@ class TableBorder extends React.PureComponent {
       children,
       isLoading,
       actionRenderer,
+      pageName,
       shouldRenderPageInfo = true,
     } = this.props;
 
@@ -59,28 +59,28 @@ class TableBorder extends React.PureComponent {
     const shouldRenderPaginationBar = totalPage > 1;
 
     return (
-      <TableBorderWrapperStyled>
-        <TableBorderContent>
+      <MainConentAdmin>
+        <TableCustomizeAdmin className={pageName}>
           {isLoading && <TableLoading />}
           {children}
-        </TableBorderContent>
-        <TableBorderTopHeader>
-          <HeaderTitle left>
-            <PaginationBlockStyled>
-              {shouldRenderPaginationBar && (
-                <PaginationBar
-                  totalPage={totalPage}
-                  sizePerPage={sizePerPage}
-                  selectedPage={selectedPage}
-                  changePage={!isLoading && changePage}
-                />
-              )}
-              {shouldRenderPageInfo && <PaginationInfoStyled>{pageInfo}</PaginationInfoStyled>}
-            </PaginationBlockStyled>
-          </HeaderTitle>
-        </TableBorderTopHeader>
+        </TableCustomizeAdmin>
+        <PaginationGroups>
+          <PaginationBlockStyled>
+            {shouldRenderPaginationBar && (
+              <PaginationBar
+                totalPage={totalPage}
+                sizePerPage={sizePerPage}
+                selectedPage={selectedPage}
+                changePage={!isLoading && changePage}
+              />
+            )}
+            {shouldRenderPageInfo && (
+              <PaginationInfoStyled>{pageInfo}</PaginationInfoStyled>
+            )}
+          </PaginationBlockStyled>
+        </PaginationGroups>
         {actionRenderer()}
-      </TableBorderWrapperStyled>
+      </MainConentAdmin>
     );
   }
 }
@@ -94,6 +94,7 @@ TableBorder.propTypes = {
   selectedPage: PropTypes.number.isRequired,
   actionRenderer: PropTypes.func,
   shouldRenderPageInfo: PropTypes.bool,
+  pageName: PropTypes.string,
 };
 
 TableBorder.defaultProps = {

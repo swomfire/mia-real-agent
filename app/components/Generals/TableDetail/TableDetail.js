@@ -4,6 +4,7 @@ import {
   TableHeadWrapper,
   TableContentWrapper,
   TableEmptyContent,
+  TableHeadItemGroup,
 } from 'components/TableComponent/TableComponent.styled';
 import {
   TableHeader,
@@ -22,8 +23,10 @@ class TableDetail extends Component {
     const { columns } = this.props;
 
     return (
-      <TableHeadWrapper bgTable>
-        {columns.map(this.renderColumnItem)}
+      <TableHeadWrapper className="vienpn-head-admin-all">
+        <TableHeadItemGroup>
+          {columns.map(this.renderColumnItem)}
+        </TableHeadItemGroup>
       </TableHeadWrapper>
     );
   }
@@ -32,7 +35,9 @@ class TableDetail extends Component {
     const { columns } = this.props;
 
     return (
-      <TableDetailRow item={item} key={index} index={index} columns={columns} />
+      <TableContentWrapper>
+        <TableDetailRow item={item} key={index} index={index} columns={columns} />
+      </TableContentWrapper>
     );
   }
 
@@ -43,10 +48,10 @@ class TableDetail extends Component {
     return (
       <TableDetailWrapper>
         {this.renderTableHeader()}
-        <TableContentWrapper bgTable>
-          {isEmpty && <TableEmptyContent>{emptyMsg}</TableEmptyContent>}
+        <div>
+          {isEmpty && <TableEmptyContent>{emptyMsg}</TableEmptyContent>} 
           {!isEmpty && items.map(this.renderItem)}
-        </TableContentWrapper>
+        </div>
       </TableDetailWrapper>
     );
   }

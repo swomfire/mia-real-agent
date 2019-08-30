@@ -48,17 +48,13 @@ export class ResponseItem extends Component {
         <ResponseParameterWrapper>
           {this.renderParameters()}
         </ResponseParameterWrapper>
+        <ResponseActionWrapper>
+          <i role="presentation" className="mia-edit" onClick={onEdit} />
+          <i role="presentation" className="mia-close" onClick={onRemove} />
+        </ResponseActionWrapper>
         <ResponseValueWrapper>
           {this.renderResponse()}
         </ResponseValueWrapper>
-        <ResponseActionWrapper>
-          <Button onClick={onEdit}>
-            <Icon type="edit" />
-          </Button>
-          <Button onClick={onRemove}>
-            <Icon type="delete" />
-          </Button>
-        </ResponseActionWrapper>
       </ResponseItemWrapper>
     );
   }

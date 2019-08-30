@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable jsx-a11y/label-has-for */
 import React, { PureComponent } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -7,7 +5,9 @@ import {
   OverviewLeftSectionWrapper,
   OverviewTitle,
   OverviewProduct,
-  InfoContentBlock,
+  AdminInfoContentBlock,
+  OverviewLabel,
+  OverviewValue,
 } from 'components/Generals/ItemDetail.styled';
 import { DATE_TIME_FORMAT } from '../../utils/constants';
 import { toI18n } from '../../utils/func-utils';
@@ -15,8 +15,8 @@ import { toI18n } from '../../utils/func-utils';
 class TicketDetailInfoContent extends PureComponent {
   renderOverviewInfo = (label, value, isLink = false) => (
     <OverviewProduct link={isLink}>
-      <label>{label}</label>
-      <span>{value instanceof Array ? value.join(', ') || '-' : (value || '-')}</span>
+      <OverviewLabel>{label}</OverviewLabel>
+      <OverviewValue>{value instanceof Array ? value.join(', ') || '-' : (value || '-')}</OverviewValue>
     </OverviewProduct>
   );
 
@@ -45,9 +45,9 @@ class TicketDetailInfoContent extends PureComponent {
 
   render() {
     return (
-      <InfoContentBlock>
+      <AdminInfoContentBlock>
         {this.renderItemOverview()}
-      </InfoContentBlock>
+      </AdminInfoContentBlock>
     );
   }
 }

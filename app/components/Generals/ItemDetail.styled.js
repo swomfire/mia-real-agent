@@ -1,39 +1,52 @@
 import styled, { css } from 'styled-components';
 import { SubmitButtonStyled } from './General.styled';
+import { COLOR_BY_STATUS } from '../../../common/enums';
 
 export const ItemDetailWrapper = styled.div`
-  height: calc(100vh - 62px);
-  overflow: hidden;
+  height: calc(100vh);
   display: flex;
   width: 100%;
+  
 `;
 
 export const ItemDetailListWrapper = styled.div`
   flex: 0 0 415px;
-  border-right: 1px solid ${props => props.theme.colorStyled.ColorWhite};
+  .main-content-admin{
+    padding: 0;
+    border-top: 1px solid ${props => props.theme.colorStyled.ColorBorder};
+    background-color: ${props => props.theme.colorStyled.ColorWhite};
+  }
+  .title-header-admin{
+    flex: 1;
+    margin-right: 0.5em;
+    span{
+      font-size: ${props => props.theme.fontSize.HeadingH5FontSize};
+    }
+  }
+`;
+export const ItemsListsName = styled.div`
+  font-weight: 600;
+  font-size:  ${props => props.theme.fontSize.MediumFontSize};
 `;
 
 export const ItemDetailListItem = styled.div`
   display: flex;
-  align-items: center;
-  border-top: 1px solid ${props => props.theme.colorStyled.ColorWhite};
+  align-items: center;  
+  padding: 0em 1em;
   cursor: pointer;
-  &:last-child {
-    border-bottom: 1px solid ${props => props.theme.colorStyled.ColorWhite};
-  }
+  border: 1px solid ${props => props.theme.colorStyled.ColorWhite};
+  &:nth-child(odd) {
+    background-color: ${props => props.theme.colorStyled.ColorXXXLightGrey};
+}
   &:hover {
-    background-color: ${props => props.theme.colorStyled.ColorWhite};
+    border: 1px solid ${props => props.theme.colorStyled.ColorBgDefault};
   }
   ${({ active }) => active
     && css`
       background-color: ${props => props.theme.colorStyled.ColorWhite};
-    `};
+  `};
 `;
 
-export const ItemDetailInput = styled.div`
-  padding: ${props => props.theme.fontSize.MediumFontSize};
-  text-align: center;
-`;
 
 export const ItemDetailName = styled.div`
   padding: ${props => props.theme.fontSize.MediumFontSize};
@@ -42,64 +55,45 @@ export const ItemDetailName = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
 `;
 
-export const ItemDetailInfoWrapper = styled.div`
+export const AdminDetailsContainer = styled.div`
   flex: 1;
+  border-left: 1px solid ${props => props.theme.colorStyled.ColorBorder};
 `;
 
-export const ItemDetailInfoHeaderWrapper = styled.div`
+export const TitleDetailsHead = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px 20px;
-  height: 60px;
-  .receive-form {
-    background-color: ${props => props.theme.colorStyled.ColorWhite};
-    border-radius: 7px;
-    border: 1px solid ${props => props.theme.colorStyled.ColorWhite};
-    box-shadow: 0 3px 9px #00000080;
-    position: fixed;
-    top: 50px;
-    left: calc(50% - 200px);
-    width: 460px;
-    height: fit-content;
-    z-index: 5;
-  }
+  padding: 1em;
+  height:  ${props => props.theme.heightSite.heightHeadAdmin};
 `;
 
-export const ItemDetailInfoHeadTitle = styled.div`  
-  font-size: 22px;
-`;
-
-export const ItemDetailInfoActionGroup = styled.div`
+export const HeaderTextDetails = styled.div`  
+  font-size: ${props => props.theme.fontSize.HeadingH4FontSize};
   display: flex;
   align-items: center;
-  .icon-pencil {
-    border-radius: 3px;
-    border: 1px solid ${props => props.theme.colorStyled.ColorWhite};
-    padding: 5px 10px;
-    font-size: 18px;
-    color: #222;
-    &:hover {
-      border-color: ${props => props.theme.colorStyled.ColorWhite};
-      box-shadow: 0 1px 1px #0000001a;
+  font-weight: 600;
+  .type-status{
+    font-size: ${props => props.theme.fontSize.HeadingH6FontSize};
+    text-transform: capitalize;
+    margin-left: 0.2em;
+  }
+  i{
+    &:hover{
+      color: ${props => props.theme.colorStyled.ColorBgDefault};
     }
   }
-  .icon-close {
-    color: #222;
-    font-size: 24px;
-    margin-left: 15px;
-  }
+`;
+
+export const AdminHeadActionGroup = styled.div`
+  display: flex;
+  align-items: center;  
   a {
     text-decoration: none;
-  }
-  ${({ noTitle }) => noTitle
-    && css`
-      .close-action {
-        margin-left: auto;
-      }
-    `};
+  }  
   button:nth-child(n) {
     margin-right: 10px;
   }
@@ -197,9 +191,21 @@ export const InfoOverviewLeft = styled.div`
   flex: 1;
 `;
 
-export const InfoContentBlock = styled.div`
-  display: block;
-  padding: 20px;
+export const AdminInfoContentBlock = styled.div`
+  border-top: 1px solid ${props => props.theme.colorStyled.ColorBorder};
+  padding: 1em 1.5em;
+`;
+
+export const AdminUserDetailsRight = styled.div`
+  flex: 1;
+`;
+
+export const AdminUserDetailsLeft = styled.div`
+  flex: 1;
+`;
+
+export const AdminUserDetailsGroup = styled.div`
+    display: flex;
 `;
 
 export const OverviewLeftSectionWrapper = styled.div`
@@ -212,34 +218,36 @@ export const OverviewRightSectionWrapper = styled.div`
 `;
 
 export const OverviewTitle = styled.div`
-  font-size: 18px;
-  margin-bottom: 15px;
+  font-size: ${props => props.theme.fontSize.HeadingH6FontSize};
+  margin-bottom: 1em;
+  font-weight: 600;
 `;
 
 export const OverviewProduct = styled.div`
   display: flex;
-  align-items: flex-start;
-  line-height: 21px;
-  margin-bottom: 10px;
-  label {
-    color: #666;
-    flex: 0 0 35%;
-  }
-  span {
-    flex: 1;
-  }
-
+  margin-bottom: .5em;
+  align-items: center;
   a {
     text-decoration: unset;
     color: ${props => props.theme.colorStyled.ColoraBtnPrimary};
   }
   ${({ link }) => link
     && css`
-      color: ${props => props.theme.colorStyled.ColoraBtnPrimary};
+      color: ${props => props.theme.colorStyled.ColorPrimary};
       &:hover {
-        color: #154983;
+        opacity: 0.7;
       }
     `};
+`;
+export const OverviewLabel = styled.span`
+  color: ${props => props.theme.colorStyled.ColorLabel};
+  flex: 0 0 10em;
+  font-size:  ${props => props.theme.fontSize.MediumFontSize};
+`;
+export const OverviewValue = styled.span`
+  flex: 1;
+  color: ${props => props.theme.colorStyled.ColorBlack};
+  font-size:  ${props => props.theme.fontSize.BaseFontSize};
 `;
 
 export const OverviewImageWrapper = styled.div`
@@ -342,10 +350,13 @@ export const OverviewAddImage = styled.div`
   }
 `;
 
-export const ItemStatus = styled.div`
-  text-align: right;
-  color: #999;
-  font-size: 11px;
+export const ItemStatus = styled.div.attrs({
+  className: 'type-status',
+})`
+  font-style: italic;
   text-transform: uppercase;
-  line-height: 1.4;
+  font-size:  ${props => props.theme.fontSize.SmallFontSize};
+   ${({ status }) => status && css`      
+      color: ${[COLOR_BY_STATUS[status]]};
+  `};
 `;

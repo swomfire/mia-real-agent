@@ -2,98 +2,115 @@
 import styled, { css } from 'styled-components';
 import { COLOR_BY_STATUS } from '../../../common/enums';
 
-export const TableHeadWrapper = styled.div`
-  display: flex;
-  border-top: 1px solid ${props => props.theme.colorStyled.ColorBlackSecondary};
-  border-bottom: 1px solid ${props => props.theme.colorStyled.ColorBorder};
-  color: #666;
-  background-color: ${props => props.theme.colorStyled.ColorWhite};
-  font-weight: 700;
-  line-height: 1.4;
-  font-size: 12px;
-  min-height: 35px;
-  ${({ bgTable }) => bgTable
-    && css`
-      background-color: #222;
-      color: #fff;
-      border: none;
-      font-size: 13px;
-      & > div {
-        border: none;
-        text-transform: capitalize;
-        color: #fff;
-      }
-    `};
-  ${({ textLarger }) => textLarger
-    && css`
-      color: #222;
-      font-size: 15px;
-    `};
-  ${({ noBorderTop }) => noBorderTop
-    && css`
-      border-top: none;
-    `};
+export const TableHeadWrapper = styled.div`  
 `;
 
 export const TableHeadItemGroup = styled.div`
+  display: flex;  
+  /* box-shadow: ${props => props.theme.boxShandow.headerTable}; */
+`;
+
+export const TableHead = styled.div`
   display: flex;
+  padding: 0 1.5em;
+  border: 1px solid ${props => props.theme.colorStyled.ColorWhite};
+  color: ${props => props.theme.colorStyled.ColorXXLightGrey};
+  min-height: ${props => props.theme.heightSite.heightHeadTable};  
+  font-size:  ${props => props.theme.fontSize.MediumFontSize};
+  flex: 1;    
   align-items: center;
-  width: 100%;
-  cursor: ${props => (props.isPointer ? 'pointer' : 'default')};
+  font-weight: 600;
+  font-size: ${props => props.theme.fontSize.MediumFontSize};
+
+`;
+
+
+export const TableRow = styled(TableHead)`
+  text-transform: none;
+  border: none;
+  min-height: ${props => props.theme.heightSite.heightHeadAdmin};
+  color: ${props => props.theme.colorStyled.ColorMidGrey};
+  font-weight: normal;  
+
+  ${({ status }) => status && css`
+    color: ${[COLOR_BY_STATUS[status]]};
+  `};
+  ${({ active }) => active && css`
+    .icon-dots {
+      color: #0095d8;
+    }
+  `};
+  &.text-bold{
+    font-weight: 700;
+  }
+  &.application-cv {
+    a {
+      color: ${props => props.theme.colorStyled.ColorBgDefault};
+    }
+    
+  }
+  &.application-action {
+    .anticon {
+      border: 1px solid transparent;
+      padding: .25em;
+      margin-right: 1em;
+      font-size: ${props => props.theme.fontSize.HeadingH5FontSize}; 
+    }
+    .anticon-check{
+      color: ${props => props.theme.colorStyled.ColorSusscess}; 
+      &:hover{
+        opacity: 0.7;
+        border: 1px solid ${props => props.theme.colorStyled.ColorSusscess}; 
+      }
+    }
+    .anticon-close{
+      color: ${props => props.theme.colorStyled.ColorWarming}; 
+      &:hover{
+        opacity: 0.7;
+        border: 1px solid ${props => props.theme.colorStyled.ColorWarming}; 
+      }
+    }
+  }
 `;
 
 export const TableContentItemGroup = styled(TableHeadItemGroup)`
-  padding: 10px 0px;
-`;
-
-export const TableContentWrapper = styled.div`
-  border-bottom: 1px solid ${props => props.theme.colorStyled.ColorBorder};
-  border-top: none;
-  color: #263035;
-  font-weight: 700;
-  line-height: 1.4;
-  ${({ bgTable }) => bgTable
-    && css`
-      border: none;
-      font-size: ${props => props.theme.fontSize.MediumFontSize};
-      & > div {
-        & > div {
-          border: none;
-        }
-      }
-    `};
-  ${({ error }) => error
-    && css`
-      border: 1px solid #ad4444;
-    `};
+  flex: 1;
+  display: flex;
 `;
 
 export const TableContentItem = styled.div`
   display: flex;
   flex: 1;
-  border: none;
-  min-height: 68px;
-  background-color: ${props => props.theme.colorStyled.ColorWhite};
-  border-radius: 3px;
-  &:hover {
-    background-color: #f7f7f7;
-  }
-  ${({ noHover }) => noHover
-    && css`
-      &:hover {
-        background-color: transparent;
-      }
-    `};
   ${({ ticket }) => ticket && css`
     border: 1px solid ${props => props.theme.colorStyled.ColorBorder};
     margin-bottom: 15px;
+    & > div{
+      &:first-child{
+        flex: 0 0 2em;
+        padding: 0;
+      }
+    }
   `}
 `;
-
-export const TableDetailWrapper = styled.div`
-  display: flex;
-  align-items: center;
+export const TicketItemGroup = styled.div.attrs({
+  className: 'vienpn-level-1-1',
+})`
 `;
+export const TableContentWrapper = styled.div.attrs({
+  className: 'vienpn-level-1',
+})`
+  border: 1px solid ${props => props.theme.colorStyled.ColorWhite}; 
+  background-color: ${props => props.theme.colorStyled.ColorWhite};  
+  &:nth-child(odd){
+    background-color: ${props => props.theme.colorStyled.ColorXXXLightGrey};   
+  }
+  &:hover{
+    cursor: pointer;
+    border-color: ${props => props.theme.colorStyled.ColorPrimary}; 
+  }
+`;
+
+export const TableDetailWrapper = styled(TableHeadItemGroup)``;
 
 export const TableDetailImages = styled.div`
   flex: 0 0 45px;
@@ -166,7 +183,6 @@ export const MoreActionWrapper = styled.div`
   background-color: ${props => props.theme.colorStyled.ColorWhite};
   border: 1px solid #ccc;
   border-radius: 2px;
-  box-shadow: 0 6px 12px #0000002d;
   z-index: 2;
   cursor: pointer;
 `;
@@ -177,117 +193,6 @@ export const MoreActionItem = styled.div`
   font-size: 13px;
   &:hover {
     color: ${props => props.theme.colorStyled.ColorWhite};
-    background-color: #2e8fda;
-  }
-`;
-
-export const TableHead = styled.div`
-  flex: 1;
-  padding: 0 5px;
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  font-weight: normal;
-  font-size: ${props => props.theme.fontSize.MediumFontSize};
-  color: #586069;
-  ${({ size }) => size
-    && css`
-      flex: 0 0 ${size}px;
-      @media (max-width: 480px) {
-        flex: 0 0 60px;
-      }
-    `};
-  ${({ percent }) => percent
-    && css`
-      flex: 0 0 ${percent}%;
-    `};
-  ${({ textRight }) => textRight
-    && css`
-      justify-content: flex-end;
-    `};
-  ${({ textCenter }) => textCenter
-    && css`
-      justify-content: center;
-    `};
-  ${({ borderRight }) => borderRight
-    && css`
-      border-right: 1px solid #e6e6e6;
-    `};
-  ${({ checkbox }) => checkbox
-    && css`
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    `};
-  ${({ bgChild }) => bgChild
-    && css`
-      background-color: #f7f7f7;
-    `};
-  ${({ widthInput }) => widthInput
-    && css`
-      text-transform: capitalize;
-      input {
-        margin-right: 10px;
-      }
-    `};
-  .anticon-caret-down {
-    margin-left: 5px;
-  }
-  a {
-    color: #586069;
-    &:hover {
-      color: #ff5402;
-    }
-  }
-`;
-
-export const TableRow = styled(TableHead)`
-  text-transform: none;
-  color: ${props => props.theme.colorStyled.ColorBlack};
-  .icon-dots {
-    font-size: 10px;
-    color: #eee;
-  }
-  ${({ noPadding }) => noPadding
-    && css`
-      padding: 0px;
-    `};
-  ${({ status }) => status
-    && css`
-      text-transform: uppercase;
-      /* color: ${[COLOR_BY_STATUS[status]]}; */
-    `};
-  ${({ active }) => active
-    && css`
-      .icon-dots {
-        color: #0095d8;
-      }
-    `};
-  ${({ input }) => input
-    && css`
-      input {
-        width: 100%;
-        text-align: center;
-        padding: 5px 0px;
-        min-height: 30px;
-        &:focus {
-          border-radius: 3px;
-          border: 1px solid #ddd;
-          padding: 5px 0px;
-        }
-      }
-    `};
-  ${({ image }) => image
-    && css`
-      max-height: 60px;
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-      }
-    `};
-  a {
-    color: ${props => props.theme.colorStyled.ColorBlack};
   }
 `;
 
@@ -297,10 +202,22 @@ export const TableEmptyContent = styled.div`
 `;
 
 export const TableStatusContent = styled.span`
-  ${({ status }) => status
-    && css`
+  display: flex;
+  align-items: center;
+  font-size:  ${props => props.theme.fontSize.MediumFontSize};
+  ${({ status }) => status && css`
       font-style: italic;
       text-transform: uppercase;
       color: ${[COLOR_BY_STATUS[status]]};
-    `};
+  `};
+  i {
+    display: inline-block;
+    width: .65em;
+    height: .65em;
+    margin-right: 0.5em;
+    border-radius: 100%;
+    ${({ status }) => status && css`
+      background: ${[COLOR_BY_STATUS[status]]};
+  `};
+  }
 `;

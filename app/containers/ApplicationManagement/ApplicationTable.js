@@ -20,6 +20,7 @@ const applicationColumns = [
     columnAttr: {
       value: toI18n('ADMIN_APPLICATION_TABLE_FULL_NAME'),
       percent: 15,
+      className: 'application-name text-bold',
     },
   },
   {
@@ -28,6 +29,7 @@ const applicationColumns = [
     columnAttr: {
       value: toI18n('ADMIN_APPLICATION_TABLE_CATEGORY'),
       percent: 25,
+      className: 'application-categories',
     },
   },
   {
@@ -36,6 +38,7 @@ const applicationColumns = [
     columnAttr: {
       value: toI18n('ADMIN_APPLICATION_TABLE_YEARS_OF_EXP'),
       percent: 10,
+      className: 'application-yearsOfExp',
     },
   },
   {
@@ -45,6 +48,7 @@ const applicationColumns = [
     columnAttr: {
       value: toI18n('ADMIN_APPLICATION_TABLE_LANGUAGE'),
       percent: 25,
+      className: 'application-languages',
     },
   },
   {
@@ -53,6 +57,7 @@ const applicationColumns = [
     columnAttr: {
       value: toI18n('ADMIN_APPLICATION_TABLE_CV'),
       percent: 5,
+      className: 'application-cv',
     },
   },
   {
@@ -61,6 +66,7 @@ const applicationColumns = [
     columnAttr: {
       value: toI18n('ADMIN_APPLICATION_TABLE_ROLE'),
       percent: 5,
+      className: 'application-role',
     },
   },
   {
@@ -69,6 +75,7 @@ const applicationColumns = [
     columnAttr: {
       value: toI18n('ADMIN_APPLICATION_TABLE_STATUS'),
       percent: 5,
+      className: 'application-satus',
     },
   },
   {
@@ -79,17 +86,20 @@ const applicationColumns = [
         oneOf: [APPLICATION_STATUS.PENDING],
         action: 'applicationApprove',
         type: 'check',
+        className: 'application-checked',
       },
       {
         dataKey: 'status',
         oneOf: [APPLICATION_STATUS.PENDING],
         action: 'applicationReject',
         type: 'close',
+        className: 'application-close',
       },
     ],
     columnAttr: {
       value: toI18n('ADMIN_APPLICATION_TABLE_ACTIONS'),
       percent: 10,
+      className: 'application-action',
     },
   },
 ];

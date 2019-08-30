@@ -8,7 +8,12 @@ import {
   OverviewLeftSectionWrapper,
   OverviewTitle,
   OverviewProduct,
-  InfoContentBlock,
+  AdminInfoContentBlock,
+  OverviewLabel,
+  OverviewValue,
+  AdminUserDetailsGroup,
+  AdminUserDetailsLeft,
+  AdminUserDetailsRight,
 } from 'components/Generals/ItemDetail.styled';
 import { DATE_TIME_FORMAT, COLUMN_TYPE } from 'utils/constants';
 import TableDetail from 'components/Generals/TableDetail';
@@ -19,10 +24,8 @@ const defaultColumns = [
   {
     headerPropertise: {
       value: toI18n('ADMIN_USERS_DETAIL_TICKET_TABLE_TICKET_ID'),
-      size: '100',
     },
     contentPropertise: {
-      size: '100',
     },
     dataKey: 'ticketId',
     type: COLUMN_TYPE.TEXT,
@@ -30,10 +33,8 @@ const defaultColumns = [
   {
     headerPropertise: {
       value: toI18n('ADMIN_USERS_DETAIL_TICKET_TABLE_CREATED_AT'),
-      size: '200',
     },
     contentPropertise: {
-      size: '200',
     },
     dataKey: 'createdAt',
     type: COLUMN_TYPE.DATE,
@@ -42,10 +43,8 @@ const defaultColumns = [
   {
     headerPropertise: {
       value: toI18n('ADMIN_USERS_DETAIL_TICKET_TABLE_CATEGORY'),
-      size: '200',
     },
     contentPropertise: {
-      size: '200',
     },
     dataKey: 'category',
     type: COLUMN_TYPE.TEXT,
@@ -63,8 +62,8 @@ const defaultColumns = [
 class UserDetailInfoContent extends PureComponent {
   renderOverviewInfo = (label, value, isLink = false) => (
     <OverviewProduct link={isLink}>
-      <label>{label}</label>
-      <span>{value || '-'}</span>
+      <OverviewLabel>{label}</OverviewLabel>
+      <OverviewValue>{value || '-'}</OverviewValue>
     </OverviewProduct>
   );
 
@@ -178,10 +177,8 @@ class UserDetailInfoContent extends PureComponent {
         {
           headerPropertise: {
             value: toI18n('ADMIN_USERS_DETAIL_TICKET_TABLE_ASSIGNEE'),
-            size: '150',
           },
           contentPropertise: {
-            size: '150',
           },
           dataKey: 'assignee.username',
           type: COLUMN_TYPE.TEXT,
@@ -189,10 +186,8 @@ class UserDetailInfoContent extends PureComponent {
         {
           headerPropertise: {
             value: 'Status',
-            size: '100',
           },
           contentPropertise: {
-            size: '100',
           },
           dataKey: 'status',
           type: COLUMN_TYPE.STATUS,
@@ -203,11 +198,9 @@ class UserDetailInfoContent extends PureComponent {
         ...defaultColumns,
         {
           headerPropertise: {
-            value: toI18n('ADMIN_USERS_DETAIL_TICKET_TABLE_OWNER'),
-            size: '150',
+            value: toI18n('ADMIN_USERS_DETAIL_TICKET_TABLE_OWNER'),            
           },
           contentPropertise: {
-            size: '150',
           },
           dataKey: 'owner.username',
           type: COLUMN_TYPE.TEXT,
@@ -215,7 +208,6 @@ class UserDetailInfoContent extends PureComponent {
         {
           headerPropertise: {
             value: 'Status',
-            size: '100',
           },
           contentPropertise: {
             size: '100',
@@ -231,11 +223,17 @@ class UserDetailInfoContent extends PureComponent {
 
   render() {
     return (
-      <InfoContentBlock>
-        {this.renderItemOverview()}
-        {this.renderItemProfile()}
+      <AdminInfoContentBlock>
+        <AdminUserDetailsGroup>
+          <AdminUserDetailsLeft>
+            {this.renderItemProfile()}
+          </AdminUserDetailsLeft>
+          <AdminUserDetailsRight>
+            {this.renderItemOverview()}
+          </AdminUserDetailsRight>
+        </AdminUserDetailsGroup>
         {this.renderTicketsTable()}
-      </InfoContentBlock>
+      </AdminInfoContentBlock>
     );
   }
 }

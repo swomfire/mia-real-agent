@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
-import { Icon } from 'antd';
 import _isEmpty from 'lodash/isEmpty';
 import { shape } from 'prop-types';
 import IntentList from '../../containers/IntentList';
 import {
-  IntentManagementWrapper, IntentPageWrapper,
-  IntentDetailWrapper, IntentHeaderWrapper, AddResponseButton, PleaseSelectIntent,
+  IntentPageWrapper,
+  IntentDetailWrapper, PleaseSelectIntent,
 } from './styles';
+import {
+  ItemDetailListWrapper,
+  AdminDetailsContainer,
+  TitleDetailsHead,
+  AdminHeadActionGroup,
+  HeaderTextDetails,
+} from '../Generals/ItemDetail.styled';
+import { ButtonApprove } from '../../stylesheets/Button.style';
 import IntentDetail from '../../containers/IntentDetail/IntentDetail';
 import AddResponseModal from '../../containers/AddResponseModal';
 import { toI18n } from '../../utils/func-utils';
@@ -30,31 +37,42 @@ class IntentManagementPage extends Component {
     const { currentIntent } = this.props;
     return (
       <IntentPageWrapper>
-        <IntentManagementWrapper>
+        <ItemDetailListWrapper>
           <IntentList />
-        </IntentManagementWrapper>
-        {_isEmpty(currentIntent) ? (
-          <PleaseSelectIntent>{toI18n('ADMIN_INTENT_DETAIL_PLEASE_SELECT_AN_INTENT')}</PleaseSelectIntent>
-        )
-          : (
-            <IntentDetailWrapper>
-              <IntentHeaderWrapper>
-                <h2>
-                  {toI18n('ADMIN_INTENT_DETAIL_TITLE')}
-                  {' '}
-                  {currentIntent.displayName}
-                </h2>
-                <AddResponseButton onClick={() => this.toggleCreateResponseModal(true)}>
-                  <Icon type="plus" />
-                </AddResponseButton>
-              </IntentHeaderWrapper>
-              <IntentDetail />
-            </IntentDetailWrapper>
-          )}
-        <AddResponseModal
-          isOpen={createResponseModalVisible}
-          handleClose={() => this.toggleCreateResponseModal(false)}
-        />
+        </ItemDetailListWrapper>
+        <AdminDetailsContainer>
+          {_isEmpty(currentIntent) ? (
+            <PleaseSelectIntent>{toI18n('ADMIN_INTENT_DETAIL_PLEASE_SELECT_AN_INTENT')}</PleaseSelectIntent>
+          )
+            : (
+              <div>
+                <TitleDetailsHead>
+                  <HeaderTextDetails>
+                    <span>
+                      {toI18n('ADMIN_INTENT_DETAIL_TITLE')}
+                      {' '}
+                      {currentIntent.displayName}
+                    </span>
+                  </HeaderTextDetails>
+                  <AdminHeadActionGroup>
+                    <ButtonApprove
+                      onClick={() => this.toggleCreateResponseModal(true)}
+                    >
+                      <i className="mia-add" />
+                      <span>Add New</span>
+                    </ButtonApprove>
+                  </AdminHeadActionGroup>
+                </TitleDetailsHead>
+                <IntentDetailWrapper>
+                  <IntentDetail />
+                </IntentDetailWrapper>
+              </div>
+            )}
+          <AddResponseModal
+            isOpen={createResponseModalVisible}
+            handleClose={() => this.toggleCreateResponseModal(false)}
+          />
+        </AdminDetailsContainer>
       </IntentPageWrapper>
     );
   }

@@ -4,6 +4,7 @@ import _find from 'lodash/find';
 import _reduce from 'lodash/reduce';
 import _startsWith from 'lodash/startsWith';
 import SidebarItem from './SideBarItem';
+import AdminTopNavBar from '../../components/AdminTopNavBar';
 import {
   LeftSideBarAdmin,
   SidebarToggleButton,
@@ -160,6 +161,7 @@ class LeftSideBar extends PureComponent {
             {this.renderLogo()}
             <IconToggle onClick={handleToggle} className="mia-chevron-right" />
           </SidebarToggleButton>
+          <AdminTopNavBar />
           {TABS_MENU.map(this.renderTabItem)}
         </SidebarBlockAdmin>
       </LeftSideBarAdmin>

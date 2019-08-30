@@ -19,6 +19,7 @@ const userColumns = [
     columnAttr: {
       value: toI18n('ADMIN_USERS_TABLE_USERNAME'),
       percent: '20',
+      className: 'user-username text-bold',
     },
   },
   {
@@ -26,6 +27,7 @@ const userColumns = [
     dataKey: 'email',
     columnAttr: {
       value: toI18n('ADMIN_USERS_TABLE_EMAIL'),
+      className: 'user-email text-bold',
     },
   },
   {
@@ -34,6 +36,7 @@ const userColumns = [
     columnAttr: {
       value: toI18n('ADMIN_USERS_TABLE_COMPANY'),
       percent: '15',
+      className: 'user-company',
     },
   },
   {
@@ -42,6 +45,7 @@ const userColumns = [
     columnAttr: {
       value: toI18n('ADMIN_USERS_TABLE_PHONE'),
       percent: '15',
+      className: 'user-phone',
     },
   },
   {
@@ -50,6 +54,7 @@ const userColumns = [
     columnAttr: {
       value: toI18n('ADMIN_USERS_TABLE_ROLE'),
       percent: '15',
+      className: 'user-role',
     },
   },
 ];

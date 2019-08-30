@@ -1,21 +1,33 @@
 import styled from 'styled-components';
 
 export const ResponseItemWrapper = styled.div`
-  padding: 10px;
-  background: white;
-  margin: 5px;
-  box-shadow: -1px 1px 3px #e3e3e3;
   display: flex;
+  flex-wrap: wrap;
+  padding: 1em 1.5em;
+  border-top: 1px solid ${props => props.theme.colorStyled.ColorBorder};
 `;
 
 export const ResponseParameterWrapper = styled.div`
-  flex: 0 0 40%;
+  margin-right: .75em;
+
 `;
 
 export const ResponseValueWrapper = styled.div`
-  flex: 0 0 40%;
+ flex: 0 0 100%; 
 `;
 
 export const ResponseActionWrapper = styled.div`
-  flex: auto;
+  font-size: ${props => props.theme.fontSize.BaseFontSize};
+  
+  .mia-edit{
+    margin-right: .5em;
+    &:hover{
+      color:  ${props => props.theme.colorStyled.ColorBgDefault};
+    }
+  }
+   .mia-close{
+    &:hover{
+      color:  ${props => props.theme.colorStyled.ColorWarming};
+    }
+  }
 `;

@@ -205,7 +205,7 @@ export const ArrayWrapper = styled.div`
 `;
 
 export const ArrayTagWrapper = styled.div`
-  width: 100%;
+  width: calc(100% - 20px);
   padding: 15px 0px;    
   border-bottom: 1px solid #efeaea;
   position: relative;

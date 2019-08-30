@@ -7,7 +7,9 @@ import {
   OverviewLeftSectionWrapper,
   OverviewTitle,
   OverviewProduct,
-  InfoContentBlock,
+  AdminInfoContentBlock,
+  OverviewLabel,
+  OverviewValue,
 } from 'components/Generals/ItemDetail.styled';
 import { Tabs, Icon } from 'antd';
 import moment from 'moment';
@@ -39,8 +41,8 @@ class ApplicationDetailInfoContent extends PureComponent {
 
   renderOverviewInfo = (label, value, isLink = false) => (
     <OverviewProduct link={isLink}>
-      <label>{label}</label>
-      <span>{value instanceof Array ? value.join(', ') || '-' : (value || '-')}</span>
+      <OverviewLabel>{label}</OverviewLabel>
+      <OverviewValue>{value instanceof Array ? value.join(', ') || '-' : (value || '-')}</OverviewValue>
     </OverviewProduct>
   );
 
@@ -199,9 +201,9 @@ class ApplicationDetailInfoContent extends PureComponent {
 
   render() {
     return (
-      <InfoContentBlock>
+      <AdminInfoContentBlock>
         {this.renderItemOverview()}
-      </InfoContentBlock>
+      </AdminInfoContentBlock>
     );
   }
 }

@@ -56,6 +56,9 @@ export const COLOR_BY_STATUS = {
   Processing: '#05ca05',
   Idle: '#f7d00f',
   Offline: '#8e8e8e',
+  Approved: '#05ca05',
+  Rejected: '#b52d2d',
+  Closed: '#898c8e',
 };
 
 export const POPUP_TYPE = {

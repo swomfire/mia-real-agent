@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import _isEmpty from 'lodash/isEmpty';
 import Scrollbar from 'components/Scrollbar';
 import SpinnerLoading from 'components/PageLoading/SpinnerLoading';
-import { ItemDetailInfoWrapper } from 'components/Generals/ItemDetail.styled';
+import { AdminDetailsContainer } from 'components/Generals/ItemDetail.styled';
 import ErrorContent from 'components/ErrorContent';
 import ApplicationDetailInfoContent from './ApplicationDetailInfoContent';
 import ApplicationDetailInfoHeader from './ApplicationDetailInfoHeader';
@@ -40,17 +40,17 @@ class applicationDetailInfo extends PureComponent {
 
     if (_isEmpty(applicationDetail) || applicationDetail.isLoading) {
       return (
-        <ItemDetailInfoWrapper>
+        <AdminDetailsContainer>
           <SpinnerLoading />
-        </ItemDetailInfoWrapper>
+        </AdminDetailsContainer>
       );
     }
 
     if (applicationDetail.error) {
       return (
-        <ItemDetailInfoWrapper>
+        <AdminDetailsContainer>
           <ErrorContent error={applicationDetail.error} />
-        </ItemDetailInfoWrapper>
+        </AdminDetailsContainer>
       );
     }
 
@@ -63,7 +63,7 @@ class applicationDetailInfo extends PureComponent {
       applicationReview,
     };
     return (
-      <ItemDetailInfoWrapper>
+      <AdminDetailsContainer>
         <ApplicationDetailInfoHeader
           applicationId={_id}
           firstName={firstName}
@@ -74,7 +74,7 @@ class applicationDetailInfo extends PureComponent {
         <Scrollbar autoHide style={scrollStyle}>
           <ApplicationDetailInfoContent applicationDetail={applicationDetail} />
         </Scrollbar>
-      </ItemDetailInfoWrapper>
+      </AdminDetailsContainer>
     );
   }
 }

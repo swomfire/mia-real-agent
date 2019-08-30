@@ -13,7 +13,7 @@ import { NoResposne, SpinningWrapper } from './styles';
 
 const widthBreakpoint = 768;
 const scrollStyle = {
-  height: 'calc(100vh - 150px)',
+  height: 'calc(100vh - 105px)',
   width: '100%',
 };
 

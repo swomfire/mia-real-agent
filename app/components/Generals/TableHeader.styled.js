@@ -1,95 +1,30 @@
 import styled, { css } from 'styled-components';
 
-export const TableHeaderWrapper = styled.div`
+export const HeaderAdminWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
-  height: 60px;
-  .icon-close {
-    font-size: 25px;
-    &:hover {
-      opacity: 0.6;
+  padding: 1em;
+  height:  ${props => props.theme.heightSite.heightHeadAdmin};
+`;
+
+export const TitleAdminHead = styled.div.attrs({
+  className: 'title-header-admin',
+})`
+  margin-right: 1.5em;
+`;
+
+export const TitleAdminMain = styled.span`
+  font-weight: 600;
+  font-size: ${props => props.theme.fontSize.HeadingH3FontSize};
+`;
+export const HeaderActionWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  button{
+    margin-right: 0.75em;
+    &:last-child{
+      margin: 0;
     }
-  }
-`;
-
-export const TableHeaderLeftWrapper = styled.div`
-  position: relative;
-  font-size: 20px;
-  .select__option {
-    border-color: #ddd;
-    cursor: pointer;
-  }
-  .select__control {
-    border: none;
-  }
-  .select__indicator-separator {
-    display: none;
-  }
-  .select__single-value,
-  .select__placeholder {
-    color: #222;
-    font-size: 20px;
-  }
-  .select__value-container {
-    min-width: 190px;
-    font-size: ${props => props.theme.fontSize.MediumFontSize};
-    padding: 2px 0px;
-  }
-  .select__indicator svg {
-    width: 15px;
-    height: 15px;
-    color: #222;
-  }
-  .select__control--is-focused {
-    box-shadow: none;
-    border-color: ${props => props.theme.colorStyled.ColorWhite} !important;
-  }
-  .select__option--is-focused {
-    background-color: ${props => props.theme.colorStyled.ColorWhite};
-  }
-`;
-
-export const TableHeaderRightWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  a {
-    text-decoration: none;
-  }
-`;
-
-export const TableHeaderAddNewButton = styled.div`
-  background-color: ${props => props.theme.colorStyled.ColorBgDefault};
-  border-color: ${props => props.theme.colorStyled.ColorBgDefault};
-  border-radius: 3px;
-  color: ${props => props.theme.colorStyled.ColorWhite};
-  padding: 5px 12px;
-  margin-right: 10px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  cursor: pointer;
-  i {
-    margin-right: 3px;
-    font-size: 20px;
-  }
-  &:hover {
-    opacity: 0.8;
-  }
-`;
-
-export const TableHeaderSortButton = styled.div`
-  position: relative;
-  border-radius: 3px;
-  border: 1px solid #bfbfbf;
-  background-color: ${props => props.theme.colorStyled.ColorWhite};
-  padding: 5px 10px;
-  font-size: 18px;
-  cursor: pointer;
-  &:hover {
-    border-color: #7d7d7d;
-    box-shadow: 0 1px 1px #0000001a;
   }
 `;
 
@@ -173,12 +108,5 @@ export const TableHeaderFilterWrapper = styled(TableHeaderSortWrapper)`
     top: -8px;
     right: 132px;
     position: absolute;
-  }
-`;
-
-export const TableHeaderLeftTitle = styled.span`
-  i {
-    margin-left: 10px;
-    font-size: 15px;
   }
 `;

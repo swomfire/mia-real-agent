@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 export const LeftSideBarAdmin = styled.div`
   height: 100vh;
   width: 100%;  
-   background-color: ${props => props.theme.colorStyled.ColorBlack};
+  background-color: ${props => props.theme.colorStyled.ColorBlack};
   ${({ isToggle }) => isToggle && css`
       width: 3.125em;      
   `};
@@ -15,6 +15,7 @@ export const SidebarBlockAdmin = styled.ul``;
 export const LogoWrapper = styled.div.attrs({
   className: 'logo-admin',
 })`
+  border-bottom: 1px solid ${props => props.theme.colorStyled.ColorXLightGrey};
   height: 100%;
   width: 100%;
   display: flex;
@@ -59,11 +60,10 @@ export const IconToggle = styled.i`
 `;
 
 export const SidebarToggleButton = styled.div`
-  height: 3.750em;
+  height:  ${props => props.theme.heightSite.heightHeadAdmin};
   background-color: ${props => props.theme.colorStyled.ColorOverLay};
   cursor: pointer;
   position: relative;
-  margin-bottom: 1em;
   ${({ isToggle }) => isToggle && css`
     display: flex;
     align-items: center;

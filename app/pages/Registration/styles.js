@@ -18,7 +18,7 @@ export const RegistrationItem = styled.div`
 
 export const RegistrationTitle = styled.div`
   text-align: center;
-  font-size: 18px;
+  font-size: ${props => props.theme.fontSize.HeadingH5FontSize};
   margin-bottom: 40px;
 `;
 

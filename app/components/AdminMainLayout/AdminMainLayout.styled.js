@@ -17,4 +17,5 @@ export const AdminContentGroup = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
+  background-color: ${props => props.theme.colorStyled.ColorWhite};
 `;

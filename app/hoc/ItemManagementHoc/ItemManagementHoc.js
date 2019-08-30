@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import HeaderContainer from 'components/HeaderContainer/HeaderContainer';
 import { PageWrapper } from 'components/PermissionDeniedPage/PermissionDeniedPage.styled';
-import { DashboardWrapperStyled } from 'components/AdminDashboard/AdminDashboard.styled';
+import { ItemDetailListWrapper } from 'components/Generals/ItemDetail.styled';
 import ErrorContent from 'components/ErrorContent';
 
 const ItemManagementHoc = (ItemsManagementTable) => {
@@ -36,7 +36,7 @@ const ItemManagementHoc = (ItemsManagementTable) => {
       }
 
       return (
-        <DashboardWrapperStyled>
+        <ItemDetailListWrapper>
           <HeaderContainer
             sortItem={sortItems}
             url={createEndpoint}
@@ -53,8 +53,8 @@ const ItemManagementHoc = (ItemsManagementTable) => {
             filtering={currentFiltering}
             shouldRenderFilter={shouldRenderFilter}
           />
-          <ItemsManagementTable {...propsTables} />
-        </DashboardWrapperStyled>
+          <ItemsManagementTable />
+        </ItemDetailListWrapper>
       );
     }
   }

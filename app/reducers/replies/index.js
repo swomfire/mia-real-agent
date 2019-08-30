@@ -12,9 +12,35 @@ export const REPLIES_SEND_MESSAGE = 'replies/REPLIES_SEND_MESSAGE';
 export const REPLIES_SEND_MESSAGE_SUCCESS = 'replies/REPLIES_SEND_MESSAGE_SUCCESS';
 export const REPLIES_SEND_MESSAGE_FAILED = 'replies/REPLIES_SEND_MESSAGE_FAILED';
 
+export const REPLIES_SEND_WARNING = 'replies/REPLIES_SEND_WARNING';
+export const REPLIES_SEND_WARNING_SUCCESS = 'replies/REPLIES_SEND_WARNING_SUCCESS';
+export const REPLIES_SEND_WARNING_FAILED = 'replies/REPLIES_SEND_WARNING_FAILED';
+
 export const REPLIES_ADD_MESSAGE = 'replies/REPLIES_ADD_MESSAGE';
 
 // action creator
+export const sendReplyWarning = conversationId => ({
+  type: REPLIES_SEND_WARNING,
+  payload: {
+    conversationId,
+  },
+});
+
+export const sendReplyWarningSuccess = conversationId => ({
+  type: REPLIES_SEND_WARNING_SUCCESS,
+  payload: {
+    conversationId,
+  },
+});
+
+export const sendReplyWarningFailed = (conversationId, error) => ({
+  type: REPLIES_SEND_WARNING_FAILED,
+  payload: {
+    conversationId,
+    error,
+  },
+});
+
 export const sendReplyMessage = (conversationId, messages) => ({
   type: REPLIES_SEND_MESSAGE,
   payload: {
@@ -292,6 +318,10 @@ export const actions = {
   fetchReplyMessages,
   fetchReplyMessagesSuccess,
   fetchReplyMessagesFailed,
+
+  sendReplyWarning,
+  sendReplyWarningSuccess,
+  sendReplyWarningFailed,
 };
 
 export const selectors = {

@@ -183,11 +183,12 @@ export default class MessageBox extends Component {
           return botChat(msgId, contents);
         case REPLY_TYPE.RATING_ACTION:
           return ticketRating(msgId, from, params, sentAt);
-        default:
+        case REPLY_TYPE.USER_NORMAL:
           if (from === userId) {
             return userChat(msgId, contents, false, isAgent(userRole));
           }
           return this.renderOtherUserMessageContent(msgId, contents, from);
+        default: return null;
       }
     }),
     this.renderOtherUserTypingContent(),

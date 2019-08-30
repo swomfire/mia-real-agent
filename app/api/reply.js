@@ -7,3 +7,10 @@ export const sendReplyMessage = (from, to, conversationId, messages) => axios
   })
   .then(response => ({ response }))
   .catch(handleError);
+
+export const sendWarningMessage = (from, conversationId) => axios
+  .post('/reply/warning', {
+    from, conversationId,
+  })
+  .then(response => ({ response }))
+  .catch(handleError);

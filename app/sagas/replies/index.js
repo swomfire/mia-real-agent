@@ -7,11 +7,14 @@ import {
   REPLIES_SEND_MESSAGE,
   sendReplyMessageSuccess,
   sendReplyMessageFailed,
+  REPLIES_SEND_WARNING,
+  sendReplyWarningSuccess,
+  sendReplyWarningFailed,
 } from '../../reducers/replies';
 import { actions as TICKET_ACTIONS } from '../../reducers/ticket';
 import { getConverationById } from '../../reducers/conversations';
 import { getUserId } from '../../reducers/auth';
-import { sendReplyMessage as sendReplyMessageAPI } from '../../api/reply';
+import * as ReplyMessageAPI from '../../api/reply';
 
 function* sendReplyMessage({ payload }) {
   const {
@@ -24,7 +27,7 @@ function* sendReplyMessage({ payload }) {
   const to = userId !== owner ? owner : members[0];
   // from, to, conversation, message
   try {
-    const { response, error } = yield call(sendReplyMessageAPI, userId, to, conversationId, messages);
+    const { response, error } = yield call(ReplyMessageAPI.sendReplyMessage, userId, to, conversationId, messages);
     if (error) throw new Error(error);
     const { reply } = get(response, 'data', {});
 
@@ -36,8 +39,24 @@ function* sendReplyMessage({ payload }) {
   }
 }
 
+function* sendReplyWarning({ payload }) {
+  const {
+    conversationId,
+  } = payload;
+  const userId = yield select(getUserId);
+  try {
+    const { error } = yield call(ReplyMessageAPI.sendWarningMessage, userId, conversationId);
+    if (error) throw new Error(error);
+    yield put(sendReplyWarningSuccess(conversationId));
+  } catch (error) {
+    console.log('[REPLY WARNING SAGA] ERROR: ', error.message || error);
+    yield put(sendReplyWarningFailed(conversationId, error.message || error));
+  }
+}
+
 function* repliesSaga() {
   yield takeEvery(REPLIES_SEND_MESSAGE, sendReplyMessage);
+  yield takeEvery(REPLIES_SEND_WARNING, sendReplyWarning);
 }
 
 export default repliesSaga;

@@ -136,6 +136,17 @@ function* updateTicketNotification() {
   }
 }
 
+function* warningTicketNotification() {
+  const socketChannel = yield call(createSocketChannel, socketConnection, SOCKET_EMIT.TICKET_WARNING);
+
+  // watch message and relay the action
+  while (true) {
+    const { ticketId } = yield take(socketChannel);
+    notification.warning({ message: ticketId });
+    // yield put(TICKET_ACTIONS.getAction(ticketId));
+  }
+}
+
 function* connectFlow() {
   const token = yield select(getToken);
   // user is not logged in
@@ -150,6 +161,7 @@ function* connectFlow() {
     foundSolution(),
     removeRequest(),
     updateTicketNotification(),
+    warningTicketNotification(),
   ]);
 }
 

@@ -1,8 +1,10 @@
-import _ from 'lodash';
+/* eslint-disable import/no-cycle */
 import ReplyCollection from './reply.model';
 import BaseService from '../base/base.service';
 import { REPLY_TYPE } from '../../../common/enums';
 import ConversationRoomQueue from '../queue/conversationRoomQueue';
+import AdminQueue from '../queue/adminQueue';
+import TicketService from '../ticket/ticket.service';
 
 class ReplyService extends BaseService {
   constructor() {
@@ -47,12 +49,19 @@ class ReplyService extends BaseService {
       { $match: { operationType: 'insert' } },
     ]).on('change', async (data) => {
       const { fullDocument } = data;
-      const { _id, conversationId } = fullDocument;
-      const reply = await this.collection.findOne({
-        _id,
-      })
-        .populate({ path: 'from', select: ['_id', 'profile', 'role', 'username'] });
-      ConversationRoomQueue.conversationNewMessage(conversationId, reply);
+      const { _id, conversationId, type } = fullDocument;
+      if (type === REPLY_TYPE.WARNING_ACTION) {
+        const { _id: ticketId } = await TicketService.getByCondition({
+          conversationId,
+        });
+        AdminQueue.sendWarningMessage(ticketId);
+      } else {
+        const reply = await this.collection.findOne({
+          _id,
+        })
+          .populate({ path: 'from', select: ['_id', 'profile', 'role', 'username'] });
+        ConversationRoomQueue.conversationNewMessage(conversationId, reply);
+      }
     });
   }
 }

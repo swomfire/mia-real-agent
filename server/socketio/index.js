@@ -7,9 +7,10 @@ import DisconnectQueue from '../modules/queue/disconnectQueue';
 import { closeTicketTimeOut } from './timer';
 import ConversationRoomQueue from '../modules/queue/conversationRoomQueue';
 import { isAgent } from '../../app/utils/func-utils';
-import { SOCKET_EMIT, REPLY_USER_ACTION } from '../../common/enums';
+import { SOCKET_EMIT, REPLY_USER_ACTION, ROLES } from '../../common/enums';
 import ReplyService from '../modules/reply/reply.service';
 import UserQueue from '../modules/queue/userQueue';
+import AdminQueue from '../modules/queue/adminQueue';
 
 const ACTION_MESSAGE = 'ACTION_MESSAGE';
 let socketIO;
@@ -54,6 +55,8 @@ class SocketIOServer {
           Logger.info(`[Socket.io]: The foul [${email}] has exit the fray`);
           if (isAgent(role)) {
             AgentQueue.removeBySocket(socketId);
+          } else if (role === ROLES.ADMIN) {
+            AdminQueue.removeBySocket(socketId);
           } else {
             UserQueue.removeUser(id);
           }
@@ -71,10 +74,13 @@ class SocketIOServer {
         // Handle user/agent online
         connected[socketId] = socket;
         DisconnectQueue.destroyTimer(id);
+        const { _doc } = user;
         if (isAgent(role)) {
           Logger.info(`[Socket.io]: The Mercenary [${email}] has join the fray`);
-          const { _doc } = user;
           AgentQueue.add({ ..._doc, socketId });
+        } else if (role === ROLES.ADMIN) {
+          Logger.info(`[Socket.io]: The Lord [${email}] has join the fray`);
+          AdminQueue.add({ ..._doc, socketId });
         } else {
           UserQueue.addUser(id, socket);
           Logger.info(`[Socket.io]: The Foul [${email}] has join the fray`);

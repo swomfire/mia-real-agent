@@ -138,6 +138,7 @@ export const warningAction = (msgId, from, contents, sentAt) => {
   let messageOwner = '';
   // eslint-disable-next-line no-underscore-dangle
   const { role, profile = {} } = from;
+  console.log(from);
   const { firstName, lastName, company = 'N/A' } = profile;
   switch (role) {
     case ROLES.INDIVIDUAL:

@@ -624,3 +624,8 @@ export const BLOCK_MESSAGES = {
   SKYPE: ['skype'],
   HANGOUT: ['hangout'],
 };
+
+export const FEEDBACK_STATUS = {
+  OPEN: 'Open',
+  SOLVED: 'Solved',
+};

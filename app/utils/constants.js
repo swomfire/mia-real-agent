@@ -83,4 +83,5 @@ export const ROUTE_DETAIL = {
   TICKET_DETAIL_ROUTER: '/admin/tickets/:id',
   TICKET_WARNING_ROUTER: '/admin/tickets-warning/:id',
   INTENT_DETAIL_ROUTER: '/admin/intents/:id',
+  FEEDBACK_DETAIL_ROUTER: '/admin/feedbacks/:id',
 };

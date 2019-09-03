@@ -14,10 +14,12 @@ import LoadingSpin from '../Loading';
 import { toI18n } from '../../utils/func-utils';
 
 const initialValues = {
+  title: '',
   feedbacks: '',
 };
 
 const validationSchema = Yup.object().shape({
+  title: Yup.string().trim().required(toI18n('FORM_REQUIRED')),
   feedbacks: Yup.string().trim().required(toI18n('FORM_REQUIRED')),
 });
 
@@ -51,8 +53,8 @@ export default class CreateFeedbackForm extends PureComponent {
 
   handleSubmit = (values) => {
     const { submitFeedback, ticketId } = this.props;
-    const { feedbacks } = values;
-    submitFeedback(ticketId, feedbacks);
+    const { title, feedbacks } = values;
+    submitFeedback(ticketId, title, feedbacks);
   }
 
   render() {
@@ -64,7 +66,7 @@ export default class CreateFeedbackForm extends PureComponent {
           visible={isOpen}
           onCancel={this.handleCancelConfirm}
           footer={[]}
-          title="Create Feedback"
+          title={toI18n('CREATE_FEEDBACK_MODAL_TITLE')}
           transitionName="zoom"
           wrapClassName="modal-customize"
           width="720px"
@@ -81,6 +83,17 @@ export default class CreateFeedbackForm extends PureComponent {
                 <Form
                   onSubmit={handleSubmit}
                 >
+                  <Row gutter={32}>
+                    <Col sm={24} xs={24}>
+                      <FormInput
+                        name="title"
+                        type="text"
+                        className="vienpn-input"
+                        label={toI18n('CREATE_FEEDBACK_TITLE')}
+                        style={DescriptionTextAreaStyled}
+                      />
+                    </Col>
+                  </Row>
                   <Row gutter={32}>
                     <Col sm={24} xs={24}>
                       <FormInput

@@ -16,7 +16,7 @@ import {
 } from 'selectors/feedback';
 import {
   actions, FEEDBACK_SUBMIT, FEEDBACK_GET_ALL,
-  FEEDBACK_SORTING, FEEDBACK_CHANGE_PAGE,
+  FEEDBACK_SORTING, FEEDBACK_CHANGE_PAGE, FEEDBACK_FETCH_SINGLE,
   // FEEDBACK_FETCH_SINGLE,
 } from '../../reducers/feedbacks';
 import {
@@ -85,24 +85,24 @@ function* getAllFeedback({ payload }) {
     ...actionParam,
   };
 
-  const { response, error } = yield call(FeedbackApi.adminGetAllFeedback, params);
+  const { response, error } = yield call(FeedbackApi.getAllFeedback, params);
   if (error) {
     const message = _get(
       error, 'response.data.message', error.message
     );
-    yield put(actions.getAllFeedbackFailAction(message));
+    yield put(actions.fetchFeedbackFailed(message));
     return;
   }
 
   const data = _get(response, 'data', {});
-  const { result, totalRecord } = data;
+  const { result, total } = data;
 
-  yield put(actions.getAllFeedbackCompleteAction(result, totalRecord));
+  yield put(actions.fetchFeedbackSuccess(result, total));
 }
 
 function* feedbackFetchSingle({ id }) {
   try {
-    const { response, error } = yield call(FeedbackApi.get, id);
+    const { response, error } = yield call(FeedbackApi.getFeedback, id);
     const data = _get(response, 'data', {});
     if (error) {
       throw new Error(error);
@@ -121,7 +121,7 @@ function* feedbackFlow() {
     takeLatest(FEEDBACK_SUBMIT, createFeedback),
     takeLatest(FEEDBACK_GET_ALL, getAllFeedback),
     takeLatest([FEEDBACK_CHANGE_PAGE, FEEDBACK_SORTING], queryFeedbacks),
-    // takeLatest(FEEDBACK_FETCH_SINGLE, feedbackFetchSingle),
+    takeLatest(FEEDBACK_FETCH_SINGLE, feedbackFetchSingle),
   ]);
 }
 

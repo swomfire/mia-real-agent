@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { FEEDBACK_STATUS } from '../../../common/enums';
 const { Schema } = mongoose;
 
 const feedbackSchema = new Schema(
@@ -6,10 +7,24 @@ const feedbackSchema = new Schema(
     ticketId: {
       type: Schema.Types.ObjectId,
       required: true,
+      ref: 'Ticket',
+    },
+    title: {
+      type: String,
+      required: true,
     },
     feedbacks: {
       type: String,
       required: true,
+    },
+    status: {
+      type: String,
+      required: true,
+      enum: [
+        FEEDBACK_STATUS.OPEN,
+        FEEDBACK_STATUS.SOLVED,
+      ],
+      default: FEEDBACK_STATUS.OPEN,
     },
     sentAt: {
       type: Date,

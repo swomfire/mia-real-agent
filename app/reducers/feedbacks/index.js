@@ -6,6 +6,10 @@ export const FEEDBACK_GET_ALL = 'feedbacks/FEEDBACK_GET_ALL';
 export const FEEDBACK_GET_ALL_SUCCESS = 'feedbacks/FEEDBACK_GET_ALL_SUCCESS';
 export const FEEDBACK_GET_ALL_FAILED = 'feedbacks/FEEDBACK_GET_ALL_FAILED';
 
+export const FEEDBACK_FETCH_SINGLE = 'feedback/FEEDBACK_FETCH_SINGLE';
+export const FEEDBACK_FETCH_SINGLE_SUCCESS = 'feedback/FEEDBACK_FETCH_SINGLE_SUCCESS';
+export const FEEDBACK_FETCH_SINGLE_FAIL = 'feedback/FEEDBACK_FETCH_SINGLE_FAIL';
+
 export const FEEDBACK_SUBMIT = 'feedbacks/FEEDBACK_SUBMIT';
 export const FEEDBACK_SUBMIT_SUCCESS = 'feedbacks/FEEDBACK_SUBMIT_SUCCESS';
 export const FEEDBACK_SUBMIT_FAILED = 'feedbacks/FEEDBACK_SUBMIT_FAILED';
@@ -15,20 +19,17 @@ export const FEEDBACK_FILTER = 'feedbacks/FEEDBACK_FILTER';
 export const FEEDBACK_CHANGE_PAGE = 'feedbacks/FEEDBACK_CHANGE_PAGE';
 // action creator
 
-// GET_ALL SINGLE FEEDBACK
+// GET ALL FEEDBACK
 
-export const fetchFeedback = feedbackId => ({
+export const fetchFeedback = payload => ({
   type: FEEDBACK_GET_ALL,
-  payload: {
-    feedbackId,
-  },
+  payload,
 });
 
-export const fetchFeedbackSuccess = feedback => ({
+export const fetchFeedbackSuccess = (result, totalRecord) => ({
   type: FEEDBACK_GET_ALL_SUCCESS,
-  payload: {
-    feedback,
-  },
+  result,
+  totalRecord,
 });
 
 export const fetchFeedbackFailed = error => ({
@@ -38,12 +39,36 @@ export const fetchFeedbackFailed = error => ({
   },
 });
 
+// FETCH SINGLE FEEDBACK
+
+function fetchFeedbackSingle(id) {
+  return {
+    type: FEEDBACK_FETCH_SINGLE,
+    id,
+  };
+}
+
+function fetchFeedbackSingleFail(id, errorMsg) {
+  return {
+    type: FEEDBACK_FETCH_SINGLE_FAIL,
+    errorMsg,
+    id,
+  };
+}
+
+function fetchFeedbackSingleSuccess(payload) {
+  return {
+    type: FEEDBACK_FETCH_SINGLE_SUCCESS,
+    payload,
+  };
+}
+
 // SUBMIT FEEDBACK
 
-export const submitFeedback = (ticketId, feedbacks) => ({
+export const submitFeedback = (ticketId, title, feedbacks) => ({
   type: FEEDBACK_SUBMIT,
   payload: {
-    ticketId, feedbacks,
+    ticketId, title, feedbacks,
   },
 });
 
@@ -150,11 +175,11 @@ function feedbackReducer(state = initialState, action) {
       return state.set('fetching', fromJS({ isFetching: true, errorMsg: '' }));
 
     case FEEDBACK_GET_ALL_SUCCESS: {
-      const { data, totalRecord } = action;
+      const { result, totalRecord } = action;
       const newFeedbacks = state
         .get('feedbacks')
-        .merge(fromJS(_keyBy(data, ({ _id }) => _id)));
-      const visibleFeedbackIds = data.map(({ _id }) => _id);
+        .merge(fromJS(_keyBy(result, ({ _id }) => _id)));
+      const visibleFeedbackIds = result.map(({ _id }) => _id);
 
       return state
         .set('visibleFeedbackIds', fromJS(visibleFeedbackIds))
@@ -164,6 +189,22 @@ function feedbackReducer(state = initialState, action) {
     }
     case FEEDBACK_GET_ALL_FAILED:
       return state.set('fetching', fromJS({ isFetching: false, errorMsg: action.errorMsg }));
+
+    case FEEDBACK_FETCH_SINGLE:
+      return state.setIn(['feedback', action.id, 'isLoading'], true);
+
+    case FEEDBACK_FETCH_SINGLE_SUCCESS: {
+      const { payload } = action;
+      const { _id } = payload;
+      const tmpFeedback = state.get('feedbacks').get(_id) || fromJS({});
+      return state
+        .setIn(['feedbacks', _id], fromJS({ ...tmpFeedback.toJS(), ...payload }));
+    }
+
+    case FEEDBACK_FETCH_SINGLE_FAIL: {
+      const { id, errorMsg } = action;
+      return state.setIn(['feedback', id], fromJS({ error: errorMsg }));
+    }
 
     case FEEDBACK_CHANGE_PAGE:
       return state
@@ -182,6 +223,10 @@ export const actions = {
   fetchFeedback,
   fetchFeedbackSuccess,
   fetchFeedbackFailed,
+
+  fetchFeedbackSingle,
+  fetchFeedbackSingleSuccess,
+  fetchFeedbackSingleFail,
 
   submitFeedbackSuccess,
   submitFeedbackFailed,

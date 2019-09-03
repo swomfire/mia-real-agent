@@ -3,6 +3,7 @@ import _get from 'lodash/get';
 import APIError, { ERROR_MESSAGE } from '../../utils/APIError';
 import BaseController from '../base/base.controller';
 import FeedbackService from './feedback.service';
+import feedbackModel from './feedback.model';
 
 class FeedbackController extends BaseController {
   constructor() {
@@ -22,9 +23,6 @@ class FeedbackController extends BaseController {
       if (!user) {
         throw new APIError(ERROR_MESSAGE.UNAUTHORIZED, httpStatus.UNAUTHORIZED);
       }
-      const { _id: owner } = user;
-      const condition = { owner };
-
       const option = { skip, limit };
       if (sort) {
         const sortObj = JSON.parse(sort);
@@ -34,11 +32,9 @@ class FeedbackController extends BaseController {
       const query = JSON.parse(_get(params, 'query', '{}'));
       const newQuery = {
         ...query,
-        ...condition,
       };
-
-      const { result } = await this.service.getAll(newQuery, option);
-      const total = await this.service.countDocument(condition);
+      const { result } = await this.service.getAllWithPopulate(newQuery, option);
+      const total = await this.service.countDocument(newQuery);
 
       return res.status(httpStatus.OK).send({
         result,

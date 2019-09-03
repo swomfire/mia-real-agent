@@ -32,6 +32,20 @@ const TABS_MENU = [
     link: '/admin/tickets',
   },
   {
+    key: 'tickets-warning',
+    type: 'container',
+    label: toI18n('ADMIN_LEFT_NAV_TICKETS_WARNING'),
+    icon: 'mia-tickets',
+    link: '/admin/tickets-warning',
+  },
+  {
+    key: 'feedbacks',
+    type: 'container',
+    label: toI18n('ADMIN_LEFT_NAV_FEEDBACK'),
+    icon: 'mia-edit',
+    link: '/admin/feedbacks',
+  },
+  {
     key: 'applications',
     type: 'container',
     label: toI18n('ADMIN_LEFT_NAV_APPLICATIONS'),

@@ -180,6 +180,8 @@ const en = {
     // Admin Left navbar
     ADMIN_LEFT_NAV_DASHBOARD: 'Dashboard',
     ADMIN_LEFT_NAV_TICKETS: 'Tickets',
+    ADMIN_LEFT_NAV_TICKETS_WARNING: 'Tickets-warning',
+    ADMIN_LEFT_NAV_FEEDBACK: 'Feedback',
     ADMIN_LEFT_NAV_APPLICATIONS: 'Applications',
     ADMIN_LEFT_NAV_USERS: 'Users',
     ADMIN_LEFT_NAV_INTENTS: 'Intents',
@@ -268,6 +270,13 @@ const en = {
     ADMIN_TICKET_DETAIL_OWNER: 'Owner',
     ADMIN_TICKET_DETAIL_ASSIGNEE: 'Assignee',
     ADMIN_TICKET_DETAIL_CONVERSATION_LOG: 'Conversation log:',
+    // Admin ticket detail
+    ADMIN_FEEDBACK_DETAIL_PRIMARY_DETAILS: 'Feedback Details',
+    ADMIN_FEEDBACK_DETAIL_FEEDBACKS: 'Feedbacks',
+    ADMIN_FEEDBACK_DETAIL_PLEASE_SELECT_FEEDBACKS: 'PLease select feedback',
+    ADMIN_FEEDBACK_DETAIL_TICKET_DETAILS: 'Ticket Details',
+    ADMIN_FEEDBACK_DETAIL_TICKET_ID: 'ID',
+    ADMIN_FEEDBACK_DETAIL_TITLE: 'Title',
     // Admin intent table
     ADMIN_INTENT_TABLE_DISPLAY_NAME: 'Name',
     ADMIN_INTENT_TABLE_ALL_INTENT: 'All Intent',
@@ -342,6 +351,8 @@ const en = {
     RESET_PASSWORD_CONFIRM_PASSWORD_ERROR: 'Confirm Password not match',
     RESET_PASSWORD_COMPLETE: 'Your password had been reset',
     // Create Feedback form
+    CREATE_FEEDBACK_MODAL_TITLE: 'Send Feedback',
+    CREATE_FEEDBACK_TITLE: 'Title',
     CREATE_FEEDBACK_FEEDBACKS: 'Feedbacks',
     CREATE_FEEDBACK_SUCCESS: 'Feedbacks submitted',
   },

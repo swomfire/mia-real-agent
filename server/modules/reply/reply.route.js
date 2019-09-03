@@ -6,6 +6,7 @@ class ReplyRouter {
     this.router = Router();
 
     this.router.post('/', controller.insertReply);
+    this.router.post('/warning', controller.insertWarning);
   }
 }
 

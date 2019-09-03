@@ -22,7 +22,8 @@ export const MessageBoxItem = styled.div`
     }
     p {
       float: left;
-      background-color: #f5f5f5;
+      background-color:  ${props => props.theme.colorStyled.ColorMidGrey};
+      color: ${props => props.theme.colorStyled.ColorWhite};
     }
   `}
   ${({ right }) => right && css`
@@ -34,7 +35,7 @@ export const MessageBoxItem = styled.div`
     p {
       float: right;
       color: ${props => props.theme.colorStyled.ColorWhite};
-      background-color: #ff5504;
+      background-color: ${props => props.theme.colorStyled.ColorBgDefault};
     }
     > div{
      align-items: flex-end;
@@ -57,7 +58,7 @@ export const MessageText = styled.div`
 
 export const UserMessage = styled.p`
   /* margin-right: 10px; */
-  background-color: ${({ pending }) => pending && '#f78b5f !important'};
+  background-color: ${({ pending, theme }) => pending && `${theme.colorStyled.ColorIcon} !important`};
 `;
 
 export const TicketStatus = styled.div`
@@ -83,7 +84,7 @@ export const TicketActionStatusTitle = styled.span`
 export const TicketRatingScore = styled.span`
   font-weight: 600;
   font-style: italic;
-  color: #ffd400;
+  color: ${props => props.theme.colorStyled.ColorRatingStar};
   font-size: 1.5em;
   margin: 0 5px;
 `;
@@ -109,10 +110,10 @@ export const LineDivider = styled.span`
     display: flex;
     align-items: center;
     flex: 0 0 20%;
-    background-color: #b9b9b9;
+    background-color: ${props => props.theme.colorStyled.ColorBorder};
     justify-content: center;
     font-size: 0.75em;
-    color: #b9b9b9;
+    color: ${props => props.theme.colorStyled.ColorBorder};
     margin: 0 2em;
     height: 1px;
     opacity: .7;
@@ -120,11 +121,11 @@ export const LineDivider = styled.span`
 
 const loading = keyframes`
   0% {
-    color: #828282;
+    color: ${props => props.theme.colorStyled.ColorMidGrey};
   }
 
   50% {
-    color: #ffff;
+    color: ${props => props.theme.colorStyled.ColorGrey};
   }
 `;
 
@@ -150,6 +151,14 @@ export const ProfileImageStyled = styled.img`
 
 export const CommentWrapper = styled.div`
   text-align: center;
-  color: #7a7a7a;
+  color: ${props => props.theme.colorStyled.ColorComment};
   font-weight: 600;
+`;
+
+export const UserLabelWarning = styled.div`
+  font-weight: 600;
+  font-style: italic;
+  color: ${props => props.theme.colorStyled.ColorUserLabel};
+  width: 100%;
+  text-align: ${({ user }) => user ? 'end' : 'start'};
 `;

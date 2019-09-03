@@ -10,14 +10,15 @@ export const combineChat = (replyMessages = []) => {
   replyMessages.sort(({ sentAt: a }, { sentAt: b }) => compareDate(a, b)).forEach((message) => {
     const {
       _id, from, type, params,
-      messages, sentAt,
+      messages = '', sentAt,
     } = message;
     if (type === REPLY_TYPE.TICKET_STATUS
       || type === REPLY_TYPE.USER_ACTION
       || type === REPLY_TYPE.RATING_ACTION
+      || type === REPLY_TYPE.WARNING_ACTION
     ) {
       combined.push({
-        _id: combined.length, type, from, params, sentAt,
+        _id: combined.length, type, contents: [{ _id, messages, sentAt }], from, params, sentAt,
       });
       return;
     }

@@ -10,7 +10,7 @@ import {
   AUTH_LOGOUT,
   getUserId,
 } from '../../reducers/auth';
-import { addNewMessage } from '../../reducers/replies';
+import { addNewMessage, fetchReplyMessages } from '../../reducers/replies';
 import { actions as TICKET_ACTIONS } from '../../reducers/ticket';
 import { actions as REQUEST_ACTIONS } from '../../reducers/requests';
 import {
@@ -18,6 +18,7 @@ import {
   USER_JOIN_CONVERSATION, USER_TYPING, getCurrentConveration, USER_LEFT_CONVERSATION,
 } from '../../reducers/conversations';
 import { SOCKET_EMIT } from '../../../common/enums';
+import history from '../../utils/history';
 
 
 let socketConnection;
@@ -136,6 +137,25 @@ function* updateTicketNotification() {
   }
 }
 
+function* warningTicketNotification() {
+  const socketChannel = yield call(createSocketChannel, socketConnection, SOCKET_EMIT.TICKET_WARNING);
+
+  // watch message and relay the action
+  while (true) {
+    const { ticketId, conversationId } = yield take(socketChannel);
+    notification.warning({
+      message: ticketId,
+      onClick: () => {
+        history.push(`/admin/tickets-warning/${ticketId}`);
+      },
+      style: {
+        cursor: 'pointer',
+      },
+    });
+    yield put(fetchReplyMessages(conversationId));
+  }
+}
+
 function* connectFlow() {
   const token = yield select(getToken);
   // user is not logged in
@@ -150,6 +170,7 @@ function* connectFlow() {
     foundSolution(),
     removeRequest(),
     updateTicketNotification(),
+    warningTicketNotification(),
   ]);
 }
 

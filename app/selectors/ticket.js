@@ -72,6 +72,18 @@ const getTicketDetailFromRoute = createSelector(
   (path, tickets) => tickets.get(path, emptyMap).toJS(),
 );
 
+const getTicketIdFromWarningRoute = createSelector(
+  getRouteMatch(ROUTE_DETAIL.TICKET_WARNING_ROUTER),
+  match => _get(match, 'params.id', null),
+);
+
+
+const getTicketWarningFromRoute = createSelector(
+  getTicketIdFromWarningRoute,
+  getTickets,
+  (path, tickets) => tickets.get(path, emptyMap).toJS(),
+);
+
 const getCurrentTicket = ({ ticket }) => ticket.get('currentTicket');
 // eslint-disable-next-line no-underscore-dangle
 
@@ -103,4 +115,6 @@ export {
   getTotalCount,
   getTicketById,
   getCurrentTicket,
+  getTicketIdFromWarningRoute,
+  getTicketWarningFromRoute,
 };

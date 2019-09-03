@@ -1,6 +1,6 @@
 import { REPLY_TYPE } from '../../../common/enums';
 import {
-  ticketStatus, userAction, botChat, userChat, ticketRating, otherChat,
+  ticketStatus, userAction, botChat, userChat, ticketRating, otherChat, warningAction,
 } from '../ChatItem';
 import { combineChat, isAgent } from '../../utils/func-utils';
 
@@ -29,6 +29,8 @@ export const conversationTranscript = (messages) => {
       }
       case REPLY_TYPE.RATING_ACTION:
         return ticketRating(_id, ownerMessage, params, sentAt);
+      case REPLY_TYPE.WARNING_ACTION:
+        return warningAction(_id, ownerMessage, contents, sentAt);
       default: return null;
     }
   });

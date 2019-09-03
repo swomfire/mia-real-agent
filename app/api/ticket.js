@@ -65,3 +65,13 @@ export const submitRating = (id, rating) => axios
   .post(`tickets/${id}/rating`, rating)
   .then(response => ({ response }))
   .catch(handleError);
+
+export const adminGetAllTicketWarning = params => axios
+  .get('admin/tickets-warning', { params })
+  .then(response => ({ response }))
+  .catch(handleError);
+
+export const getWarning = id => axios
+  .get(`admin/tickets-warning/${id}`)
+  .then(response => ({ response }))
+  .catch(handleError);

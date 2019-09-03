@@ -7,13 +7,13 @@ import IdleQueue from '../queue/idleQueue';
 import ConversationService from '../conversation/conversation.service';
 import TicketService from '../ticket/ticket.service';
 import { TICKET_STATUS, SOCKET_EMIT, REPLY_TYPE } from '../../../common/enums';
-import { checkContext } from './reply.utils';
 import userQueue from '../queue/userQueue';
 
 class ReplyController extends BaseController {
   constructor() {
     super(ReplyService);
     this.insertReply = this.insertReply.bind(this);
+    this.insertWarning = this.insertWarning.bind(this);
     this.getResponseFromMia = this.getResponseFromMia.bind(this);
   }
 
@@ -62,6 +62,19 @@ class ReplyController extends BaseController {
       } else {
         setTimeout(() => this.getResponseFromMia(reply), 0);
       }
+      return res.status(httpStatus.OK).send({ reply });
+    } catch (error) {
+      return super.handleError(res, error);
+    }
+  }
+
+  async insertWarning(req, res) {
+    try {
+      const reply = req.body;
+      await this.service.insert({
+        ...reply,
+        type: REPLY_TYPE.WARNING_ACTION,
+      });
       return res.status(httpStatus.OK).send({ reply });
     } catch (error) {
       return super.handleError(res, error);

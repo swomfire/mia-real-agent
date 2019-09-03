@@ -7,10 +7,10 @@ import {
   MessageBoxSystemNotification, LineDivider,
   MessageBoxItemIsTyping, IsTypingWrapper,
   TicketActionStatus, UserAction, TicketActionStatusTitle,
-  TicketRatingScore, CommentWrapper,
+  TicketRatingScore, CommentWrapper, UserWarning, UserLabelWarning,
 } from './styles';
 import { ROLES } from '../../../common/enums';
-import { toI18n } from '../../utils/func-utils';
+import { toI18n, isAgent } from '../../utils/func-utils';
 
 const renderTime = (time) => {
   if (moment().diff(time, 'days') === 0) {
@@ -131,6 +131,61 @@ export const userAction = (msgId, from, params, sentAt) => {
       </Tooltip>
       <LineDivider />
     </MessageBoxSystemNotification>
+  );
+};
+
+export const warningAction = (msgId, from, contents, sentAt) => {
+  let messageOwner = '';
+  // eslint-disable-next-line no-underscore-dangle
+  const { role, profile = {} } = from;
+  const { firstName, lastName, company = 'N/A' } = profile;
+  switch (role) {
+    case ROLES.INDIVIDUAL:
+      messageOwner = `${firstName} ${lastName}`;
+      break;
+    case ROLES.BUSINESS:
+      messageOwner = company;
+      break;
+    default:
+      messageOwner = `${firstName} ${lastName}`;
+      break;
+  }
+  if (isAgent(from.role)) {
+    return (
+      <MessageBoxItem left key={msgId}>
+        <MessageText>
+          {
+            contents.map(({ _id, messages }) => (
+              <Tooltip placement="left" title={renderTime(sentAt)}>
+                <UserLabelWarning>
+                  {messageOwner}
+                </UserLabelWarning>
+                <p key={_id}>
+                  {messages}
+                </p>
+              </Tooltip>
+            ))
+          }
+        </MessageText>
+      </MessageBoxItem>
+    );
+  }
+  return (
+    <MessageBoxItem right key={msgId}>
+      <MessageText>
+        {contents.map(({ _id, messages }) => (
+          <Tooltip placement="right" title={renderTime(sentAt)}>
+            <UserLabelWarning user>
+              {messageOwner}
+            </UserLabelWarning>
+            <UserMessage key={_id}>
+              {messages}
+            </UserMessage>
+          </Tooltip>
+        ))
+        }
+      </MessageText>
+    </MessageBoxItem>
   );
 };
 

@@ -235,7 +235,6 @@ function* submitTicketRating({ payload }) {
     if (error) throw new Error(error);
     const data = _get(response, 'data', {});
     notification.success({ message: 'Rating submitted' });
-    console.log(data)
     yield put(actions.submitTicketRatingSuccess(data));
   } catch (error) {
     const errorMessage = error.message || error;

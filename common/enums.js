@@ -185,6 +185,7 @@ export const REPLY_TYPE = {
   TICKET_STATUS: 'TICKET_STATUS',
   USER_ACTION: 'USER_ACTION',
   RATING_ACTION: 'RATING_ACTION',
+  WARNING_ACTION: 'WARNING_ACTION',
 };
 
 export const REPLY_USER_ACTION = {
@@ -212,6 +213,8 @@ export const SOCKET_EMIT = {
 
   USER_ONLINE: 'USER_ONLINE',
   USER_OFFLINE: 'USER_OFFLINE',
+
+  TICKET_WARNING: 'TICKET_WARNING',
   // conversation room
   OTHER_JOIN_ROOM: 'OTHER_JOIN_ROOM',
   OTHER_LEFT_ROOM: 'OTHER_LEFT_ROOM',
@@ -611,3 +614,13 @@ export const NEW_BUTTONS_TYPE = {
   BUTTON: 'BUTTON',
 };
 export const MAX_UPLOAD_SIZE = 10000000;
+
+export const BLOCK_MESSAGES = {
+  FACEBOOK: ['fb', 'facebook'],
+  PHONE_NUMBER: ['phoneNumber', 'phone'],
+  TWITTER: ['twitter'],
+  ZALO: ['zalo'],
+  LINKED_IN: ['linked-in'],
+  SKYPE: ['skype'],
+  HANGOUT: ['hangout'],
+};

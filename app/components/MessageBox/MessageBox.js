@@ -40,6 +40,8 @@ import {
 } from '../ChatItem';
 import RichEditor from '../FormInput/RichEditor/RichEditor';
 import { clearEditorContent } from '../../api/utils';
+import { ButtonPrimary } from '../../stylesheets/Button.style';
+import CreateFeedbackForm from '../../containers/CreateFeedbackForm';
 
 const scrollStyle = {
   flex: 'auto',

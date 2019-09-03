@@ -15,6 +15,7 @@ import user from './user';
 import admin from './admin';
 import system from './system';
 import conversations from './conversations';
+import feedbacks from './feedbacks';
 import replies from './replies';
 import requests from './requests';
 import response from './response';
@@ -40,6 +41,7 @@ export default function createReducer(injectedReducers = {}) {
     application,
     system,
     conversations,
+    feedbacks,
     replies,
     requests,
     response,

@@ -27,7 +27,6 @@ class AdminQueue {
   sendWarningMessage = (ticketId, conversationId) => {
     this.queue.forEach(({ socketId }) => {
       const socket = getSocketByUser({ socketId });
-      console.log('object');
       socket.emit(SOCKET_EMIT.TICKET_WARNING, { ticketId, conversationId });
     });
   }

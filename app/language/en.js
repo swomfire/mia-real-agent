@@ -341,6 +341,9 @@ const en = {
     RESET_PASSWORD_CONFIRM_PASSWORD: 'Confirm Password',
     RESET_PASSWORD_CONFIRM_PASSWORD_ERROR: 'Confirm Password not match',
     RESET_PASSWORD_COMPLETE: 'Your password had been reset',
+    // Create Feedback form
+    CREATE_FEEDBACK_FEEDBACKS: 'Feedbacks',
+    CREATE_FEEDBACK_SUCCESS: 'Feedbacks submitted',
   },
 };
 

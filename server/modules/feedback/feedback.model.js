@@ -26,7 +26,7 @@ const feedbackSchema = new Schema(
   },
   {
     versionKey: false,
-    collection: 'conversation',
+    collection: 'feedback',
   },
 );
 

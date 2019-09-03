@@ -5,7 +5,7 @@ import { COLOR_BY_STATUS } from '../../../common/enums';
 
 export const MessageBoxWrapper = styled.div`
   display: flex;
-  height: calc(100vh - 123px);
+  height: calc(100vh - 8.3em);
   background: ${props => props.theme.colorStyled.ColorWhite};
   position: relative;
 `;
@@ -84,6 +84,8 @@ export const ConversationTitle = styled.div`
   button {
     font-size: .85em;
     border-radius: .3em;
+    position: absolute;
+    right: 1em;
   }
   span {
     font-weight: 600;

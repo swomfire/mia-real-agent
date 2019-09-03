@@ -183,6 +183,9 @@ export const actions = {
   fetchFeedbackSuccess,
   fetchFeedbackFailed,
 
+  submitFeedbackSuccess,
+  submitFeedbackFailed,
+
   sortFeedback,
   changePage,
   filterFeedback,

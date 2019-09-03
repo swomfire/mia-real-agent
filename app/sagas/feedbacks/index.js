@@ -9,7 +9,6 @@ import _pick from 'lodash/pick';
 import _pickBy from 'lodash/pickBy';
 // utils
 import { getSkipLimit } from 'utils/func-utils';
-import history from 'utils/history';
 
 import { notification } from 'antd';
 import {
@@ -20,7 +19,6 @@ import {
   FEEDBACK_SORTING, FEEDBACK_CHANGE_PAGE,
   // FEEDBACK_FETCH_SINGLE,
 } from '../../reducers/feedbacks';
-import { actions as CONVERSATION_ACTIONS } from '../../reducers/conversations';
 import {
   AUTH_LOGIN_SUCCESS,
 } from '../../reducers/auth';
@@ -58,16 +56,12 @@ function* createFeedback({ payload }) {
     const message = _get(
       error, 'response.data.message', error.message
     );
-    yield put(actions.createFailAction(message));
+    yield put(actions.submitFeedbackFailed(message));
     return;
   }
 
   const { data } = response;
-  yield put(actions.createCompleteAction(data));
-  const { conversationId } = data;
-  yield put(CONVERSATION_ACTIONS.userJoinConversation(conversationId));
-  yield put(CONVERSATION_ACTIONS.selectConversation(conversationId));
-  history.push(`/conversation/${conversationId}`);
+  yield put(actions.submitFeedbackSuccess(data));
 }
 
 function* getAllFeedback({ payload }) {

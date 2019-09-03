@@ -25,6 +25,9 @@ import {
   getSolution,
 } from '../../reducers/conversations';
 import {
+  submitFeedback,
+} from '../../reducers/feedbacks';
+import {
   isFindingAgent,
   findAgentRequest,
 } from '../../reducers/requests';
@@ -58,6 +61,7 @@ const mapDispatchToProps = {
   sendReplyMessage,
   findAgentRequest,
   submitRating: actions.submitTicketRating,
+  submitFeedback,
   joinConversation: CONVERSATION_ACTIONS.userJoinConversation,
   leftConversation: CONVERSATION_ACTIONS.userLeftConversation,
   userTyping: CONVERSATION_ACTIONS.userTyping,

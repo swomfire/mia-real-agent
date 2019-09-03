@@ -1,9 +1,9 @@
-import conversationCollection from './feedback.model';
+import feedbackCollection from './feedback.model';
 import BaseService from '../base/base.service';
 
 class FeedbackService extends BaseService {
   constructor() {
-    super(conversationCollection);
+    super(feedbackCollection);
   }
 
   countDocument(filter) {

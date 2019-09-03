@@ -46,6 +46,7 @@ class RichEditor extends Component {
     editorState: shape().isRequired,
     mentions: arrayOf(shape({})).isRequired,
     t: func.isRequired,
+    handleReturn: func.isRequired,
   }
 
   constructor(props) {
@@ -66,6 +67,9 @@ class RichEditor extends Component {
   state = {
     suggestions: [],
   };
+
+  mentionIsOpen = false;
+
 
   onChange = (editorState) => {
     const { onChange } = this.props;
@@ -92,6 +96,24 @@ class RichEditor extends Component {
     this.editor.focus();
   };
 
+  handleOpenMention = () => {
+    this.mentionIsOpen = true;
+  }
+
+  handleCloseMention = () => {
+    this.mentionIsOpen = false;
+  }
+
+  handleReturn = (e) => {
+    e.preventDefault();
+    const { handleReturn } = this.props;
+    if (!this.mentionIsOpen) {
+      handleReturn();
+      return 'handled';
+    }
+    return 'not-handled';
+  }
+
   render() {
     const { editorState, t } = this.props;
     const { MentionSuggestions } = this.mentionPlugin;
@@ -105,12 +127,15 @@ class RichEditor extends Component {
           onChange={this.onChange}
           plugins={plugins}
           ref={(element) => { this.editor = element; }}
+          handleReturn={this.handleReturn}
         />
         <MentionSuggestions
           onSearchChange={this.onSearchChange}
           suggestions={this.state.suggestions}
           onAddMention={this.onAddMention}
           entryComponent={Entry}
+          onOpen={this.handleOpenMention}
+          onClose={this.handleCloseMention}
         />
       </div>
     );

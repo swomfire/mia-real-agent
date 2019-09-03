@@ -39,6 +39,7 @@ import {
   userChat, otherChat, otherTyping, botChat, ticketStatus, userAction, ticketRating,
 } from '../ChatItem';
 import RichEditor from '../FormInput/RichEditor/RichEditor';
+import { clearEditorContent } from '../../api/utils';
 
 const scrollStyle = {
   flex: 'auto',
@@ -225,7 +226,7 @@ export default class MessageBox extends Component {
       }
       this.formik.getFormikContext().resetForm();
       this.setState({
-        content: EditorState.createEmpty(),
+        content: clearEditorContent(content),
       });
     }
   }
@@ -272,6 +273,7 @@ export default class MessageBox extends Component {
                 }))}
                 onChange={this.handleChangeContent}
                 editorState={content}
+                handleReturn={handleSubmit}
               />
               {this.renderGroupAction()}
               <InputAction onClick={handleSubmit} className="mia-enter" />

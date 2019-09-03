@@ -1,7 +1,7 @@
 import TicketWarningInfo from 'components/TicketWarning/TicketWarningInfo';
 import { connect } from 'react-redux';
 import { actions } from 'reducers/ticketWarning';
-import { actions as REPLY_ACTIONS, getReplyMessagesByConversationId } from 'reducers/replies';
+import { actions as REPLY_ACTIONS, getReplyMessagesByConversationId, isFetchingReplies } from 'reducers/replies';
 import { getTicketWarningFromRoute, getTicketIdFromWarningRoute } from 'selectors/ticketWarning';
 
 const mapStateToProps = (state) => {
@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
     conversationLog: getReplyMessagesByConversationId(state, conversationId),
     ticketDetail,
     ticketId: getTicketIdFromWarningRoute(state),
+    isFetchingReplies: isFetchingReplies(state, conversationId),
   };
 };
 

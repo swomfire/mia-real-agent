@@ -221,6 +221,10 @@ export const OverviewTitle = styled.div`
   font-size: ${props => props.theme.fontSize.HeadingH6FontSize};
   margin-bottom: 1em;
   font-weight: 600;
+
+  :nth-of-type(n+2) {
+    margin-top: 2em;
+  }
 `;
 
 export const OverviewProduct = styled.div`
@@ -359,4 +363,11 @@ export const ItemStatus = styled.div.attrs({
    ${({ status }) => status && css`      
       color: ${[COLOR_BY_STATUS[status]]};
   `};
+`;
+
+export const PleaseSelect = styled.div`
+  height: calc(100vh - 150px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

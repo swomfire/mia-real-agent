@@ -59,7 +59,7 @@ class Router extends React.PureComponent {
             <AdminMainLayout>
               <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
               <AdminRoute exact path="/admin/tickets" component={TicketManagement} />
-              <AdminRoute path="/admin/tickets-warning/:id" component={TicketWarning} />
+              <AdminRoute path="/admin/tickets-warning/:id?" component={TicketWarning} />
               <AdminRoute path="/admin/tickets/:id" component={TicketDetail} />
               <AdminRoute exact path="/admin/applications" component={ApplicationManagement} />
               <AdminRoute path="/admin/applications/:id" component={ApplicationDetail} />

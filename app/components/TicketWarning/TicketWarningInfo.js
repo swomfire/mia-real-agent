@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import _isEmpty from 'lodash/isEmpty';
 import Scrollbar from 'components/Scrollbar';
 import SpinnerLoading from 'components/PageLoading/SpinnerLoading';
-import { AdminDetailsContainer } from 'components/Generals/ItemDetail.styled';
+import { AdminDetailsContainer, PleaseSelect } from 'components/Generals/ItemDetail.styled';
 import ErrorContent from 'components/ErrorContent';
 import TicketDetailInfoHeader from './TicketWarningInfoHeader';
 import { conversationTranscript } from './TicketWarningConversationLog';
 import { ConversationLogWrapper, ActionWrapper } from './styles';
 import { ButtonPrimary } from '../../stylesheets/Button.style';
+import { toI18n } from '../../utils/func-utils';
 
 const conversationScrollStyle = {
   height: 'calc(100vh - 220px)',
@@ -19,8 +20,9 @@ const conversationScrollStyle = {
 class TicketWarningInfo extends PureComponent {
   componentDidMount() {
     const { ticketId, fetchTicketSingle } = this.props;
-
-    fetchTicketSingle(ticketId);
+    if (ticketId) {
+      fetchTicketSingle(ticketId);
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -30,7 +32,7 @@ class TicketWarningInfo extends PureComponent {
     } = this.props;
     const { ticketId: prevticketId, ticketDetail: prevTicketDetail } = prevProps;
 
-    if (prevticketId !== ticketId) {
+    if (prevticketId !== ticketId && ticketId) {
       fetchTicketSingle(ticketId);
       const { conversationId } = ticketDetail || {};
       fetchConversationLog(conversationId);
@@ -44,14 +46,23 @@ class TicketWarningInfo extends PureComponent {
   }
 
   render() {
-    const { ticketDetail, conversationLog } = this.props;
-    if (_isEmpty(ticketDetail) || ticketDetail.isLoading) {
+    const { ticketDetail, isFetchingReplies, conversationLog } = this.props;
+    if (ticketDetail.isLoading || isFetchingReplies) {
       return (
         <AdminDetailsContainer>
           <SpinnerLoading />
         </AdminDetailsContainer>
       );
     }
+
+    if (_isEmpty(ticketDetail)) {
+      return (
+        <AdminDetailsContainer>
+          <PleaseSelect>{toI18n('ADMIN_TICKET_WARNING_DETAIL_SELECT_TICKET')}</PleaseSelect>
+        </AdminDetailsContainer>
+      );
+    }
+
 
     if (ticketDetail.error) {
       return (
@@ -67,13 +78,15 @@ class TicketWarningInfo extends PureComponent {
       <AdminDetailsContainer>
         <TicketDetailInfoHeader title={title} status={status} />
         <ConversationLogWrapper>
-          <h2>Violation Messages:</h2>
+          <h2>
+            {toI18n('ADMIN_TICKET_WARNING_DETAIL_VIOLATION_MESSAGES')}
+          </h2>
           <Scrollbar autoHide style={conversationScrollStyle}>
             {conversationTranscript(conversationLog)}
           </Scrollbar>
           <ActionWrapper>
             <ButtonPrimary type="primary">
-              Contact Agent
+              {toI18n('ADMIN_TICKET_WARNING_DETAIL_CONTACT_AGENT')}
             </ButtonPrimary>
           </ActionWrapper>
         </ConversationLogWrapper>
@@ -86,6 +99,7 @@ TicketWarningInfo.propTypes = {
   ticketId: PropTypes.string.isRequired,
   fetchTicketSingle: PropTypes.func.isRequired,
   fetchConversationLog: PropTypes.func.isRequired,
+  isFetchingReplies: PropTypes.bool.isRequired,
   ticketDetail: PropTypes.object.isRequired,
   conversationLog: PropTypes.arrayOf(PropTypes.shape()),
 };

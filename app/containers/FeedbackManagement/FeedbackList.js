@@ -32,7 +32,7 @@ const mapStateToProps = (state) => {
   return {
     ...structureSelector,
     sortItems: USER_SORT,
-    title: toI18n('ADMIN_TICKET_DETAIL_ALL_TICKETS'),
+    title: toI18n('ADMIN_TICKET_DETAIL_ALL_FEEDBACKS'),
   };
 };
 

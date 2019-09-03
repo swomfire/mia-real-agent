@@ -4,15 +4,13 @@ import PropTypes from 'prop-types';
 import _isEmpty from 'lodash/isEmpty';
 import Scrollbar from 'components/Scrollbar';
 import SpinnerLoading from 'components/PageLoading/SpinnerLoading';
-import { AdminDetailsContainer } from 'components/Generals/ItemDetail.styled';
+import { AdminDetailsContainer, PleaseSelect } from 'components/Generals/ItemDetail.styled';
 import ErrorContent from 'components/ErrorContent';
 import FeedbackDetailInfoHeader from './FeedbackInfoHeader';
-import { ConversationLogWrapper, ActionWrapper, PleaseSelectFeedback } from './styles';
-import { ButtonPrimary } from '../../stylesheets/Button.style';
 import FeedbackDetailInfoContent from './FeedbackDetailInfoContent';
 import { toI18n } from '../../utils/func-utils';
 
-const conversationScrollStyle = {
+const scrollStyle = {
   height: 'calc(100vh - 220px)',
   width: '100%',
 };
@@ -48,7 +46,7 @@ class FeedbackWarningInfo extends PureComponent {
     if (_isEmpty(feedbackDetail)) {
       return (
         <AdminDetailsContainer>
-          <PleaseSelectFeedback>{toI18n('ADMIN_FEEDBACK_DETAIL_PLEASE_SELECT_FEEDBACKS')}</PleaseSelectFeedback>
+          <PleaseSelect>{toI18n('ADMIN_FEEDBACK_DETAIL_PLEASE_SELECT_FEEDBACKS')}</PleaseSelect>
         </AdminDetailsContainer>
       );
     }
@@ -66,7 +64,9 @@ class FeedbackWarningInfo extends PureComponent {
     return (
       <AdminDetailsContainer>
         <FeedbackDetailInfoHeader title={title} status={status} />
-        <FeedbackDetailInfoContent feedbackDetail={feedbackDetail} />
+        <Scrollbar autoHide style={scrollStyle}>
+          <FeedbackDetailInfoContent feedbackDetail={feedbackDetail} />
+        </Scrollbar>
       </AdminDetailsContainer>
     );
   }

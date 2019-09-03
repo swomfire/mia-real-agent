@@ -180,7 +180,7 @@ const en = {
     // Admin Left navbar
     ADMIN_LEFT_NAV_DASHBOARD: 'Dashboard',
     ADMIN_LEFT_NAV_TICKETS: 'Tickets',
-    ADMIN_LEFT_NAV_TICKETS_WARNING: 'Tickets-warning',
+    ADMIN_LEFT_NAV_TICKETS_WARNING: 'Tickets warning',
     ADMIN_LEFT_NAV_FEEDBACK: 'Feedback',
     ADMIN_LEFT_NAV_APPLICATIONS: 'Applications',
     ADMIN_LEFT_NAV_USERS: 'Users',
@@ -270,7 +270,13 @@ const en = {
     ADMIN_TICKET_DETAIL_OWNER: 'Owner',
     ADMIN_TICKET_DETAIL_ASSIGNEE: 'Assignee',
     ADMIN_TICKET_DETAIL_CONVERSATION_LOG: 'Conversation log:',
-    // Admin ticket detail
+    // Admin ticket warning detail
+    ADMIN_TICKET_WARNING_DETAIL_ALL_TICKETS: 'All Tickets',
+    ADMIN_TICKET_WARNING_DETAIL_SELECT_TICKET: 'PLease select ticket',
+    ADMIN_TICKET_WARNING_DETAIL_VIOLATION_MESSAGES: 'Violation Messages:',
+    ADMIN_TICKET_WARNING_DETAIL_CONTACT_AGENT: 'Contact Agent',
+    // Admin feedback detail
+    ADMIN_TICKET_DETAIL_ALL_FEEDBACKS: 'All Feedbacks',
     ADMIN_FEEDBACK_DETAIL_PRIMARY_DETAILS: 'Feedback Details',
     ADMIN_FEEDBACK_DETAIL_FEEDBACKS: 'Feedbacks',
     ADMIN_FEEDBACK_DETAIL_PLEASE_SELECT_FEEDBACKS: 'PLease select feedback',

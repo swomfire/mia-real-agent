@@ -367,6 +367,13 @@ export const ItemStatus = styled.div.attrs({
   `};
 `;
 
+export const ItemDescription = styled.div`
+  font-style: italic;
+  text-transform: uppercase;
+  font-size:  ${props => props.theme.fontSize.SmallFontSize};
+  margin-top: 0.2em;
+`;
+
 export const PleaseSelect = styled.div`
   height: calc(100vh - 150px);
   display: flex;

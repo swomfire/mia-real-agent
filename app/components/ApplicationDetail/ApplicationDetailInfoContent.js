@@ -169,13 +169,14 @@ class ApplicationDetailInfoContent extends PureComponent {
     } = this.state;
     const {
       applicationDetail: {
-        firstName, lastName, email, cv,
+        nickname, firstName, lastName, email, cv,
         role, categories, skills, createdAt, billingRate = 0,
       },
     } = this.props;
     return (
       <OverviewLeftSectionWrapper>
         <OverviewTitle>{toI18n('ADMIN_APPLICATION_DETAIL_PRIMARY_DETAILS')}</OverviewTitle>
+        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_NICKNAME'), nickname)}
         {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_FIRST_NAME'), firstName)}
         {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_LAST_NAME'), lastName)}
         {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_EMAIL'), email)}

@@ -60,7 +60,7 @@ class applicationDetailInfo extends PureComponent {
     }
 
     const {
-      _id, firstName, lastName, status, tickets
+      _id, firstName, lastName, status, tickets, nickname,
     } = applicationDetail;
     const actions = {
       applicationApprove,
@@ -71,6 +71,7 @@ class applicationDetailInfo extends PureComponent {
       <AdminDetailsContainer>
         <ApplicationDetailInfoHeader
           applicationId={_id}
+          nickname={nickname}
           firstName={firstName}
           lastName={lastName}
           status={status}

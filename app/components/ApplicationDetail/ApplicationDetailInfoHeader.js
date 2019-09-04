@@ -15,6 +15,7 @@ import {
   ButtonReject,
 } from '../../stylesheets/Button.style';
 import { APPLICATION_STATUS } from '../../../common/enums';
+import { ItemDescription } from '../Generals/ItemDetail.styled';
 
 class ApplicationDetailInfoHeader extends PureComponent {
   goToEditPage = () => {
@@ -33,15 +34,21 @@ class ApplicationDetailInfoHeader extends PureComponent {
   }
 
   render() {
-    const { firstName, lastName, status } = this.props;
+    const {
+      nickname, firstName, lastName, status,
+    } = this.props;
     return (
       <TitleDetailsHead>
         <HeaderTextDetails>
           <span>
+            {nickname}
+            {' - '}
+          </span>
+          <ItemDescription>
             {firstName}
             {' '}
             {lastName}
-          </span>
+          </ItemDescription>
           <ItemStatus status={status}>{`  - ${status} `}</ItemStatus>
           {status === APPLICATION_STATUS.APPROVED && (<i className="mia-edit" onClick={this.goToEditPage} />)}
         </HeaderTextDetails>
@@ -68,6 +75,7 @@ ApplicationDetailInfoHeader.propTypes = {
   applicationId: PropTypes.string.isRequired,
   actions: PropTypes.shape().isRequired,
   status: PropTypes.string.isRequired,
+  nickname: PropTypes.string.isRequired,
   firstName: PropTypes.string.isRequired,
   lastName: PropTypes.string.isRequired,
 };

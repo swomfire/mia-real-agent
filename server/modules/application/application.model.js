@@ -45,6 +45,7 @@ const applicationSchema = new Schema(
         certificate: [String],
       },
     ],
+    billingRate: Number,
     skills: [String],
     languages: [
       {

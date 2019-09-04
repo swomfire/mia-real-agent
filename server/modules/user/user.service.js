@@ -32,6 +32,10 @@ class UserService extends BaseService {
     return userCollection.findOne({ _id: id }).exec();
   }
 
+  getByApplication(application) {
+    return userCollection.findOne({ application }).exec();
+  }
+
   countDocument(filter) {
     return userCollection.countDocuments(filter);
   }

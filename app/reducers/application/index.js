@@ -293,15 +293,15 @@ function applicationReducer(state = initialState, action) {
         .setIn(['pagination', 'selectedPage'], action.pageIndex);
 
     case APPLICATION_FETCH_SINGLE:
-      return state.setIn(['application', action.id, 'isLoading'], true);
+      return state.setIn(['applications', action.id, 'isLoading'], true);
     case APPLICATION_FETCH_SINGLE_COMPLETE: {
       const { payload } = action;
       const { _id } = payload;
-      return state.setIn(['application', _id], fromJS(payload));
+      return state.setIn(['applications', _id], fromJS(payload));
     }
     case APPLICATION_FETCH_SINGLE_FAIL: {
       const { id, errorMsg } = action;
-      return state.setIn(['application', id], fromJS({ error: errorMsg }));
+      return state.setIn(['applications', id], fromJS({ error: errorMsg }));
     }
 
     case APPLICATION_APPROVE_COMPLETE: {

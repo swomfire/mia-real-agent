@@ -11,7 +11,7 @@ import FeedbackDetailInfoContent from './FeedbackDetailInfoContent';
 import { toI18n } from '../../utils/func-utils';
 
 const scrollStyle = {
-  height: 'calc(100vh - 220px)',
+  height: 'calc(100vh - 120px)',
   width: '100%',
 };
 

@@ -252,6 +252,8 @@ export const OverviewValue = styled.span`
   flex: 1;
   color: ${props => props.theme.colorStyled.ColorBlack};
   font-size:  ${props => props.theme.fontSize.BaseFontSize};
+  overflow: hidden;
+  overflow-wrap: break-word;
 `;
 
 export const OverviewImageWrapper = styled.div`

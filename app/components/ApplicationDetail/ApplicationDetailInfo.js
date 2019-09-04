@@ -85,7 +85,9 @@ class applicationDetailInfo extends PureComponent {
           {status === APPLICATION_STATUS.APPROVED && [
             (
               <TabPane tab="Ticket" key="2">
-                <ApplicationDetailTicketTable tickets={tickets} />
+                <Scrollbar autoHide style={scrollStyle}>
+                  <ApplicationDetailTicketTable tickets={tickets} />
+                </Scrollbar>
               </TabPane>
             ),
             (<TabPane tab="Billing history" key="3">

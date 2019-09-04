@@ -13,8 +13,20 @@ class TableDetailRow extends React.PureComponent {
   renderTextColumn = (column) => {
     const { item } = this.props;
     const { dataKey } = column;
-
-    return _get(item, dataKey);
+    if (dataKey instanceof (Array)) {
+      return dataKey.map((key) => {
+        const value = _get(item, key);
+        if (Array.isArray(value)) {
+          return value.length > 1 ? value.join(' , ') : value;
+        }
+        return `${value} ` || '-';
+      });
+    }
+    const value = _get(item, dataKey);
+    if (Array.isArray(value)) {
+      return value.length > 1 ? value.join(' , ') : value;
+    }
+    return value || '-';
   }
 
   renderStatusColumn = (column) => {

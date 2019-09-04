@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import _get from 'lodash/get';
+import { shape } from 'prop-types';
 import TableDetail from 'components/Generals/TableDetail';
-import { ROLES } from '../../../common/enums';
 import { toI18n } from '../../utils/func-utils';
 import { COLUMN_TYPE, DATE_TIME_FORMAT } from '../../utils/constants';
+import { OverviewTitle, OverviewLeftSectionWrapper, AdminInfoContentBlock } from '../Generals/ItemDetail.styled';
 
 const defaultColumns = [
   {
@@ -45,8 +45,13 @@ const defaultColumns = [
 ];
 
 class ApplicationDetailTicketTable extends Component {
+  static propTypes = {
+    tickets: shape(),
+  }
+
   renderTicketsTable = () => {
-    const { tickets = [] } = this.props;
+    const { tickets } = this.props;
+    const { result = [] } = tickets || {};
     let columns = [];
     columns = [
       ...defaultColumns,
@@ -70,14 +75,21 @@ class ApplicationDetailTicketTable extends Component {
         type: COLUMN_TYPE.STATUS,
       },
     ];
-    return <TableDetail columns={columns} items={tickets} emptyMsg="No tickets available" />;
+    return <TableDetail columns={columns} items={result} emptyMsg="No tickets available" />;
   }
 
   render() {
+    const { tickets } = this.props;
+    const { totalRecord = 0 } = tickets || {};
     return (
-      <div>
-        {this.renderTicketsTable()}
-      </div>
+      <AdminInfoContentBlock>
+        <OverviewLeftSectionWrapper>
+          <OverviewTitle>
+            {`Total ticket: ${totalRecord}`}
+          </OverviewTitle>
+          {this.renderTicketsTable()}
+        </OverviewLeftSectionWrapper>
+      </AdminInfoContentBlock>
     );
   }
 }

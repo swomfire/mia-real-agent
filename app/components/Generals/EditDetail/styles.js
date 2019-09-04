@@ -7,9 +7,12 @@ export const EditFormTitle = styled.span`
 `;
 
 export const EditFormWrapper = styled.div`
-  width: 50%;
+  width: 100%;
   padding: 2em;
   height: 100vh;
+  .ant-row {
+    margin: 0;
+  }
 `;
 
 export const EditFormActionWrapper = styled.div`

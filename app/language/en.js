@@ -248,7 +248,7 @@ const en = {
     ADMIN_APPLICATION_DETAIL_CATEGORIES: 'Categories',
     ADMIN_APPLICATION_DETAIL_SKILLS: 'Skills',
     ADMIN_APPLICATION_DETAIL_CREATED_AT: 'Created at',
-    ADMIN_APPLICATION_DETAIL_BILLING_RATE: 'Billing rate',
+    ADMIN_APPLICATION_DETAIL_BILLING_RATE: 'Billing rate ($/h)',
     ADMIN_APPLICATION_DETAIL_CV: 'CV',
     ADMIN_APPLICATION_DETAIL_PRIMARY_DETAILS: 'Primary Details',
     ADMIN_APPLICATION_DETAIL_: 'All',
@@ -322,7 +322,7 @@ const en = {
     PROFILE_DETAIL_COMPANY: 'Company',
     PROFILE_DETAIL_COMPANY_SIZE: 'Company Size',
     PROFILE_DETAIL_COMPANY_FIELDS: 'Company fields',
-    // Profile In5dividial Form
+    // Profile Individial Form
     PROFILE_INDIVIDIAL_FORM_FIRST_NAME: 'First name',
     PROFILE_INDIVIDIAL_FORM_LAST_NAME: 'Last name',
     PROFILE_INDIVIDIAL_FORM_DOB: 'Date of birth',

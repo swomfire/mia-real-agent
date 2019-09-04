@@ -4,11 +4,18 @@ import { Form, Row, Col } from 'antd';
 import {
   shape, arrayOf, func, object, bool, string,
 } from 'prop-types';
+import Scrollbar from 'components/Scrollbar';
 import FormInput from '../../FormInput';
 import { ButtonCancel, ButtonSubmit } from '../../../stylesheets/Button.style';
 import { toI18n } from '../../../utils/func-utils';
 import { EditFormWrapper, EditFormTitle, EditFormActionWrapper } from './styles';
 import LoadingSpin from '../../Loading';
+
+const scrollStyle = {
+  height: 'calc(100vh - 160px)',
+  width: '100%',
+};
+
 
 class EditDetail extends Component {
   static propTypes = {
@@ -17,15 +24,31 @@ class EditDetail extends Component {
     additionalSubmitValues: shape().isRequired,
     validationSchema: shape.isRequired,
     title: object.isRequired,
+    onInit: func.isRequired,
+    isIniting: bool.isRequired,
     onSubmit: func.isRequired,
     onCancel: func.isRequired,
     onComplete: func.isRequired,
     isLoading: bool.isRequired,
+    initParam: string,
     submitError: string,
   }
 
+  componentDidMount = () => {
+    const { onInit, initParam } = this.props;
+    onInit(initParam);
+  }
+
   componentDidUpdate = (prevProps) => {
-    const { isLoading, submitError, onComplete } = this.props;
+    const {
+      isLoading, submitError, onComplete,
+      initialValues, isIniting,
+    } = this.props;
+    if (prevProps.isIniting && !isIniting) {
+      this.editDetailFormik.getFormikContext().setValues(initialValues);
+      return;
+    }
+
     if (prevProps.isLoading && !isLoading && !submitError) {
       onComplete();
     }
@@ -33,17 +56,16 @@ class EditDetail extends Component {
 
   renderFieldInput = () => {
     const { fields } = this.props;
+    const colSpan = fields.length < 4 ? 24 : 12;
     return fields.map(
       ({ name, type, ...rest }) => (
-        <Row gutter={32}>
-          <Col sm={24} xs={24}>
-            <FormInput
-              name={name}
-              type={type}
-              {...rest}
-            />
-          </Col>
-        </Row>
+        <Col sm={colSpan} xs={colSpan}>
+          <FormInput
+            name={name}
+            type={type}
+            {...rest}
+          />
+        </Col>
       )
     );
   }
@@ -62,14 +84,18 @@ class EditDetail extends Component {
     const { initialValues, validationSchema } = this.props;
     return (
       <Formik
-        ref={(formik) => { this.educationformik = formik; }}
+        ref={(formik) => { this.editDetailFormik = formik; }}
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={this.handleSubmit}
       >
         {({ handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
-            {this.renderFieldInput()}
+            <Scrollbar autoHide style={scrollStyle}>
+              <Row gutter={32}>
+                {this.renderFieldInput()}
+              </Row>
+            </Scrollbar>
             <EditFormActionWrapper>
               <ButtonCancel
                 onClick={this.handleCancel}
@@ -87,11 +113,11 @@ class EditDetail extends Component {
   }
 
   render() {
-    const { title, isLoading } = this.props;
+    const { title, isLoading, isIniting } = this.props;
     return (
       <EditFormWrapper>
         <EditFormTitle>{title}</EditFormTitle>
-        <LoadingSpin loading={isLoading}>
+        <LoadingSpin loading={isLoading || isIniting}>
           {this.renderForm()}
         </LoadingSpin>
       </EditFormWrapper>

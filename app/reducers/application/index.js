@@ -41,7 +41,27 @@ export const APPLICATION_FORM_VALIDATE_STEP = 'application/APPLICATION_FORM_VALI
 export const APPLICATION_FORM_VALIDATE_STEP_COMPLETE = 'application/APPLICATION_FORM_VALIDATE_STEP_COMPLETE';
 export const APPLICATION_FORM_VALIDATE_STEP_FAIL = 'application/APPLICATION_FORM_VALIDATE_STEP_FAIL';
 
+export const APPLICATION_DETAIL_EDIT = 'application/APPLICATION_DETAIL_EDIT';
+export const APPLICATION_DETAIL_EDIT_COMPLETE = 'application/APPLICATION_DETAIL_EDIT_COMPLETE';
+export const APPLICATION_DETAIL_EDIT_FAIL = 'application/APPLICATION_DETAIL_EDIT_FAIL';
+
 // action creator
+// Edit detail action
+const applicationDetailEditAction = application => ({
+  type: APPLICATION_DETAIL_EDIT,
+  payload: { application },
+});
+
+const applicationDetailEditCompleteAction = application => ({
+  type: APPLICATION_DETAIL_EDIT_COMPLETE,
+  application,
+});
+
+const applicationDetailEditFailAction = errorMessage => ({
+  type: APPLICATION_DETAIL_EDIT_FAIL,
+  errorMessage,
+});
+
 const applicationFormValidateStepAction = (
   validateFuncAction,
   payload,
@@ -231,6 +251,9 @@ const initialState = fromJS({
   isSubmitting: false,
   submitError: '',
 
+  isEditting: false,
+  editError: '',
+
   applications: {},
   totalRecord: 0,
   pagination: fromJS({
@@ -258,6 +281,20 @@ function applicationReducer(state = initialState, action) {
     case APPLICATION_FORM_VALIDATE_STEP_FAIL:
       return state.set('isValidating', false)
         .set('validateError', action.errorMessage);
+
+    case APPLICATION_DETAIL_EDIT:
+      return state.set('isEditting', true)
+        .set('editError', '');
+    case APPLICATION_DETAIL_EDIT_COMPLETE: {
+      const { application } = action;
+      const { _id } = application;
+      return state
+        .set('isEditting', false)
+        .setIn(['applications', _id], fromJS(application));
+    }
+    case APPLICATION_DETAIL_EDIT_FAIL:
+      return state.set('isEditting', false)
+        .set('editError', action.errorMessage);
 
     case SUBMIT:
       return state.set('isSubmitting', true)
@@ -366,6 +403,10 @@ export const actions = {
   applicationFormValidateStepAction,
   applicationFormValidateStepCompleteAction,
   applicationFormValidateStepFailAction,
+
+  applicationDetailEditAction,
+  applicationDetailEditCompleteAction,
+  applicationDetailEditFailAction,
 };
 
 export const selectors = {

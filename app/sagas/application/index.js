@@ -11,7 +11,7 @@ import {
   SUBMIT, actions, APPLICATION_CHANGE_PAGE,
   APPLICATION_ADMIN_GET_ALL, APPLICATION_SORTING,
   APPLICATION_APPROVE, APPLICATION_REJECT, APPLICATION_REVIEW,
-  APPLICATION_FETCH_SINGLE,
+  APPLICATION_FETCH_SINGLE, APPLICATION_DETAIL_EDIT,
   APPLICATION_CHECK_INFO, APPLICATION_FORM_VALIDATE_STEP,
 } from 'reducers/application';
 import { getSkipLimit, toI18n } from 'utils/func-utils';
@@ -235,6 +235,23 @@ function* validateFormStep({
   }
 }
 
+function* editApplication({ payload }) {
+  const { application } = payload;
+  const { applicationId, ...data } = application;
+  const { response, error } = yield call(ApplicationApi.editApplication, applicationId, data);
+  if (error) {
+    const message = _get(
+      error, 'response.data.message', DEFAULT_ERROR_MESSAGE
+    );
+    notification.error({ message });
+    yield put(actions.applicationDetailEditFailAction(message));
+    return;
+  }
+  const { data: responseData } = response;
+  notification.success({ message: toI18n('ADMIN_APPLICATION_DETAIL_EDIT_COMPLETE') });
+  yield put(actions.applicationDetailEditCompleteAction(responseData));
+}
+
 function* ticketFlow() {
   yield takeEvery(SUBMIT, submitApplication);
   yield takeLatest([APPLICATION_CHANGE_PAGE, APPLICATION_SORTING], queryTickets);
@@ -245,6 +262,7 @@ function* ticketFlow() {
   yield takeEvery(APPLICATION_FETCH_SINGLE, applicationFetchSingle);
   yield takeEvery(APPLICATION_CHECK_INFO, checkBasicInfomation);
   yield takeEvery(APPLICATION_FORM_VALIDATE_STEP, validateFormStep);
+  yield takeEvery(APPLICATION_DETAIL_EDIT, editApplication);
 }
 
 export default ticketFlow;

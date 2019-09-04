@@ -2,8 +2,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { PureComponent } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import history from 'utils/history';
 import {
   TitleDetailsHead,
   AdminHeadActionGroup,
@@ -17,6 +17,11 @@ import {
 import { APPLICATION_STATUS } from '../../../common/enums';
 
 class ApplicationDetailInfoHeader extends PureComponent {
+  goToEditPage = () => {
+    const { applicationId } = this.props;
+    history.push(`/admin/applications/${applicationId}/edit`);
+  };
+
   handleApprove = () => {
     const { applicationId, actions } = this.props;
     actions.applicationApprove({ _id: applicationId });
@@ -37,7 +42,8 @@ class ApplicationDetailInfoHeader extends PureComponent {
             {' '}
             {lastName}
           </span>
-          <ItemStatus status={status}>{`  - ${status}`}</ItemStatus>
+          <ItemStatus status={status}>{`  - ${status} `}</ItemStatus>
+          {status === APPLICATION_STATUS.APPROVED && (<i className="mia-edit" onClick={this.goToEditPage} />)}
         </HeaderTextDetails>
         <AdminHeadActionGroup>
           {status === APPLICATION_STATUS.PENDING && [(

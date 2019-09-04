@@ -31,6 +31,9 @@ const reselectSorting = createSelector(getSorting, sorting => sorting.toJS());
 const getIsFetching = ({ application }) => application.getIn(['fetching', 'isFetching'], false);
 const getFetchingError = ({ application }) => application.getIn(['fetching', 'errorMsg'], '');
 
+const getIsEditting = ({ application }) => application.get('isEditting', false);
+const getEditError = ({ application }) => application.get('editError', '');
+
 const getApplications = ({ application }) => application.get('applications', emptyMap);
 
 
@@ -68,6 +71,9 @@ export {
 
   getIsFetching,
   getFetchingError,
+
+  getIsEditting,
+  getEditError,
 
   getTotalCount,
   getApplicationIdFromRoute,

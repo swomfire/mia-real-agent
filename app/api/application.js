@@ -40,3 +40,8 @@ export const checkBasicInfomationExisted = (nickname, email) => axios
   .get(`applications/info/check?nickname=${nickname}&email=${email}`)
   .then(response => ({ response }))
   .catch(handleError);
+
+export const editApplication = (id, data) => axios
+  .put(`applications/${id}`, data)
+  .then(response => ({ response }))
+  .catch(handleError);

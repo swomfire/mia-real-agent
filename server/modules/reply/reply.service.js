@@ -16,8 +16,11 @@ class ReplyService extends BaseService {
     const replies = this.collection.find({
       conversationId,
     })
-      .populate({ path: 'from', select: ['_id', 'profile', 'role', 'username'] })
-      .exec();
+      .populate({
+        path: 'from',
+        select: ['_id', 'role', 'username', 'application'],
+        populate: ({ path: 'application', select: ['nickname', 'billingRate'] }),
+      }).exec();
     return replies;
   }
 
@@ -59,7 +62,11 @@ class ReplyService extends BaseService {
         const reply = await this.collection.findOne({
           _id,
         })
-          .populate({ path: 'from', select: ['_id', 'profile', 'role', 'username'] });
+          .populate({
+            path: 'from',
+            select: ['_id', 'role', 'username', 'application'],
+            populate: ({ path: 'application', select: ['nickname', 'billingRate'] }),
+          });
         ConversationRoomQueue.conversationNewMessage(conversationId, reply);
       }
     });

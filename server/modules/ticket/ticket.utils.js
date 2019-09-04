@@ -212,6 +212,7 @@ export const ticketWarningAdminAggregration = (conditions, limit, skip, sort) =>
       },
       assignee: {
         profile: '$assignee_doc.profile',
+        nickname: '$assignee_doc.nickname',
         username: '$assignee_doc.username',
         rating: '$assignee_doc.rating',
       },

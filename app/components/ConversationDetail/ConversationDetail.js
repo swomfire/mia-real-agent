@@ -49,11 +49,13 @@ export default class ConversationDetail extends Component {
     if (_isEmpty(assignee)) {
       return (<NoInformationText>{toI18n('CONV_MESSAGE_BOX_DETAIL_NO_DATA')}</NoInformationText>);
     }
-    const { firstName, lastName } = assignee.profile;
+    const { application } = assignee || {};
+    const { nickname, billingRate } = application;
     return (
       <div className="assignee">
         <span>
-          {`${firstName} ${lastName}`}
+          {nickname}
+          {`  - $${billingRate}/h`}
         </span>
       </div>
     );

@@ -21,6 +21,7 @@ import {
 import ApplicationDetailExperienceDetail from './ApplicationDetailExperienceDetail';
 import ApplicationDetailEducationDetail from './ApplicationDetailEducationDetail';
 import { toI18n } from '../../utils/func-utils';
+import { AdminUserDetailsGroup, AdminUserDetailsLeft, AdminUserDetailsRight } from '../Generals/ItemDetail.styled';
 
 const { TabPane } = Tabs;
 
@@ -164,28 +165,63 @@ class ApplicationDetailInfoContent extends PureComponent {
 
   renderItemOverview = () => {
     const {
-      isExperienceDetailOpen, experienceDetail,
-      isEducationDetailOpen, educationDetail,
-    } = this.state;
-    const {
       applicationDetail: {
-        nickname, firstName, lastName, email, cv,
-        role, categories, skills, createdAt, billingRate = 0,
+        nickname, firstName, lastName, email,
+        country, address, postcode, phone,
+        role, categories,
       },
     } = this.props;
     return (
       <OverviewLeftSectionWrapper>
         <OverviewTitle>{toI18n('ADMIN_APPLICATION_DETAIL_PRIMARY_DETAILS')}</OverviewTitle>
+        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_ROLE'), role)}
         {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_NICKNAME'), nickname)}
         {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_FIRST_NAME'), firstName)}
         {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_LAST_NAME'), lastName)}
         {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_EMAIL'), email)}
-        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_ROLE'), role)}
+        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_COUNTRY'), country)}
+        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_ADDRESS'), address)}
+        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_POSTCODE'), postcode)}
+        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_PHONE'), phone)}
+        <OverviewTitle>{toI18n('ADMIN_APPLICATION_DETAIL_EXPERIENCE')}</OverviewTitle>
         {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_CATEGORIES'), categories)}
+      </OverviewLeftSectionWrapper>
+    );
+  };
+
+  renderItemAdditional = () => {
+    const {
+      applicationDetail: {
+        cv, skills, createdAt, billingRate = 0,
+      },
+    } = this.props;
+    return (
+      <OverviewLeftSectionWrapper>
+        <OverviewTitle>{toI18n('ADMIN_APPLICATION_DETAIL_ADDITIONAL')}</OverviewTitle>
+        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_CV'), cv, true)}
         {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_SKILLS'), skills)}
         {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_CREATED_AT'), moment(createdAt).format(DATE_TIME_FORMAT.DATE))}
+        <OverviewTitle>{toI18n('ADMIN_APPLICATION_DETAIL_BILLING')}</OverviewTitle>
         {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_BILLING_RATE'), billingRate)}
-        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_CV'), cv, true)}
+      </OverviewLeftSectionWrapper>
+    );
+  };
+
+  render() {
+    const {
+      isExperienceDetailOpen, experienceDetail,
+      isEducationDetailOpen, educationDetail,
+    } = this.state;
+    return (
+      <AdminInfoContentBlock>
+        <AdminUserDetailsGroup>
+          <AdminUserDetailsLeft>
+            {this.renderItemOverview()}
+          </AdminUserDetailsLeft>
+          <AdminUserDetailsRight>
+            {this.renderItemAdditional()}
+          </AdminUserDetailsRight>
+        </AdminUserDetailsGroup>
         {this.renderTabMenu()}
         <ApplicationDetailExperienceDetail
           isOpen={isExperienceDetailOpen}
@@ -197,14 +233,6 @@ class ApplicationDetailInfoContent extends PureComponent {
           education={educationDetail}
           handleClose={() => this.toggleEducationDetail(false)}
         />
-      </OverviewLeftSectionWrapper>
-    );
-  };
-
-  render() {
-    return (
-      <AdminInfoContentBlock>
-        {this.renderItemOverview()}
       </AdminInfoContentBlock>
     );
   }

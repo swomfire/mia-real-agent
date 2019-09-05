@@ -11,6 +11,7 @@ import { conversationTranscript } from './TicketWarningConversationLog';
 import { ConversationLogWrapper, ActionWrapper } from './styles';
 import { ButtonPrimary } from '../../stylesheets/Button.style';
 import { toI18n } from '../../utils/func-utils';
+import TicketOverview from '../TicketDetail/TicketOverview';
 
 const conversationScrollStyle = {
   height: 'calc(100vh - 220px)',
@@ -78,6 +79,7 @@ class TicketWarningInfo extends PureComponent {
       <AdminDetailsContainer>
         <TicketDetailInfoHeader title={title} status={status} />
         <ConversationLogWrapper>
+          <TicketOverview ticketDetail={ticketDetail} />
           <h2>
             {toI18n('ADMIN_TICKET_WARNING_DETAIL_VIOLATION_MESSAGES')}
           </h2>

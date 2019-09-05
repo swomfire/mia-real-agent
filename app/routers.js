@@ -28,6 +28,7 @@ import TicketWarning from './containers/TicketWarning';
 import ApplicationManagement from './pages/ApplicationManagement';
 import ApplicationDetail from './containers/ApplicationDetail';
 import IntentManagement from './pages/IntentManagement';
+import FeedbackManagement from './pages/FeedbackManagement';
 import CannedResponseManagement from './pages/CannedResponseManagement';
 
 import AdminDashboard from './pages/AdminDashboard';
@@ -58,11 +59,12 @@ class Router extends React.PureComponent {
             <AdminMainLayout>
               <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
               <AdminRoute exact path="/admin/tickets" component={TicketManagement} />
-              <AdminRoute path="/admin/tickets-warning/:id" component={TicketWarning} />
+              <AdminRoute path="/admin/tickets-warning/:id?" component={TicketWarning} />
               <AdminRoute path="/admin/tickets/:id" component={TicketDetail} />
               <AdminRoute exact path="/admin/applications" component={ApplicationManagement} />
               <AdminRoute path="/admin/applications/:id" component={ApplicationDetail} />
               <AdminRoute path="/admin/intents/:id?" component={IntentManagement} />
+              <AdminRoute path="/admin/feedbacks/:id?" component={FeedbackManagement} />
               <AdminRoute exact path="/admin/user" component={UserManagement} />
               <AdminRoute path="/admin/user/:id" component={UserDetail} />
               <AdminRoute path="/admin/canned-responses" component={CannedResponseManagement} />

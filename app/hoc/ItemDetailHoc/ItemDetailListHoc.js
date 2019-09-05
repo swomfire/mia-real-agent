@@ -20,7 +20,7 @@ const ItemDetailListHoc = (ItemsDetailListItem) => {
     renderListItem = (item) => {
       const { selectedId } = this.props;
       const { _id } = item;
-      const active = selectedId === _id;
+      const active = (selectedId) ? selectedId === _id : false;
 
       return <ItemsDetailListItem key={_id} item={item} active={active} />;
     };
@@ -86,7 +86,7 @@ const ItemDetailListHoc = (ItemsDetailListItem) => {
     currentSorting: PropTypes.object.isRequired,
     sortItems: PropTypes.array.isRequired,
     createEndpoint: PropTypes.string,
-    title: PropTypes.string,
+    title: PropTypes.object,
     isLoading: PropTypes.bool.isRequired,
     items: PropTypes.array.isRequired,
     fetchList: PropTypes.func.isRequired,

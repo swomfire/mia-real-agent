@@ -40,6 +40,8 @@ import {
 } from '../ChatItem';
 import RichEditor from '../FormInput/RichEditor/RichEditor';
 import { clearEditorContent } from '../../api/utils';
+import { ButtonPrimary } from '../../stylesheets/Button.style';
+import CreateFeedbackForm from '../../containers/CreateFeedbackForm';
 
 const scrollStyle = {
   flex: 'auto',
@@ -92,6 +94,13 @@ export default class MessageBox extends Component {
 
   state = {
     content: EditorState.createEmpty(),
+    feedbackFormIsOpen: false,
+  }
+
+  toggleFeedbackForm = (toggle) => {
+    this.setState({
+      feedbackFormIsOpen: toggle,
+    });
   }
 
   componentDidMount() {
@@ -293,6 +302,13 @@ export default class MessageBox extends Component {
         <ConversationTitle>
           <TicketStatus status={status} />
           <span>{title}</span>
+          <ButtonPrimary
+            type="primary"
+            onClick={() => this.toggleFeedbackForm(true)}
+          >
+            <Icon type="form" />
+            Feedback
+          </ButtonPrimary>
         </ConversationTitle>
       </ConversationHeaderTitle>
     );
@@ -396,9 +412,11 @@ export default class MessageBox extends Component {
 
 
   render() {
+    const { feedbackFormIsOpen } = this.state;
     const {
       isFetchingReplies, isFindingAgent, currentTicket,
     } = this.props;
+    const { _id } = currentTicket || {};
     return (
       <LoadingSpin loading={isFetchingReplies || isFindingAgent}>
         {this.renderMessageHeader()}
@@ -407,6 +425,11 @@ export default class MessageBox extends Component {
             {this.renderMessageBoxContent()}
           </MessageBoxContent>
           <ConversationDetail ticket={currentTicket} />
+          <CreateFeedbackForm
+            ticketId={_id}
+            isOpen={feedbackFormIsOpen}
+            handleCancel={() => this.toggleFeedbackForm(false)}
+          />
         </MessageBoxWrapper>
       </LoadingSpin>
     );

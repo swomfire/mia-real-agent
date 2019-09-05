@@ -7,7 +7,7 @@ import {
   MessageBoxSystemNotification, LineDivider,
   MessageBoxItemIsTyping, IsTypingWrapper,
   TicketActionStatus, UserAction, TicketActionStatusTitle,
-  TicketRatingScore, CommentWrapper, UserWarning, UserLabelWarning,
+  TicketRatingScore, CommentWrapper, UserLabelWarning,
 } from './styles';
 import { ROLES } from '../../../common/enums';
 import { toI18n, isAgent } from '../../utils/func-utils';
@@ -30,7 +30,7 @@ export const userChat = (msgId, contents, isPending = false) => (
   <MessageBoxItem right key={msgId}>
     <MessageText>
       {contents.map(({ _id, messages, sentAt }) => (
-        <Tooltip placement="right" title={renderTime(sentAt)}>
+        <Tooltip key={msgId} placement="right" title={renderTime(sentAt)}>
           <UserMessage key={_id} pending={isPending}>
             {messages}
           </UserMessage>
@@ -47,7 +47,7 @@ export const otherChat = (msgId, contents, avatar) => (
     />
     <MessageText>
       {contents.map(({ _id, messages, sentAt }) => (
-        <Tooltip placement="left" title={renderTime(sentAt)}>
+        <Tooltip key={msgId} placement="left" title={renderTime(sentAt)}>
           <p key={_id}>
             {messages}
           </p>
@@ -64,7 +64,7 @@ export const botChat = (msgId, contents) => (
     />
     <MessageText>
       {contents.map(({ _id, messages, sentAt }) => (
-        <Tooltip placement="left" title={renderTime(sentAt)}>
+        <Tooltip key={msgId} placement="left" title={renderTime(sentAt)}>
           <p key={_id}>
             {messages}
           </p>
@@ -91,7 +91,7 @@ export const ticketStatus = (msgId, params, sentAt) => {
   return (
     <MessageBoxSystemNotification key={`status${msgId}`}>
       <LineDivider />
-      <Tooltip placement="top" title={renderTime(sentAt)}>
+      <Tooltip key={msgId} placement="top" title={renderTime(sentAt)}>
         {toI18n('CONV_MESSAGE_BOX_TICKET_CHANGED_TO')}
         <TicketActionStatus status={status} />
         <TicketActionStatusTitle status={status}>{status}</TicketActionStatusTitle>
@@ -121,7 +121,7 @@ export const userAction = (msgId, from, params, sentAt) => {
   return (
     <MessageBoxSystemNotification key={`status${msgId}`}>
       <LineDivider />
-      <Tooltip placement="top" title={renderTime(sentAt)}>
+      <Tooltip key={`status${msgId}`} placement="top" title={renderTime(sentAt)}>
         {
           `${messageOwner} `
         }
@@ -156,7 +156,7 @@ export const warningAction = (msgId, from, contents, sentAt) => {
         <MessageText>
           {
             contents.map(({ _id, messages }) => (
-              <Tooltip placement="left" title={renderTime(sentAt)}>
+              <Tooltip key={msgId} placement="left" title={renderTime(sentAt)}>
                 <UserLabelWarning>
                   {messageOwner}
                 </UserLabelWarning>
@@ -174,7 +174,7 @@ export const warningAction = (msgId, from, contents, sentAt) => {
     <MessageBoxItem right key={msgId}>
       <MessageText>
         {contents.map(({ _id, messages }) => (
-          <Tooltip placement="right" title={renderTime(sentAt)}>
+          <Tooltip key={msgId} placement="right" title={renderTime(sentAt)}>
             <UserLabelWarning user>
               {messageOwner}
             </UserLabelWarning>
@@ -205,7 +205,7 @@ export const ticketRating = (msgId, from, params, sentAt) => {
   return (
     <MessageBoxSystemNotification key={`status${msgId}`}>
       <LineDivider />
-      <Tooltip placement="top" title={renderTime(sentAt)}>
+      <Tooltip key={`status${msgId}`} placement="top" title={renderTime(sentAt)}>
         {
           `${messageOwner} `
         }

@@ -17,7 +17,7 @@ import TimerWrapper from './Timer';
 import { toI18n } from '../../utils/func-utils';
 
 const scrollStyle = {
-  height: 'calc(100vh - 125px)',
+  height: 'calc(100vh - 9em)',
   width: '100%',
 };
 

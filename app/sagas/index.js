@@ -11,6 +11,7 @@ import adminSaga from './admin';
 import applicationSaga from './application';
 import intentSaga from './intent';
 import conversationSaga from './conversations';
+import feedbackSaga from './feedbacks';
 import repliesSaga from './replies';
 import responseSaga from './response';
 import agentsSaga from './agents';
@@ -35,6 +36,7 @@ export default function* rootSagas() {
     applicationSaga(),
     adminSaga(),
     conversationSaga(),
+    feedbackSaga(),
     repliesSaga(),
     agentsSaga(),
     intentSaga(),

@@ -8,14 +8,13 @@ import {
   TitleDetailsHead,
   AdminHeadActionGroup,
   HeaderTextDetails,
-  ItemStatus,
+  ItemStatus, ItemDescription,
 } from 'components/Generals/ItemDetail.styled';
 import {
   ButtonApprove,
   ButtonReject,
 } from '../../stylesheets/Button.style';
 import { APPLICATION_STATUS } from '../../../common/enums';
-import { ItemDescription } from '../Generals/ItemDetail.styled';
 
 class ApplicationDetailInfoHeader extends PureComponent {
   goToEditPage = () => {
@@ -42,14 +41,15 @@ class ApplicationDetailInfoHeader extends PureComponent {
         <HeaderTextDetails>
           <span>
             {nickname}
-            {' - '}
           </span>
           <ItemDescription>
+            {' ('}
             {firstName}
             {' '}
             {lastName}
+            {'). '}
           </ItemDescription>
-          <ItemStatus status={status}>{`  - ${status} `}</ItemStatus>
+          <ItemStatus status={status}>{status}</ItemStatus>
           {status === APPLICATION_STATUS.APPROVED && (<i className="mia-edit" onClick={this.goToEditPage} />)}
         </HeaderTextDetails>
         <AdminHeadActionGroup>

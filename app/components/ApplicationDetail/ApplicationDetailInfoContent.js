@@ -10,8 +10,9 @@ import {
   AdminInfoContentBlock,
   OverviewLabel,
   OverviewValue,
+  AdminUserDetailsGroup, AdminUserDetailsLeft, AdminUserDetailsRight,
 } from 'components/Generals/ItemDetail.styled';
-import { Tabs, Icon } from 'antd';
+import { Tabs, Icon, Upload, Row } from 'antd';
 import moment from 'moment';
 import { DATE_TIME_FORMAT } from '../../utils/constants';
 import {
@@ -21,7 +22,6 @@ import {
 import ApplicationDetailExperienceDetail from './ApplicationDetailExperienceDetail';
 import ApplicationDetailEducationDetail from './ApplicationDetailEducationDetail';
 import { toI18n } from '../../utils/func-utils';
-import { AdminUserDetailsGroup, AdminUserDetailsLeft, AdminUserDetailsRight } from '../Generals/ItemDetail.styled';
 
 const { TabPane } = Tabs;
 
@@ -163,6 +163,33 @@ class ApplicationDetailInfoContent extends PureComponent {
     </ArrayTagWrapper>
   );
 
+  renderUpload = () => {
+    const {
+      applicationDetail: {
+        cv,
+      },
+    } = this.props;
+    const fileList = cv.map((link, index) => {
+      const path = link.split('/');
+      const fileName = path[path.length - 1];
+      return {
+        uid: index,
+        name: fileName,
+        status: 'done',
+        url: link,
+        thumbUrl: link,
+      };
+    });
+    const listType = fileList.length > 3 ? 'picture-card' : 'picture';
+    return (
+      <Upload
+        disabled
+        listType={listType}
+        defaultFileList={fileList}
+      />
+    );
+  }
+
   renderItemOverview = () => {
     const {
       applicationDetail: {
@@ -192,17 +219,20 @@ class ApplicationDetailInfoContent extends PureComponent {
   renderItemAdditional = () => {
     const {
       applicationDetail: {
-        cv, skills, createdAt, billingRate = 0,
+        skills, createdAt, billingRate = 0,
       },
     } = this.props;
     return (
       <OverviewLeftSectionWrapper>
-        <OverviewTitle>{toI18n('ADMIN_APPLICATION_DETAIL_ADDITIONAL')}</OverviewTitle>
-        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_CV'), cv, true)}
-        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_SKILLS'), skills)}
-        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_CREATED_AT'), moment(createdAt).format(DATE_TIME_FORMAT.DATE))}
         <OverviewTitle>{toI18n('ADMIN_APPLICATION_DETAIL_BILLING')}</OverviewTitle>
         {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_BILLING_RATE'), billingRate)}
+        <OverviewTitle>{toI18n('ADMIN_APPLICATION_DETAIL_ADDITIONAL')}</OverviewTitle>
+        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_SKILLS'), skills)}
+        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_CREATED_AT'), moment(createdAt).format(DATE_TIME_FORMAT.DATE))}
+        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_CV'), '')}
+        <Row>
+          {this.renderUpload()}
+        </Row>
       </OverviewLeftSectionWrapper>
     );
   };

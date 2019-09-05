@@ -23278,3 +23278,16 @@ div.ant-typography-edit-content {
     opacity: 0;
   }
 }
+.ant-upload-list-picture-card .ant-upload-list-item-thumbnail, .ant-upload-list-picture-card .ant-upload-list-item-thumbnail img{
+  height: 2.5em;
+  margin-bottom: 10px;
+}
+
+.ant-upload-list-picture-card .ant-upload-list-item{
+  width: 8em;
+  height: 8em;
+}
+
+.ant-upload-list-picture-card .ant-upload-list-item-name{
+  display: inline;
+}

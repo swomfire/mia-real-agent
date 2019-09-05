@@ -1,26 +1,24 @@
 import React, { Component } from 'react';
 import { func, bool, shape } from 'prop-types';
 import {
-  Row, Col, Divider, Button,
+  Row, Col, Divider, Tabs,
 } from 'antd';
 import {
   ProfileWrapper, ProfileCard, ProfileTitle,
   InputStyled,
   InputLabelStyled,
-  ActionBar,
 } from './styles';
 import LoadingSpin from '../Loading';
 import ProfileDetail from './ProfileDetail/ProfileDetail';
-import ProfileFormContainer from '../../containers/Profile/ProfileForm';
-import ChangePasswordFormContainer from '../../containers/Profile/ChangePasswordForm/ChangePasswordFormContainer';
+
 import { toI18n } from '../../utils/func-utils';
+import ProfileBasicInfo from './ProfileBasicInfo';
+import PaidMethods from './PaidMethods';
+import AddCreditCard from './AddCreditCard';
+
+const { TabPane } = Tabs;
 
 export default class Profile extends Component {
-  state = {
-    isOpenConfirmPasswordModal: false,
-    isOpenChangePasswordModal: false,
-  }
-
   static propTypes = {
     fetchProfile: func.isRequired,
     isFetching: bool.isRequired,
@@ -34,30 +32,6 @@ export default class Profile extends Component {
   handleFetchDetail = () => {
     const { fetchProfile } = this.props;
     fetchProfile();
-  }
-
-  handleOpenConfirmPasswordModal = () => {
-    this.setState({
-      isOpenConfirmPasswordModal: true,
-    });
-  }
-
-  handleCloseConfirmPasswordModal = () => {
-    this.setState({
-      isOpenConfirmPasswordModal: false,
-    });
-  }
-
-  handleOpenChangePasswordModal = () => {
-    this.setState({
-      isOpenChangePasswordModal: true,
-    });
-  }
-
-  handleCloseChangePasswordModal = () => {
-    this.setState({
-      isOpenChangePasswordModal: false,
-    });
   }
 
   renderProfile = () => {
@@ -91,32 +65,25 @@ export default class Profile extends Component {
   }
 
   render() {
-    const { isOpenConfirmPasswordModal, isOpenChangePasswordModal } = this.state;
-    const { isFetching } = this.props;
+    const { isFetching, user } = this.props;
     return (
       <ProfileWrapper>
         <ProfileCard>
           <LoadingSpin loading={isFetching}>
             <ProfileTitle>{toI18n('PROFILE_PROFILE')}</ProfileTitle>
-            {this.renderProfile()}
-            <ActionBar>
-              <Button type="primary" onClick={this.handleOpenConfirmPasswordModal}>
-                {toI18n('PROFILE_EDIT')}
-              </Button>
-              <Button type="primary" onClick={this.handleOpenChangePasswordModal}>
-                {toI18n('PROFILE_CHANGE_PASSWORD')}
-              </Button>
-            </ActionBar>
+            <Tabs>
+              <TabPane tab="Basic info" key="1">
+                <ProfileBasicInfo user={user} />
+              </TabPane>
+              <TabPane tab="Payment info" key="2">
+                <PaidMethods user={user} />
+              </TabPane>
+              <TabPane tab="Add credit card" key="3">
+                <AddCreditCard user={user} />
+              </TabPane>
+            </Tabs>
           </LoadingSpin>
         </ProfileCard>
-        <ProfileFormContainer
-          isOpen={isOpenConfirmPasswordModal}
-          handleCancel={this.handleCloseConfirmPasswordModal}
-        />
-        <ChangePasswordFormContainer
-          isOpen={isOpenChangePasswordModal}
-          handleCancel={this.handleCloseChangePasswordModal}
-        />
       </ProfileWrapper>
     );
   }

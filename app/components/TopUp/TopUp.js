@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _isEmpty from 'lodash/isEmpty';
 import {
   Modal, Steps, Tabs, Form, Icon,
 } from 'antd';
@@ -7,7 +8,7 @@ import {
 } from 'prop-types';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { TopUpBlock, ActionGroup, ExchangeRateWrapper, TopUpTitle, TopUpSuccess } from './styles';
+import { TopUpBlock, ActionGroup, ExchangeRateWrapper, TopUpTitle, TopUpSuccess, AddCreditCard } from './styles';
 import { ButtonCancel, ButtonPrimary } from '../../stylesheets/Button.style';
 import CreditCard from '../CreditCard/CreditCard';
 
@@ -32,6 +33,7 @@ const initialState = {
 class TopUp extends Component {
   state = {
     ...initialState,
+    selectedCard: '',
   }
 
   static propTypes = {
@@ -56,20 +58,37 @@ class TopUp extends Component {
     });
   }
 
+  handleSelectCard = (card) => {
+    this.setState({
+      selectedCard: card,
+    });
+  }
+
   renderSelectCreditCard = () => {
+    const { selectedCard } = this.state;
     const { creditCard } = this.props;
     return (
       <div>
         <div>
           <CreditCard
             card={creditCard}
-            onClick={() => this.handleStep(1)}
+            type="select-list"
+            onClick={this.handleSelectCard}
           />
         </div>
+        <AddCreditCard>
+          Add Credit Card
+        </AddCreditCard>
         <ActionGroup>
           <ButtonCancel onClick={this.handleClose}>
             Cancel
           </ButtonCancel>
+          <ButtonPrimary
+            disabled={_isEmpty(selectedCard)}
+            onClick={() => this.handleStep(1)}
+          >
+            Next
+          </ButtonPrimary>
         </ActionGroup>
       </div>
     );

@@ -110,6 +110,11 @@ export const ButtonPrimary = styled(Button)`
   color:  ${props => props.theme.colorStyled.ColorWhite};
   font-size: ${props => props.theme.fontSize.SmallFontSize};
   padding: .35em 1em;
+  :disabled {
+    background: ${props => props.theme.colorStyled.ColorXXXLightGrey};
+    color:  ${props => props.theme.colorStyled.ColoraBtnCancel};
+    border: 1px solid ${props => props.theme.colorStyled.ColorXXXLightGrey};
+  }
   &:hover{
     opacity: .7;
   }

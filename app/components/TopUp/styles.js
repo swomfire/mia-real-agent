@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ButtonPrimary } from '../../stylesheets/Button.style';
 
 export const TopUpBlock = styled.div`
   padding: 0 .5em;
@@ -110,6 +111,13 @@ export const TopUpBlock = styled.div`
     font-size: 1.5em;
     height: 50px;
   }
+`;
+
+export const AddCreditCard = styled(ButtonPrimary)`
+    font-size: 1em;
+    position: absolute;
+    bottom: .5em;
+    left: .5em;
 `;
 
 export const ActionGroup = styled.div`

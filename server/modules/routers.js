@@ -11,6 +11,7 @@ import AdminRouter from './admin/routers';
 import ReplyRouter from './reply/reply.route';
 import IntentRouter from './intent/intent.route';
 import ResponseRouter from './intentResponse/intentResponse.route';
+import SystemRouter from './system/system.route';
 import CannedResponseRouter from './canned-response/canned-response.route';
 
 
@@ -29,5 +30,6 @@ export default () => {
   router.use('/intents', IntentRouter.router);
   router.use('/responses', ResponseRouter.router);
   router.use('/canned-responses', CannedResponseRouter.router);
+  router.use('/system', SystemRouter.router);
   return router;
 };

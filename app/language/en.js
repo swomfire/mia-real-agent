@@ -186,6 +186,7 @@ const en = {
     ADMIN_LEFT_NAV_USERS: 'Users',
     ADMIN_LEFT_NAV_INTENTS: 'Intents',
     ADMIN_LEFT_NAV_CANNED_RESPONDE: 'Canned Responses',
+    ADMIN_LEFT_NAV_System: 'System',
     // Admin users table
     ADMIN_USERS_TABLE_ALL_USERS: 'All Users',
     ADMIN_USERS_TABLE_USERNAME: 'Username',

@@ -43,6 +43,7 @@ function* login({ payload }) {
     token,
     userId,
     verifiedAt,
+    creditTime,
   } = data;
 
   // unverified account
@@ -60,6 +61,7 @@ function* login({ payload }) {
       token,
       userId,
       verifiedAt,
+      creditTime,
     })
   );
 }

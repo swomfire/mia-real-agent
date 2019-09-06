@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { shape } from 'prop-types';
 import _isEmpty from 'lodash/isEmpty';
+import numeral from 'numeral';
 import { ButtonPrimary } from '../../../stylesheets/Button.style';
 import TopUp from '../../TopUp/TopUp';
 import {
@@ -53,7 +54,7 @@ class PaidMethods extends Component {
       <PaidMethodWrapper>
         <CreditTimeWrapper>
           <span>
-            {`Total credit time: ${creditTime}`}
+            {`Total credit time: ${numeral(creditTime).format('00:00:00')}`}
           </span>
           <ButtonPrimary
             onClick={() => this.toggleTopUpModal(true)}

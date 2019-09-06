@@ -13,6 +13,7 @@ import { ButtonCancel, ButtonPrimary } from '../../stylesheets/Button.style';
 import CreditCard from '../CreditCard/CreditCard';
 
 import FormInput from '../FormInput/FormInput';
+import { toI18n } from '../../utils/func-utils';
 
 const { TabPane } = Tabs;
 const { Step } = Steps;
@@ -22,7 +23,7 @@ const initialValues = {
 };
 
 const validationSchema = Yup.object().shape({
-  amount: Yup.number().min(1).required('Required'),
+  amount: Yup.number().min(1).required(toI18n('FORM_REQUIRED')),
 });
 
 const initialState = {
@@ -77,17 +78,17 @@ class TopUp extends Component {
           />
         </div>
         <AddCreditCard>
-          Add Credit Card
+          {toI18n('TOP_UP_SUCCESS_ADD_CREDIT_CARD')}
         </AddCreditCard>
         <ActionGroup>
           <ButtonCancel onClick={this.handleClose}>
-            Cancel
+            {toI18n('FORM_CANCEL')}
           </ButtonCancel>
           <ButtonPrimary
             disabled={_isEmpty(selectedCard)}
             onClick={() => this.handleStep(1)}
           >
-            Next
+            {toI18n('FORM_NEXT')}
           </ButtonPrimary>
         </ActionGroup>
       </div>
@@ -119,10 +120,10 @@ class TopUp extends Component {
             </ExchangeRateWrapper>
             <ActionGroup>
               <ButtonCancel onClick={() => this.handleStep(-1)}>
-                Back
+                {toI18n('FORM_BACK')}
               </ButtonCancel>
               <ButtonPrimary type="submit">
-                Submit
+                {toI18n('FORM_SUBMIT')}
               </ButtonPrimary>
             </ActionGroup>
           </Form>
@@ -142,11 +143,13 @@ class TopUp extends Component {
         footer={null}
       >
         <TopUpBlock>
-          <TopUpTitle>Top-up your credit time</TopUpTitle>
+          <TopUpTitle>
+            {toI18n('TOP_UP_YOUR_CREDIT_TIME')}
+          </TopUpTitle>
           <Steps current={step}>
-            <Step title="Select Credit Card" />
-            <Step title="Input Amount" />
-            <Step title="Finish" />
+            <Step title={toI18n('TOP_UP_SELECT_CREDIT_CARD')} />
+            <Step title={toI18n('TOP_UP_INPUT_AMOUNT')} />
+            <Step title={toI18n('TOP_UP_FINISH')} />
           </Steps>
           <Tabs activeKey={`${step}`}>
             <TabPane key="0">
@@ -159,10 +162,10 @@ class TopUp extends Component {
               <TopUpSuccess>
                 <h2>
                   <Icon type="check" />
-                  Top up success
+                  {toI18n('TOP_UP_SUCCESS')}
                 </h2>
                 <ButtonPrimary type="button" onClick={this.handleClose}>
-                  Return
+                  {toI18n('FORM_RETURN')}
                 </ButtonPrimary>
               </TopUpSuccess>
             </TabPane>

@@ -386,6 +386,13 @@ const en = {
     CREATE_FEEDBACK_TITLE: 'Title',
     CREATE_FEEDBACK_FEEDBACKS: 'Feedbacks',
     CREATE_FEEDBACK_SUCCESS: 'Feedbacks submitted',
+    // Top up
+    TOP_UP_SUCCESS: 'Top up success',
+    TOP_UP_SELECT_CREDIT_CARD: 'Select Credit Card',
+    TOP_UP_INPUT_AMOUNT: 'Input Amount',
+    TOP_UP_FINISH: 'Finish',
+    TOP_UP_SUCCESS_ADD_CREDIT_CARD: 'Add Credit Card',
+    TOP_UP_YOUR_CREDIT_TIME: 'Top-up your credit time',
   },
 };
 

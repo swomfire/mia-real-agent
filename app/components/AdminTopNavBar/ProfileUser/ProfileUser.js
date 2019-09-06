@@ -22,7 +22,7 @@ class ProfileUser extends React.PureComponent {
     return (
       <AdditionalInformationWrapper>
         <AdditionalInformationTitle>
-          Credit time:
+          {toI18n('NAVBAR_PROFILE_CREDIT_TIME')}
         </AdditionalInformationTitle>
         <AdditionalInformationValue>
           {numeral(creditTime).format('00:00:00')}

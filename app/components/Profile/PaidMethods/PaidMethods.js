@@ -7,6 +7,7 @@ import TopUp from '../../TopUp/TopUp';
 import {
   PaidMethodWrapper, CreditTimeWrapper, BillingHistoryWrapper, BillingHistory, NoHistoryWrapper,
 } from './styles';
+import { toI18n } from '../../../utils/func-utils';
 
 class PaidMethods extends Component {
   state = {
@@ -30,7 +31,7 @@ class PaidMethods extends Component {
       return (
         <BillingHistoryWrapper>
           <NoHistoryWrapper>
-            No Billing History
+            {toI18n('PROFILE_PAYMENT_INFO_NO_BILLING_HISTORY')}
           </NoHistoryWrapper>
         </BillingHistoryWrapper>
       );
@@ -54,12 +55,13 @@ class PaidMethods extends Component {
       <PaidMethodWrapper>
         <CreditTimeWrapper>
           <span>
-            {`Total credit time: ${numeral(creditTime).format('00:00:00')}`}
+            {toI18n('PROFILE_PAYMENT_INFO_TOTAL_CREDIT_TIME')}
+            {numeral(creditTime).format('00:00:00')}
           </span>
           <ButtonPrimary
             onClick={() => this.toggleTopUpModal(true)}
           >
-            Top up
+            {toI18n('PROFILE_PAYMENT_INFO_TOP_UP')}
           </ButtonPrimary>
         </CreditTimeWrapper>
         {this.renderBillingHistory()}

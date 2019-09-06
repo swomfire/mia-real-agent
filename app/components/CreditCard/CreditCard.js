@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { arrayOf, func, shape } from 'prop-types';
 import { Row, Col } from 'antd';
 import { CreditCardWrapper, CreditCardType, AddCreditCardWrapper } from './styles';
+import { toI18n } from '../../utils/func-utils';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class CreditCard extends Component {
@@ -24,7 +25,7 @@ class CreditCard extends Component {
         ))}
         <Col xs={16} sm={16} md={8}>
           <AddCreditCardWrapper onClick={onClick}>
-            + Add Credit Card
+            {toI18n('CREDIT_CARD_ADD_CREDIT_CARD')}
           </AddCreditCardWrapper>
         </Col>
       </Row>

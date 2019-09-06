@@ -72,13 +72,13 @@ export default class Profile extends Component {
           <LoadingSpin loading={isFetching}>
             <ProfileTitle>{toI18n('PROFILE_PROFILE')}</ProfileTitle>
             <Tabs>
-              <TabPane tab="Basic info" key="1">
+              <TabPane tab={toI18n('PROFILE_CHANGE_BASIC_INFO')} key="1">
                 <ProfileBasicInfo user={user} />
               </TabPane>
-              <TabPane tab="Payment info" key="2">
+              <TabPane tab={toI18n('PROFILE_PAYMENT_INFO_PAYMENT_INFO')} key="2">
                 <PaidMethods user={user} />
               </TabPane>
-              <TabPane tab="Add credit card" key="3">
+              <TabPane tab={toI18n('PROFILE_CHANGE_ADD_CREDIT_CARD')} key="3">
                 <AddCreditCard user={user} />
               </TabPane>
             </Tabs>

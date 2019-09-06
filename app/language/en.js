@@ -321,6 +321,8 @@ const en = {
     PROFILE_PROFILE: 'Profile',
     PROFILE_EDIT: 'Edit',
     PROFILE_CHANGE_PASSWORD: 'Change password',
+    PROFILE_CHANGE_BASIC_INFO: 'Basic info',
+    PROFILE_CHANGE_ADD_CREDIT_CARD: 'Add credit card',
     // Profile Detail
     PROFILE_DETAIL_FIRST_NAME: 'First name',
     PROFILE_DETAIL_LAST_NAME: 'Last name',
@@ -343,6 +345,15 @@ const en = {
     PROFILE_BUSINESS_FORM_WORKING_FIELDS: 'Working fields',
     PROFILE_BUSINESS_FORM_ADDRESS: 'Address',
     PROFILE_BUSINESS_FORM_PHONE: 'Phone No.',
+    // Profile payment info
+    PROFILE_PAYMENT_INFO_PAYMENT_INFO: 'Payment info',
+    PROFILE_PAYMENT_INFO_NO_BILLING_HISTORY: 'No Billing History',
+    PROFILE_PAYMENT_INFO_TOP_UP: 'Top up',
+    PROFILE_PAYMENT_INFO_TOTAL_CREDIT_TIME: 'Total credit time: ',
+    // Credit card
+    CREDIT_CARD_ADD_CREDIT_CARD: '+ Add Credit Card',
+    // Navbar profile
+    NAVBAR_PROFILE_CREDIT_TIME: 'Credit time:',
     // Close Ticket Modal
     CLOSE_TICKET_MODAL_CLOSED_STATUS: 'Closed Status',
     CLOSE_TICKET_MODAL_UNSOLVED_REASON: 'Unsolved Reason',

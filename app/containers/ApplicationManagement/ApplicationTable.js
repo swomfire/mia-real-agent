@@ -16,6 +16,15 @@ import { toI18n } from '../../utils/func-utils';
 const applicationColumns = [
   {
     type: COLUMN_TYPE.TEXT,
+    dataKey: 'nickname',
+    columnAttr: {
+      value: toI18n('ADMIN_APPLICATION_TABLE_NICKNAME'),
+      percent: 15,
+      className: 'application-name text-bold',
+    },
+  },
+  {
+    type: COLUMN_TYPE.TEXT,
     dataKey: ['firstName', 'lastName'],
     columnAttr: {
       value: toI18n('ADMIN_APPLICATION_TABLE_FULL_NAME'),

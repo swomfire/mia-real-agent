@@ -23,6 +23,7 @@ export const DefaultThemes = {
     SmallMobileFontSize: '0.625em',
     DefaultFonts: '0.688em',
     SmallFontSize: '0.750em',
+    SmallSmallFontSize: '0.50em',
     MediumFontSize: '0.875em',
     BaseFontSize: '1em',
     HeadingH6FontSize: '1.125em',
@@ -43,6 +44,7 @@ export const DefaultThemes = {
   colorStyled: {
     ColorWhite: '#ffffff',
     ColorBlack: '#000000',
+    ColorBlackGrey: '#5e615e',
     ColorBgDefault: '#ff5402',
     ColorTransparent: 'transparent',
     ColorBgDefaultHover: '#d67f04',

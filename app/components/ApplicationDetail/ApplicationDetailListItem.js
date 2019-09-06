@@ -19,13 +19,13 @@ class UserListItem extends React.PureComponent {
 
   render() {
     const { item: application, active } = this.props;
-    const { firstName, lastName, status } = application;
+    const { nickname, status } = application;
 
     return (
       <ItemDetailListItem active={active} onClick={this.onClick}>
         <ItemDetailName>
           <ItemsListsName>
-            {`${firstName} ${lastName}`}
+            {nickname}
           </ItemsListsName>
           <ItemStatus status={status}>
             {status}

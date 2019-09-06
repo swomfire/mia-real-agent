@@ -21,7 +21,11 @@ class TicketService extends BaseService {
   getByCondition(condition) {
     return this.collection.findOne(condition)
       .populate({ path: 'owner', select: ['_id', 'profile', 'role', 'username'] }) // only get _id and username of owner
-      .populate({ path: 'assignee', select: ['_id', 'profile', 'rating', 'username'] });
+      .populate({
+        path: 'assignee',
+        select: ['_id', 'rating', 'application'],
+        populate: ({ path: 'application', select: ['nickname', 'billingRate'] }),
+      });
   }
 
   getAllByConditionWithPopulationInfo(condition, population) {
@@ -97,7 +101,11 @@ class TicketService extends BaseService {
     const resultPromise = this.collection
       .find(queryCondition, null, options)
       .populate({ path: 'owner', select: ['_id', 'profile', 'role', 'username'] }) // only get _id and username of owner
-      .populate({ path: 'assignee', select: ['_id', 'profile', 'rating', 'username'] }) // only get _id and username of assignee
+      .populate({
+        path: 'assignee',
+        select: ['_id', 'rating', 'application'],
+        populate: ({ path: 'application', select: ['nickname', 'billingRate'] }),
+      })
       .sort(sort)
       .skip(+skip)
       .limit(+limit || 10)

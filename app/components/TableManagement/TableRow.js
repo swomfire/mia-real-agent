@@ -67,8 +67,7 @@ class TableRow extends React.PureComponent {
     const { dataKey, key } = column;
 
     const values = _get(item, dataKey);
-
-    return values.map(value => value[key]);
+    return values.map(value => value[key]).join(', ');
   };
 
   handleActionBarOnClick = (e) => {

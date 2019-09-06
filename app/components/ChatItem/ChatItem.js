@@ -105,19 +105,9 @@ export const userAction = (msgId, from, params, sentAt) => {
   const { action } = params;
   let messageOwner = '';
   // eslint-disable-next-line no-underscore-dangle
-  const { role, profile = {} } = from;
-  const { firstName, lastName, company = 'N/A' } = profile;
-  switch (role) {
-    case ROLES.INDIVIDUAL:
-      messageOwner = `${firstName} ${lastName}`;
-      break;
-    case ROLES.BUSINESS:
-      messageOwner = company;
-      break;
-    default:
-      messageOwner = `${firstName} ${lastName}`;
-      break;
-  }
+  const { role, username, application } = from;
+  const { nickname } = application || {};
+  messageOwner = isAgent(role) ? nickname : username;
   return (
     <MessageBoxSystemNotification key={`status${msgId}`}>
       <LineDivider />

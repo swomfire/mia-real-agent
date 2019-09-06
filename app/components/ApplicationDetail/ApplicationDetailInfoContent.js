@@ -10,8 +10,9 @@ import {
   AdminInfoContentBlock,
   OverviewLabel,
   OverviewValue,
+  AdminUserDetailsGroup, AdminUserDetailsLeft, AdminUserDetailsRight,
 } from 'components/Generals/ItemDetail.styled';
-import { Tabs, Icon } from 'antd';
+import { Tabs, Icon, Upload, Row } from 'antd';
 import moment from 'moment';
 import { DATE_TIME_FORMAT } from '../../utils/constants';
 import {
@@ -162,28 +163,95 @@ class ApplicationDetailInfoContent extends PureComponent {
     </ArrayTagWrapper>
   );
 
-  renderItemOverview = () => {
-    const {
-      isExperienceDetailOpen, experienceDetail,
-      isEducationDetailOpen, educationDetail,
-    } = this.state;
+  renderUpload = () => {
     const {
       applicationDetail: {
-        firstName, lastName, email, cv,
-        role, categories, skills, createdAt,
+        cv,
+      },
+    } = this.props;
+    const fileList = cv.map((link, index) => {
+      const path = link.split('/');
+      const fileName = path[path.length - 1];
+      return {
+        uid: index,
+        name: fileName,
+        status: 'done',
+        url: link,
+        thumbUrl: link,
+      };
+    });
+    const listType = fileList.length > 3 ? 'picture-card' : 'picture';
+    return (
+      <Upload
+        disabled
+        listType={listType}
+        defaultFileList={fileList}
+      />
+    );
+  }
+
+  renderItemOverview = () => {
+    const {
+      applicationDetail: {
+        nickname, firstName, lastName, email,
+        country, address, postcode, phone,
+        role, categories,
       },
     } = this.props;
     return (
       <OverviewLeftSectionWrapper>
         <OverviewTitle>{toI18n('ADMIN_APPLICATION_DETAIL_PRIMARY_DETAILS')}</OverviewTitle>
+        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_ROLE'), role)}
+        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_NICKNAME'), nickname)}
         {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_FIRST_NAME'), firstName)}
         {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_LAST_NAME'), lastName)}
         {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_EMAIL'), email)}
-        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_ROLE'), role)}
+        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_COUNTRY'), country)}
+        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_ADDRESS'), address)}
+        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_POSTCODE'), postcode)}
+        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_PHONE'), phone)}
+        <OverviewTitle>{toI18n('ADMIN_APPLICATION_DETAIL_EXPERIENCE')}</OverviewTitle>
         {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_CATEGORIES'), categories)}
+      </OverviewLeftSectionWrapper>
+    );
+  };
+
+  renderItemAdditional = () => {
+    const {
+      applicationDetail: {
+        skills, createdAt, billingRate = 0,
+      },
+    } = this.props;
+    return (
+      <OverviewLeftSectionWrapper>
+        <OverviewTitle>{toI18n('ADMIN_APPLICATION_DETAIL_BILLING')}</OverviewTitle>
+        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_BILLING_RATE'), billingRate)}
+        <OverviewTitle>{toI18n('ADMIN_APPLICATION_DETAIL_ADDITIONAL')}</OverviewTitle>
         {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_SKILLS'), skills)}
         {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_CREATED_AT'), moment(createdAt).format(DATE_TIME_FORMAT.DATE))}
-        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_CV'), cv, true)}
+        {this.renderOverviewInfo(toI18n('ADMIN_APPLICATION_DETAIL_CV'), '')}
+        <Row>
+          {this.renderUpload()}
+        </Row>
+      </OverviewLeftSectionWrapper>
+    );
+  };
+
+  render() {
+    const {
+      isExperienceDetailOpen, experienceDetail,
+      isEducationDetailOpen, educationDetail,
+    } = this.state;
+    return (
+      <AdminInfoContentBlock>
+        <AdminUserDetailsGroup>
+          <AdminUserDetailsLeft>
+            {this.renderItemOverview()}
+          </AdminUserDetailsLeft>
+          <AdminUserDetailsRight>
+            {this.renderItemAdditional()}
+          </AdminUserDetailsRight>
+        </AdminUserDetailsGroup>
         {this.renderTabMenu()}
         <ApplicationDetailExperienceDetail
           isOpen={isExperienceDetailOpen}
@@ -195,14 +263,6 @@ class ApplicationDetailInfoContent extends PureComponent {
           education={educationDetail}
           handleClose={() => this.toggleEducationDetail(false)}
         />
-      </OverviewLeftSectionWrapper>
-    );
-  };
-
-  render() {
-    return (
-      <AdminInfoContentBlock>
-        {this.renderItemOverview()}
       </AdminInfoContentBlock>
     );
   }

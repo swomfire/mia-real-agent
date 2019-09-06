@@ -64,21 +64,23 @@ class TableBorder extends React.PureComponent {
           {isLoading && <TableLoading />}
           {children}
         </TableCustomizeAdmin>
-        <PaginationGroups>
-          <PaginationBlockStyled>
-            {shouldRenderPaginationBar && (
-              <PaginationBar
-                totalPage={totalPage}
-                sizePerPage={sizePerPage}
-                selectedPage={selectedPage}
-                changePage={!isLoading && changePage}
-              />
-            )}
-            {shouldRenderPageInfo && (
-              <PaginationInfoStyled>{pageInfo}</PaginationInfoStyled>
-            )}
-          </PaginationBlockStyled>
-        </PaginationGroups>
+        {(shouldRenderPaginationBar || shouldRenderPageInfo) && (
+          <PaginationGroups>
+            <PaginationBlockStyled>
+              {shouldRenderPaginationBar && (
+                <PaginationBar
+                  totalPage={totalPage}
+                  sizePerPage={sizePerPage}
+                  selectedPage={selectedPage}
+                  changePage={!isLoading && changePage}
+                />
+              )}
+              {shouldRenderPageInfo && (
+                <PaginationInfoStyled>{pageInfo}</PaginationInfoStyled>
+              )}
+            </PaginationBlockStyled>
+          </PaginationGroups>
+        )}
         {actionRenderer()}
       </MainConentAdmin>
     );

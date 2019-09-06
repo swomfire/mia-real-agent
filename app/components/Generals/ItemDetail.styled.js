@@ -68,6 +68,7 @@ export const TitleDetailsHead = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 1em;
+  border-bottom: 1px solid ${props => props.theme.colorStyled.ColorBorder};
   height:  ${props => props.theme.heightSite.heightHeadAdmin};
 `;
 
@@ -192,7 +193,6 @@ export const InfoOverviewLeft = styled.div`
 `;
 
 export const AdminInfoContentBlock = styled.div`
-  border-top: 1px solid ${props => props.theme.colorStyled.ColorBorder};
   padding: 1em 1.5em;
 `;
 
@@ -356,15 +356,19 @@ export const OverviewAddImage = styled.div`
   }
 `;
 
-export const ItemStatus = styled.div.attrs({
-  className: 'type-status',
-})`
+export const ItemStatus = styled.div`
   font-style: italic;
-  text-transform: uppercase;
+  margin: .3em .2em 0 .4em;
   font-size:  ${props => props.theme.fontSize.SmallFontSize};
    ${({ status }) => status && css`      
       color: ${[COLOR_BY_STATUS[status]]};
   `};
+`;
+
+export const ItemDescription = styled.div`
+  font-style: italic;
+  font-size:  ${props => props.theme.fontSize.SmallFontSize};
+  margin: 0.2em  0 0 .2em;
 `;
 
 export const PleaseSelect = styled.div`

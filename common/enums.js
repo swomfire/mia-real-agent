@@ -170,6 +170,15 @@ export const APPLICATION_TYPE = {
   DEDICATED: 'Dedicated',
 };
 
+export const APPLICATION_OPTION = [{
+  label: 'Freelancer',
+  value: 'Freelancer',
+},
+{
+  label: 'Dedicated',
+  value: 'Dedicated',
+}];
+
 export const APPLICATION_LANGUAGE = {
   VIETNAMESE: 'Vietnamese',
   CHINESE: 'Chinese',

@@ -7,6 +7,7 @@ import {
   ProfileWrapper, ProfileCard, ProfileTitle,
   InputStyled,
   InputLabelStyled,
+  ProfileContentWrapper,
 } from './styles';
 import LoadingSpin from '../Loading';
 import ProfileDetail from './ProfileDetail/ProfileDetail';
@@ -73,13 +74,19 @@ export default class Profile extends Component {
             <ProfileTitle>{toI18n('PROFILE_PROFILE')}</ProfileTitle>
             <Tabs>
               <TabPane tab={toI18n('PROFILE_CHANGE_BASIC_INFO')} key="1">
-                <ProfileBasicInfo user={user} />
+                <ProfileContentWrapper>
+                  <ProfileBasicInfo user={user} />
+                </ProfileContentWrapper>
               </TabPane>
               <TabPane tab={toI18n('PROFILE_PAYMENT_INFO_PAYMENT_INFO')} key="2">
-                <PaidMethods user={user} />
+                <ProfileContentWrapper>
+                  <PaidMethods user={user} />
+                </ProfileContentWrapper>
               </TabPane>
               <TabPane tab={toI18n('PROFILE_CHANGE_ADD_CREDIT_CARD')} key="3">
-                <AddCreditCard user={user} />
+                <ProfileContentWrapper>
+                  <AddCreditCard user={user} />
+                </ProfileContentWrapper>
               </TabPane>
             </Tabs>
           </LoadingSpin>

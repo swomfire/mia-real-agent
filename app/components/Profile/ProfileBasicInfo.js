@@ -3,7 +3,7 @@ import { shape } from 'prop-types';
 import { Col, Row, Divider } from 'antd';
 import ProfileFormContainer from '../../containers/Profile/ProfileForm';
 import ChangePasswordFormContainer from '../../containers/Profile/ChangePasswordForm/ChangePasswordFormContainer';
-import { InputLabelStyled, ActionBar } from './styles';
+import { InputLabelStyled, ActionBar, RowStyled } from './styles';
 import { toI18n } from '../../utils/func-utils';
 import { InputStyled } from '../FormInput/styles';
 import ProfileDetail from './ProfileDetail/ProfileDetail';
@@ -52,7 +52,7 @@ class ProfileBasicInfo extends Component {
     } = this.props;
     return (
       <div>
-        <Row gutter={32}>
+        <RowStyled gutter={32}>
           <Col span={12}>
             <InputLabelStyled>
               {toI18n('PROFILE_USERNAME')}
@@ -67,8 +67,7 @@ class ProfileBasicInfo extends Component {
             </InputLabelStyled>
             <InputStyled value={email} />
           </Col>
-        </Row>
-        <Divider />
+        </RowStyled>
         <ProfileDetail role={role} profile={profile} />
       </div>
     );

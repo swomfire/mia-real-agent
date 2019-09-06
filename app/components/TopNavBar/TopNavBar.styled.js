@@ -17,13 +17,13 @@ export const TopNavBarWrapper = styled(Header)`
       .menu-items-top{
          &.ant-menu-item-active{
            &:after{
-             background-color: ${props => props.theme.colorStyled.ColorBlack}; 
+             background-color: ${props => props.theme.colorStyled.ColorWhite}; 
            } 
          }
          a {
           color: ${props => props.theme.colorStyled.ColorWhite};
           &:hover{
-            color: ${props => props.theme.colorStyled.ColorBlack};        
+            color: ${props => props.theme.colorStyled.ColorWhite};        
           }
         }
       }
@@ -31,10 +31,10 @@ export const TopNavBarWrapper = styled(Header)`
     .profile-name{
       &:hover{
         span{
-          color: ${props => props.theme.colorStyled.ColorBlack};
+          color: ${props => props.theme.colorStyled.ColorWhite};
         }
         .select-icon {
-          color: ${props => props.theme.colorStyled.ColorBlack};
+          color: ${props => props.theme.colorStyled.ColorWhite};
         }
       }
     }

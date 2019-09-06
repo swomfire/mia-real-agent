@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Modal, Steps, Tabs, Form,
+  Modal, Steps, Tabs, Form, Icon,
 } from 'antd';
 import {
   bool, func, arrayOf, shape,
@@ -137,12 +137,15 @@ class TopUp extends Component {
               {this.renderInputAmount()}
             </TabPane>
             <TabPane key="2">
-              <TopUpSuccess>Top up success</TopUpSuccess>
-              <ActionGroup>
+              <TopUpSuccess>
+                <h2>
+                  <Icon type="check" />
+                  Top up success
+                </h2>
                 <ButtonPrimary type="button" onClick={this.handleClose}>
                   Return
                 </ButtonPrimary>
-              </ActionGroup>
+              </TopUpSuccess>
             </TabPane>
           </Tabs>
         </TopUpBlock>

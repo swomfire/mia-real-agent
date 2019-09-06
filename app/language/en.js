@@ -349,7 +349,7 @@ const en = {
     PROFILE_PAYMENT_INFO_PAYMENT_INFO: 'Payment info',
     PROFILE_PAYMENT_INFO_NO_BILLING_HISTORY: 'No Billing History',
     PROFILE_PAYMENT_INFO_TOP_UP: 'Top up',
-    PROFILE_PAYMENT_INFO_TOTAL_CREDIT_TIME: 'Total credit time: ',
+    PROFILE_PAYMENT_INFO_TOTAL_CREDIT_TIME: 'Total: ',
     // Credit card
     CREDIT_CARD_ADD_CREDIT_CARD: '+ Add Credit Card',
     // Navbar profile

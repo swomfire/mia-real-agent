@@ -95,6 +95,7 @@ export const TableContentItem = styled.div`
 export const TicketItemGroup = styled.div.attrs({
   className: 'vienpn-level-1-1',
 })`
+  font-size: 1.2em;
 `;
 export const TableContentWrapper = styled.div.attrs({
   className: 'vienpn-level-1',

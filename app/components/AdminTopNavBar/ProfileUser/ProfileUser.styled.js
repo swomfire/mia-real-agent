@@ -173,7 +173,7 @@ export const ProfileOrganizationStatus = styled.div`
 export const AdditionalInformationWrapper = styled.div`
   padding: 1em;
   display: flex;
-  border-bottom: 1px solid ${props => props.theme.colorStyled.ColorDarkGrey};
+  border-bottom: 1px solid ${props => props.theme.colorStyled.ColorBorder};
 `;
 
 export const AdditionalInformationTitle = styled.div`

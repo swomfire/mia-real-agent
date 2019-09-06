@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const TopUpBlock = styled.div`
-  padding: 2em;
+  padding: 0 .5em;
   display: flex;
   flex-direction: column;
   background-color: ${props => props.theme.colorStyled.ColorWhite};
@@ -62,13 +62,25 @@ export const TopUpBlock = styled.div`
       font-size: ${props => props.theme.fontSize.MediumFontSize};
     }
   }
+  .ant-steps-item-finish, .ant-steps-item-wait{
+    .ant-steps-item-content {
+      border-left: 0;
+      padding-left: 0;
+  }
+  }
   .ant-steps-item-content {
     position: relative;
     z-index: 2;
+    border-left: 4px solid white;
+    margin-top: -3px;
+    margin-bottom: -3px;
+    height: 38px;
+    padding-left: 10px;
   }
   .ant-steps-item-title {
     color: #aaa !important;
     font-size: ${props => props.theme.fontSize.MediumFontSizePx};
+    margin-top: 3px;
     &:after {
       content: none;
     }
@@ -90,6 +102,13 @@ export const TopUpBlock = styled.div`
   }
   .ant-tabs-bar {
     display: none;
+  }
+  .ant-input-number{
+    height: 55px;
+  }
+  .ant-input-number-input {
+    font-size: 1.5em;
+    height: 50px;
   }
 `;
 
@@ -117,8 +136,18 @@ export const TopUpTitle = styled.div`
   margin-bottom: 1em;
 `;
 
-export const TopUpSuccess = styled.h2`
+export const TopUpSuccess = styled.div`
   text-align: center;
-  color: green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   font-size: 1.4em;
+  h2 {
+    color: ${props => props.theme.colorStyled.ColorSusscess};
+    margin-bottom: .5em;
+  }
+  i {
+      margin-right: .4em;
+  }
 `;

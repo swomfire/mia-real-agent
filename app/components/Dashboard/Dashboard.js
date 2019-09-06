@@ -16,7 +16,7 @@ import { isAgent, toI18n } from '../../utils/func-utils';
 const { TabPane } = Tabs;
 
 const scrollStyle = {
-  height: 'calc(100vh - 65px)',
+  height: 'calc(100vh - 72px)',
   width: '100%',
 };
 

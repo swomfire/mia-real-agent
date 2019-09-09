@@ -20,6 +20,7 @@ const en = {
     FORM_SAVE: 'Save',
     FORM_YES: 'Yes',
     FORM_NO: 'No',
+    FORM_DOUBLE_TO_EDIT: 'Double Click to Edit',
     // Form validate
     FORM_REQUIRED: 'Required',
     FORM_INVALID_MAIL: 'Invalid Email',
@@ -394,6 +395,11 @@ const en = {
     TOP_UP_FINISH: 'Finish',
     TOP_UP_SUCCESS_ADD_CREDIT_CARD: 'Add Credit Card',
     TOP_UP_YOUR_CREDIT_TIME: 'Top-up your credit time',
+    // System
+    SYSTEM_TITLE: 'System setting',
+    SYSTEM_UPDATE_SUCCESS: 'System updated',
+    // Convert rate
+    CONVERT_RATE_EXCHANGE_RATE: 'Exchange Rate:',
   },
 };
 

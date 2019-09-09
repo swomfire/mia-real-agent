@@ -16,6 +16,8 @@ import repliesSaga from './replies';
 import responseSaga from './response';
 import agentsSaga from './agents';
 import cannedResponseSaga from './cannedResponse';
+import systemSaga from './system';
+import { FETCH_CURRENT_VERSION } from '../reducers/system';
 
 export default function* rootSagas() {
   configAxios();
@@ -42,5 +44,9 @@ export default function* rootSagas() {
     intentSaga(),
     responseSaga(),
     cannedResponseSaga(),
+    systemSaga(),
+    put({
+      type: FETCH_CURRENT_VERSION,
+    }),
   ]);
 }

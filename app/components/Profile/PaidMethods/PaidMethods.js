@@ -8,6 +8,7 @@ import {
   PaidMethodWrapper, CreditTimeWrapper, BillingHistoryWrapper, BillingHistory, NoHistoryWrapper,
 } from './styles';
 import { toI18n } from '../../../utils/func-utils';
+import { Icon } from 'antd';
 
 class PaidMethods extends Component {
   state = {
@@ -61,6 +62,7 @@ class PaidMethods extends Component {
           <ButtonPrimary
             onClick={() => this.toggleTopUpModal(true)}
           >
+            <Icon type="arrow-up" />
             {toI18n('PROFILE_PAYMENT_INFO_TOP_UP')}
           </ButtonPrimary>
         </CreditTimeWrapper>

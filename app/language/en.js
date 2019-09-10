@@ -19,6 +19,7 @@ const en = {
     FORM_ADD: 'Add',
     FORM_SAVE: 'Save',
     FORM_YES: 'Yes',
+    FORM_PAYOUT: 'Payout',
     FORM_NO: 'No',
     FORM_DOUBLE_TO_EDIT: 'Double Click to Edit',
     // Form validate
@@ -400,6 +401,18 @@ const en = {
     SYSTEM_UPDATE_SUCCESS: 'System updated',
     // Convert rate
     CONVERT_RATE_EXCHANGE_RATE: 'Exchange Rate:',
+    // Ticket Payment
+    TICKET_PAYMENT_TITLE: 'Ticket Payment',
+    TICKET_PAYMENT_CHOOSE_PAYMENT_METHOD: 'Choose payment method',
+    TICKET_PAYMENT_VERIFY_INFORMATION: 'Verify information',
+    TICKET_PAYMENT_FINISH: 'Finish',
+    TICKET_PAYMENT_SUCCESS: 'Ticket paid',
+    TICKET_PAYMENT_CREDIT_TIME: 'Credit time',
+    TICKET_PAYMENT_DIRECT_CHARGE: 'Direct Charge',
+    TICKET_PAYMENT_TICKET_TIME: 'Ticket time:',
+    TICKET_PAYMENT_CURRENT_CREDIT_TIME: 'Current credit time:',
+    TICKET_PAYMENT_REMAINING_CREDIT_TIME: 'Remaining credit time:',
+    TICKET_PAYMENT_REMAINING_EQUIVALENT_TO: 'Equivalent to:',
   },
 };
 

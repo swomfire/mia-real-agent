@@ -152,13 +152,13 @@ class TopUp extends Component {
             <Step title={toI18n('TOP_UP_FINISH')} />
           </Steps>
           <Tabs activeKey={`${step}`}>
-            <TabPane key="0">
+            <TabPane tab={null} key="0">
               {this.renderSelectCreditCard()}
             </TabPane>
-            <TabPane key="1">
+            <TabPane tab={null} key="1">
               {this.renderInputAmount()}
             </TabPane>
-            <TabPane key="2">
+            <TabPane tab={null} key="2">
               <TopUpSuccess>
                 <h2>
                   <Icon type="check" />

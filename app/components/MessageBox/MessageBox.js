@@ -42,6 +42,7 @@ import RichEditor from '../FormInput/RichEditor/RichEditor';
 import { clearEditorContent } from '../../api/utils';
 import { ButtonPrimary } from '../../stylesheets/Button.style';
 import CreateFeedbackForm from '../../containers/CreateFeedbackForm';
+import TicketPayment from '../../containers/TicketPayment';
 
 const scrollStyle = {
   flex: 'auto',
@@ -431,6 +432,7 @@ export default class MessageBox extends Component {
             handleCancel={() => this.toggleFeedbackForm(false)}
           />
         </MessageBoxWrapper>
+        <TicketPayment isOpen />
       </LoadingSpin>
     );
   }

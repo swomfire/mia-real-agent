@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import { ButtonDefault } from '../../stylesheets/Button.style';
 
-export const TopUpBlock = styled.div`
+
+export const PaymentBlock = styled.div`
   padding: 0 .5em;
+  width: 100%;
   display: flex;
   flex-direction: column;
   background-color: ${props => props.theme.colorStyled.ColorWhite};
@@ -113,6 +115,35 @@ export const TopUpBlock = styled.div`
   }
 `;
 
+
+export const PaymentWrapper = styled.div`
+  display: flex;
+  .ant-row {
+    width: 100%;
+  }
+`;
+
+export const OptionWrapper = styled.div`
+  width: 100%;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1.5em;
+  margin: 10px;
+  border-radius: 2px;
+  border: 1px solid  ${props => props.theme.colorStyled.ColorBorder};
+  flex-direction: column;
+  :hover {
+    background-color: ${props => props.theme.colorStyled.ColorXXXLightGrey};
+  }
+  i {
+    font-size: 2.2em;
+    margin-bottom: .1em;
+  }
+`;
+
 export const AddCreditCard = styled(ButtonDefault)`
     font-size: 1em;
     position: absolute;
@@ -132,19 +163,7 @@ export const ActionGroup = styled.div`
   }
 `;
 
-export const ExchangeRateWrapper = styled.div`
-  padding: 5px 20px;
-  text-align: center;
-  font-size: 1.3em;
-`;
-
-export const TopUpTitle = styled.div`
-  text-align: center;
-  font-size: 2em;
-  margin-bottom: 1em;
-`;
-
-export const TopUpSuccess = styled.div`
+export const TicketPaymentSuccess = styled.div`
   text-align: center;
   display: flex;
   align-items: center;
@@ -157,5 +176,66 @@ export const TopUpSuccess = styled.div`
   }
   i {
       margin-right: .4em;
+  }
+`;
+
+export const CreditTimeWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: .6em;
+  button {
+    font-size: 1em;
+    margin-left: .5em;
+  }
+`;
+
+export const CreditTimeLabelWrapper = styled.div`
+  font-size: 1.2em;
+  width: 100%;
+  span {
+    font-weight: 600;
+    font-size: 1.2em;
+    color: ${props => props.theme.colorStyled.ColorLabel};
+    margin-left: .5em;
+  }
+`;
+
+export const TicketTimeWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 1.2em;
+  margin-bottom: .6em;
+  span {
+    font-weight: 600;
+    font-size: 1.2em;
+    color: ${props => props.theme.colorStyled.ColorIconHover};
+    margin-left: .5em;
+  }
+`;
+
+export const RemainingCreditTimeWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 1.2em;
+  margin-bottom: .6em;
+  span {
+    font-weight: 600;
+    font-size: 1.2em;
+    color: ${props => props.theme.colorStyled.ColorSusscess};
+    margin-left: .5em;
+  }
+`;
+
+export const EquivalentToWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 1.2em;
+  margin-bottom: .6em;
+  span {
+    font-weight: 600;
+    font-size: 1.2em;
+    color: ${props => props.theme.colorStyled.ColorWarming};
+    margin-left: .5em;
   }
 `;

@@ -27,10 +27,12 @@ import {
   USER_FETCH_SINGLE,
   USER_UPDATE,
   USER_REMOVE,
+  USER_SEND_MAIL,
+  USER_ADD_CREDIT_CARD,
   actions as userActions,
 } from 'reducers/user';
 import * as UserAPI from 'api/user';
-import { USER_SEND_MAIL } from '../../reducers/user';
+import { getUserId } from '../../reducers/auth';
 
 function* queryUsers(action) {
   const userPayload = {};
@@ -163,6 +165,18 @@ function* sendMail() {
   }
 }
 
+function* addCreditCard({ payload }) {
+  const { card } = payload;
+  const userId = yield select(getUserId);
+  const { error } = yield call(UserAPI.addCreditCard, userId, card);
+  if (error) {
+    const errMsg = _get(error, 'response.data.message', error.message);
+    notification.error({ message: errMsg });
+  } else {
+    notification.success({ message: 'Send Mail success' });
+  }
+}
+
 function* userFlow() {
   yield takeEvery([USER_SORTING, USER_CHANGE_PAGE], queryUsers);
   yield takeEvery(USER_ADD_NEW, addNewUser);
@@ -170,6 +184,7 @@ function* userFlow() {
   yield takeEvery(USER_UPDATE, userUpdate);
   yield takeEvery(USER_REMOVE, userRemove);
   yield takeEvery(USER_SEND_MAIL, sendMail);
+  yield takeEvery(USER_ADD_CREDIT_CARD, addCreditCard);
   while (1) {
     const action = yield take(USER_FETCH_LIST);
     yield call(fetchList, action);

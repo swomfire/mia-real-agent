@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import AWS from 'aws-sdk';
 import BaseController from '../base/base.controller';
 import UserService from './user.service';
+import * as StripeService from '../stripe/stripe.service';
 import APIError, { ERROR_MESSAGE } from '../../utils/APIError';
 import check from '../../utils/validate';
 import { VALIDATION_TYPE } from '../../../common/enums';
@@ -159,6 +160,34 @@ class UserController extends BaseController {
       return super.handleError(res, error);
     }
   }
+
+  async addCreditCard(req, res) {
+    try {
+      const { model: user } = req;
+      const { card } = req.body;
+      let { stripeCustomerId } = user;
+      const { creditCard } = user;
+      if (!stripeCustomerId) {
+        const customer = await StripeService.createCustomer(user);
+        stripeCustomerId = customer.id;
+        user.set({ stripeCustomerId });
+        await user.save();
+      }
+      const { id: source } = card || {};
+      const result = await StripeService.createCard(stripeCustomerId, {
+        source,
+      });
+      const { id: cardId, brand, last4 } = result;
+      creditCard.push({ type: brand, last4Digits: last4, apiKey: cardId });
+      user.set({ creditCard });
+      await user.save();
+
+      return res.status(httpStatus.OK).send({ user });
+    } catch (error) {
+      return super.handleError(res, error);
+    }
+  }
+
 
   async sendTestMail(req, res) {
     try {

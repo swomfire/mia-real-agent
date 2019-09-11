@@ -17,6 +17,7 @@ class CreditCard extends Component {
     card: arrayOf(shape()).isRequired,
     type: string,
     onClick: func,
+    onAdd: func,
   }
 
   handleOnClick = (last4) => {
@@ -51,7 +52,7 @@ class CreditCard extends Component {
   }
 
   renderDisplayCreditCard = () => {
-    const { card, onClick = () => { } } = this.props;
+    const { card, onClick = () => { }, onAdd } = this.props;
     return (
       <div>
         {card.map(({ last4Digits, type }) => (
@@ -68,7 +69,7 @@ class CreditCard extends Component {
           </Row>
         ))}
         <Col xs={24} sm={24} md={24}>
-          <AddCreditCardWrapper onClick={onClick}>
+          <AddCreditCardWrapper onClick={onAdd}>
             <ButtonPrimary>
               {toI18n('CREDIT_CARD_ADD_CREDIT_CARD')}
             </ButtonPrimary>

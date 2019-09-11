@@ -27,6 +27,11 @@ export const USER_REMOVE = 'user/USER_REMOVE';
 export const USER_REMOVE_SUCCESS = 'user/USER_REMOVE_SUCCESS';
 export const USER_REMOVE_FAIL = 'user/USER_REMOVE_FAIL';
 
+// Add credit card
+export const USER_ADD_CREDIT_CARD = 'user/USER_ADD_CREDIT_CARD';
+export const USER_ADD_CREDIT_CARD_SUCCESS = 'user/USER_ADD_CREDIT_CARD_SUCCESS';
+export const USER_ADD_CREDIT_CARD_FAIL = 'user/USER_ADD_CREDIT_CARD_FAIL';
+
 // change page
 export const USER_CHANGE_PAGE = 'user/CHANGE_PAGE';
 
@@ -36,6 +41,29 @@ export const USER_SEND_MAIL = 'user/USER_SEND_MAIL';
 function sendMail() {
   return {
     type: USER_SEND_MAIL,
+  };
+}
+
+function addCreditCard(card) {
+  return {
+    type: USER_ADD_CREDIT_CARD,
+    payload: {
+      card,
+    },
+  };
+}
+
+function addCreditCardSuccess(data) {
+  return {
+    type: USER_ADD_CREDIT_CARD_SUCCESS,
+    data,
+  };
+}
+
+function addCreditCardFail(errorMsg) {
+  return {
+    type: USER_ADD_CREDIT_CARD_FAIL,
+    errorMsg,
   };
 }
 
@@ -181,6 +209,10 @@ export const actions = {
   removeUserFail,
 
   sendMail,
+
+  addCreditCard,
+  addCreditCardFail,
+  addCreditCardSuccess,
 };
 
 // initialState

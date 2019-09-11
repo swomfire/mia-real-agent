@@ -87,6 +87,11 @@ export const sendMail = ticketId => axios
     ticketId,
   });
 
+export const addCreditCard = (userId, card) => axios
+  .post(`users/${userId}/addCreditCard`, {
+    card,
+  });
+
 export const getUploadSignedUrl = data => axios
   .get('/users/upload', data)
   .then(response => ({ response }))

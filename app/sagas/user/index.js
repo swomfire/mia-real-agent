@@ -171,6 +171,7 @@ function* userFlow() {
   yield takeEvery(USER_UPDATE, userUpdate);
   yield takeEvery(USER_REMOVE, userRemove);
   yield takeEvery(USER_SEND_MAIL, sendMail);
+  yield takeEvery(USER_ADD_CREDIT_CARD, addCreditCard);
   while (1) {
     const action = yield take(USER_FETCH_LIST);
     yield call(fetchList, action);

@@ -40,6 +40,29 @@ function sendMail() {
   };
 }
 
+function addCreditCard(card) {
+  return {
+    type: USER_ADD_CREDIT_CARD,
+    payload: {
+      card,
+    },
+  };
+}
+
+function addCreditCardSuccess(data) {
+  return {
+    type: USER_ADD_CREDIT_CARD_SUCCESS,
+    data,
+  };
+}
+
+function addCreditCardFail(errorMsg) {
+  return {
+    type: USER_ADD_CREDIT_CARD_FAIL,
+    errorMsg,
+  };
+}
+
 function updateUser(payload) {
   return {
     type: USER_UPDATE,
@@ -182,6 +205,10 @@ export const actions = {
   removeUserFail,
 
   sendMail,
+
+  addCreditCard,
+  addCreditCardFail,
+  addCreditCardSuccess,
 };
 
 // initialState

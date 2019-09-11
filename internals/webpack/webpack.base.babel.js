@@ -120,6 +120,7 @@ module.exports = options => ({
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        REACT_APP_STRIPE_KEY: JSON.stringify(process.env.REACT_APP_STRIPE_KEY),
       },
     }),
   ]),

@@ -175,6 +175,12 @@ export const ButtonSubmit = styled(Button).attrs({
     font-size: 1em;
     margin-left: .35em;
   }
+  :disabled {
+    border: 1px solid ${props => props.theme.colorStyled.ColoraBtnCancel};
+    background: ${props => props.theme.colorStyled.ColorXXXLightGrey};
+    color:  ${props => props.theme.colorStyled.ColoraBtnCancel};
+    cursor: not-allowed;
+  }
 `;
 
 export const LoginBtn = styled.button`

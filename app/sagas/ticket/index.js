@@ -27,7 +27,6 @@ import {
   AUTH_LOGIN_SUCCESS,
 } from '../../reducers/auth';
 import * as TicketApi from '../../api/ticket';
-
 function* queryTickets(action) {
   const ticketPayload = {};
   const { type } = action;

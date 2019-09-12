@@ -7,11 +7,11 @@ import {
 import { bool, func, string } from 'prop-types';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { DefaultButton } from 'components/Generals/General.styled';
 import FormInput from '../FormInput/FormInput';
 import { ActionBar, DescriptionTextAreaStyled, ModalCustomize } from './styles';
 import LoadingSpin from '../Loading';
 import { toI18n } from '../../utils/func-utils';
+import { ButtonCancel, ButtonSubmit } from '../../stylesheets/Button.style';
 
 const initialValues = {
   title: '',
@@ -107,12 +107,12 @@ export default class CreateFeedbackForm extends PureComponent {
                   </Row>
                   <Row gutter={32}>
                     <ActionBar>
-                      <DefaultButton type="button" cancel onClick={this.handleCancelConfirm}>
-                        {toI18n('FORM_CANCEL')}
-                      </DefaultButton>
-                      <DefaultButton onClick={handleSubmit}>
+                      <ButtonSubmit onClick={handleSubmit}>
                         {toI18n('FORM_SUBMIT')}
-                      </DefaultButton>
+                      </ButtonSubmit>
+                      <ButtonCancel type="button" cancel onClick={this.handleCancelConfirm}>
+                        {toI18n('FORM_CANCEL')}
+                      </ButtonCancel>
                     </ActionBar>
                   </Row>
                 </Form>

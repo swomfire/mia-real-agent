@@ -17,3 +17,10 @@ export const removeCard = (cusId, card) => stripe.customers.deleteSource(
   cusId,
   card,
 );
+
+export const createCharge = (cardId, amount, description) => stripe.charges.create({
+  amount,
+  currency: 'usd',
+  source: cardId, // obtained with Stripe.js
+  description,
+});

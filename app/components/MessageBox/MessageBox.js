@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { EditorState } from 'draft-js';
 import {
-  Form, Icon,
+  Form, Icon, Tooltip,
 } from 'antd';
 import _isEmpty from 'lodash/isEmpty';
 import { Translation } from 'react-i18next';
+import history from 'utils/history';
 import { Formik } from 'formik';
+import { Return } from 'components/Generals/General.styled';
+import CreatTicketFormContainer from 'containers/Chatbot/CreateTicket';
 import ShadowScrollbars from 'components/Scrollbar';
 import {
   MessageBoxWrapper,
@@ -26,6 +29,10 @@ import {
   MessageBoxSystemNotification,
   FindAgentButton,
   FindAgentWrapper,
+  ConversationHeaderWrapper,
+  ConversationHeaderTitleBlock,
+  MessageInputContent,
+  ConversationActionWrapper,
 } from './styles';
 import LoadingSpin from '../Loading';
 import ConversationDetail from '../ConversationDetail/ConversationDetail';
@@ -40,9 +47,10 @@ import {
 } from '../ChatItem';
 import RichEditor from '../FormInput/RichEditor/RichEditor';
 import { clearEditorContent } from '../../api/utils';
-import { ButtonPrimary } from '../../stylesheets/Button.style';
+import { ButtonPrimary, ButtonDefault } from '../../stylesheets/Button.style';
 import CreateFeedbackForm from '../../containers/CreateFeedbackForm';
 import TicketPayment from '../../containers/TicketPayment';
+import CloseTicketModal from './CloseTicketModal';
 
 const scrollStyle = {
   flex: 'auto',
@@ -76,6 +84,7 @@ export default class MessageBox extends Component {
     setCurrentTicket: PropTypes.func.isRequired,
     joinConversation: PropTypes.func.isRequired,
     leftConversation: PropTypes.func.isRequired,
+    closeTicket: PropTypes.func.isRequired,
     userTyping: PropTypes.func.isRequired,
 
     submitRating: PropTypes.func.isRequired,
@@ -96,6 +105,8 @@ export default class MessageBox extends Component {
   state = {
     content: EditorState.createEmpty(),
     feedbackFormIsOpen: false,
+    closeTicketModalIsOpen: false,
+    isOpenCreateModal: false,
   }
 
   toggleFeedbackForm = (toggle) => {
@@ -294,22 +305,51 @@ export default class MessageBox extends Component {
     );
   }
 
+  goToDashboard = () => {
+    history.push('/dashboard/ticket/1');
+  }
 
   renderMessageHeader = () => {
-    const { currentTicket } = this.props;
+    const { currentTicket, userRole } = this.props;
     const { title, status } = currentTicket || {};
     return (
       <ConversationHeaderTitle>
         <ConversationTitle>
+          <ConversationHeaderWrapper>
+            <Return onClick={this.goToDashboard}>
+              <Icon type="left" />
+              <span>
+                {toI18n('MENU')}
+              </span>
+            </Return>
+            {!isAgent(userRole) && (
+              <Tooltip title="Create ticket" onClick={() => this.handleToggleCreateModal(true)}>
+                <Icon type="copy" />
+                <span className="create-ticket">
+                  {toI18n('CREATE')}
+                  Ticket
+                </span>
+              </Tooltip>
+            )}
+          </ConversationHeaderWrapper>
+          <ConversationHeaderTitleBlock />
           <TicketStatus status={status} />
           <span>{title}</span>
-          <ButtonPrimary
-            type="primary"
-            onClick={() => this.toggleFeedbackForm(true)}
-          >
-            <Icon type="form" />
-            Feedback
-          </ButtonPrimary>
+          <ConversationActionWrapper>
+            <ButtonDefault
+              type="primary"
+              onClick={() => this.toggleFeedbackForm(true)}
+            >
+              <Icon type="form" />
+              Feedback
+            </ButtonDefault>
+            <ButtonPrimary
+              type="primary"
+              onClick={() => this.handleToggleCloseModal(true)}
+            >
+              Close Ticket
+            </ButtonPrimary>
+          </ConversationActionWrapper>
         </ConversationTitle>
       </ConversationHeaderTitle>
     );
@@ -406,14 +446,35 @@ export default class MessageBox extends Component {
           {this.renderPendingMessageContent()}
           <div ref={this.messagesEndRef} />
         </ShadowScrollbars>
-        {this.renderMessageBoxFooter()}
+        <MessageInputContent>
+          {this.renderMessageBoxFooter()}
+        </MessageInputContent>
       </>
     );
   }
 
+  handleCloseTicket = ({ status, unsolvedReason }) => {
+    const { closeTicket, currentTicket } = this.props;
+    const { _id } = currentTicket || {};
+    if (_id) {
+      closeTicket(_id, status, unsolvedReason);
+    }
+  }
+
+  handleToggleCloseModal = (isOpen) => {
+    this.setState({
+      closeTicketModalIsOpen: isOpen,
+    });
+  }
+
+  handleToggleCreateModal = (isOpen) => {
+    this.setState({
+      isOpenCreateModal: isOpen,
+    });
+  }
 
   render() {
-    const { feedbackFormIsOpen } = this.state;
+    const { feedbackFormIsOpen, closeTicketModalIsOpen, isOpenCreateModal } = this.state;
     const {
       isFetchingReplies, isFindingAgent, currentTicket,
     } = this.props;
@@ -433,6 +494,15 @@ export default class MessageBox extends Component {
           />
         </MessageBoxWrapper>
         <TicketPayment />
+        <CloseTicketModal
+          handleSubmitCloseTicket={this.handleCloseTicket}
+          handleCloseModal={() => this.handleToggleCloseModal(false)}
+          isOpen={closeTicketModalIsOpen}
+        />
+        <CreatTicketFormContainer
+          isOpen={isOpenCreateModal}
+          handleCancel={() => this.handleToggleCreateModal(false)}
+        />
       </LoadingSpin>
     );
   }

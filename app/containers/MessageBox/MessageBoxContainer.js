@@ -66,6 +66,7 @@ const mapDispatchToProps = {
   leftConversation: CONVERSATION_ACTIONS.userLeftConversation,
   userTyping: CONVERSATION_ACTIONS.userTyping,
   fetchCannedResponseForUser: cannedResponseActions.fetchCannedResponseForUser,
+  closeTicket: actions.closeAction,
 };
 
 export default withTranslation()(connect(mapStateToProps, mapDispatchToProps)(MessageBox));

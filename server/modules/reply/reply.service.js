@@ -9,7 +9,12 @@ import TicketService from '../ticket/ticket.service';
 class ReplyService extends BaseService {
   constructor() {
     super(ReplyCollection);
+    this.countDocument = this.countDocument.bind(this);
     this.handleReplyInsert(ReplyCollection);
+  }
+
+  countDocument(filter) {
+    return this.collection.countDocuments(filter);
   }
 
   getByConversation(conversationId) {

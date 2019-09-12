@@ -54,8 +54,16 @@ class ReplyController extends BaseController {
     try {
       const reply = req.body;
       const { conversationId } = reply;
+      const NoReply = await this.service.countDocument({ conversationId });
       await this.service.insert(reply);
       const { ticketId } = await ConversationService.getOneByQuery({ _id: conversationId });
+      // For processing time
+      if (
+        NoReply === 1 // Skip first status log
+      ) {
+        TicketService.updateProcessingTime(ticketId);
+      }
+      // For idle queue
       IdleQueue.resetTimer(ticketId);
       if (reply.to) {
         TicketService.updateStatus(ticketId, TICKET_STATUS.PROCESSING);

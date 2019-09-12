@@ -1,7 +1,9 @@
 import ticketCollection from './ticket.model';
 import BaseService from '../base/base.service';
 import { TICKET_STATUS, REPLY_TYPE } from '../../../common/enums';
+// eslint-disable-next-line import/no-cycle
 import ReplyService from '../reply/reply.service';
+import * as StripeService from '../stripe/stripe.service';
 import ConversationRoomQueue from '../queue/conversationRoomQueue';
 import { getHistoryTicketUpdate } from '../../utils/utils';
 import { sendEmailTrascript } from '../../mail-sparkpost/sparkpost';
@@ -45,6 +47,10 @@ class TicketService extends BaseService {
       return this.update(ticketId, { status, history: newHistory });
     }
     return true;
+  }
+
+  async updateProcessingTime(ticketId) {
+    return this.update(ticketId, { processingTime: new Date() });
   }
 
   async getAllForAdmin(condition, options) {
@@ -180,6 +186,13 @@ class TicketService extends BaseService {
     await this.handleUpdateTicketStatusHistory(query, TICKET_STATUS.IDLE);
     await this.collection.updateMany(query, { status: TICKET_STATUS.IDLE }).exec();
     return tickets;
+  }
+
+  async handleChargeTicket(ticket) {
+    const { processingTime, owner } = ticket;
+    console.log(processingTime, owner);
+    // StripeService.createCharge();
+    return false;
   }
 
   async handleCloseTicket(query) {

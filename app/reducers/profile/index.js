@@ -15,6 +15,7 @@ export const UPDATE_PROFILE_FAIL = 'profile/UPDATE_PROFILE_FAIL';
 export const CHANGE_PASSWORD = 'profile/CHANGE_PASSWORD';
 export const CHANGE_PASSWORD_SUCCESS = 'profile/CHANGE_PASSWORD_SUCCESS';
 export const CHANGE_PASSWORD_FAIL = 'profile/CHANGE_PASSWORD_FAIL';
+
 // Add credit card
 export const USER_ADD_CREDIT_CARD = 'profile/USER_ADD_CREDIT_CARD';
 export const USER_ADD_CREDIT_CARD_SUCCESS = 'profile/USER_ADD_CREDIT_CARD_SUCCESS';
@@ -56,6 +57,29 @@ function topUpSuccess(data) {
 function topUpFail(errorMsg) {
   return {
     type: USER_TOP_UP_FAIL,
+    errorMsg,
+  };
+}
+
+function removeCreditCard(cardId) {
+  return {
+    type: USER_REMOVE_CREDIT_CARD,
+    payload: {
+      cardId,
+    },
+  };
+}
+
+function removeCreditCardSuccess(data) {
+  return {
+    type: USER_REMOVE_CREDIT_CARD_SUCCESS,
+    payload: data,
+  };
+}
+
+function removeCreditCardFail(errorMsg) {
+  return {
+    type: USER_REMOVE_CREDIT_CARD_FAIL,
     errorMsg,
   };
 }
@@ -287,6 +311,18 @@ function profileReducer(state = initialState, action) {
 
     case USER_TOP_UP_FAIL:
     case USER_ADD_CREDIT_CARD_FAIL:
+    case USER_REMOVE_CREDIT_CARD_FAIL:
+      return state.set('isUpdating', false)
+        .set('updateError', action.errorMessage);
+
+    case USER_REMOVE_CREDIT_CARD:
+      return state.set('isUpdating', true)
+        .set('updateError', '');
+    case USER_REMOVE_CREDIT_CARD_SUCCESS: {
+      return state.set('isUpdating', false)
+        .set('fetchUser', action.payload);
+    }
+
     case USER_REMOVE_CREDIT_CARD_FAIL:
       return state.set('isUpdating', false)
         .set('updateError', action.errorMessage);

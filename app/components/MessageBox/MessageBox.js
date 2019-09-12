@@ -432,7 +432,7 @@ export default class MessageBox extends Component {
             handleCancel={() => this.toggleFeedbackForm(false)}
           />
         </MessageBoxWrapper>
-        <TicketPayment isOpen />
+        <TicketPayment />
       </LoadingSpin>
     );
   }

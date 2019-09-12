@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Row } from 'antd';
 
 export const ProfileWrapper = styled.div`
-  height: calc(100vh - 200px);
+    height: calc(100vh - 80px);
   width: 100%;
   display: flex;
   justify-content: center;
@@ -14,6 +14,7 @@ export const ProfileWrapper = styled.div`
 
 export const ProfileCard = styled.div`
   width: 720px;
+  height: calc(100vh - 200px);
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
@@ -60,6 +61,8 @@ export const RowStyled = styled(Row)`
 `;
 
 export const ActionBar = styled.div`
+  margin-top: 1em;
+  margin-right: 1em;
   button{
     float: right;
     margin-left: 10px;

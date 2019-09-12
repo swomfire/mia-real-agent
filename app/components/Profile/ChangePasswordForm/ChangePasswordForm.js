@@ -3,12 +3,14 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import {
   Modal, Row, Col,
-  Form, Button, notification,
+  Form, notification,
 } from 'antd';
 import { func, bool, string } from 'prop-types';
 import FormInput from '../../FormInput/FormInput';
 import { ActionBar } from '../styles';
 import LoadingSpin from '../../Loading';
+import { ButtonPrimary, ButtonCancel } from '../../../stylesheets/Button.style';
+import { toI18n } from '../../../utils/func-utils';
 
 const validationSchema = Yup.object().shape({
   currentPassword: Yup.string().trim().required('Required'),
@@ -53,9 +55,10 @@ export default class ChangePasswordForm extends PureComponent {
     const { isOpen, isChangingPassword } = this.props;
     return (
       <Modal
+        title={toI18n('PROFILE_CHANGE_PASSWORD_FORM_TITLE')}
         visible={isOpen}
         onCancel={this.handleCancel}
-        footer={[]}
+        footer={null}
       >
         <LoadingSpin loading={isChangingPassword}>
           <Formik
@@ -69,7 +72,7 @@ export default class ChangePasswordForm extends PureComponent {
                     <FormInput
                       name="currentPassword"
                       type="password"
-                      label="Current Password"
+                      label={toI18n('PROFILE_CHANGE_PASSWORD_FORM_CURRENT_PASSWORD')}
                     />
                   </Col>
                 </Row>
@@ -78,7 +81,7 @@ export default class ChangePasswordForm extends PureComponent {
                     <FormInput
                       name="newPassword"
                       type="password"
-                      label="New Password"
+                      label={toI18n('PROFILE_CHANGE_PASSWORD_FORM_NEW_PASSWORD')}
                     />
                   </Col>
                 </Row>
@@ -87,18 +90,18 @@ export default class ChangePasswordForm extends PureComponent {
                     <FormInput
                       name="confirmNewPassword"
                       type="password"
-                      label="Confirm new Password"
+                      label={toI18n('PROFILE_CHANGE_PASSWORD_FORM_CONFIRM_NEW_PASSWORD')}
                     />
                   </Col>
                 </Row>
                 <Row gutter={32}>
                   <ActionBar>
-                    <Button type="primary" onClick={handleSubmit}>
-                      Submit
-                    </Button>
-                    <Button key="back" onClick={this.handleCancel}>
-                      Return
-                    </Button>
+                    <ButtonPrimary onClick={handleSubmit}>
+                      {toI18n('FORM_SUBMIT')}
+                    </ButtonPrimary>
+                    <ButtonCancel onClick={this.handleCancel}>
+                      {toI18n('FORM_RETURN')}
+                    </ButtonCancel>
                   </ActionBar>
                 </Row>
               </Form>

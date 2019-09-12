@@ -9,7 +9,7 @@ class UserRouter extends BaseRouter {
       UserController.getUserProfile,
     );
     this.router.put(
-      '/:id',
+      '/:id/profile',
       UserController.updateUserProfile,
     );
     this.router.post(

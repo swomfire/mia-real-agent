@@ -7,7 +7,7 @@ export const getUserProfile = id => axios
   .catch(handleError);
 
 export const updateUserProfile = (id, data) => axios
-  .put(`users/${id}`, { data })
+  .put(`users/${id}/profile`, { data })
   .then(response => ({ response }))
   .catch(handleError);
 
@@ -67,6 +67,7 @@ export const update = (id, data) => axios
   .put(`admin/users/${id}`, { data })
   .then(response => ({ response }))
   .catch(handleError);
+
 export const insert = data => axios
   .post('admin/users/', { data })
   .then(response => ({ response }))

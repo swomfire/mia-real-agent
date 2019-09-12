@@ -34,7 +34,7 @@ const initialValues = {
   companySize: '',
   companyFields: [],
   address: '',
-  phoneNumber: '',
+  phone: '',
 };
 
 const validationSchema = Yup.object().shape({
@@ -47,7 +47,7 @@ const validationSchema = Yup.object().shape({
   companySize: Yup.string().trim().required(toI18n('FORM_REQUIRED')),
   companyFields: Yup.array().of(Yup.string()).required(toI18n('FORM_REQUIRED')),
   address: Yup.string().trim(),
-  phoneNumber: Yup.string().trim(),
+  phone: Yup.string().trim(),
 });
 
 class Registration extends Component {
@@ -177,7 +177,7 @@ class Registration extends Component {
                     </Col>
                     <Col sm={12} xs={24}>
                       <FormInput
-                        name="phoneNumber"
+                        name="phone"
                         type="text"
                         label={toI18n('REGISTER_BUSINESS_PHONE')}
                         login={1}

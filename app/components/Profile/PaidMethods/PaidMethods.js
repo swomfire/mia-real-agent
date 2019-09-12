@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { shape } from 'prop-types';
 import _isEmpty from 'lodash/isEmpty';
 import numeral from 'numeral';
-import { ButtonPrimary } from '../../../stylesheets/Button.style';
-import TopUp from '../../TopUp/TopUp';
+import { Icon } from 'antd';
+import TopUp from 'containers/TopUp';
+import { ButtonDefault } from '../../../stylesheets/Button.style';
 import {
   PaidMethodWrapper, CreditTimeWrapper, BillingHistoryWrapper, BillingHistory, NoHistoryWrapper,
 } from './styles';
 import { toI18n } from '../../../utils/func-utils';
-import { Icon } from 'antd';
 
 class PaidMethods extends Component {
   state = {
@@ -59,12 +59,12 @@ class PaidMethods extends Component {
             {toI18n('PROFILE_PAYMENT_INFO_TOTAL_CREDIT_TIME')}
             {numeral(creditTime).format('00:00:00')}
           </span>
-          <ButtonPrimary
+          <ButtonDefault
             onClick={() => this.toggleTopUpModal(true)}
           >
             <Icon type="arrow-up" />
             {toI18n('PROFILE_PAYMENT_INFO_TOP_UP')}
-          </ButtonPrimary>
+          </ButtonDefault>
         </CreditTimeWrapper>
         {this.renderBillingHistory()}
         <TopUp

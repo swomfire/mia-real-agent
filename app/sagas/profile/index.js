@@ -16,7 +16,7 @@ import {
   updateToken,
 } from '../../reducers/auth';
 import * as UserApi from '../../api/user';
-import { handleEmailCensor } from './utils';
+import { toI18n } from '../../utils/func-utils';
 
 function* fetchDetail() {
   const userId = yield select(getUserId);
@@ -28,11 +28,7 @@ function* fetchDetail() {
     yield put(actions.fetchDetailFailAction(message));
     return;
   }
-  const { email } = data;
-  yield put(actions.fetchDetailCompleteAction({
-    ...data,
-    email: handleEmailCensor(email),
-  }));
+  yield put(actions.fetchDetailCompleteAction(data));
 }
 
 function* checkPassword({ payload }) {
@@ -58,9 +54,11 @@ function* updateProfile({ payload }) {
     const message = _get(
       error, 'response.data.message', DEFAULT_ERROR_MESSAGE
     );
+    notification.error({ message });
     yield put(actions.updateProfileFailAction(message));
   }
   const { data } = response;
+  notification.success({ message: toI18n('PROFILE_UPDATE_SUCCESS') });
   yield put(actions.updateProfileCompleteAction(data));
 }
 
@@ -71,10 +69,13 @@ function* changePassword({ payload }) {
     const { response } = yield call(UserApi.changePassword, userId, currentPassword, newPassword);
     const { data } = response;
     const { token } = data;
+    notification.success({ message: toI18n('PROFILE_CHANGE_PASSWORD_FORM_SUCCESS') });
     yield put(actions.changePasswordCompleteAction());
     yield put(updateToken(token));
   } catch (error) {
+    const errMsg = _get(error, 'response.data.message', error.message);
     yield put(actions.changePasswordFailAction(error));
+    notification.error({ message: errMsg });
   }
 }
 
@@ -83,7 +84,7 @@ function* addCreditCard({ payload }) {
   const userId = yield select(getUserId);
   try {
     const { data } = yield call(UserApi.addCreditCard, userId, card);
-    notification.success({ message: 'Card Added to account' });
+    notification.success({ message: toI18n('CREDIT_ADD_SUCCESS') });
     yield put(actions.addCreditCardSuccess(data));
   } catch (error) {
     const errMsg = _get(error, 'response.data.message', error.message);
@@ -97,7 +98,7 @@ function* removeCreditCard({ payload }) {
   const userId = yield select(getUserId);
   try {
     const { data } = yield call(UserApi.removeCreditCard, userId, cardId);
-    notification.success({ message: 'Card Removed from account' });
+    notification.success({ message: toI18n('CREDIT_REMOVE_SUCCESS') });
     yield put(actions.removeCreditCardSuccess(data));
   } catch (error) {
     const errMsg = _get(error, 'response.data.message', error.message);

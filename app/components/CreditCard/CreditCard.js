@@ -26,29 +26,35 @@ class CreditCard extends Component {
     onAdd: func,
   }
 
-  handleOnClick = (last4) => {
+  handleOnClick = (_id) => {
     const { onClick = () => { } } = this.props;
     const { selectedCard } = this.state;
-    const card = selectedCard === last4 ? '' : last4;
+    const card = selectedCard === _id ? '' : _id;
     this.setState({
       selectedCard: card,
     });
     onClick(card);
   }
 
+  handleRemove = (_id, e) => {
+    const { onRemove } = this.props;
+    onRemove(_id);
+    e.stopPropagation();
+  }
+
   renderActionreditCard = () => {
     const { selectedCard } = this.state;
-    const { card, onRemove } = this.props;
+    const { card } = this.props;
     return (
       card.map(({ last4Digits, type, _id }) => (
         <Row>
-          <CreditCardWrapper key={last4Digits} onClick={() => this.handleOnClick(last4Digits)} selected={selectedCard === last4Digits}>
-            <Checkbox onChange={() => this.handleOnClick(last4Digits)} checked={selectedCard === last4Digits} />
+          <CreditCardWrapper key={last4Digits} onClick={() => this.handleOnClick(_id)} selected={selectedCard === _id}>
+            <Checkbox onChange={() => this.handleOnClick(_id)} checked={selectedCard === _id} />
             <CreditCardTitleWrapper>
               <CreditCardType type={type} />
               {`**** **** **** ${last4Digits}`}
             </CreditCardTitleWrapper>
-            <ButtonPrimary onClick={() => onRemove(_id)}>
+            <ButtonPrimary onClick={e => this.handleRemove(_id, e)}>
               <Icon type="delete" />
             </ButtonPrimary>
           </CreditCardWrapper>
@@ -59,7 +65,7 @@ class CreditCard extends Component {
 
   renderDisplayCreditCard = () => {
     const {
-      card, onClick = () => { }, onAdd, onRemove,
+      card, onClick = () => { }, onAdd,
     } = this.props;
     return (
       <div>
@@ -70,7 +76,7 @@ class CreditCard extends Component {
                 <CreditCardType type={type} />
                 {`**** **** **** ${last4Digits}`}
               </CreditCardTitleWrapper>
-              <ButtonPrimary onClick={() => onRemove(_id)}>
+              <ButtonPrimary onClick={e => this.handleRemove(_id, e)}>
                 <Icon type="delete" />
               </ButtonPrimary>
             </CreditCardWrapper>

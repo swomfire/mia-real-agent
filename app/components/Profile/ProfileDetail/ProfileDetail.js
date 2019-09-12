@@ -89,7 +89,7 @@ export class ProfileDetail extends PureComponent {
   renderBusiness = () => {
     const { profile = {} } = this.props;
     const {
-      companyFields, phone, address,
+      companyFields = [], phone, address,
       companySize, company,
     } = profile;
     const size = SIZE_OPTIONS.find(({ value }) => value === companySize);
@@ -103,6 +103,13 @@ export class ProfileDetail extends PureComponent {
               :
             </InputLabelStyled>
             <InputStyled>{company}</InputStyled>
+          </Col>
+          <Col span={12}>
+            <InputLabelStyled>
+              {toI18n('PROFILE_DETAIL_PHONE')}
+              :
+            </InputLabelStyled>
+            <InputStyled>{phone}</InputStyled>
           </Col>
         </RowStyled>
         <RowStyled gutter={32}>
@@ -118,18 +125,11 @@ export class ProfileDetail extends PureComponent {
               {toI18n('PROFILE_DETAIL_COMPANY_FIELDS')}
               :
             </InputLabelStyled>
-            <InputStyled>{companyFields}</InputStyled>
+            <InputStyled>{companyFields.join(', ')}</InputStyled>
           </Col>
         </RowStyled>
         <RowStyled gutter={32}>
-          <Col span={12}>
-            <InputLabelStyled>
-              {toI18n('PROFILE_DETAIL_PHONE')}
-              :
-            </InputLabelStyled>
-            <InputStyled>{phone}</InputStyled>
-          </Col>
-          <Col span={12}>
+          <Col span={24}>
             <InputLabelStyled>
               {toI18n('PROFILE_DETAIL_ADDRESS')}
               :

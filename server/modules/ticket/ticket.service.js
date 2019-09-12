@@ -4,7 +4,11 @@ import BaseService from '../base/base.service';
 import { TICKET_STATUS, REPLY_TYPE } from '../../../common/enums';
 // eslint-disable-next-line import/no-cycle
 import ReplyService from '../reply/reply.service';
+<<<<<<< HEAD
 import ApplicationService from '../application/application.service';
+=======
+import * as StripeService from '../stripe/stripe.service';
+>>>>>>> Update UI for conversation
 import ConversationRoomQueue from '../queue/conversationRoomQueue';
 import { getHistoryTicketUpdate } from '../../utils/utils';
 import { sendEmailTrascript } from '../../mail-sparkpost/sparkpost';

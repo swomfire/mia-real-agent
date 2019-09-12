@@ -36,11 +36,15 @@ class TimerWrapper extends React.PureComponent {
   }
 
   render() {
+<<<<<<< HEAD
     const { history, processingDate } = this.props;
     const firstOpen = history[0] || {};
     const timeBeforeChat = moment(firstOpen.startTime).diff(
       moment(processingDate), 'minutes'
     );
+=======
+    const { history } = this.props;
+>>>>>>> Update UI for conversation
     const openingTime = getHourMinutes(calculateStatusTime(history, [TICKET_STATUS.OPEN]));
     const pendingTime = getHourMinutes(calculateStatusTime(history, [TICKET_STATUS.PENDING]));
     const processingTime = getHourMinutes(calculateStatusTime(history, [TICKET_STATUS.PROCESSING]));
@@ -81,9 +85,15 @@ class TimerWrapper extends React.PureComponent {
                 </TimerTitle>
                 <TimerValue>
                   <span>
+<<<<<<< HEAD
                     {Numeral(billableTime.hours).format('00')}
                     :
                     {Numeral(billableTime.minutes).format('00')}
+=======
+                    {Numeral(processingTime.hours).format('00')}
+                    :
+                    {Numeral(processingTime.minutes).format('00')}
+>>>>>>> Update UI for conversation
                   </span>
                 </TimerValue>
               </TimerStyled>

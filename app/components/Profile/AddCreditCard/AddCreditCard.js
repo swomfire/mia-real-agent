@@ -9,6 +9,7 @@ class AddCreditCard extends Component {
   static propTypes = {
     user: shape().isRequired,
     addCreditCard: func.isRequired,
+    removeCreditCard: func.isRequired,
     isUpdating: bool.isRequired,
     updateError: string,
   }
@@ -35,6 +36,11 @@ class AddCreditCard extends Component {
     addCreditCard(token);
   }
 
+  handleRemoveCreditCard = (cardId) => {
+    const { removeCreditCard } = this.props;
+    removeCreditCard(cardId);
+  }
+
   render() {
     const { user, isUpdating } = this.props;
     const { creditCard } = user;
@@ -42,7 +48,11 @@ class AddCreditCard extends Component {
     return (
       <div>
         <LoadingSpin loading={isUpdating}>
-          <CreditCard card={creditCard} onAdd={() => this.toggleAddCreditCard(true)} />
+          <CreditCard
+            card={creditCard}
+            onAdd={() => this.toggleAddCreditCard(true)}
+            onRemove={this.handleRemoveCreditCard}
+          />
           <AddCreditCardModal
             isLoading={isUpdating}
             isOpen={isAddCreditCardModalVisiable}

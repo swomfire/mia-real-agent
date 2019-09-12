@@ -9,6 +9,7 @@ import {
   UPDATE_PROFILE,
   CHANGE_PASSWORD,
   USER_ADD_CREDIT_CARD,
+  USER_REMOVE_CREDIT_CARD,
 } from '../../reducers/profile';
 import {
   getUserId,
@@ -91,12 +92,27 @@ function* addCreditCard({ payload }) {
   }
 }
 
+function* removeCreditCard({ payload }) {
+  const { cardId } = payload;
+  const userId = yield select(getUserId);
+  try {
+    const { data } = yield call(UserApi.removeCreditCard, userId, cardId);
+    notification.success({ message: 'Card Removed from account' });
+    yield put(actions.removeCreditCardSuccess(data));
+  } catch (error) {
+    const errMsg = _get(error, 'response.data.message', error.message);
+    notification.error({ message: errMsg });
+    yield put(actions.removeCreditCardFail(errMsg));
+  }
+}
+
 function* profileFlow() {
   yield takeEvery(FETCH_DETAIL, fetchDetail);
   yield takeEvery(UPDATE_PROFILE, updateProfile);
   yield takeEvery(CHECK_PASSWORD, checkPassword);
   yield takeEvery(CHANGE_PASSWORD, changePassword);
   yield takeEvery(USER_ADD_CREDIT_CARD, addCreditCard);
+  yield takeEvery(USER_REMOVE_CREDIT_CARD, removeCreditCard);
 }
 
 export default profileFlow;

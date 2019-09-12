@@ -9,6 +9,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   addCreditCard: actions.addCreditCard,
+  removeCreditCard: actions.removeCreditCard,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddCreditCard);

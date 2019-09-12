@@ -88,8 +88,13 @@ export const sendMail = ticketId => axios
   });
 
 export const addCreditCard = (userId, card) => axios
-  .post(`users/${userId}/addCreditCard`, {
+  .post(`users/${userId}/creditCard`, {
     card,
+  });
+
+export const removeCreditCard = (userId, cardId) => axios
+  .delete(`users/${userId}/creditCard`, {
+    data: { cardId },
   });
 
 export const getUploadSignedUrl = data => axios

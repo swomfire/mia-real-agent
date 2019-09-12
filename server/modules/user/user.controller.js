@@ -188,6 +188,34 @@ class UserController extends BaseController {
     }
   }
 
+  async removeCard(req, res) {
+    try {
+      const { model: user } = req;
+      const { cardId } = req.body;
+      let { stripeCustomerId } = user;
+      const { creditCard } = user;
+      if (!stripeCustomerId) {
+        const customer = await StripeService.createCustomer(user);
+        stripeCustomerId = customer.id;
+        user.set({ stripeCustomerId });
+        await user.save();
+      }
+      const result = creditCard.find(({ _id }) => _id.toString() === cardId);
+      if (result) {
+        await StripeService.removeCard(stripeCustomerId, result.apiKey);
+      } else {
+        const { CONTENT_NOT_FOUND } = ERROR_MESSAGE;
+        throw new APIError(CONTENT_NOT_FOUND, httpStatus.NOT_FOUND);
+      }
+      user.set({ creditCard: creditCard.filter(({ _id }) => _id.toString() !== cardId) });
+      await user.save();
+
+      return res.status(httpStatus.OK).send(user);
+    } catch (error) {
+      return super.handleError(res, error);
+    }
+  }
+
 
   async sendTestMail(req, res) {
     try {

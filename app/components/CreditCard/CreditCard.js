@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import {
   arrayOf, func, shape, string,
 } from 'prop-types';
-import { Row, Col, Icon, Checkbox } from 'antd';
-import { CreditCardWrapper, CreditCardType, AddCreditCardWrapper, CreditCardTitleWrapper } from './styles';
+import {
+  Row, Col, Icon, Checkbox,
+} from 'antd';
+import {
+  CreditCardWrapper, CreditCardType, AddCreditCardWrapper,
+  CreditCardTitleWrapper,
+} from './styles';
 import { toI18n } from '../../utils/func-utils';
 import { ButtonPrimary } from '../../stylesheets/Button.style';
 
@@ -17,6 +22,7 @@ class CreditCard extends Component {
     card: arrayOf(shape()).isRequired,
     type: string,
     onClick: func,
+    onRemove: func,
     onAdd: func,
   }
 
@@ -32,9 +38,9 @@ class CreditCard extends Component {
 
   renderActionreditCard = () => {
     const { selectedCard } = this.state;
-    const { card } = this.props;
+    const { card, onRemove } = this.props;
     return (
-      card.map(({ last4Digits, type }) => (
+      card.map(({ last4Digits, type, _id }) => (
         <Row>
           <CreditCardWrapper key={last4Digits} onClick={() => this.handleOnClick(last4Digits)} selected={selectedCard === last4Digits}>
             <Checkbox onChange={() => this.handleOnClick(last4Digits)} checked={selectedCard === last4Digits} />
@@ -42,7 +48,7 @@ class CreditCard extends Component {
               <CreditCardType type={type} />
               {`**** **** **** ${last4Digits}`}
             </CreditCardTitleWrapper>
-            <ButtonPrimary>
+            <ButtonPrimary onClick={() => onRemove(_id)}>
               <Icon type="delete" />
             </ButtonPrimary>
           </CreditCardWrapper>
@@ -52,17 +58,19 @@ class CreditCard extends Component {
   }
 
   renderDisplayCreditCard = () => {
-    const { card, onClick = () => { }, onAdd } = this.props;
+    const {
+      card, onClick = () => { }, onAdd, onRemove,
+    } = this.props;
     return (
       <div>
-        {card.map(({ last4Digits, type }) => (
+        {card.map(({ last4Digits, type, _id }) => (
           <Row>
             <CreditCardWrapper key={last4Digits} onClick={onClick}>
               <CreditCardTitleWrapper>
                 <CreditCardType type={type} />
                 {`**** **** **** ${last4Digits}`}
               </CreditCardTitleWrapper>
-              <ButtonPrimary>
+              <ButtonPrimary onClick={() => onRemove(_id)}>
                 <Icon type="delete" />
               </ButtonPrimary>
             </CreditCardWrapper>

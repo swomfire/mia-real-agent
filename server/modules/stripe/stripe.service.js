@@ -12,3 +12,8 @@ export const createCard = (cusId, card) => stripe.customers.createSource(
   cusId,
   card,
 );
+
+export const removeCard = (cusId, card) => stripe.customers.deleteSource(
+  cusId,
+  card,
+);

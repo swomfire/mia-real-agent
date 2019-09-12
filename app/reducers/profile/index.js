@@ -15,12 +15,41 @@ export const UPDATE_PROFILE_FAIL = 'profile/UPDATE_PROFILE_FAIL';
 export const CHANGE_PASSWORD = 'profile/CHANGE_PASSWORD';
 export const CHANGE_PASSWORD_SUCCESS = 'profile/CHANGE_PASSWORD_SUCCESS';
 export const CHANGE_PASSWORD_FAIL = 'profile/CHANGE_PASSWORD_FAIL';
+
 // Add credit card
 export const USER_ADD_CREDIT_CARD = 'profile/USER_ADD_CREDIT_CARD';
 export const USER_ADD_CREDIT_CARD_SUCCESS = 'profile/USER_ADD_CREDIT_CARD_SUCCESS';
 export const USER_ADD_CREDIT_CARD_FAIL = 'profile/USER_ADD_CREDIT_CARD_FAIL';
 
+// Add credit card
+export const USER_REMOVE_CREDIT_CARD = 'profile/USER_REMOVE_CREDIT_CARD';
+export const USER_REMOVE_CREDIT_CARD_SUCCESS = 'profile/USER_REMOVE_CREDIT_CARD_SUCCESS';
+export const USER_REMOVE_CREDIT_CARD_FAIL = 'profile/USER_REMOVE_CREDIT_CARD_FAIL';
+
 // action creator
+
+function removeCreditCard(cardId) {
+  return {
+    type: USER_REMOVE_CREDIT_CARD,
+    payload: {
+      cardId,
+    },
+  };
+}
+
+function removeCreditCardSuccess(data) {
+  return {
+    type: USER_REMOVE_CREDIT_CARD_SUCCESS,
+    payload: data,
+  };
+}
+
+function removeCreditCardFail(errorMsg) {
+  return {
+    type: USER_REMOVE_CREDIT_CARD_FAIL,
+    errorMsg,
+  };
+}
 
 function addCreditCard(card) {
   return {
@@ -223,6 +252,18 @@ function profileReducer(state = initialState, action) {
       return state.set('isUpdating', false)
         .set('updateError', action.errorMessage);
 
+    case USER_REMOVE_CREDIT_CARD:
+      return state.set('isUpdating', true)
+        .set('updateError', '');
+    case USER_REMOVE_CREDIT_CARD_SUCCESS: {
+      return state.set('isUpdating', false)
+        .set('fetchUser', action.payload);
+    }
+
+    case USER_REMOVE_CREDIT_CARD_FAIL:
+      return state.set('isUpdating', false)
+        .set('updateError', action.errorMessage);
+
     default: return state;
   }
 }
@@ -249,6 +290,10 @@ export const actions = {
   addCreditCard,
   addCreditCardFail,
   addCreditCardSuccess,
+
+  removeCreditCard,
+  removeCreditCardFail,
+  removeCreditCardSuccess,
 };
 
 export const selectors = {

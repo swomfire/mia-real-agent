@@ -17,9 +17,15 @@ class UserRouter extends BaseRouter {
       UserController.changePassword,
     );
     this.router.post(
-      '/:id/addCreditCard',
+      '/:id/creditCard',
       UserController.addCreditCard,
     );
+
+    this.router.delete(
+      '/:id/creditCard',
+      UserController.removeCard,
+    );
+
     this.router.post(
       '/createPassword',
       UserController.createPassword,

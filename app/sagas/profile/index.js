@@ -126,7 +126,7 @@ function* addCreditCard({ payload }) {
   const userId = yield select(getUserId);
   try {
     const { data } = yield call(UserApi.addCreditCard, userId, card);
-    notification.success({ message: 'Card Added to account' });
+    notification.success({ message: toI18n('CREDIT_ADD_SUCCESS') });
     yield put(actions.addCreditCardSuccess(data));
   } catch (error) {
     const errMsg = _get(error, 'response.data.message', error.message);
@@ -140,7 +140,7 @@ function* removeCreditCard({ payload }) {
   const userId = yield select(getUserId);
   try {
     const { data } = yield call(UserApi.removeCreditCard, userId, cardId);
-    notification.success({ message: 'Card Removed from account' });
+    notification.success({ message: toI18n('CREDIT_REMOVE_SUCCESS') });
     yield put(actions.removeCreditCardSuccess(data));
   } catch (error) {
     const errMsg = _get(error, 'response.data.message', error.message);

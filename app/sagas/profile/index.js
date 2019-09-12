@@ -106,6 +106,20 @@ function* removeCreditCard({ payload }) {
   }
 }
 
+function* addCreditCard({ payload }) {
+  const { card } = payload;
+  const userId = yield select(getUserId);
+  try {
+    const { data } = yield call(UserApi.addCreditCard, userId, card);
+    notification.success({ message: 'Card Added to account' });
+    yield put(actions.addCreditCardSuccess(data));
+  } catch (error) {
+    const errMsg = _get(error, 'response.data.message', error.message);
+    notification.error({ message: errMsg });
+    yield put(actions.addCreditCardFail(errMsg));
+  }
+}
+
 function* profileFlow() {
   yield takeEvery(FETCH_DETAIL, fetchDetail);
   yield takeEvery(UPDATE_PROFILE, updateProfile);

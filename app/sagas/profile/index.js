@@ -120,6 +120,20 @@ function* addCreditCard({ payload }) {
   }
 }
 
+function* removeCreditCard({ payload }) {
+  const { cardId } = payload;
+  const userId = yield select(getUserId);
+  try {
+    const { data } = yield call(UserApi.removeCreditCard, userId, cardId);
+    notification.success({ message: 'Card Removed from account' });
+    yield put(actions.removeCreditCardSuccess(data));
+  } catch (error) {
+    const errMsg = _get(error, 'response.data.message', error.message);
+    notification.error({ message: errMsg });
+    yield put(actions.removeCreditCardFail(errMsg));
+  }
+}
+
 function* profileFlow() {
   yield takeEvery(FETCH_DETAIL, fetchDetail);
   yield takeEvery(UPDATE_PROFILE, updateProfile);

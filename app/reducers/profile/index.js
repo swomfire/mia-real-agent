@@ -15,6 +15,7 @@ export const UPDATE_PROFILE_FAIL = 'profile/UPDATE_PROFILE_FAIL';
 export const CHANGE_PASSWORD = 'profile/CHANGE_PASSWORD';
 export const CHANGE_PASSWORD_SUCCESS = 'profile/CHANGE_PASSWORD_SUCCESS';
 export const CHANGE_PASSWORD_FAIL = 'profile/CHANGE_PASSWORD_FAIL';
+
 // Add credit card
 export const USER_ADD_CREDIT_CARD = 'profile/USER_ADD_CREDIT_CARD';
 export const USER_ADD_CREDIT_CARD_SUCCESS = 'profile/USER_ADD_CREDIT_CARD_SUCCESS';

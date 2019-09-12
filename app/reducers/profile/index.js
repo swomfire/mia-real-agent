@@ -15,8 +15,36 @@ export const UPDATE_PROFILE_FAIL = 'profile/UPDATE_PROFILE_FAIL';
 export const CHANGE_PASSWORD = 'profile/CHANGE_PASSWORD';
 export const CHANGE_PASSWORD_SUCCESS = 'profile/CHANGE_PASSWORD_SUCCESS';
 export const CHANGE_PASSWORD_FAIL = 'profile/CHANGE_PASSWORD_FAIL';
+// Add credit card
+export const USER_ADD_CREDIT_CARD = 'profile/USER_ADD_CREDIT_CARD';
+export const USER_ADD_CREDIT_CARD_SUCCESS = 'profile/USER_ADD_CREDIT_CARD_SUCCESS';
+export const USER_ADD_CREDIT_CARD_FAIL = 'profile/USER_ADD_CREDIT_CARD_FAIL';
 
 // action creator
+
+function addCreditCard(card) {
+  return {
+    type: USER_ADD_CREDIT_CARD,
+    payload: {
+      card,
+    },
+  };
+}
+
+function addCreditCardSuccess(data) {
+  return {
+    type: USER_ADD_CREDIT_CARD_SUCCESS,
+    payload: data,
+  };
+}
+
+function addCreditCardFail(errorMsg) {
+  return {
+    type: USER_ADD_CREDIT_CARD_FAIL,
+    errorMsg,
+  };
+}
+
 const fetchDetailAction = () => ({
   type: FETCH_DETAIL,
 });
@@ -116,6 +144,7 @@ const getProfilePasswordIsChecking = ({ profile }) => profile.get('isCheckingPas
 const getProfilePasswordIsConfirmed = ({ profile }) => profile.get('checkPasswordConfirm');
 
 const getProfileIsUpdating = ({ profile }) => profile.get('isUpdating');
+const getProfileUpdateError = ({ profile }) => profile.get('updateError');
 
 const getProfilePasswordIsChanging = ({ profile }) => profile.get('isChangingPassword');
 const getProfilePasswordChangeError = ({ profile }) => profile.get('changePasswordError');
@@ -181,6 +210,19 @@ function profileReducer(state = initialState, action) {
     case CHANGE_PASSWORD_FAIL:
       return state.set('isChangingPassword', false)
         .set('changePasswordError', action.errorMessage);
+
+    case USER_ADD_CREDIT_CARD:
+      return state.set('isUpdating', true)
+        .set('updateError', '');
+    case USER_ADD_CREDIT_CARD_SUCCESS: {
+      return state.set('isUpdating', false)
+        .set('fetchUser', action.payload);
+    }
+
+    case USER_ADD_CREDIT_CARD_FAIL:
+      return state.set('isUpdating', false)
+        .set('updateError', action.errorMessage);
+
     default: return state;
   }
 }
@@ -203,6 +245,10 @@ export const actions = {
   changePasswordAction,
   changePasswordCompleteAction,
   changePasswordFailAction,
+
+  addCreditCard,
+  addCreditCardFail,
+  addCreditCardSuccess,
 };
 
 export const selectors = {
@@ -213,6 +259,7 @@ export const selectors = {
   getProfilePasswordIsConfirmed,
 
   getProfileIsUpdating,
+  getProfileUpdateError,
 
   getProfilePasswordIsChanging,
   getProfilePasswordChangeError,

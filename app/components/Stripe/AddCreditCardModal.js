@@ -5,17 +5,21 @@ import {
 import { Modal } from 'antd';
 import { func, bool } from 'prop-types';
 import AddCreditForm from './AddCreditForm';
+import LoadingSpin from '../Loading';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class AddCreditCardModal extends Component {
   static propTypes = {
     isOpen: bool.isRequired,
+    isLoading: bool.isRequired,
     onCancel: func.isRequired,
     onSubmit: func.isRequired,
   }
 
   render() {
-    const { isOpen = false, onCancel, onSubmit } = this.props;
+    const {
+      isOpen = false, isLoading, onCancel, onSubmit,
+    } = this.props;
     return (
       <Modal
         title="Add Credit Card"
@@ -23,11 +27,13 @@ class AddCreditCardModal extends Component {
         onCancel={onCancel}
         footer={null}
       >
-        <StripeProvider apiKey={process.env.REACT_APP_STRIPE_KEY}>
-          <Elements>
-            <AddCreditForm onSubmit={onSubmit} />
-          </Elements>
-        </StripeProvider>
+        <LoadingSpin loading={isLoading}>
+          <StripeProvider apiKey={process.env.REACT_APP_STRIPE_KEY}>
+            <Elements>
+              <AddCreditForm onSubmit={onSubmit} />
+            </Elements>
+          </StripeProvider>
+        </LoadingSpin>
       </Modal>
     );
   }

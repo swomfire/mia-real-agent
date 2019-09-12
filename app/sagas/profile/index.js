@@ -1,12 +1,14 @@
 import {
   takeEvery, call, put, select,
 } from 'redux-saga/effects';
+import { notification } from 'antd';
 import _get from 'lodash/get';
 import { DEFAULT_ERROR_MESSAGE } from 'utils/constants';
 import {
   FETCH_DETAIL, actions, CHECK_PASSWORD,
   UPDATE_PROFILE,
   CHANGE_PASSWORD,
+  USER_ADD_CREDIT_CARD,
 } from '../../reducers/profile';
 import {
   getUserId,
@@ -75,11 +77,26 @@ function* changePassword({ payload }) {
   }
 }
 
+function* addCreditCard({ payload }) {
+  const { card } = payload;
+  const userId = yield select(getUserId);
+  try {
+    const { data } = yield call(UserApi.addCreditCard, userId, card);
+    notification.success({ message: 'Card Added to account' });
+    yield put(actions.addCreditCardSuccess(data));
+  } catch (error) {
+    const errMsg = _get(error, 'response.data.message', error.message);
+    notification.error({ message: errMsg });
+    yield put(actions.addCreditCardFail(errMsg));
+  }
+}
+
 function* profileFlow() {
   yield takeEvery(FETCH_DETAIL, fetchDetail);
   yield takeEvery(UPDATE_PROFILE, updateProfile);
   yield takeEvery(CHECK_PASSWORD, checkPassword);
   yield takeEvery(CHANGE_PASSWORD, changePassword);
+  yield takeEvery(USER_ADD_CREDIT_CARD, addCreditCard);
 }
 
 export default profileFlow;

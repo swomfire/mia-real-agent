@@ -182,7 +182,7 @@ class UserController extends BaseController {
       user.set({ creditCard });
       await user.save();
 
-      return res.status(httpStatus.OK).send({ user });
+      return res.status(httpStatus.OK).send(user);
     } catch (error) {
       return super.handleError(res, error);
     }

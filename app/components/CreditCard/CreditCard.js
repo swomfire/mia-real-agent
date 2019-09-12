@@ -44,7 +44,7 @@ class CreditCard extends Component {
 
   renderActionreditCard = () => {
     const { selectedCard } = this.state;
-    const { card, onRemove } = this.props;
+    const { card } = this.props;
     return (
       card.map(({ last4Digits, type, _id }) => (
         <Row>

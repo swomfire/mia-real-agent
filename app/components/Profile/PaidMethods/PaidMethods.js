@@ -57,7 +57,7 @@ class PaidMethods extends Component {
         <CreditTimeWrapper>
           <span>
             {toI18n('PROFILE_PAYMENT_INFO_TOTAL_CREDIT_TIME')}
-            {numeral(creditTime).format('00:00:00')}
+            {numeral(creditTime * 60).format('00:00:00')}
           </span>
           <ButtonDefault
             onClick={() => this.toggleTopUpModal(true)}

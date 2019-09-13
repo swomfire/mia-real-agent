@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
 import React, { Component } from 'react';
-
-import { string, number } from 'prop-types';
+import { shape } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Translation } from 'react-i18next';
 import {
@@ -21,9 +20,7 @@ import { isAgent } from '../../utils/func-utils';
 
 export default class TopNavBar extends Component {
   static propTypes = {
-    email: string.isRequired,
-    userRole: string.isRequired,
-    creditTime: number.isRequired,
+    profile: shape().isRequired,
   };
 
   state = {
@@ -37,14 +34,15 @@ export default class TopNavBar extends Component {
   };
 
   renderLogo = () => {
-    const { userRole } = this.props;
+    const { profile } = this.props;
+    const { role } = profile;
     return (
       <Logo>
         <Link to="/dashboard">
           <img
             alt="logo mia"
             src={
-              isAgent(userRole)
+              isAgent(role)
                 ? '/assets/images/logo-small-white.png'
                 : '/assets/images/user-mia-logo.svg'
             }
@@ -57,10 +55,11 @@ export default class TopNavBar extends Component {
 
   render() {
     const { isUserInfoOpen } = this.state;
-    const { email, userRole, creditTime } = this.props;
+    const { profile } = this.props;
+    const { email, role } = profile;
     return (
       <TopNavBarWrapper
-        className={!isAgent(userRole) ? 'user-account' : 'agent-account'}
+        className={!isAgent(role) ? 'user-account' : 'agent-account'}
       >
         {this.renderLogo()}
         <MenuTopNavBar mode="horizontal">
@@ -77,7 +76,7 @@ export default class TopNavBar extends Component {
           <ProfileStyled>
             <ProfileImageStyled
               src={
-                !isAgent(userRole)
+                !isAgent(role)
                   ? '/assets/images/user-live.jpeg'
                   : '/assets/images/user.svg'
               }
@@ -93,7 +92,7 @@ export default class TopNavBar extends Component {
               <span>{email}</span>
               <Translation>
                 {t => (
-                  <span className="type-user">{!isAgent(userRole) ? t('USER') : t('AGENT')}</span>
+                  <span className="type-user">{!isAgent(role) ? t('USER') : t('AGENT')}</span>
                 )}
               </Translation>
             </UserName>

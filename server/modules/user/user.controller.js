@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import AWS from 'aws-sdk';
 import BaseController from '../base/base.controller';
 import UserService from './user.service';
+import SystemService from '../system/system.service';
 import * as StripeService from '../stripe/stripe.service';
 import APIError, { ERROR_MESSAGE } from '../../utils/APIError';
 import check from '../../utils/validate';
@@ -208,6 +209,28 @@ class UserController extends BaseController {
         throw new APIError(CONTENT_NOT_FOUND, httpStatus.NOT_FOUND);
       }
       user.set({ creditCard: creditCard.filter(({ _id }) => _id.toString() !== cardId) });
+      await user.save();
+
+      return res.status(httpStatus.OK).send(user);
+    } catch (error) {
+      return super.handleError(res, error);
+    }
+  }
+
+  async topUp(req, res) {
+    try {
+      const { model: user } = req;
+      const { cardId, amount } = req.body;
+      const { stripeCustomerId, creditTime, creditCard } = user;
+      const result = creditCard.find(({ _id }) => _id.toString() === cardId);
+      if (result && stripeCustomerId) {
+        await StripeService.createCharge(stripeCustomerId, result.apiKey, amount * 100, 'Topup');
+      } else {
+        const { CONTENT_NOT_FOUND } = ERROR_MESSAGE;
+        throw new APIError(CONTENT_NOT_FOUND, httpStatus.NOT_FOUND);
+      }
+      const { exchangeRate } = await SystemService.getCurrentVersion();
+      user.set({ creditTime: +creditTime + (amount * exchangeRate) });
       await user.save();
 
       return res.status(httpStatus.OK).send(user);

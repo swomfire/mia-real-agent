@@ -1,11 +1,10 @@
 import { connect } from 'react-redux';
 import TopNavBar from 'components/TopNavBar';
-import { actions, getUserEmail, getUserRole, getCreditTime } from '../../reducers/auth';
+import { actions } from '../../reducers/auth';
+import { selectors } from '../../reducers/profile';
 
 const mapStateToProps = state => ({
-  email: getUserEmail(state),
-  userRole: getUserRole(state),
-  creditTime: getCreditTime(state),
+  profile: selectors.getProfileFetchedProfile(state),
 });
 
 const mapDispatchToProps = {

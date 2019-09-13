@@ -31,7 +31,35 @@ export const USER_REMOVE_CREDIT_CARD = 'profile/USER_REMOVE_CREDIT_CARD';
 export const USER_REMOVE_CREDIT_CARD_SUCCESS = 'profile/USER_REMOVE_CREDIT_CARD_SUCCESS';
 export const USER_REMOVE_CREDIT_CARD_FAIL = 'profile/USER_REMOVE_CREDIT_CARD_FAIL';
 
+// Add credit card
+export const USER_TOP_UP = 'profile/USER_TOP_UP';
+export const USER_TOP_UP_SUCCESS = 'profile/USER_TOP_UP_SUCCESS';
+export const USER_TOP_UP_FAIL = 'profile/USER_TOP_UP_FAIL';
+
 // action creator
+function topUp(cardId, amount) {
+  return {
+    type: USER_TOP_UP,
+    payload: {
+      cardId,
+      amount,
+    },
+  };
+}
+
+function topUpSuccess(data) {
+  return {
+    type: USER_TOP_UP_SUCCESS,
+    payload: data,
+  };
+}
+
+function topUpFail(errorMsg) {
+  return {
+    type: USER_TOP_UP_FAIL,
+    errorMsg,
+  };
+}
 
 function removeCreditCard(cardId) {
   return {
@@ -245,26 +273,21 @@ function profileReducer(state = initialState, action) {
       return state.set('isChangingPassword', false)
         .set('changePasswordError', action.errorMessage);
 
+    case USER_TOP_UP:
     case USER_ADD_CREDIT_CARD:
+    case USER_REMOVE_CREDIT_CARD:
       return state.set('isUpdating', true)
         .set('updateError', '');
+
+    case USER_TOP_UP_SUCCESS:
+    case USER_REMOVE_CREDIT_CARD_SUCCESS:
     case USER_ADD_CREDIT_CARD_SUCCESS: {
       return state.set('isUpdating', false)
         .set('fetchUser', action.payload);
     }
 
+    case USER_TOP_UP_FAIL:
     case USER_ADD_CREDIT_CARD_FAIL:
-      return state.set('isUpdating', false)
-        .set('updateError', action.errorMessage);
-
-    case USER_REMOVE_CREDIT_CARD:
-      return state.set('isUpdating', true)
-        .set('updateError', '');
-    case USER_REMOVE_CREDIT_CARD_SUCCESS: {
-      return state.set('isUpdating', false)
-        .set('fetchUser', action.payload);
-    }
-
     case USER_REMOVE_CREDIT_CARD_FAIL:
       return state.set('isUpdating', false)
         .set('updateError', action.errorMessage);
@@ -299,6 +322,10 @@ export const actions = {
   removeCreditCard,
   removeCreditCardFail,
   removeCreditCardSuccess,
+
+  topUp,
+  topUpFail,
+  topUpSuccess,
 };
 
 export const selectors = {

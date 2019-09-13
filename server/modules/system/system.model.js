@@ -19,6 +19,11 @@ const applicationSchema = new Schema(
       required: true,
       default: 0,
     },
+    miaRate: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
     createdAt: {
       type: Date,
       default: () => new Date(),

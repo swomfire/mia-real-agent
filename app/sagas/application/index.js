@@ -6,7 +6,6 @@ import _assign from 'lodash/assign';
 import _pick from 'lodash/pick';
 import _pickBy from 'lodash/pickBy';
 import { notification } from 'antd';
-import { DEFAULT_ERROR_MESSAGE } from 'utils/constants';
 import {
   SUBMIT, actions, APPLICATION_CHANGE_PAGE,
   APPLICATION_ADMIN_GET_ALL, APPLICATION_SORTING,
@@ -23,7 +22,7 @@ function* uploadApplicationFile(file) {
   const { error, response } = yield call(UploadApi.uploadFile, file);
   if (error) {
     const message = _get(
-      error, 'response.data.message', DEFAULT_ERROR_MESSAGE
+      error, 'response.data.message', error.message
     );
     yield put(actions.submitFailAction(message));
     return null;
@@ -68,7 +67,7 @@ function* submitApplication({ payload }) {
   });
   if (error) {
     const message = _get(
-      error, 'response.data.message', DEFAULT_ERROR_MESSAGE
+      error, 'response.data.message', error.message
     );
     yield put(actions.submitFailAction(message));
     return;
@@ -146,7 +145,7 @@ function* approveApplication(action) {
   const { response, error } = yield call(ApplicationApi.approveApplication, applicationId);
   if (error) {
     const message = _get(
-      error, 'response.data.message', DEFAULT_ERROR_MESSAGE
+      error, 'response.data.message', error.message
     );
     yield put(actions.applicationApproveFail(message));
     return;
@@ -160,7 +159,7 @@ function* rejectApplication(action) {
   const { response, error } = yield call(ApplicationApi.rejectApplication, applicationId);
   if (error) {
     const message = _get(
-      error, 'response.data.message', DEFAULT_ERROR_MESSAGE
+      error, 'response.data.message', error.message
     );
     yield put(actions.applicationRejectFail(message));
     return;
@@ -174,7 +173,7 @@ function* reviewApplication(action) {
   const { response, error } = yield call(ApplicationApi.reviewApplication, applicationId);
   if (error) {
     const message = _get(
-      error, 'response.data.message', DEFAULT_ERROR_MESSAGE
+      error, 'response.data.message', error.message
     );
     yield put(actions.applicationReviewFail(message));
     return;
@@ -241,7 +240,7 @@ function* editApplication({ payload }) {
   const { response, error } = yield call(ApplicationApi.editApplication, applicationId, data);
   if (error) {
     const message = _get(
-      error, 'response.data.message', DEFAULT_ERROR_MESSAGE
+      error, 'response.data.message', error.message
     );
     notification.error({ message });
     yield put(actions.applicationDetailEditFailAction(message));

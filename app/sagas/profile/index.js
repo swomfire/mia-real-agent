@@ -3,7 +3,6 @@ import {
 } from 'redux-saga/effects';
 import { notification } from 'antd';
 import _get from 'lodash/get';
-import { DEFAULT_ERROR_MESSAGE } from 'utils/constants';
 import {
   FETCH_DETAIL, actions, CHECK_PASSWORD,
   UPDATE_PROFILE,
@@ -23,7 +22,7 @@ function* fetchDetail() {
   const { response: { data }, error } = yield call(UserApi.getUserProfile, userId);
   if (error) {
     const message = _get(
-      error, 'response.data.message', DEFAULT_ERROR_MESSAGE
+      error, 'response.data.message', error.message
     );
     yield put(actions.fetchDetailFailAction(message));
     return;
@@ -37,7 +36,7 @@ function* checkPassword({ payload }) {
   const { response, error } = yield call(UserApi.checkPassword, userId, password);
   if (error) {
     const message = _get(
-      error, 'response.data.message', DEFAULT_ERROR_MESSAGE
+      error, 'response.data.message', error.message
     );
     yield put(actions.checkPasswordFailAction(message));
   }
@@ -52,7 +51,7 @@ function* updateProfile({ payload }) {
   const { response, error } = yield call(UserApi.updateUserProfile, userId, profile);
   if (error) {
     const message = _get(
-      error, 'response.data.message', DEFAULT_ERROR_MESSAGE
+      error, 'response.data.message', error.message
     );
     notification.error({ message });
     yield put(actions.updateProfileFailAction(message));

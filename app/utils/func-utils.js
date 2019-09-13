@@ -102,3 +102,6 @@ export const getHourMinutes = (durationInSecondInMinutes) => {
     hours, minutes,
   };
 };
+
+export const getSeconds = durationInMinutes => Number
+  .parseInt(durationInMinutes, 10) * 60;

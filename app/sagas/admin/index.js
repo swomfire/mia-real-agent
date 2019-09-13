@@ -2,8 +2,6 @@ import {
   takeEvery, call, put, select,
 } from 'redux-saga/effects';
 import _get from 'lodash/get';
-
-import { DEFAULT_ERROR_MESSAGE } from 'utils/constants';
 import {
   actions, DASHBOARD_GET_TICKET_ACTIVITY, DASHBOARD_GET_APPLICATION_SUMMARY,
   DASHBOARD_GET_USER_SUMMARY,
@@ -18,7 +16,7 @@ function* getDashboardTicketActivity() {
   const { response, error } = yield call(TicketApi.getActivity);
   if (error) {
     const message = _get(
-      error, 'response.data.message', DEFAULT_ERROR_MESSAGE
+      error, 'response.data.message', error.message
     );
     yield put(actions.dashboardGetTicketActivityFail(message));
     return;
@@ -31,7 +29,7 @@ function* getDashboardApplicationSummary() {
   const { response, error } = yield call(ApplicationApi.getApplicationSummary);
   if (error) {
     const message = _get(
-      error, 'response.data.message', DEFAULT_ERROR_MESSAGE
+      error, 'response.data.message', error.message
     );
     yield put(actions.dashboardGetApplicationSummaryFail(message));
     return;
@@ -44,7 +42,7 @@ function* getDashboardUserSummary() {
   const { response, error } = yield call(UserApi.getUserSummary);
   if (error) {
     const message = _get(
-      error, 'response.data.message', DEFAULT_ERROR_MESSAGE
+      error, 'response.data.message', error.message
     );
     yield put(actions.dashboardGetUserSummaryFail(message));
     return;

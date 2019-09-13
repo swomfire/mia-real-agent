@@ -305,3 +305,8 @@ export const ConversationActionWrapper = styled.div.attrs({
     border-radius: .3em;
   }
 `;
+
+export const MessageBoxBlock = styled.div`
+  height: 3em;
+  width: 100%;
+`;

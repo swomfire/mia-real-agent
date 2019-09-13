@@ -36,10 +36,21 @@ class TimerWrapper extends React.PureComponent {
   }
 
   render() {
-    const { history } = this.props;
+    const { history, processingDate } = this.props;
+    const firstOpen = history[0] || {};
+    const timeBeforeChat = moment(firstOpen.startTime).diff(
+      moment(processingDate), 'minutes'
+    );
     const openingTime = getHourMinutes(calculateStatusTime(history, [TICKET_STATUS.OPEN]));
     const pendingTime = getHourMinutes(calculateStatusTime(history, [TICKET_STATUS.PENDING]));
     const processingTime = getHourMinutes(calculateStatusTime(history, [TICKET_STATUS.PROCESSING]));
+    const billableTime = processingDate
+      ? getHourMinutes(
+        timeBeforeChat + calculateStatusTime(
+          history, [TICKET_STATUS.OPEN, TICKET_STATUS.PROCESSING]
+        )
+      )
+      : getHourMinutes(0);
     const holdTime = getHourMinutes(calculateStatusTime(history, [TICKET_STATUS.IDLE, TICKET_STATUS.OFFLINE]));
     const totalTime = {
       hours: openingTime.hours + pendingTime.hours + processingTime.hours + holdTime.hours,
@@ -70,9 +81,9 @@ class TimerWrapper extends React.PureComponent {
                 </TimerTitle>
                 <TimerValue>
                   <span>
-                    {Numeral(processingTime.hours).format('00')}
+                    {Numeral(billableTime.hours).format('00')}
                     :
-                    {Numeral(processingTime.minutes).format('00')}
+                    {Numeral(billableTime.minutes).format('00')}
                   </span>
                 </TimerValue>
               </TimerStyled>

@@ -33,6 +33,7 @@ import {
   ConversationHeaderTitleBlock,
   MessageInputContent,
   ConversationActionWrapper,
+  MessageBoxBlock,
 } from './styles';
 import LoadingSpin from '../Loading';
 import ConversationDetail from '../ConversationDetail/ConversationDetail';
@@ -444,6 +445,7 @@ export default class MessageBox extends Component {
             && _isEmpty(assignee)
             && this.renderFindAgentForSolution()}
           {this.renderPendingMessageContent()}
+          <MessageBoxBlock />
           <div ref={this.messagesEndRef} />
         </ShadowScrollbars>
         <MessageInputContent>

@@ -218,7 +218,7 @@ class TicketController extends BaseController {
       }
       // Charge ticket
       if (status === TICKET_STATUS.SOLVED) {
-        if (!TicketService.handleChargeTicket(ticket)) {
+        if (!(await TicketService.handleChargeTicket(ticket))) {
           throw new APIError(INSUFFICIENT_FUNDS, httpStatus.PAYMENT_REQUIRED);
         }
       }
@@ -233,7 +233,7 @@ class TicketController extends BaseController {
       }, 1000);
       return res.status(httpStatus.OK).send(result);
     } catch (error) {
-      return this.handleError(res, error);
+      return super.handleError(res, error);
     }
   }
 

@@ -342,14 +342,17 @@ export default class MessageBox extends Component {
               onClick={() => this.toggleFeedbackForm(true)}
             >
               <Icon type="form" />
-              Feedback
+              {toI18n('CONV_HEADER_FEEDBACK')}
             </ButtonDefault>
-            <ButtonPrimary
-              type="primary"
-              onClick={() => this.handleToggleCloseModal(true)}
-            >
-              Close Ticket
-            </ButtonPrimary>
+            {!CLOSED_TICKET_STATUSES.includes(status) && (
+              <ButtonPrimary
+                type="primary"
+                onClick={() => this.handleToggleCloseModal(true)}
+              >
+                {toI18n('CONV_HEADER_CLOSE_TICKET')}
+              </ButtonPrimary>
+            )
+            }
           </ConversationActionWrapper>
         </ConversationTitle>
       </ConversationHeaderTitle>
@@ -428,7 +431,7 @@ export default class MessageBox extends Component {
     const hasChatData = !_isEmpty(replyMessages)
       || shouldShowSystemMessage(systemMessage, conversationId)
       || !_isEmpty(otherUserTyping);
-    const { assignee, status } = currentTicket || {};
+    const { assignee, status, rating } = currentTicket || {};
     return (
       <>
         <ShadowScrollbars
@@ -446,6 +449,13 @@ export default class MessageBox extends Component {
             && this.renderFindAgentForSolution()}
           {this.renderPendingMessageContent()}
           <MessageBoxBlock />
+          {CLOSED_TICKET_STATUSES.includes(status) && !rating &&
+            [
+              (<MessageBoxBlock />),
+              (<MessageBoxBlock />),
+              (<MessageBoxBlock />),
+            ]
+          }
           <div ref={this.messagesEndRef} />
         </ShadowScrollbars>
         <MessageInputContent>

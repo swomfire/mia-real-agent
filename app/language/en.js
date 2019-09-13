@@ -54,6 +54,8 @@ const en = {
     CONV_MESSAGE_BOX_TICKET_CHANGED_TO: 'Ticket changed to',
     CONV_MESSAGE_BOX_TICKET_RATING: 'has rated',
     CONV_MESSAGE_BOX_TICKET_RATING_COMMENT: 'with comment',
+    CONV_HEADER_FEEDBACK: 'Feedback',
+    CONV_HEADER_CLOSE_TICKET: 'Close Ticket',
     // Conversation Detail
     CONV_MESSAGE_BOX_DETAIL_STATUS: 'Status',
     CONV_MESSAGE_BOX_DETAIL_TICKET: 'Ticket',

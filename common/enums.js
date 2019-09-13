@@ -638,3 +638,8 @@ export const FEEDBACK_STATUS = {
   OPEN: 'Open',
   SOLVED: 'Solved',
 };
+
+export const BILLING_TYPE = {
+  TOPUP: 'Top-up',
+  TICKET_CHARGE: 'Ticket Charge',
+};

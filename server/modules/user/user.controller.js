@@ -4,6 +4,7 @@ import AWS from 'aws-sdk';
 import BaseController from '../base/base.controller';
 import UserService from './user.service';
 import SystemService from '../system/system.service';
+import BillingService from '../billing/billing.service';
 import * as StripeService from '../stripe/stripe.service';
 import APIError, { ERROR_MESSAGE } from '../../utils/APIError';
 import check from '../../utils/validate';
@@ -232,7 +233,15 @@ class UserController extends BaseController {
       const { exchangeRate } = await SystemService.getCurrentVersion();
       user.set({ creditTime: +creditTime + (amount * exchangeRate) });
       await user.save();
-
+      await BillingService.topUpBilling(
+        {
+          creditTime,
+          cardId,
+          exchangeRate,
+        }, {
+          amount,
+        }
+      );
       return res.status(httpStatus.OK).send(user);
     } catch (error) {
       return super.handleError(res, error);

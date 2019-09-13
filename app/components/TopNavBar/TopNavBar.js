@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
 import React, { Component } from 'react';
 
-import { string } from 'prop-types';
+import { string, number } from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Translation } from 'react-i18next';
 import {
@@ -23,6 +23,7 @@ export default class TopNavBar extends Component {
   static propTypes = {
     email: string.isRequired,
     userRole: string.isRequired,
+    creditTime: number.isRequired,
   };
 
   state = {
@@ -56,7 +57,7 @@ export default class TopNavBar extends Component {
 
   render() {
     const { isUserInfoOpen } = this.state;
-    const { email, userRole } = this.props;
+    const { email, userRole, creditTime } = this.props;
     return (
       <TopNavBarWrapper
         className={!isAgent(userRole) ? 'user-account' : 'agent-account'}

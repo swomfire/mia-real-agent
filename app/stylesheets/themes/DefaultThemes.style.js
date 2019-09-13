@@ -25,6 +25,7 @@ export const DefaultThemes = {
     SmallFontSize: '0.750em',
     SmallSmallFontSize: '0.50em',
     MediumFontSize: '0.875em',
+    MediumFontSizePx: '14px',
     BaseFontSize: '1em',
     HeadingH6FontSize: '1.125em',
     HeadingH5FontSize: '1.225em',

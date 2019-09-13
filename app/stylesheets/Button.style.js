@@ -100,6 +100,30 @@ export const ButtonCancel = styled(Button)`
   }
 `;
 
+export const ButtonDefault = styled(Button)`
+  min-width: 7.25em;
+  height: 2.25em;
+  padding: 0;
+  border-radius: ${props => props.theme.borderRadius.borderBtnSmall};
+  border: 1px solid ${props => props.theme.colorStyled.ColorSecond};
+  background: ${props => props.theme.colorStyled.ColorWhite};
+  color:  ${props => props.theme.colorStyled.ColorSecond};
+  font-size: ${props => props.theme.fontSize.SmallFontSize};
+  padding: .35em 1em;
+  :disabled {
+    background: ${props => props.theme.colorStyled.ColorXXXLightGrey};
+    color:  ${props => props.theme.colorStyled.ColoraBtnCancel};
+    border: 1px solid ${props => props.theme.colorStyled.ColorXXXLightGrey};
+  }
+  &:hover{
+    opacity: .7;
+  }
+  i {
+    font-size: 1em;
+    margin-right: .35em;
+  }
+`;
+
 export const ButtonPrimary = styled(Button)`
   min-width: 6.25em;
   height: 2.25em;
@@ -110,6 +134,11 @@ export const ButtonPrimary = styled(Button)`
   color:  ${props => props.theme.colorStyled.ColorWhite};
   font-size: ${props => props.theme.fontSize.SmallFontSize};
   padding: .35em 1em;
+  :disabled {
+    background: ${props => props.theme.colorStyled.ColorXXXLightGrey};
+    color:  ${props => props.theme.colorStyled.ColoraBtnCancel};
+    border: 1px solid ${props => props.theme.colorStyled.ColorXXXLightGrey};
+  }
   &:hover{
     opacity: .7;
   }

@@ -288,6 +288,7 @@ export const getToken = ({ auth }) => auth.get('token');
 export const getUserEmail = ({ auth }) => auth.get('email');
 export const getUserId = ({ auth }) => auth.get('userId');
 export const getUsername = ({ auth }) => auth.get('username');
+export const getCreditTime = ({ auth }) => auth.get('creditTime');
 export const checkAuthenticatedStatus = ({ auth }) => !!auth.get('isLoggedIn');
 export const selectErrorMessage = ({ auth }) => auth.get('errorMessage');
 export const getIsSendingEmail = ({ auth }) => auth.get('isVerifing', false);
@@ -316,6 +317,7 @@ function authReducer(state = initialState, action) {
         .set('userId', authInfo.userId)
         .set('verifiedAt', authInfo.verifiedAt)
         .set('username', authInfo.username)
+        .set('creditTime', authInfo.creditTime)
         .set('isLoading', false)
         .set('isLoggedIn', true);
     }

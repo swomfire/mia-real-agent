@@ -169,3 +169,22 @@ export const ProfileOrganizationID = styled.div`
 export const ProfileOrganizationStatus = styled.div`
   font-size: 10px;
 `;
+
+export const AdditionalInformationWrapper = styled.div`
+  padding: 1em;
+  display: flex;
+  border-bottom: 1px solid ${props => props.theme.colorStyled.ColorBorder};
+`;
+
+export const AdditionalInformationTitle = styled.div`
+  box-sizing: border-box;
+  flex: 0 0 60%;
+  color: ${props => props.theme.colorStyled.ColorDarkGrey};
+  font-weight: 600;
+`;
+
+export const AdditionalInformationValue = styled.div`
+  flex: auto;
+  font-weight: 600;
+  color: ${props => props.theme.colorStyled.ColorBlack}
+`;

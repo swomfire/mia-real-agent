@@ -2,6 +2,23 @@ import mongoose from 'mongoose';
 import { ROLES } from '../../../common/enums';
 const { Schema } = mongoose;
 
+const creditCardSchema = new Schema(
+  {
+    type: {
+      type: String,
+      required: true,
+    },
+    last4Digits: {
+      type: String,
+      required: true,
+    },
+    apiKey: {
+      type: String,
+      required: true,
+    },
+  }
+);
+
 const userSchema = new Schema(
   {
     username: { type: String, unique: true, required: true },
@@ -30,6 +47,16 @@ const userSchema = new Schema(
       type: Number,
       required: true,
       default: 0,
+    },
+    creditTime: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    creditCard: {
+      type: [creditCardSchema],
+      required: true,
+      default: [],
     },
     // indicate number of solved ticket for agent
     solved: {

@@ -23291,3 +23291,11 @@ div.ant-typography-edit-content {
 .ant-upload-list-picture-card .ant-upload-list-item-name{
   display: inline;
 }
+
+.ant-tabs-nav .ant-tabs-tab-active, .ant-tabs-nav .ant-tabs-tab:hover{
+  color: #ff5402;
+}
+
+.ant-tabs-ink-bar {  
+  background-color: #ff5402;
+}

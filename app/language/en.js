@@ -19,7 +19,9 @@ const en = {
     FORM_ADD: 'Add',
     FORM_SAVE: 'Save',
     FORM_YES: 'Yes',
+    FORM_PAYOUT: 'Payout',
     FORM_NO: 'No',
+    FORM_DOUBLE_TO_EDIT: 'Double Click to Edit',
     // Form validate
     FORM_REQUIRED: 'Required',
     FORM_INVALID_MAIL: 'Invalid Email',
@@ -186,6 +188,7 @@ const en = {
     ADMIN_LEFT_NAV_USERS: 'Users',
     ADMIN_LEFT_NAV_INTENTS: 'Intents',
     ADMIN_LEFT_NAV_CANNED_RESPONDE: 'Canned Responses',
+    ADMIN_LEFT_NAV_System: 'System',
     // Admin users table
     ADMIN_USERS_TABLE_ALL_USERS: 'All Users',
     ADMIN_USERS_TABLE_USERNAME: 'Username',
@@ -321,6 +324,8 @@ const en = {
     PROFILE_PROFILE: 'Profile',
     PROFILE_EDIT: 'Edit',
     PROFILE_CHANGE_PASSWORD: 'Change password',
+    PROFILE_CHANGE_BASIC_INFO: 'Basic info',
+    PROFILE_CHANGE_ADD_CREDIT_CARD: 'Add credit card',
     // Profile Detail
     PROFILE_DETAIL_FIRST_NAME: 'First name',
     PROFILE_DETAIL_LAST_NAME: 'Last name',
@@ -343,6 +348,15 @@ const en = {
     PROFILE_BUSINESS_FORM_WORKING_FIELDS: 'Working fields',
     PROFILE_BUSINESS_FORM_ADDRESS: 'Address',
     PROFILE_BUSINESS_FORM_PHONE: 'Phone No.',
+    // Profile payment info
+    PROFILE_PAYMENT_INFO_PAYMENT_INFO: 'Payment info',
+    PROFILE_PAYMENT_INFO_NO_BILLING_HISTORY: 'No Billing History',
+    PROFILE_PAYMENT_INFO_TOP_UP: 'Top up',
+    PROFILE_PAYMENT_INFO_TOTAL_CREDIT_TIME: 'Total: ',
+    // Credit card
+    CREDIT_CARD_ADD_CREDIT_CARD: '+ Add Credit Card',
+    // Navbar profile
+    NAVBAR_PROFILE_CREDIT_TIME: 'Credit time:',
     // Close Ticket Modal
     CLOSE_TICKET_MODAL_CLOSED_STATUS: 'Closed Status',
     CLOSE_TICKET_MODAL_UNSOLVED_REASON: 'Unsolved Reason',
@@ -375,6 +389,30 @@ const en = {
     CREATE_FEEDBACK_TITLE: 'Title',
     CREATE_FEEDBACK_FEEDBACKS: 'Feedbacks',
     CREATE_FEEDBACK_SUCCESS: 'Feedbacks submitted',
+    // Top up
+    TOP_UP_SUCCESS: 'Top up success',
+    TOP_UP_SELECT_CREDIT_CARD: 'Select Credit Card',
+    TOP_UP_INPUT_AMOUNT: 'Input Amount',
+    TOP_UP_FINISH: 'Finish',
+    TOP_UP_SUCCESS_ADD_CREDIT_CARD: 'Add Credit Card',
+    TOP_UP_YOUR_CREDIT_TIME: 'Top-up your credit time',
+    // System
+    SYSTEM_TITLE: 'System setting',
+    SYSTEM_UPDATE_SUCCESS: 'System updated',
+    // Convert rate
+    CONVERT_RATE_EXCHANGE_RATE: 'Exchange Rate:',
+    // Ticket Payment
+    TICKET_PAYMENT_TITLE: 'Ticket Payment',
+    TICKET_PAYMENT_CHOOSE_PAYMENT_METHOD: 'Choose payment method',
+    TICKET_PAYMENT_VERIFY_INFORMATION: 'Verify information',
+    TICKET_PAYMENT_FINISH: 'Finish',
+    TICKET_PAYMENT_SUCCESS: 'Ticket paid',
+    TICKET_PAYMENT_CREDIT_TIME: 'Credit time',
+    TICKET_PAYMENT_DIRECT_CHARGE: 'Direct Charge',
+    TICKET_PAYMENT_TICKET_TIME: 'Ticket time:',
+    TICKET_PAYMENT_CURRENT_CREDIT_TIME: 'Current credit time:',
+    TICKET_PAYMENT_REMAINING_CREDIT_TIME: 'Remaining credit time:',
+    TICKET_PAYMENT_REMAINING_EQUIVALENT_TO: 'Equivalent to:',
   },
 };
 

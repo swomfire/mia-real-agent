@@ -37,6 +37,7 @@ import AdminRoute from './containers/Route/AdminRoute';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import EditApplication from './containers/EditApplication/EditApplication';
+import System from './pages/System';
 
 class Router extends React.PureComponent {
   static propTypes = {
@@ -70,6 +71,7 @@ class Router extends React.PureComponent {
               <AdminRoute exact path="/admin/user" component={UserManagement} />
               <AdminRoute path="/admin/user/:id" component={UserDetail} />
               <AdminRoute path="/admin/canned-responses" component={CannedResponseManagement} />
+              <AdminRoute path="/admin/system" component={System} />
               <AdminRoute exact path="/admin" component={() => <Redirect to="/admin/user" />} />
             </AdminMainLayout>
           )}

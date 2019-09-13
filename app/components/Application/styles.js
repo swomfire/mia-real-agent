@@ -110,7 +110,7 @@ export const ApplicationBlock = styled.div`
   }
   .ant-steps-item-title {
     color: #aaa !important;
-    font-size: ${props => props.theme.fontSize.MediumFontSize};
+    font-size: ${props => props.theme.fontSize.MediumFontSizePx};
     &:after {
       content: none;
     }

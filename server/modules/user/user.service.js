@@ -43,7 +43,7 @@ class UserService extends BaseService {
   async getUserProfile(user) {
     const { password } = user;
     const isNewlyLoginAsSocialNetwork = !password;
-    const profile = pick(user, ['role', 'username', 'profile', 'address', 'email']);
+    const profile = pick(user, ['role', 'username', 'profile', 'address', 'email', 'creditTime']);
     return {
       ...profile,
       isNewlyLoginAsSocialNetwork,

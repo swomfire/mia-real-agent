@@ -73,6 +73,13 @@ const TABS_MENU = [
     icon: 'mia-menu',
     link: '/admin/canned-responses',
   },
+  {
+    key: 'system',
+    type: 'container',
+    label: toI18n('ADMIN_LEFT_NAV_System'),
+    icon: 'mia-hr-settings',
+    link: '/admin/system',
+  },
 ];
 
 const paths = _reduce(

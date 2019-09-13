@@ -20,7 +20,7 @@ class ShadowScrollbars extends Component {
       position: 'relative',
     };
     return (
-      <div style={containerStyle}>
+      <div style={containerStyle} className="shadow-scrollbars-container">
         <Scrollbars {...props} />
       </div>
     );

@@ -5,6 +5,8 @@ import { BILLING_TYPE } from '../../../common/enums';
 class BillingService extends BaseService {
   constructor() {
     super(BillingCollection);
+    this.countDocument = this.countDocument.bind(this);
+    this.getByCondition = this.getByCondition.bind(this);
     this.ticketChargeBilling = this.ticketChargeBilling.bind(this);
   }
 
@@ -22,6 +24,14 @@ class BillingService extends BaseService {
       content,
       total,
     });
+  }
+
+  getByCondition(condition) {
+    return this.collection.findOne(condition);
+  }
+
+  countDocument(filter) {
+    return this.collection.countDocuments(filter);
   }
 
   async getAll(condition, options) {

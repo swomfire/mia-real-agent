@@ -4,8 +4,12 @@ export const handleError = (error) => {
   const { response, request, message } = error;
   if (response) {
     const { data, status } = response;
+    const { message: errorMessage } = data;
     // Request made and server responded
-    return { error: `[${status}] ${data}`, data };
+    if (errorMessage) {
+      return { error: { message: errorMessage } };
+    }
+    return { error: { message: `[${status}] ${data}` }, data };
   }
   if (request) {
     // The request was made but no response was received

@@ -27,6 +27,7 @@ export const USER_REMOVE = 'user/USER_REMOVE';
 export const USER_REMOVE_SUCCESS = 'user/USER_REMOVE_SUCCESS';
 export const USER_REMOVE_FAIL = 'user/USER_REMOVE_FAIL';
 
+
 // change page
 export const USER_CHANGE_PAGE = 'user/CHANGE_PAGE';
 

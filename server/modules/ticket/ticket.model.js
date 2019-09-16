@@ -78,9 +78,7 @@ const ticketSchema = new Schema(
       comment: String,
     },
     processingTime: {
-      type: Number,
-      required: true,
-      default: 0,
+      type: Date,
     },
     price: {
       type: Number,

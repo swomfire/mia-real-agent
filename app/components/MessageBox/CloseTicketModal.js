@@ -4,17 +4,16 @@ import { connect } from 'react-redux';
 import { bool, func, string } from 'prop-types';
 import {
   Modal, Form, Row, Col,
-  notification,
 } from 'antd';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { DefaultButton } from 'components/Generals/General.styled';
 import { toI18n } from '../../utils/func-utils';
 import FormInput from '../FormInput/FormInput';
 import { TICKET_STATUS } from '../../../common/enums';
 import { ActionBar } from '../CreateTicket/styles';
 import { getTicketIsClosing, getTicketCloseError } from '../../selectors/ticket';
 import LoadingSpin from '../Loading';
+import { ButtonCancel, ButtonSubmit } from '../../stylesheets/Button.style';
 
 
 const initialValues = {
@@ -113,12 +112,12 @@ class CloseTicketModal extends React.PureComponent {
 
                 <Row gutter={32}>
                   <ActionBar>
-                    <DefaultButton type="button" cancel onClick={handleCloseModal}>
-                      {toI18n('CANCEL')}
-                    </DefaultButton>
-                    <DefaultButton loading={isClosing} disabled={isClosing} onClick={handleSubmit}>
+                    <ButtonSubmit loading={isClosing} disabled={isClosing} onClick={handleSubmit}>
                       {toI18n('CLOSE_TICKET_MODAL_CLOSE_TICKET')}
-                    </DefaultButton>
+                    </ButtonSubmit>
+                    <ButtonCancel type="button" cancel onClick={handleCloseModal}>
+                      {toI18n('CANCEL')}
+                    </ButtonCancel>
                   </ActionBar>
                 </Row>
               </Form>

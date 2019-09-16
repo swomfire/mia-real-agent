@@ -54,6 +54,8 @@ const en = {
     CONV_MESSAGE_BOX_TICKET_CHANGED_TO: 'Ticket changed to',
     CONV_MESSAGE_BOX_TICKET_RATING: 'has rated',
     CONV_MESSAGE_BOX_TICKET_RATING_COMMENT: 'with comment',
+    CONV_HEADER_FEEDBACK: 'Feedback',
+    CONV_HEADER_CLOSE_TICKET: 'Close Ticket',
     // Conversation Detail
     CONV_MESSAGE_BOX_DETAIL_STATUS: 'Status',
     CONV_MESSAGE_BOX_DETAIL_TICKET: 'Ticket',
@@ -336,6 +338,16 @@ const en = {
     PROFILE_DETAIL_COMPANY: 'Company',
     PROFILE_DETAIL_COMPANY_SIZE: 'Company Size',
     PROFILE_DETAIL_COMPANY_FIELDS: 'Company fields',
+    // Profile Change password Form
+    PROFILE_CHANGE_PASSWORD_FORM_TITLE: 'Change Password',
+    PROFILE_CHANGE_PASSWORD_FORM_CURRENT_PASSWORD: 'Current Password',
+    PROFILE_CHANGE_PASSWORD_FORM_NEW_PASSWORD: 'New Password',
+    PROFILE_CHANGE_PASSWORD_FORM_CONFIRM_NEW_PASSWORD: 'Confirm new Password',
+    PROFILE_CHANGE_PASSWORD_FORM_SUCCESS: 'Password changed',
+    // Profile Edit
+    PROFILE_EDIT_TITLE: 'Edit Profile',
+    PROFILE_EDIT_CONFIRM_PASSWORD: 'Confirm Password to Edit',
+    PROFILE_EDIT_PASSWORD_NOT_MATCH: 'Password not match',
     // Profile Individial Form
     PROFILE_INDIVIDIAL_FORM_FIRST_NAME: 'First name',
     PROFILE_INDIVIDIAL_FORM_LAST_NAME: 'Last name',
@@ -348,6 +360,7 @@ const en = {
     PROFILE_BUSINESS_FORM_WORKING_FIELDS: 'Working fields',
     PROFILE_BUSINESS_FORM_ADDRESS: 'Address',
     PROFILE_BUSINESS_FORM_PHONE: 'Phone No.',
+    PROFILE_UPDATE_SUCCESS: 'Profile Updated',
     // Profile payment info
     PROFILE_PAYMENT_INFO_PAYMENT_INFO: 'Payment info',
     PROFILE_PAYMENT_INFO_NO_BILLING_HISTORY: 'No Billing History',
@@ -355,6 +368,8 @@ const en = {
     PROFILE_PAYMENT_INFO_TOTAL_CREDIT_TIME: 'Total: ',
     // Credit card
     CREDIT_CARD_ADD_CREDIT_CARD: '+ Add Credit Card',
+    CREDIT_ADD_SUCCESS: 'Card Added to account',
+    CREDIT_REMOVE_SUCCESS: 'Card Removed from account',
     // Navbar profile
     NAVBAR_PROFILE_CREDIT_TIME: 'Credit time:',
     // Close Ticket Modal
@@ -394,7 +409,7 @@ const en = {
     TOP_UP_SELECT_CREDIT_CARD: 'Select Credit Card',
     TOP_UP_INPUT_AMOUNT: 'Input Amount',
     TOP_UP_FINISH: 'Finish',
-    TOP_UP_SUCCESS_ADD_CREDIT_CARD: 'Add Credit Card',
+    TOP_UP_SUCCESS_ADD_CREDIT_CARD: '+ Add Credit Card',
     TOP_UP_YOUR_CREDIT_TIME: 'Top-up your credit time',
     // System
     SYSTEM_TITLE: 'System setting',

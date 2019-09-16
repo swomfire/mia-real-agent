@@ -49,6 +49,7 @@ module.exports = options => ({
     // drop any unreachable code.
     new webpack.EnvironmentPlugin({
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      REACT_APP_STRIPE_KEY: JSON.stringify(process.env.REACT_APP_STRIPE_KEY),
     }),
   ]),
 

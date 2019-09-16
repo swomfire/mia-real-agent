@@ -9,6 +9,7 @@ export const ERROR_MESSAGE = {
   TOKEN_EXPIRED: 'Token Expired',
   PASSWORD_INCORRECT: 'Current password is not correct',
   UNAUTHORIZED: 'Unauthorized',
+  INSUFFICIENT_FUNDS: 'Insufficient funds',
 
   // tax
   ZIP_CODE_NOT_FOUND:

@@ -3,6 +3,7 @@ import { func, bool, shape } from 'prop-types';
 import {
   Row, Col, Divider, Tabs,
 } from 'antd';
+import AddCreditCard from 'containers/AddCreditCard';
 import {
   ProfileWrapper, ProfileCard, ProfileTitle,
   InputStyled,
@@ -15,7 +16,6 @@ import ProfileDetail from './ProfileDetail/ProfileDetail';
 import { toI18n } from '../../utils/func-utils';
 import ProfileBasicInfo from './ProfileBasicInfo';
 import PaidMethods from './PaidMethods';
-import AddCreditCard from './AddCreditCard';
 
 const { TabPane } = Tabs;
 

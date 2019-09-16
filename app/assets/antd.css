@@ -23299,3 +23299,11 @@ div.ant-typography-edit-content {
 .ant-tabs-ink-bar {  
   background-color: #ff5402;
 }
+
+.ant-input:hover , .ant-input:focus{
+  border-color: #ff5402;
+}
+
+html {
+  --antd-wave-shadow-color: #ff5402;
+}

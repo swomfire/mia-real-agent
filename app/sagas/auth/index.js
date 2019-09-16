@@ -3,7 +3,7 @@ import {
   takeLatest, all,
 } from 'redux-saga/effects';
 import _get from 'lodash/get';
-import { DEFAULT_ERROR_MESSAGE } from 'utils/constants';
+import { notification } from 'antd';
 import * as AuthApi from '../../api/auth';
 import { getUserProfile } from '../../api/user';
 import { configToken } from '../../api/config';
@@ -21,7 +21,6 @@ import {
   AUTH_FORGOT_PASSWORD,
   AUTH_RESET_PASSWORD,
 } from '../../reducers/auth';
-import { notification } from 'antd';
 
 // login handler
 function* login({ payload }) {
@@ -31,7 +30,7 @@ function* login({ payload }) {
   // login error
   if (error) {
     yield put(authActions.setVerifyingEmail(null));
-    const message = _get(error, 'response.data.message', DEFAULT_ERROR_MESSAGE); // this line of code needs to refactor
+    const message = _get(error, 'response.data.message', error.message); // this line of code needs to refactor
     yield put(authActions.loginFail(message));
     return;
   }
@@ -72,7 +71,7 @@ function* register({ payload }) {
   const { error } = yield call(AuthApi.register, payload);
 
   if (error) {
-    const message = _get(error, 'response.data.message', DEFAULT_ERROR_MESSAGE); // this line of code needs to refactor
+    const message = _get(error, 'response.data.message', error.message); // this line of code needs to refactor
     yield put(authActions.registerFail(message));
     return;
   }
@@ -88,7 +87,7 @@ function* createPassword({ payload }) {
   const { error } = yield call(AuthApi.createPassword, newPassword);
 
   if (error) {
-    const message = _get(error, 'response.data.message', DEFAULT_ERROR_MESSAGE); // this line of code needs to refactor
+    const message = _get(error, 'response.data.message', error.message); // this line of code needs to refactor
     yield put(authActions.createPasswordFail(message));
     return;
   }
@@ -104,7 +103,7 @@ function* sendVericationEmail() {
     verifyingEmail,
   );
   if (error) {
-    const message = _get(error, 'response.data.message', DEFAULT_ERROR_MESSAGE); // this line of code needs to refactor
+    const message = _get(error, 'response.data.message', error.message); // this line of code needs to refactor
     yield put(authActions.sendVericationEmailFail(message));
     return;
   }
@@ -151,7 +150,7 @@ function* sendForgotPassword({ payload }) {
     email,
   );
   if (error) {
-    const message = _get(data, 'error', DEFAULT_ERROR_MESSAGE); // this line of code needs to refactor
+    const message = _get(data, 'error', error.message); // this line of code needs to refactor
     notification.error({ message });
     yield put(authActions.forgotPasswordFailAction(message));
     return;
@@ -168,7 +167,7 @@ function* sendResetPassword({ payload }) {
     newPassword, token,
   );
   if (error) {
-    const message = _get(data, 'error', DEFAULT_ERROR_MESSAGE); // this line of code needs to refactor
+    const message = _get(data, 'error', error.message); // this line of code needs to refactor
     notification.error({ message });
     yield put(authActions.resetPasswordFailAction(message));
     return;

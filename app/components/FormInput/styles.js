@@ -142,7 +142,7 @@ export const InputWrapperStyled = styled(Form.Item)`
   }
   label{
     float: left;
-    color: #6e6c83fa!important;
+    color: ${props => props.theme.colorStyled.ColorBlack}!important;
     ::after{
       content: '' !important;
     }

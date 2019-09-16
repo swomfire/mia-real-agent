@@ -29,6 +29,7 @@ const userSchema = new Schema(
     categories: { type: [String] },
     token: String, // for login
     forgotToken: String, // for reset password
+    stripeCustomerId: String,
     profile: {
       // profile for individual customer
       firstName: { type: String, trim: true },

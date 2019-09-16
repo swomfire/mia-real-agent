@@ -88,8 +88,8 @@ export const ButtonCancel = styled(Button)`
   height: 2.438em;
   padding: 0;
   border-radius: ${props => props.theme.borderRadius.borderBtnSmall};
-  border: 1px solid ${props => props.theme.colorStyled.ColorXXXLightGrey};
-  background: ${props => props.theme.colorStyled.ColorXXXLightGrey};
+  border: 1px solid ${props => props.theme.colorStyled.ColorBgBtnCancel};
+  background: ${props => props.theme.colorStyled.ColorBgBtnCancel};
   color:  ${props => props.theme.colorStyled.ColoraBtnCancel};
   &:hover{
     opacity: .7;
@@ -136,8 +136,9 @@ export const ButtonPrimary = styled(Button)`
   padding: .35em 1em;
   :disabled {
     background: ${props => props.theme.colorStyled.ColorXXXLightGrey};
-    color:  ${props => props.theme.colorStyled.ColoraBtnCancel};
+    color:  ${props => props.theme.colorStyled.ColoraBtnPrimaryDisabled};
     border: 1px solid ${props => props.theme.colorStyled.ColorXXXLightGrey};
+    cursor: not-allowed;
   }
   &:hover{
     opacity: .7;
@@ -174,6 +175,12 @@ export const ButtonSubmit = styled(Button).attrs({
   i {
     font-size: 1em;
     margin-left: .35em;
+  }
+  :disabled {
+    border: 1px solid ${props => props.theme.colorStyled.ColoraBtnCancel};
+    background: ${props => props.theme.colorStyled.ColorXXXLightGrey};
+    color:  ${props => props.theme.colorStyled.ColoraBtnPrimaryDisabled};
+    cursor: not-allowed;
   }
 `;
 

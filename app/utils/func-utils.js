@@ -78,3 +78,30 @@ export function shouldShowSystemMessage(systemMessage, currentConversationId) {
 export const toI18n = key => (
   <Trans i18nKey={key} />
 );
+
+const sortTicketHistory = history => (history || [])
+  .sort((h1, h2) => new Date(h1.startTime) - new Date(h2.startTime));
+
+
+export const calculateStatusTime = (history, status) => {
+  if (!Array.isArray(history)) return 0;
+  const sortedHistory = sortTicketHistory(history) || [];
+  const logs = sortedHistory.filter(his => status.includes(his.currentStatus));
+  if (logs.length <= 0) return 0;
+  const totalTime = logs.reduce(
+    (acc, log) => Math.ceil(acc + moment(log.endTime || new Date()).diff(log.startTime)), 0
+  );
+  return Math.ceil(moment.duration(totalTime, 'millisecond').asMinutes());
+};
+
+export const getHourMinutes = (durationInSecondInMinutes) => {
+  const hours = Number.parseInt(durationInSecondInMinutes / 60, 10);
+  const minutes = durationInSecondInMinutes % 60;
+
+  return {
+    hours, minutes,
+  };
+};
+
+export const getSeconds = durationInMinutes => Number
+  .parseInt(durationInMinutes, 10) * 60;

@@ -53,7 +53,7 @@ export const MessageBoxItem = styled.div`
     p {
       float: right;
       color: ${props => props.theme.colorStyled.ColorWhite};
-      background-color: #ff5504;
+      background-color: ${props => props.theme.colorStyled.ColorBgDefault};
     }
     > div{
      align-items: flex-end;
@@ -80,10 +80,8 @@ export const ConversationTitle = styled.div`
   background-color: #fff;
   border-bottom: 1px solid ${props => props.theme.colorStyled.ColorBorder};
   align-items: center;
-  justify-content: center;
-  button {
-    font-size: .85em;
-    border-radius: .3em;
+  justify-content: flex-start;
+  .conv-action-bar {
     position: absolute;
     right: 1em;
   }
@@ -217,9 +215,10 @@ export const MessageBoxSystemNotification = styled.span`
   justify-content: center;
   padding: 1em;
   font-size: 0.85em;
-  color: #828282;
+  color: ${props => props.theme.colorStyled.ColorBlackGrey};
   opacity: .7;
   font-style: italic;
+  background: ${props => props.theme.colorStyled.ColorWhite};
 `;
 
 export const FindAgentWrapper = styled.div`
@@ -238,12 +237,76 @@ export const FindAgentButton = styled(DefaultButton)`
   margin-left: 10px;
   padding: 10px 10px;
   background: transparent;
-  color: #ff5504;
-  border: 1px solid #ff5504;
+  color: ${props => props.theme.colorStyled.ColorBgDefault};
+  border: 1px solid ${props => props.theme.colorStyled.ColorBgDefault};
   i{
     margin-right: 5px;
   }
   :hover{
     box-shadow: none;
   }
+`;
+
+export const ConversationHeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1em 1.5em 1em 0;
+  border-right: 1px solid ${props => props.theme.colorStyled.ColorGrey};
+  height: 60px;
+  width: 100%;
+  flex: 0 0 20%;
+  span {
+    cursor: pointer;
+    font-weight: 600;
+    &.create-ticket{
+      font-weight: 400;
+      margin-left: .5em;
+    }
+    &:hover{
+      color: ${props => props.theme.colorStyled.ColorBgDefault};
+    }
+  }
+  ${({ search }) => search && css`
+    border-bottom: none;
+    width: 94%;
+    @media (max-width: 840px) {
+      display: none;
+    }
+  `};
+  @media (max-width: 1024px) {
+    padding: 15px;
+  }
+  @media (max-width: 840px) {
+    justify-content: center;
+    .anticon-edit, span {
+      display: none;
+    }
+  }
+`;
+
+export const ConversationHeaderTitleBlock = styled.div`
+  flex: 0 0 15%;
+`;
+
+export const MessageInputContent = styled.div`
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+`;
+
+export const ConversationActionWrapper = styled.div.attrs({
+  className: 'conv-action-bar',
+})`
+  display: flex;
+  button {
+    margin-left: 1em;
+    font-size: .85em;
+    border-radius: .3em;
+  }
+`;
+
+export const MessageBoxBlock = styled.div`
+  height: 3em;
+  width: 100%;
 `;

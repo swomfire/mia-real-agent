@@ -8,33 +8,9 @@ import {
   TimerTitle, TimerValue,
 } from './Timer.styled';
 import { TICKET_STATUS } from '../../../../common/enums';
+import { getHourMinutes, calculateStatusTime } from '../../../utils/func-utils';
 
 const TIME_TO_FORCE_UPDATE = 60000;
-
-
-const sortTicketHistory = history => (history || [])
-  .sort((h1, h2) => new Date(h1.startTime) - new Date(h2.startTime));
-
-function calculateStatusTime(history, status) {
-  if (!Array.isArray(history)) return 0;
-  const sortedHistory = sortTicketHistory(history) || [];
-  const logs = sortedHistory.filter(his => status.includes(his.currentStatus));
-  if (logs.length <= 0) return 0;
-  const totalTime = logs.reduce(
-    (acc, log) => Math.ceil(acc + moment(log.endTime || new Date()).diff(log.startTime)), 0
-  );
-  return Math.ceil(moment.duration(totalTime, 'millisecond').asMinutes());
-}
-
-function getHourMinutes(durationInSecondInMinutes) {
-  const hours = Number.parseInt(durationInSecondInMinutes / 60, 10);
-  const minutes = durationInSecondInMinutes % 60;
-
-  return {
-    hours, minutes,
-  };
-}
-
 
 class TimerWrapper extends React.PureComponent {
   static propTypes = {
@@ -60,13 +36,25 @@ class TimerWrapper extends React.PureComponent {
   }
 
   render() {
-    const { history } = this.props;
-    const pendingTime = getHourMinutes(calculateStatusTime(history, [TICKET_STATUS.OPEN, TICKET_STATUS.PENDING]));
+    const { history, processingDate } = this.props;
+    const firstOpen = history[0] || {};
+    const timeBeforeChat = moment(firstOpen.startTime).diff(
+      moment(processingDate), 'minutes'
+    );
+    const openingTime = getHourMinutes(calculateStatusTime(history, [TICKET_STATUS.OPEN]));
+    const pendingTime = getHourMinutes(calculateStatusTime(history, [TICKET_STATUS.PENDING]));
     const processingTime = getHourMinutes(calculateStatusTime(history, [TICKET_STATUS.PROCESSING]));
+    const billableTime = processingDate
+      ? getHourMinutes(
+        timeBeforeChat + calculateStatusTime(
+          history, [TICKET_STATUS.OPEN, TICKET_STATUS.PROCESSING]
+        )
+      )
+      : getHourMinutes(0);
     const holdTime = getHourMinutes(calculateStatusTime(history, [TICKET_STATUS.IDLE, TICKET_STATUS.OFFLINE]));
     const totalTime = {
-      hours: pendingTime.hours + processingTime.hours + holdTime.hours,
-      minutes: pendingTime.minutes + processingTime.minutes + holdTime.minutes,
+      hours: openingTime.hours + pendingTime.hours + processingTime.hours + holdTime.hours,
+      minutes: openingTime.minutes + pendingTime.minutes + processingTime.minutes + holdTime.minutes,
     };
 
 
@@ -93,9 +81,9 @@ class TimerWrapper extends React.PureComponent {
                 </TimerTitle>
                 <TimerValue>
                   <span>
-                    {Numeral(processingTime.hours).format('00')}
-                  :
-                    {Numeral(processingTime.minutes).format('00')}
+                    {Numeral(billableTime.hours).format('00')}
+                    :
+                    {Numeral(billableTime.minutes).format('00')}
                   </span>
                 </TimerValue>
               </TimerStyled>
@@ -106,7 +94,7 @@ class TimerWrapper extends React.PureComponent {
                 <TimerValue>
                   <span>
                     {Numeral(holdTime.hours).format('00')}
-                  :
+                    :
                     {Numeral(holdTime.minutes).format('00')}
                   </span>
                 </TimerValue>
@@ -118,7 +106,7 @@ class TimerWrapper extends React.PureComponent {
                 <TimerValue>
                   <span>
                     {Numeral(pendingTime.hours).format('00')}
-                  :
+                    :
                     {Numeral(pendingTime.minutes).format('00')}
                   </span>
                 </TimerValue>

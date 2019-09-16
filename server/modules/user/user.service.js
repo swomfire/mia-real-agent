@@ -51,12 +51,11 @@ class UserService extends BaseService {
   }
 
   async updateUserProfile(user, newUpdate) {
-    const newModel = newUpdate;
     const { profile } = user;
-    _.assign(user, { profile: { ...profile, ...newModel } });
+    _.assign(user, { profile: { ...profile, ...newUpdate } });
 
     const savedModel = await user.save();
-    return this.getUserProfile(savedModel);
+    return savedModel;
   }
 
   async createPassword(user, password) {

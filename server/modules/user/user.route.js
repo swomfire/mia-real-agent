@@ -9,13 +9,23 @@ class UserRouter extends BaseRouter {
       UserController.getUserProfile,
     );
     this.router.put(
-      '/:id',
+      '/:id/profile',
       UserController.updateUserProfile,
     );
     this.router.post(
       '/:id/changePassword',
       UserController.changePassword,
     );
+    this.router.post(
+      '/:id/creditCard',
+      UserController.addCreditCard,
+    );
+
+    this.router.delete(
+      '/:id/creditCard',
+      UserController.removeCard,
+    );
+
     this.router.post(
       '/createPassword',
       UserController.createPassword,

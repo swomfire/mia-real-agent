@@ -14,7 +14,7 @@ import RequestQueue from '../queue/requestQueue';
 import ReplyService from '../reply/reply.service';
 import { getHistoryTicketUpdate } from '../../utils/utils';
 
-const { CONTENT_NOT_FOUND, BAD_REQUEST } = ERROR_MESSAGE;
+const { CONTENT_NOT_FOUND, BAD_REQUEST, INSUFFICIENT_FUNDS } = ERROR_MESSAGE;
 const emptyObjString = '{}';
 
 class TicketController extends BaseController {
@@ -216,6 +216,12 @@ class TicketController extends BaseController {
         || (status === TICKET_STATUS.UNSOLVED && !unsolvedReason)) {
         throw new APIError(BAD_REQUEST, httpStatus.BAD_REQUEST);
       }
+      // Charge ticket
+      if (status === TICKET_STATUS.SOLVED) {
+        if (!(await TicketService.handleChargeTicket(ticket))) {
+          throw new APIError(INSUFFICIENT_FUNDS, httpStatus.PAYMENT_REQUIRED);
+        }
+      }
       const { history, conversationId } = ticket;
       const oldHistory = history.map(h => h.toJSON());
       const newHistory = getHistoryTicketUpdate(oldHistory, status);
@@ -227,7 +233,7 @@ class TicketController extends BaseController {
       }, 1000);
       return res.status(httpStatus.OK).send(result);
     } catch (error) {
-      return this.handleError(res, error);
+      return super.handleError(res, error);
     }
   }
 

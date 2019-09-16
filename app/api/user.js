@@ -7,7 +7,7 @@ export const getUserProfile = id => axios
   .catch(handleError);
 
 export const updateUserProfile = (id, data) => axios
-  .put(`users/${id}`, { data })
+  .put(`users/${id}/profile`, { data })
   .then(response => ({ response }))
   .catch(handleError);
 
@@ -67,6 +67,7 @@ export const update = (id, data) => axios
   .put(`admin/users/${id}`, { data })
   .then(response => ({ response }))
   .catch(handleError);
+
 export const insert = data => axios
   .post('admin/users/', { data })
   .then(response => ({ response }))
@@ -85,6 +86,16 @@ export const getUserSummary = () => axios
 export const sendMail = ticketId => axios
   .post('users/mail', {
     ticketId,
+  });
+
+export const addCreditCard = (userId, card) => axios
+  .post(`users/${userId}/creditCard`, {
+    card,
+  });
+
+export const removeCreditCard = (userId, cardId) => axios
+  .delete(`users/${userId}/creditCard`, {
+    data: { cardId },
   });
 
 export const getUploadSignedUrl = data => axios

@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import { Formik } from 'formik';
 import {
   Form, Row, Col,
-  Button,
 } from 'antd';
 import * as Yup from 'yup';
 import { shape, func } from 'prop-types';
@@ -10,6 +9,7 @@ import FormInput from '../../../FormInput/FormInput';
 import { POSITION_OPTIONS } from '../../../../../common/enums';
 import { ActionBar } from '../../styles';
 import { toI18n } from '../../../../utils/func-utils';
+import { ButtonPrimary, ButtonCancel } from '../../../../stylesheets/Button.style';
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().trim().required('Required'),
@@ -88,12 +88,12 @@ export class ProfileFormIndividual extends PureComponent {
             </Row>
             <Row gutter={32}>
               <ActionBar>
-                <Button key="submit" type="primary" onClick={handleSubmit}>
+                <ButtonPrimary type="submit">
                   {toI18n('FORM_SAVE')}
-                </Button>
-                <Button key="back" onClick={onCancel}>
+                </ButtonPrimary>
+                <ButtonCancel type="button" onClick={onCancel}>
                   {toI18n('FORM_RETURN')}
-                </Button>
+                </ButtonCancel>
               </ActionBar>
             </Row>
           </Form>

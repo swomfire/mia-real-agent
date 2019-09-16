@@ -1,13 +1,16 @@
+import _isEmpty from 'lodash/isEmpty';
 import ticketCollection from './ticket.model';
 import BaseService from '../base/base.service';
 import { TICKET_STATUS, REPLY_TYPE } from '../../../common/enums';
+// eslint-disable-next-line import/no-cycle
 import ReplyService from '../reply/reply.service';
+import ApplicationService from '../application/application.service';
 import ConversationRoomQueue from '../queue/conversationRoomQueue';
 import { getHistoryTicketUpdate } from '../../utils/utils';
 import { sendEmailTrascript } from '../../mail-sparkpost/sparkpost';
 import UserService from '../user/user.service';
 import { conversationTranscript } from '../../mail-sparkpost/dynamicTemplate';
-import { ticketAdminAggregration, ticketWarningAdminAggregration } from './ticket.utils';
+import { ticketAdminAggregration, ticketWarningAdminAggregration, calculateChargeTime, directChargeTicket } from './ticket.utils';
 
 class TicketService extends BaseService {
   constructor(collection) {
@@ -45,6 +48,10 @@ class TicketService extends BaseService {
       return this.update(ticketId, { status, history: newHistory });
     }
     return true;
+  }
+
+  async updateProcessingTime(ticketId) {
+    return this.update(ticketId, { processingTime: new Date() });
   }
 
   async getAllForAdmin(condition, options) {
@@ -180,6 +187,58 @@ class TicketService extends BaseService {
     await this.handleUpdateTicketStatusHistory(query, TICKET_STATUS.IDLE);
     await this.collection.updateMany(query, { status: TICKET_STATUS.IDLE }).exec();
     return tickets;
+  }
+
+  async handleChargeTicket(ticket) {
+    const {
+      processingTime, owner, _id, assignee,
+    } = ticket;
+    if (!processingTime) {
+      return true;
+    }
+    const { _id: userId } = owner;
+    const user = await UserService.getById(userId);
+    const { creditCard, stripeCustomerId } = user;
+    const {
+      remainingOpeningTime,
+      remainingProcessingTime,
+      userCreditTime,
+      remainingCreditTime,
+    } = calculateChargeTime(ticket, user);
+    let needDirectCharge = false;
+    // Direct charge if has remaining ticket time
+    if ((remainingOpeningTime > 0 || remainingProcessingTime > 0)
+      && (!_isEmpty(creditCard) && stripeCustomerId)) {
+      needDirectCharge = true;
+      // Convert usedTime to $
+      let miaFee = 0;
+      let agentFee = 0;
+      if (remainingOpeningTime > 0) {
+        const miaRate = 5; // TODO: Replace with system mia rate
+        miaFee = Number(miaRate * remainingOpeningTime / 60).toFixed(2);
+      }
+      if (remainingProcessingTime > 0 && assignee) {
+        const { _id: assigneeId } = assignee;
+        const { application } = await UserService.getById(assigneeId);
+        const { billingRate } = await ApplicationService.get(application);
+        agentFee = Number(billingRate * remainingProcessingTime / 60).toFixed(2);
+      }
+      needDirectCharge = !await directChargeTicket(
+        _id, creditCard, stripeCustomerId, miaFee, agentFee,
+      );
+    }
+
+    // Change success
+    if ((remainingOpeningTime <= 0 && remainingProcessingTime <= 0)
+      || !needDirectCharge) {
+      // Update user credit time
+      if (userCreditTime !== remainingCreditTime) {
+        await UserService.update(userId, { creditTime: remainingCreditTime });
+      }
+      // TODO: Save charge history
+      return true;
+    }
+    return false;
   }
 
   async handleCloseTicket(query) {

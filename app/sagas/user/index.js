@@ -27,10 +27,10 @@ import {
   USER_FETCH_SINGLE,
   USER_UPDATE,
   USER_REMOVE,
+  USER_SEND_MAIL,
   actions as userActions,
 } from 'reducers/user';
 import * as UserAPI from 'api/user';
-import { USER_SEND_MAIL } from '../../reducers/user';
 
 function* queryUsers(action) {
   const userPayload = {};
@@ -162,6 +162,7 @@ function* sendMail() {
     notification.success({ message: 'Send Mail success' });
   }
 }
+
 
 function* userFlow() {
   yield takeEvery([USER_SORTING, USER_CHANGE_PAGE], queryUsers);

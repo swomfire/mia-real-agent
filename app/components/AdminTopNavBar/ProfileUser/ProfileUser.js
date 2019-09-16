@@ -18,14 +18,15 @@ import { ROLES } from '../../../../common/enums';
 
 class ProfileUser extends React.PureComponent {
   renderAdditionalInformation = () => {
-    const { creditTime } = this.props;
+    const { profile } = this.props;
+    const { creditTime } = profile;
     return (
       <AdditionalInformationWrapper>
         <AdditionalInformationTitle>
           {toI18n('NAVBAR_PROFILE_CREDIT_TIME')}
         </AdditionalInformationTitle>
         <AdditionalInformationValue>
-          {numeral(creditTime).format('00:00:00')}
+          {numeral(creditTime * 60).format('00:00:00')}
         </AdditionalInformationValue>
       </AdditionalInformationWrapper>
     );
@@ -34,8 +35,9 @@ class ProfileUser extends React.PureComponent {
   render() {
     const {
       onLogout,
-      role,
+      profile,
     } = this.props;
+    const { role } = profile;
     return (
       <ProfileUserInfoWrapper>
         <ProfileUserHead>
@@ -54,8 +56,7 @@ class ProfileUser extends React.PureComponent {
 
 ProfileUser.propTypes = {
   onLogout: PropTypes.func,
-  role: PropTypes.string,
-  creditTime: PropTypes.number,
+  profile: PropTypes.shape(),
 };
 
 export default ProfileUser;

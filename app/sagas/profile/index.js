@@ -9,6 +9,7 @@ import {
   CHANGE_PASSWORD,
   USER_ADD_CREDIT_CARD,
   USER_REMOVE_CREDIT_CARD,
+  USER_TOP_UP,
 } from '../../reducers/profile';
 import {
   getUserId,
@@ -106,6 +107,20 @@ function* removeCreditCard({ payload }) {
   }
 }
 
+function* topUp({ payload }) {
+  const { cardId, amount } = payload;
+  const userId = yield select(getUserId);
+  try {
+    const { data } = yield call(UserApi.topUp, userId, cardId, amount);
+    notification.success({ message: toI18n('TOP_UP_SUCCESS') });
+    yield put(actions.topUpSuccess(data));
+  } catch (error) {
+    const errMsg = _get(error, 'response.data.message', error.message);
+    notification.error({ message: errMsg });
+    yield put(actions.topUpFail(errMsg));
+  }
+}
+
 function* profileFlow() {
   yield takeEvery(FETCH_DETAIL, fetchDetail);
   yield takeEvery(UPDATE_PROFILE, updateProfile);
@@ -113,6 +128,7 @@ function* profileFlow() {
   yield takeEvery(CHANGE_PASSWORD, changePassword);
   yield takeEvery(USER_ADD_CREDIT_CARD, addCreditCard);
   yield takeEvery(USER_REMOVE_CREDIT_CARD, removeCreditCard);
+  yield takeEvery(USER_TOP_UP, topUp);
 }
 
 export default profileFlow;

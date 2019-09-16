@@ -88,6 +88,12 @@ export const sendMail = ticketId => axios
     ticketId,
   });
 
+export const topUp = (userId, cardId, amount) => axios
+  .post(`users/${userId}/topUp`, {
+    cardId,
+    amount,
+  });
+
 export const addCreditCard = (userId, card) => axios
   .post(`users/${userId}/creditCard`, {
     card,

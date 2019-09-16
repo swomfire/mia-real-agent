@@ -17,6 +17,11 @@ class UserRouter extends BaseRouter {
       UserController.changePassword,
     );
     this.router.post(
+      '/:id/topUp',
+      UserController.topUp,
+    );
+
+    this.router.post(
       '/:id/creditCard',
       UserController.addCreditCard,
     );

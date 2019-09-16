@@ -182,6 +182,8 @@ class FormInput extends React.Component {
       label,
       formLayout,
       shouldRenderFeedback,
+      formatter,
+      parser,
       ...rest
     } = props;
 
@@ -210,7 +212,8 @@ class FormInput extends React.Component {
       >
         <InputNumber
           {...field}
-          {...rest}
+          formatter={formatter}
+          parser={parser}
           style={{ width: '100%' }}
           onChange={handleChange}
           size={inputSize}

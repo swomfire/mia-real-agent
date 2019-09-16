@@ -159,3 +159,14 @@ export const TopUpSuccess = styled.div`
       margin-right: .4em;
   }
 `;
+
+export const ExchangeValue = styled.div`
+  height: 2.5em;
+  display: flex;
+  align-items: center;
+  font-size: 1.5em;
+  color: ${props => props.theme.colorStyled.ColorSusscess};
+  i {
+    margin-right: .4em;
+  }
+`;

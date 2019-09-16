@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import _isEmpty from 'lodash/isEmpty';
 import {
-  Modal, Steps, Tabs, Form, Icon,
+  Modal, Steps, Tabs, Form, Icon, Row, Col,
 } from 'antd';
+import Numeral from 'numeral';
 import {
   bool, func, arrayOf, shape, string,
 } from 'prop-types';
@@ -10,7 +11,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import {
   TopUpBlock, ActionGroup,
-  ExchangeRateWrapper, TopUpTitle, TopUpSuccess, AddCreditCard,
+  ExchangeRateWrapper, TopUpTitle, TopUpSuccess, AddCreditCard, ExchangeValue,
 } from './styles';
 import { ButtonCancel, ButtonPrimary } from '../../stylesheets/Button.style';
 import CreditCard from '../CreditCard/CreditCard';
@@ -24,7 +25,7 @@ const { TabPane } = Tabs;
 const { Step } = Steps;
 
 const initialValues = {
-  amount: 0,
+  amount: 5,
 };
 
 const validationSchema = Yup.object().shape({
@@ -33,7 +34,6 @@ const validationSchema = Yup.object().shape({
 
 const initialState = {
   step: 0,
-  exchangeRate: 20,
 };
 
 class TopUp extends Component {
@@ -41,6 +41,7 @@ class TopUp extends Component {
     ...initialState,
     selectedCard: '',
     isAddCreditCardModalVisiable: false,
+    submitted: false,
   }
 
   static propTypes = {
@@ -49,13 +50,23 @@ class TopUp extends Component {
     creditCard: arrayOf(shape()).isRequired,
     updateError: string,
     onCancel: func.isRequired,
+    topUp: func.isRequired,
     addCreditCard: func.isRequired,
     removeCreditCard: func.isRequired,
+    system: shape().isRequired,
   }
 
 
   componentDidUpdate = (prevProps) => {
     const { updateError, isUpdating } = this.props;
+    const { submitted } = this.state;
+    if (submitted && prevProps.isUpdating && !isUpdating) {
+      this.setState({ submitted: false });
+      if (!updateError) {
+        this.handleStep(1);
+      }
+      return;
+    }
     if (prevProps.isUpdating && !isUpdating && !updateError) {
       this.toggleAddCreditCard(false);
     }
@@ -95,8 +106,14 @@ class TopUp extends Component {
   }
 
   handleRemoveCreditCard = (cardId) => {
+    const { selectedCard } = this.state;
     const { removeCreditCard } = this.props;
     removeCreditCard(cardId);
+    if (selectedCard === cardId) {
+      this.setState({
+        selectedCard: null,
+      });
+    }
   }
 
   renderSelectCreditCard = () => {
@@ -117,7 +134,7 @@ class TopUp extends Component {
           {toI18n('TOP_UP_SUCCESS_ADD_CREDIT_CARD')}
         </AddCreditCard>
         <ActionGroup>
-          <ButtonCancel onClick={this.handleClose}>
+          <ButtonCancel type="button" onClick={this.handleClose}>
             {toI18n('FORM_CANCEL')}
           </ButtonCancel>
           <ButtonPrimary
@@ -131,12 +148,19 @@ class TopUp extends Component {
     );
   }
 
-  handleSubmit = () => {
-    this.handleStep(1);
+  handleSubmit = (values) => {
+    const { amount } = values;
+    const { selectedCard } = this.state;
+    const { topUp } = this.props;
+    topUp(selectedCard, amount);
+    this.setState({
+      submitted: true,
+    });
   }
 
   renderInputAmount = () => {
-    const { exchangeRate } = this.state;
+    const { system } = this.props;
+    const { exchangeRate } = system || {};
     return (
       <Formik
         ref={(formik) => { this.formik = formik; }}
@@ -144,21 +168,33 @@ class TopUp extends Component {
         validationSchema={validationSchema}
         onSubmit={this.handleSubmit}
       >
-        {({ handleSubmit }) => (
+        {({ handleSubmit, values }) => (
           <Form onSubmit={handleSubmit}>
-            <FormInput
-              name="amount"
-              type="number"
-              login={1}
-            />
+            <Row gutter={32}>
+              <Col span={18}>
+                <FormInput
+                  type="number"
+                  formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                  parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                  name="amount"
+                  login={1}
+                />
+              </Col>
+              <Col span={6}>
+                <ExchangeValue>
+                  <Icon type="arrow-right" />
+                  {Numeral(values.amount * exchangeRate * 60).format('00:00:00')}
+                </ExchangeValue>
+              </Col>
+            </Row>
             <ExchangeRateWrapper>
               {`1$ = ${exchangeRate} minutes`}
             </ExchangeRateWrapper>
             <ActionGroup>
-              <ButtonCancel onClick={() => this.handleStep(-1)}>
+              <ButtonCancel type="button" onClick={() => this.handleStep(-1)}>
                 {toI18n('FORM_BACK')}
               </ButtonCancel>
-              <ButtonPrimary type="submit">
+              <ButtonPrimary type="submit" disabled={!system}>
                 {toI18n('FORM_SUBMIT')}
               </ButtonPrimary>
             </ActionGroup>

@@ -22,6 +22,8 @@ import {
   AUTH_LOGIN_SUCCESS,
 } from '../../reducers/auth';
 import * as BillingApi from '../../api/billing';
+import { USER_TOP_UP_SUCCESS } from '../../reducers/profile';
+import { TICKET_CLOSE_SUCCESS } from '../../reducers/ticket';
 
 function* queryBillings(action) {
   const billingPayload = {};
@@ -104,7 +106,7 @@ function* billingFlow() {
   yield take(AUTH_LOGIN_SUCCESS);
   yield all([
     takeLatest([BILLING_CHANGE_PAGE, BILLING_SORTING], queryBillings),
-    takeLatest(BILLING_GET_ALL, getAllBilling),
+    takeLatest([BILLING_GET_ALL, USER_TOP_UP_SUCCESS, TICKET_CLOSE_SUCCESS], getAllBilling),
     takeLatest(BILLING_FETCH_SINGLE, billingFetchSingle),
   ]);
 }

@@ -107,34 +107,6 @@ function* removeCreditCard({ payload }) {
   }
 }
 
-function* addCreditCard({ payload }) {
-  const { card } = payload;
-  const userId = yield select(getUserId);
-  try {
-    const { data } = yield call(UserApi.addCreditCard, userId, card);
-    notification.success({ message: toI18n('CREDIT_ADD_SUCCESS') });
-    yield put(actions.addCreditCardSuccess(data));
-  } catch (error) {
-    const errMsg = _get(error, 'response.data.message', error.message);
-    notification.error({ message: errMsg });
-    yield put(actions.addCreditCardFail(errMsg));
-  }
-}
-
-function* removeCreditCard({ payload }) {
-  const { cardId } = payload;
-  const userId = yield select(getUserId);
-  try {
-    const { data } = yield call(UserApi.removeCreditCard, userId, cardId);
-    notification.success({ message: toI18n('CREDIT_REMOVE_SUCCESS') });
-    yield put(actions.removeCreditCardSuccess(data));
-  } catch (error) {
-    const errMsg = _get(error, 'response.data.message', error.message);
-    notification.error({ message: errMsg });
-    yield put(actions.removeCreditCardFail(errMsg));
-  }
-}
-
 function* topUp({ payload }) {
   const { cardId, amount } = payload;
   const userId = yield select(getUserId);

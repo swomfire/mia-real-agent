@@ -172,19 +172,37 @@ export const ProfileOrganizationStatus = styled.div`
 
 export const AdditionalInformationWrapper = styled.div`
   padding: 1em;
-  display: flex;
   border-bottom: 1px solid ${props => props.theme.colorStyled.ColorBorder};
 `;
 
 export const AdditionalInformationTitle = styled.div`
   box-sizing: border-box;
-  flex: 0 0 60%;
   color: ${props => props.theme.colorStyled.ColorDarkGrey};
   font-weight: 600;
 `;
 
 export const AdditionalInformationValue = styled.div`
-  flex: auto;
   font-weight: 600;
-  color: ${props => props.theme.colorStyled.ColorBlack}
+  color: ${props => props.theme.colorStyled.ColorBlack};
+`;
+
+export const LanguageWrapper = styled.div`
+  color: ${props => props.theme.colorStyled.ColorDarkGrey};
+  font-weight: 600;
+`;
+
+export const LanguageRadioWrapper = styled.div`
+
+`;
+
+export const LanguageRadio = styled.div`
+  background-color: ${props => props.active
+    ? props.theme.colorStyled.ColorBgDefault
+    : props.theme.colorStyled.ColorWhite};
+  color: ${props => props.active
+    ? props.theme.colorStyled.ColorWhite
+    : props.theme.colorStyled.ColorDarkGrey};
+  border-color: ${props => props.active
+    ? props.theme.colorStyled.ColorBgDefault
+    : props.theme.colorStyled.ColorWhite};
 `;

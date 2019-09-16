@@ -22,11 +22,6 @@ export const USER_ADD_CREDIT_CARD_SUCCESS = 'profile/USER_ADD_CREDIT_CARD_SUCCES
 export const USER_ADD_CREDIT_CARD_FAIL = 'profile/USER_ADD_CREDIT_CARD_FAIL';
 
 // Add credit card
-export const USER_ADD_CREDIT_CARD = 'profile/USER_ADD_CREDIT_CARD';
-export const USER_ADD_CREDIT_CARD_SUCCESS = 'profile/USER_ADD_CREDIT_CARD_SUCCESS';
-export const USER_ADD_CREDIT_CARD_FAIL = 'profile/USER_ADD_CREDIT_CARD_FAIL';
-
-// Add credit card
 export const USER_REMOVE_CREDIT_CARD = 'profile/USER_REMOVE_CREDIT_CARD';
 export const USER_REMOVE_CREDIT_CARD_SUCCESS = 'profile/USER_REMOVE_CREDIT_CARD_SUCCESS';
 export const USER_REMOVE_CREDIT_CARD_FAIL = 'profile/USER_REMOVE_CREDIT_CARD_FAIL';
@@ -81,29 +76,6 @@ function removeCreditCardFail(errorMessage) {
   return {
     type: USER_REMOVE_CREDIT_CARD_FAIL,
     errorMessage,
-  };
-}
-
-function removeCreditCard(cardId) {
-  return {
-    type: USER_REMOVE_CREDIT_CARD,
-    payload: {
-      cardId,
-    },
-  };
-}
-
-function removeCreditCardSuccess(data) {
-  return {
-    type: USER_REMOVE_CREDIT_CARD_SUCCESS,
-    payload: data,
-  };
-}
-
-function removeCreditCardFail(errorMsg) {
-  return {
-    type: USER_REMOVE_CREDIT_CARD_FAIL,
-    errorMsg,
   };
 }
 
@@ -311,18 +283,6 @@ function profileReducer(state = initialState, action) {
 
     case USER_TOP_UP_FAIL:
     case USER_ADD_CREDIT_CARD_FAIL:
-    case USER_REMOVE_CREDIT_CARD_FAIL:
-      return state.set('isUpdating', false)
-        .set('updateError', action.errorMessage);
-
-    case USER_REMOVE_CREDIT_CARD:
-      return state.set('isUpdating', true)
-        .set('updateError', '');
-    case USER_REMOVE_CREDIT_CARD_SUCCESS: {
-      return state.set('isUpdating', false)
-        .set('fetchUser', action.payload);
-    }
-
     case USER_REMOVE_CREDIT_CARD_FAIL:
       return state.set('isUpdating', false)
         .set('updateError', action.errorMessage);

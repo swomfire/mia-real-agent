@@ -23307,3 +23307,12 @@ div.ant-typography-edit-content {
 html {
   --antd-wave-shadow-color: #ff5402;
 }
+
+.ant-pagination-item:focus a, .ant-pagination-item:hover a, .ant-pagination-prev:focus .ant-pagination-item-link, .ant-pagination-next:focus .ant-pagination-item-link, .ant-pagination-prev:hover .ant-pagination-item-link, .ant-pagination-next:hover .ant-pagination-item-link {
+  color: #ff5402;
+}
+
+.ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){
+  border-color: #ff5402;
+  background-color: #ff5402;
+}

@@ -371,7 +371,10 @@ const en = {
     CREDIT_ADD_SUCCESS: 'Card Added to account',
     CREDIT_REMOVE_SUCCESS: 'Card Removed from account',
     // Navbar profile
-    NAVBAR_PROFILE_CREDIT_TIME: 'Credit time:',
+    NAVBAR_PROFILE_CREDIT_TIME: 'Credit time',
+    NAVBAR_PROFILE_LANGUAGE: 'Language',
+    NAVBAR_PROFILE_EN: 'EN',
+    NAVBAR_PROFILE_VN: 'VN',
     // Close Ticket Modal
     CLOSE_TICKET_MODAL_CLOSED_STATUS: 'Closed Status',
     CLOSE_TICKET_MODAL_UNSOLVED_REASON: 'Unsolved Reason',
@@ -433,6 +436,9 @@ const en = {
     BILLING_INFO_ROW_BILLING: 'Billing',
     BILLING_INFO_ROW_CREATE_AT: 'Create At',
     BILLING_INFO_ROW_VALUE: 'Value',
+    BILLING_INFO_ROW_TOPUP: 'Top-up',
+    BILLING_INFO_ROW_TIME_FOR_TICKET: 'Time for ticket',
+    BILLING_INFO_ROW_CHARGED_FOR_TICKET: 'Charged for ticket',
   },
 };
 

@@ -2,7 +2,6 @@ import TableManagement from 'components/BillingManagement';
 import { connect } from 'react-redux';
 import { actions } from 'reducers/billing';
 import { createStructuredSelector } from 'reselect';
-import history from 'utils/history';
 import {
   getBillingsList,
   getIsFetching,
@@ -62,8 +61,7 @@ const mapStateToProps = (state) => {
   return {
     ...structureSelector,
     columns: billingColumns,
-    onClick: ({ _id }) => { history.push(`/admin/billings/${_id}`); },
-    endpoint: 'admin/billings',
+    shouldOpenDetail: false,
   };
 };
 

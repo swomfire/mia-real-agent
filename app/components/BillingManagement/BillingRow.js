@@ -9,10 +9,11 @@ import {
 import { TableContent } from 'components/TableComponent/TableComponent';
 import TableRow from '../TableManagement/TableRow';
 import { BILLING_TYPE } from '../../../common/enums';
-import { DATE_TIME_FORMAT } from '../../utils/constants';
+import { DATE_TIME_FORMAT, NUMERAL_MONEY_FORMAT } from '../../utils/constants';
 import {
   AddText, MinusText, BoldText, MoneyText,
 } from './styles';
+import { toI18n } from '../../utils/func-utils';
 
 export class BillingRow extends TableRow {
   renderBillingColumn = (column, index) => {
@@ -32,11 +33,11 @@ export class BillingRow extends TableRow {
     return [
       {
         value: (<span>
-          Topup
+          {toI18n('BILLING_INFO_ROW_TOPUP')}
           <BoldText>
             (
             <MoneyText>
-              {Numeral(amount).format('$0.0')}
+              {Numeral(amount).format(NUMERAL_MONEY_FORMAT)}
             </MoneyText>
             )
           </BoldText>
@@ -66,7 +67,7 @@ export class BillingRow extends TableRow {
         [
           {
             value: (<span>
-              Time for ticket
+              {toI18n('BILLING_INFO_ROW_TIME_FOR_TICKET')}
               <BoldText>
                 (
                 {ticketId}
@@ -92,7 +93,7 @@ export class BillingRow extends TableRow {
         [
           {
             value: (<span>
-              Charged for ticket
+              {toI18n('BILLING_INFO_ROW_CHARGED_FOR_TICKET')}
               <BoldText>
                 (
                 {ticketId}
@@ -106,7 +107,7 @@ export class BillingRow extends TableRow {
             percent: 25,
           },
           {
-            value: (<MinusText>{`- ${Numeral(chargeAmount).format('$0.0')}`}</MinusText>),
+            value: (<MinusText>{`- ${Numeral(chargeAmount).format(NUMERAL_MONEY_FORMAT)}`}</MinusText>),
             percent: 15,
             justify: 'flex-end',
           },

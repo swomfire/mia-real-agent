@@ -430,7 +430,9 @@ const en = {
     TICKET_PAYMENT_REMAINING_EQUIVALENT_TO: 'Equivalent to:',
     // Billing Info
     BILLING_INFO_ROW_BILLING_ID: 'Billing ID',
-    BILLING_INFO_ROW_TYPE: 'Type',
+    BILLING_INFO_ROW_BILLING: 'Billing',
+    BILLING_INFO_ROW_CREATE_AT: 'Create At',
+    BILLING_INFO_ROW_VALUE: 'Value',
   },
 };
 

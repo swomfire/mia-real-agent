@@ -33,6 +33,7 @@ export const COLUMN_TYPE = {
   UPPERCASE: 'uppercase',
   ARRAY: 'array',
   ACTIONS: 'actions',
+  TYPE: 'type',
 };
 
 export const SORT = {

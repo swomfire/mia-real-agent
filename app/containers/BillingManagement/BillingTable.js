@@ -1,4 +1,4 @@
-import TableManagement from 'components/TableManagement';
+import TableManagement from 'components/BillingManagement';
 import { connect } from 'react-redux';
 import { actions } from 'reducers/billing';
 import { createStructuredSelector } from 'reselect';
@@ -16,10 +16,10 @@ import { toI18n } from '../../utils/func-utils';
 const billingColumns = [
   {
     type: COLUMN_TYPE.TEXT,
-    dataKey: '_id',
+    dataKey: 'type',
     columnAttr: {
-      value: toI18n('BILLING_INFO_ROW_BILLING_ID'),
-      percent: 10,
+      value: toI18n('BILLING_INFO_ROW_BILLING'),
+      percent: 60,
       className: 'text-bold billing-Id',
     },
   },
@@ -27,9 +27,19 @@ const billingColumns = [
     type: COLUMN_TYPE.TEXT,
     dataKey: 'type',
     columnAttr: {
-      value: toI18n('BILLING_INFO_ROW_TYPE'),
-      percent: 10,
+      value: toI18n('BILLING_INFO_ROW_CREATE_AT'),
+      percent: 15,
       className: 'text-bold billing-Id',
+    },
+  },
+  {
+    type: COLUMN_TYPE.TEXT,
+    dataKey: 'total.amount',
+    columnAttr: {
+      value: toI18n('BILLING_INFO_ROW_VALUE'),
+      percent: 15,
+      className: 'text-bold billing-Id',
+      justify: 'flex-end',
     },
   },
 ];

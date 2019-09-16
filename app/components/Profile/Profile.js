@@ -15,7 +15,6 @@ import ProfileDetail from './ProfileDetail/ProfileDetail';
 
 import { toI18n } from '../../utils/func-utils';
 import ProfileBasicInfo from './ProfileBasicInfo';
-import PaidMethods from './PaidMethods';
 import BillingManagement from '../../containers/BillingManagement';
 
 const { TabPane } = Tabs;

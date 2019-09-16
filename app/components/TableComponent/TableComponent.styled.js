@@ -17,11 +17,11 @@ export const TableHead = styled.div`
   color: ${props => props.theme.colorStyled.ColorXXLightGrey};
   min-height: ${props => props.theme.heightSite.heightHeadTable};  
   font-size:  ${props => props.theme.fontSize.MediumFontSize};
-  flex: 1;    
+  flex: ${props => props.percent || 'auto'};    
   align-items: center;
   font-weight: 600;
   font-size: ${props => props.theme.fontSize.MediumFontSize};
-
+  justify-content: ${props => props.justify || 'auto'};    
 `;
 
 

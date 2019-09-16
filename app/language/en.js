@@ -327,7 +327,7 @@ const en = {
     PROFILE_EDIT: 'Edit',
     PROFILE_CHANGE_PASSWORD: 'Change password',
     PROFILE_CHANGE_BASIC_INFO: 'Basic info',
-    PROFILE_CHANGE_ADD_CREDIT_CARD: 'Add credit card',
+    PROFILE_PAYMENT_INFO_BILLING_INFO: 'Billing Info',
     // Profile Detail
     PROFILE_DETAIL_FIRST_NAME: 'First name',
     PROFILE_DETAIL_LAST_NAME: 'Last name',
@@ -371,7 +371,10 @@ const en = {
     CREDIT_ADD_SUCCESS: 'Card Added to account',
     CREDIT_REMOVE_SUCCESS: 'Card Removed from account',
     // Navbar profile
-    NAVBAR_PROFILE_CREDIT_TIME: 'Credit time:',
+    NAVBAR_PROFILE_CREDIT_TIME: 'Credit time',
+    NAVBAR_PROFILE_LANGUAGE: 'Language',
+    NAVBAR_PROFILE_EN: 'EN',
+    NAVBAR_PROFILE_VN: 'VN',
     // Close Ticket Modal
     CLOSE_TICKET_MODAL_CLOSED_STATUS: 'Closed Status',
     CLOSE_TICKET_MODAL_UNSOLVED_REASON: 'Unsolved Reason',
@@ -428,6 +431,14 @@ const en = {
     TICKET_PAYMENT_CURRENT_CREDIT_TIME: 'Current credit time:',
     TICKET_PAYMENT_REMAINING_CREDIT_TIME: 'Remaining credit time:',
     TICKET_PAYMENT_REMAINING_EQUIVALENT_TO: 'Equivalent to:',
+    // Billing Info
+    BILLING_INFO_ROW_BILLING_ID: 'Billing ID',
+    BILLING_INFO_ROW_BILLING: 'Billing',
+    BILLING_INFO_ROW_CREATE_AT: 'Create At',
+    BILLING_INFO_ROW_VALUE: 'Value',
+    BILLING_INFO_ROW_TOPUP: 'Top-up',
+    BILLING_INFO_ROW_TIME_FOR_TICKET: 'Time for ticket',
+    BILLING_INFO_ROW_CHARGED_FOR_TICKET: 'Charged for ticket',
   },
 };
 

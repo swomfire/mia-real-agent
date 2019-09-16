@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { shape, arrayOf } from 'prop-types';
+import { shape, arrayOf, string } from 'prop-types';
 import Numeral from 'numeral';
 import { Translation } from 'react-i18next';
 import {
@@ -15,6 +15,7 @@ const TIME_TO_FORCE_UPDATE = 60000;
 class TimerWrapper extends React.PureComponent {
   static propTypes = {
     history: arrayOf(shape()),
+    processingDate: string,
   }
 
   static defaultProps = {

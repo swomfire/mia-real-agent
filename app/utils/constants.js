@@ -3,9 +3,17 @@ export const RESTART_ON_REMOUNT = '@@saga-injector/restart-on-remount';
 export const DAEMON = '@@saga-injector/daemon';
 export const ONCE_TILL_UNMOUNT = '@@saga-injector/once-till-unmount';
 
+export const LNG_CODE = {
+  EN: 'en',
+  VN: 'vn',
+};
+
 export const DEFAULT_ERROR_MESSAGE = 'Something has wrong';
 
 const i18nextLng = ls.get('i18nextLng');
+
+export const NUMERAL_MONEY_FORMAT = '$0.00';
+
 export const DATE_TIME_FORMAT = (i18nextLng === 'vn') ? {
   DATE: 'Do MMMM YYYY',
   TIME: 'H:mm',
@@ -33,6 +41,7 @@ export const COLUMN_TYPE = {
   UPPERCASE: 'uppercase',
   ARRAY: 'array',
   ACTIONS: 'actions',
+  TYPE: 'type',
 };
 
 export const SORT = {
@@ -84,4 +93,5 @@ export const ROUTE_DETAIL = {
   TICKET_WARNING_ROUTER: '/admin/tickets-warning/:id',
   INTENT_DETAIL_ROUTER: '/admin/intents/:id',
   FEEDBACK_DETAIL_ROUTER: '/admin/feedbacks/:id',
+  BILLING_DETAIL_ROUTER: '/billing/:id',
 };

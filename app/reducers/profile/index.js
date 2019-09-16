@@ -49,10 +49,10 @@ function topUpSuccess(data) {
   };
 }
 
-function topUpFail(errorMsg) {
+function topUpFail(errorMessage) {
   return {
     type: USER_TOP_UP_FAIL,
-    errorMsg,
+    errorMessage,
   };
 }
 
@@ -72,10 +72,10 @@ function removeCreditCardSuccess(data) {
   };
 }
 
-function removeCreditCardFail(errorMsg) {
+function removeCreditCardFail(errorMessage) {
   return {
     type: USER_REMOVE_CREDIT_CARD_FAIL,
-    errorMsg,
+    errorMessage,
   };
 }
 
@@ -95,10 +95,10 @@ function addCreditCardSuccess(data) {
   };
 }
 
-function addCreditCardFail(errorMsg) {
+function addCreditCardFail(errorMessage) {
   return {
     type: USER_ADD_CREDIT_CARD_FAIL,
-    errorMsg,
+    errorMessage,
   };
 }
 

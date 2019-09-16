@@ -15,7 +15,7 @@ import ProfileDetail from './ProfileDetail/ProfileDetail';
 
 import { toI18n } from '../../utils/func-utils';
 import ProfileBasicInfo from './ProfileBasicInfo';
-import PaidMethods from './PaidMethods';
+import BillingManagement from '../../containers/BillingManagement';
 
 const { TabPane } = Tabs;
 
@@ -78,12 +78,12 @@ export default class Profile extends Component {
                   <ProfileBasicInfo user={user} />
                 </ProfileContentWrapper>
               </TabPane>
-              <TabPane tab={toI18n('PROFILE_PAYMENT_INFO_PAYMENT_INFO')} key="2">
+              <TabPane tab={toI18n('PROFILE_PAYMENT_INFO_BILLING_INFO')} key="2">
                 <ProfileContentWrapper>
-                  <PaidMethods user={user} />
+                  <BillingManagement noHeader />
                 </ProfileContentWrapper>
               </TabPane>
-              <TabPane tab={toI18n('PROFILE_CHANGE_ADD_CREDIT_CARD')} key="3">
+              <TabPane tab={toI18n('PROFILE_PAYMENT_INFO_PAYMENT_INFO')} key="3">
                 <ProfileContentWrapper>
                   <AddCreditCard user={user} />
                 </ProfileContentWrapper>

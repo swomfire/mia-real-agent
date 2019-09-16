@@ -24,6 +24,7 @@ const ItemManagementHoc = (ItemsManagementTable) => {
         errorMsg,
         newButtonType,
         onClickAddButton,
+        noHeader = false,
         ...propsTables
       } = this.props;
 
@@ -37,22 +38,24 @@ const ItemManagementHoc = (ItemsManagementTable) => {
 
       return (
         <ItemDetailListWrapper>
-          <HeaderContainer
-            sortItem={sortItems}
-            url={createEndpoint}
-            handleSort={handleSort}
-            sorting={currentSorting}
-            title={title}
-            shouldRenderNewButton={shouldRenderNewButton}
-            onClickAddButton={onClickAddButton}
-            newButtonType={newButtonType}
-            shouldRenderSendEmailButton={shouldRenderSendEmailButton}
-            openModal={openModal}
-            filterItems={filterItems}
-            handleFilter={handleFilter}
-            filtering={currentFiltering}
-            shouldRenderFilter={shouldRenderFilter}
-          />
+          {!noHeader && (
+            <HeaderContainer
+              sortItem={sortItems}
+              url={createEndpoint}
+              handleSort={handleSort}
+              sorting={currentSorting}
+              title={title}
+              shouldRenderNewButton={shouldRenderNewButton}
+              onClickAddButton={onClickAddButton}
+              newButtonType={newButtonType}
+              shouldRenderSendEmailButton={shouldRenderSendEmailButton}
+              openModal={openModal}
+              filterItems={filterItems}
+              handleFilter={handleFilter}
+              filtering={currentFiltering}
+              shouldRenderFilter={shouldRenderFilter}
+            />
+          )}
           <ItemsManagementTable />
         </ItemDetailListWrapper>
       );
@@ -78,6 +81,7 @@ const ItemManagementHoc = (ItemsManagementTable) => {
     shouldRenderFilter: PropTypes.bool,
     errorMsg: PropTypes.string,
     newButtonType: PropTypes.string,
+    noHeader: PropTypes.bool,
   };
 
   return ItemManagementWrapper;

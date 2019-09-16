@@ -12,9 +12,13 @@ import {
   AdditionalInformationWrapper,
   AdditionalInformationTitle,
   AdditionalInformationValue,
+  LanguageWrapper,
+  LanguageRadio,
+  LanguageRadioWrapper,
 } from './ProfileUser.styled';
 import { toI18n } from '../../../utils/func-utils';
 import { ROLES } from '../../../../common/enums';
+import { LNG_CODE } from '../../../utils/constants';
 
 class ProfileUser extends React.PureComponent {
   renderAdditionalInformation = () => {
@@ -32,6 +36,29 @@ class ProfileUser extends React.PureComponent {
     );
   }
 
+  renderSelectLanguage = () => {
+    const { lngCode, changeLanguage } = this.props;
+    return (
+      <LanguageWrapper>
+        {toI18n('NAVBAR_PROFILE_LANGUAGE')}
+        <LanguageRadioWrapper>
+          <LanguageRadio
+            active={lngCode === LNG_CODE.EN}
+            onClick={() => changeLanguage(LNG_CODE.EN)}
+          >
+            {toI18n('NAVBAR_PROFILE_EN')}
+          </LanguageRadio>
+          <LanguageRadio
+            active={lngCode === LNG_CODE.VN}
+            onClick={() => changeLanguage(LNG_CODE.VN)}
+          >
+            {toI18n('NAVBAR_PROFILE_VN')}
+          </LanguageRadio>
+        </LanguageRadioWrapper>
+      </LanguageWrapper>
+    );
+  }
+
   render() {
     const {
       onLogout,
@@ -42,6 +69,7 @@ class ProfileUser extends React.PureComponent {
       <ProfileUserInfoWrapper>
         <ProfileUserHead>
           <ProfileUserAction>
+            {this.renderSelectLanguage()}
             {role !== ROLES.ADMIN && this.renderAdditionalInformation()}
             <Link to="/profile" className="my-account">{toI18n('DB_PROFILE_MY_ACCOUNT')}</Link>
             <button className="sign-out" onClick={onLogout}>
@@ -56,7 +84,9 @@ class ProfileUser extends React.PureComponent {
 
 ProfileUser.propTypes = {
   onLogout: PropTypes.func,
+  changeLanguage: PropTypes.func,
   profile: PropTypes.shape(),
+  lngCode: PropTypes.string,
 };
 
 export default ProfileUser;

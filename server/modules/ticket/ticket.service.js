@@ -9,6 +9,7 @@ import ConversationRoomQueue from '../queue/conversationRoomQueue';
 import { getHistoryTicketUpdate } from '../../utils/utils';
 import { sendEmailTrascript } from '../../mail-sparkpost/sparkpost';
 import UserService from '../user/user.service';
+import BillingService from '../billing/billing.service';
 import { conversationTranscript } from '../../mail-sparkpost/dynamicTemplate';
 import { ticketAdminAggregration, ticketWarningAdminAggregration, calculateChargeTime, directChargeTicket } from './ticket.utils';
 
@@ -51,7 +52,7 @@ class TicketService extends BaseService {
   }
 
   async updateProcessingTime(ticketId) {
-    return this.update(ticketId, { processingTime: new Date() });
+    return this.update(ticketId, { processingDate: new Date() });
   }
 
   async getAllForAdmin(condition, options) {
@@ -191,15 +192,18 @@ class TicketService extends BaseService {
 
   async handleChargeTicket(ticket) {
     const {
-      processingTime, owner, _id, assignee,
+      processingDate, owner, _id, assignee,
     } = ticket;
-    if (!processingTime) {
+    if (!processingDate) {
       return true;
     }
     const { _id: userId } = owner;
     const user = await UserService.getById(userId);
     const { creditCard, stripeCustomerId } = user;
     const {
+      timeBeforeChat,
+      openingTime,
+      processingTime,
       remainingOpeningTime,
       remainingProcessingTime,
       userCreditTime,
@@ -207,22 +211,25 @@ class TicketService extends BaseService {
     } = calculateChargeTime(ticket, user);
     let needDirectCharge = false;
     // Direct charge if has remaining ticket time
+    let miaFee = 0;
+    let agentFee = 0;
+    const miaRate = 5; // TODO: Replace with system mia rate
+    let agentRate = 0;
+    let chargeAmount = 0;
     if ((remainingOpeningTime > 0 || remainingProcessingTime > 0)
       && (!_isEmpty(creditCard) && stripeCustomerId)) {
       needDirectCharge = true;
       // Convert usedTime to $
-      let miaFee = 0;
-      let agentFee = 0;
       if (remainingOpeningTime > 0) {
-        const miaRate = 5; // TODO: Replace with system mia rate
         miaFee = Number(miaRate * remainingOpeningTime / 60).toFixed(2);
       }
       if (remainingProcessingTime > 0 && assignee) {
         const { _id: assigneeId } = assignee;
         const { application } = await UserService.getById(assigneeId);
-        const { billingRate } = await ApplicationService.get(application);
-        agentFee = Number(billingRate * remainingProcessingTime / 60).toFixed(2);
+        agentRate = await ApplicationService.get(application).billingRate;
+        agentFee = Number(agentRate * remainingProcessingTime / 60).toFixed(2);
       }
+      chargeAmount = (+miaFee + +agentFee) >= 0.5 ? +miaFee + +agentFee : 0.5;
       needDirectCharge = !await directChargeTicket(
         _id, creditCard, stripeCustomerId, miaFee, agentFee,
       );
@@ -235,7 +242,24 @@ class TicketService extends BaseService {
       if (userCreditTime !== remainingCreditTime) {
         await UserService.update(userId, { creditTime: remainingCreditTime });
       }
-      // TODO: Save charge history
+      // Save charge history
+      await BillingService.ticketChargeBilling(
+        {
+          userCreditTime,
+          ticketId: _id,
+          timeBeforeChat,
+          openingTime,
+          processingTime,
+          miaRate,
+          agentRate,
+        },
+        {
+          usedCreditTime: userCreditTime - remainingCreditTime,
+          chargeAmount,
+          miaFee,
+          agentFee,
+        }
+      );
       return true;
     }
     return false;

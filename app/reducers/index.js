@@ -20,6 +20,7 @@ import replies from './replies';
 import requests from './requests';
 import response from './response';
 import intent from './intent';
+import billing from './billing';
 import cannedResponse from './cannedResponse';
 
 export const REHYDRATE_COMPLETE = 'root/REHYDRATE_COMPLETE';
@@ -46,6 +47,7 @@ export default function createReducer(injectedReducers = {}) {
     requests,
     response,
     cannedResponse,
+    billing,
     router: connectRouter(history),
     ...injectedReducers,
   });

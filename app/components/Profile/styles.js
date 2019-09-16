@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Row } from 'antd';
 
 export const ProfileWrapper = styled.div`
-    height: calc(100vh - 80px);
+  height: calc(100vh - 80px);
   width: 100%;
   display: flex;
   justify-content: center;
@@ -13,7 +13,7 @@ export const ProfileWrapper = styled.div`
 `;
 
 export const ProfileCard = styled.div`
-  width: 720px;
+  width: 1000px;
   height: calc(100vh - 200px);
   display: flex;
   flex-direction: column;
@@ -72,4 +72,7 @@ export const ActionBar = styled.div`
 
 export const ProfileContentWrapper = styled.div`
   padding-top: 1em;
+  .shadow-scrollbars-container{
+    height: calc(100vh - 465px) !important;
+  }
 `;

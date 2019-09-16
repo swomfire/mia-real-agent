@@ -233,7 +233,7 @@ export const ticketWarningAdminAggregration = (conditions, limit, skip, sort) =>
 
 export const calculateChargeTime = (ticket, user) => {
   const {
-    processingTime: processingDate, history,
+    processingDate, history,
   } = ticket;
   // Calculate Ticket Time
   const firstOpen = history[0];

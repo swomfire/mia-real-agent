@@ -6,7 +6,7 @@ import {
 
 export const REHYDRATE_COMPLETE = 'root/REHYDRATE_COMPLETE';
 export const CLEAR_TRANSACTION = 'root/CLEAR_TRANSACTION';
-export const CHANGE_LANGUAGE = 'root/CHANGE_LANGAUGE';
+export const CHANGE_LANGUAGE = 'root/CHANGE_LANGUAGE';
 export const FETCH_CURRENT_VERSION = 'root/FETCH_CURRENT_VERSION';
 export const FETCH_CURRENT_VERSION_COMPLETE = 'root/FETCH_CURRENT_VERSION_COMPLETE';
 export const FETCH_CURRENT_VERSION_FAIL = 'root/FETCH_CURRENT_VERSION_FAIL';
@@ -15,6 +15,12 @@ export const UPDATE_SYSTEM = 'system/UPDATE_SYSTEM';
 export const UPDATE_SYSTEM_COMPLETE = 'system/UPDATE_SYSTEM_COMPLETE';
 export const UPDATE_SYSTEM_FAIL = 'system/UPDATE_SYSTEM_FAIL';
 // action creator
+export const changeLanguage = lng => ({
+  type: CHANGE_LANGUAGE,
+  payload: {
+    lng,
+  },
+});
 
 export const updateSystemAction = system => ({
   type: UPDATE_SYSTEM,

@@ -17,6 +17,7 @@ import responseSaga from './response';
 import agentsSaga from './agents';
 import cannedResponseSaga from './cannedResponse';
 import systemSaga from './system';
+import billingSaga from './billing';
 import { FETCH_CURRENT_VERSION } from '../reducers/system';
 import { FETCH_DETAIL } from '../reducers/profile';
 
@@ -46,6 +47,7 @@ export default function* rootSagas() {
     responseSaga(),
     cannedResponseSaga(),
     systemSaga(),
+    billingSaga(),
     put({
       type: FETCH_CURRENT_VERSION,
     }),

@@ -68,7 +68,7 @@ class CreditCard extends Component {
       card, onClick = () => { }, onAdd,
     } = this.props;
     return (
-      <div>
+      <>
         {card.map(({ last4Digits, type, _id }) => (
           <Row>
             <CreditCardWrapper key={last4Digits} onClick={onClick}>
@@ -89,7 +89,7 @@ class CreditCard extends Component {
             </ButtonPrimary>
           </AddCreditCardWrapper>
         </Col>
-      </div>
+      </>
     );
   }
 

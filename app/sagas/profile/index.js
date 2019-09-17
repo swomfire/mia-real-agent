@@ -10,12 +10,14 @@ import {
   USER_ADD_CREDIT_CARD,
   USER_REMOVE_CREDIT_CARD,
   USER_TOP_UP,
+  UPDATE_PROFILE_AVATAR,
 } from '../../reducers/profile';
 import {
   getUserId,
   updateToken,
 } from '../../reducers/auth';
 import * as UserApi from '../../api/user';
+import * as UploadApi from '../../api/upload';
 import { toI18n } from '../../utils/func-utils';
 
 function* fetchDetail() {
@@ -60,6 +62,31 @@ function* updateProfile({ payload }) {
   const { data } = response;
   notification.success({ message: toI18n('PROFILE_UPDATE_SUCCESS') });
   yield put(actions.updateProfileCompleteAction(data));
+}
+
+function* updateProfileAvatar({ payload }) {
+  const userId = yield select(getUserId);
+  const { avatar } = payload;
+  const { error: uploadError, response: uploadResponse } = yield call(UploadApi.uploadFile, avatar);
+  if (uploadError) {
+    const message = _get(
+      uploadError, 'response.data.message', uploadError.message
+    );
+    notification.error({ message });
+    yield put(actions.updateAvatarFail(message));
+  }
+  const { fileUrl } = uploadResponse;
+  const { response, error } = yield call(UserApi.updateUserProfile, userId, { avatar: fileUrl });
+  if (error) {
+    const message = _get(
+      error, 'response.data.message', error.message
+    );
+    notification.error({ message });
+    yield put(actions.updateAvatarFail(message));
+  }
+  const { data } = response;
+  notification.success({ message: toI18n('PROFILE_UPDATE_SUCCESS') });
+  yield put(actions.updateAvatarSuccess(data));
 }
 
 function* changePassword({ payload }) {
@@ -129,6 +156,7 @@ function* profileFlow() {
   yield takeEvery(USER_ADD_CREDIT_CARD, addCreditCard);
   yield takeEvery(USER_REMOVE_CREDIT_CARD, removeCreditCard);
   yield takeEvery(USER_TOP_UP, topUp);
+  yield takeEvery(UPDATE_PROFILE_AVATAR, updateProfileAvatar);
 }
 
 export default profileFlow;

@@ -23320,3 +23320,7 @@ html {
 .ant-upload.ant-upload-select-picture-card:hover{
   border-color: #ff5402;
 }
+
+.ant-upload-list-picture-card .ant-upload-list-item-name{
+  color: #ff5402;
+}

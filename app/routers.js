@@ -38,6 +38,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import EditApplication from './containers/EditApplication/EditApplication';
 import System from './pages/System';
+import ApplicationReview from './components/ApplicationReview/ApplicationReview';
 
 class Router extends React.PureComponent {
   static propTypes = {
@@ -66,6 +67,7 @@ class Router extends React.PureComponent {
               <AdminRoute exact path="/admin/applications" component={ApplicationManagement} />
               <AdminRoute exact path="/admin/applications/:id" component={ApplicationDetail} />
               <AdminRoute exact path="/admin/applications/:id/edit" component={EditApplication} />
+              <AdminRoute exact path="/admin/applications/:id/review" component={ApplicationReview} />
               <AdminRoute path="/admin/intents/:id?" component={IntentManagement} />
               <AdminRoute path="/admin/feedbacks/:id?" component={FeedbackManagement} />
               <AdminRoute exact path="/admin/user" component={UserManagement} />

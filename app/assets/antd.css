@@ -23316,3 +23316,7 @@ html {
   border-color: #ff5402;
   background-color: #ff5402;
 }
+
+.ant-upload.ant-upload-select-picture-card:hover{
+  border-color: #ff5402;
+}

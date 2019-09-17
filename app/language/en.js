@@ -15,6 +15,8 @@ const en = {
     FORM_CANCEL: 'Cancel',
     FORM_RETURN: 'Return',
     FORM_SUBMIT: 'Submit',
+    FORM_UPDATE: 'Update',
+    FORM_UPLOAD: 'Upload',
     FORM_SUBMITTING: 'Submitting..',
     FORM_ADD: 'Add',
     FORM_SAVE: 'Save',

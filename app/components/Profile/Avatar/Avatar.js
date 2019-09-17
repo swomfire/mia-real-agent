@@ -9,6 +9,8 @@ function beforeUpload() {
   return false;
 }
 
+const avatarStyle = { width: '100%' };
+
 export class Avatar extends Component {
   static propTypes = {
     updateAvatar: func.isRequired,
@@ -21,6 +23,10 @@ export class Avatar extends Component {
     const { name, type } = file;
     updateAvatar({ name, type, originFileObj: file });
   };
+
+  handleEditClick = () => {
+    this.editCursor.click();
+  }
 
   render() {
     const { isLoading = false, avatar } = this.props;
@@ -44,11 +50,14 @@ export class Avatar extends Component {
             onChange={this.handleChange}
           >
             {avatar
-              ? <img src={avatar} alt="avatar" style={{ width: '100%' }} />
+              ? <img src={avatar} alt="avatar" style={avatarStyle} />
               : uploadButton}
+            <div
+              ref={(editCursor) => { this.editCursor = editCursor; }}
+            />
           </Upload>
         </LoadingSpin>
-        <ClickToEditWrapper>
+        <ClickToEditWrapper onClick={this.handleEditClick}>
           <div>
             <Icon type="camera" theme="filled" />
             {toI18n('FORM_UPDATE')}

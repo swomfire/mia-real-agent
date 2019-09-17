@@ -19,7 +19,6 @@ import cannedResponseSaga from './cannedResponse';
 import systemSaga from './system';
 import billingSaga from './billing';
 import { FETCH_CURRENT_VERSION } from '../reducers/system';
-import { FETCH_DETAIL } from '../reducers/profile';
 
 export default function* rootSagas() {
   configAxios();
@@ -50,9 +49,6 @@ export default function* rootSagas() {
     billingSaga(),
     put({
       type: FETCH_CURRENT_VERSION,
-    }),
-    put({
-      type: FETCH_DETAIL,
     }),
   ]);
 }

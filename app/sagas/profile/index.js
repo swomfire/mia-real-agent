@@ -15,6 +15,7 @@ import {
 import {
   getUserId,
   updateToken,
+  AUTH_LOGIN_SUCCESS,
 } from '../../reducers/auth';
 import * as UserApi from '../../api/user';
 import * as UploadApi from '../../api/upload';
@@ -22,6 +23,10 @@ import { toI18n } from '../../utils/func-utils';
 
 function* fetchDetail() {
   const userId = yield select(getUserId);
+  if (!userId) {
+    yield put(actions.fetchDetailFailAction(toI18n('PROFILE_MISSING_USER_ID')));
+    return;
+  }
   const { response: { data }, error } = yield call(UserApi.getUserProfile, userId);
   if (error) {
     const message = _get(
@@ -149,7 +154,7 @@ function* topUp({ payload }) {
 }
 
 function* profileFlow() {
-  yield takeEvery(FETCH_DETAIL, fetchDetail);
+  yield takeEvery([FETCH_DETAIL, AUTH_LOGIN_SUCCESS], fetchDetail);
   yield takeEvery(UPDATE_PROFILE, updateProfile);
   yield takeEvery(CHECK_PASSWORD, checkPassword);
   yield takeEvery(CHANGE_PASSWORD, changePassword);

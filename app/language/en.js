@@ -323,6 +323,7 @@ const en = {
     ADMIN_RESPONSE_REMOVE_SUCCESS: 'Response Removed',
 
     // Profile
+    PROFILE_MISSING_USER_ID: 'Missing userId',
     PROFILE_USERNAME: 'Username',
     PROFILE_EMAIL: 'Email',
     PROFILE_PROFILE: 'Profile',

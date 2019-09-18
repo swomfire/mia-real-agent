@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
-import { Upload, Icon } from 'antd';
+import moment from 'moment';
 import {
-  any, string, bool, func,
+  Upload, Icon, Tooltip, Row,
+} from 'antd';
+import {
+  any, string, func, shape,
 } from 'prop-types';
 import {
   ReviewInputValue, ReviewInputWrapper,
   ReviewInputTitle, ReviewInputAction, ReviewInputValueWrapper,
-  CommentWrapper, CommentInput, CommentAction, CommentDisplayWrapper,
+  CommentWrapper, CommentInput, CommentAction,
+  CommentDisplayWrapper, ListFieldValue, ListFieldLabel,
+  ListItemWrapper,
 } from './styles';
 import { ButtonPrimary } from '../../../stylesheets/Button.style';
+import { DATE_TIME_FORMAT } from '../../../utils/constants';
 
 class ReviewInput extends Component {
   state = {
@@ -23,13 +29,15 @@ class ReviewInput extends Component {
   static propTypes = {
     label: string.isRequired,
     name: string.isRequired,
+    type: string.isRequired,
     value: any.isRequired,
-    isUpload: bool,
+    displayFields: shape(),
     onAdd: func,
     onRemove: func,
   }
 
-  renderUpload = (value) => {
+  renderUpload = () => {
+    const { value } = this.props;
     const { isRequest, comment } = this.state;
     const fileList = value.map((link, index) => {
       const path = link.split('/');
@@ -55,12 +63,54 @@ class ReviewInput extends Component {
     );
   }
 
-  renderText = (value) => {
+  renderListItem = (value) => {
+    const { displayFields } = this.props;
+    const keys = Object.keys(value).filter(key => displayFields[key]);
+    return (
+      <ListItemWrapper>
+        {keys.map((key) => {
+          const {
+            tooltip, skip, replace, type,
+          } = displayFields[key];
+          const result = type === 'date'
+            ? moment(value[key]).format(DATE_TIME_FORMAT.DATE)
+            : value[key];
+          return (
+            <Row mutter={32}>
+              <Tooltip title={value[tooltip]}>
+                <ListFieldLabel>
+                  {key}
+                </ListFieldLabel>
+                <ListFieldValue>
+                  {value[skip] ? replace : result}
+                </ListFieldValue>
+              </Tooltip>
+            </Row>
+          );
+        })}
+      </ListItemWrapper>
+    );
+  }
+
+  renderListObject = () => {
+    const { value } = this.props;
     const { isRequest, comment } = this.state;
+
+    return (
+      <ReviewInputValue isRequest={isRequest || comment}>
+        {value.map(this.renderListItem)}
+      </ReviewInputValue>
+    );
+  }
+
+  renderText = () => {
+    const { value } = this.props;
+    const { isRequest, comment } = this.state;
+    const result = value instanceof Array ? value.join(', ') : value;
     return (
       <ReviewInputValue isRequest={isRequest || comment}>
         <div>
-          {value}
+          {result}
         </div>
       </ReviewInputValue>
     );
@@ -94,13 +144,13 @@ class ReviewInput extends Component {
 
   renderFieldHasComment = () => {
     const { comment } = this.state;
-    const { label, value, isUpload } = this.props;
+    const { label } = this.props;
     return (
       <ReviewInputWrapper>
         <ReviewInputTitle>{label}</ReviewInputTitle>
         <ReviewInputValueWrapper>
           <div>
-            {isUpload ? this.renderUpload(value) : this.renderText(value)}
+            {this.selectInputType()}
           </div>
           <div>
             <CommentDisplayWrapper>
@@ -114,9 +164,20 @@ class ReviewInput extends Component {
     );
   }
 
+  selectInputType = () => {
+    const { type } = this.props;
+    switch (type) {
+      case 'upload': return this.renderUpload();
+      case 'list': return this.renderListObject();
+      case 'text':
+      default:
+        return this.renderText();
+    }
+  }
+
   render() {
     const { isRequest, comment } = this.state;
-    const { label, value, isUpload } = this.props;
+    const { label } = this.props;
     if (comment) {
       return this.renderFieldHasComment();
     }
@@ -126,7 +187,7 @@ class ReviewInput extends Component {
           <ReviewInputTitle>{label}</ReviewInputTitle>
           <ReviewInputValueWrapper>
             <div>
-              {isUpload ? this.renderUpload(value) : this.renderText(value)}
+              {this.selectInputType()}
               <ReviewInputAction>
                 <Icon type="close" onClick={() => this.handleToggleRequest(false)} />
               </ReviewInputAction>
@@ -152,7 +213,7 @@ class ReviewInput extends Component {
         <ReviewInputTitle>{label}</ReviewInputTitle>
         <ReviewInputValueWrapper>
           <div>
-            {isUpload ? this.renderUpload(value) : this.renderText(value)}
+            {this.selectInputType()}
             <ReviewInputAction>
               <Icon type="message" theme="filled" onClick={() => this.handleToggleRequest(true)} />
             </ReviewInputAction>

@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { func } from 'prop-types';
+import ShadowScrollbars from 'components/Scrollbar';
 import ReviewInput from './ReviewInput/ReviewInput';
 
+const scrollStyle = {
+  height: 'calc(100vh - 60px)',
+  width: '100%',
+};
 class ReviewForm extends Component {
   state = {
     // Number of requested change
@@ -69,7 +74,7 @@ class ReviewForm extends Component {
   renderReviewInput = (key) => {
     const { fields } = this.state;
     const {
-      label, value, type,
+      label, value, type, displayFields,
     } = fields[key];
     return (
       <ReviewInput
@@ -77,7 +82,8 @@ class ReviewForm extends Component {
         name={key}
         label={label}
         value={value}
-        isUpload={type === 'upload'}
+        type={type}
+        displayFields={displayFields}
         onAdd={this.handleAddComment}
         onRemove={this.handleRemoveComment}
       />
@@ -87,9 +93,9 @@ class ReviewForm extends Component {
   render() {
     const { fields } = this.state;
     return (
-      <div>
+      <ShadowScrollbars autoHide style={scrollStyle}>
         {Object.keys(fields).map(this.renderReviewInput)}
-      </div>
+      </ShadowScrollbars>
     );
   }
 }

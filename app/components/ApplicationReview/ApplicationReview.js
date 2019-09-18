@@ -13,13 +13,87 @@ import LoadingSpin from '../Loading';
 import { flatApplicationForm } from '../../utils/func-utils';
 
 const mapping = {
+  nickname: {
+    label: 'NK',
+    type: 'text',
+  },
   firstName: {
     label: 'FN',
     type: 'text',
   },
   lastName: {
-    label: 'CV',
+    label: 'LN',
     type: 'text',
+  },
+  email: {
+    label: 'EM',
+    type: 'text',
+  },
+  country: {
+    label: 'CT',
+    type: 'text',
+  },
+  postcode: {
+    label: 'PS',
+    type: 'text',
+  },
+  address: {
+    label: 'AD',
+    type: 'text',
+  },
+  cv: {
+    label: 'CV',
+    type: 'upload',
+  },
+  categories: {
+    label: 'CT',
+    type: 'text',
+  },
+  skills: {
+    label: 'SK',
+    type: 'text',
+  },
+  workExperiences: {
+    label: 'Ex',
+    type: 'list',
+    displayFields: {
+      title: {
+        type: 'text',
+        tooltip: 'roleDescription',
+      },
+      company: {
+        type: 'text',
+      },
+      from: {
+        type: 'date',
+      },
+      to: {
+        type: 'date',
+        skip: 'isWorking',
+        replace: 'now',
+      },
+    },
+  },
+  languages: {
+    label: 'Ex',
+    type: 'list',
+    displayFields: {
+      name: {
+        type: 'text',
+      },
+      writing: {
+        type: 'text',
+      },
+      reading: {
+        type: 'text',
+      },
+      speaking: {
+        type: 'text',
+      },
+      overall: {
+        type: 'text',
+      },
+    },
   },
 };
 
@@ -29,7 +103,6 @@ class ApplicationReview extends Component {
   }
 
   static propTypes = {
-    fetchApplicationSingle: func.isRequired,
     applicationId: string.isRequired,
     applicationDetail: shape().isRequired,
   }

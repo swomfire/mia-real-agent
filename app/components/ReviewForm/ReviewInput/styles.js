@@ -113,3 +113,20 @@ export const CommentDisplayWrapper = styled.div`
     }
   }
 `;
+
+export const ListItemWrapper = styled.div`
+  width: 100% !important;
+  border: 1px solid ${props => props.theme.colorStyled.ColorXXXLightGrey};
+  span {
+    display: flex;
+  }
+`;
+
+export const ListFieldLabel = styled.div`
+  flex: 0 0 30%;
+  font-weight: 600;
+`;
+
+export const ListFieldValue = styled.div`
+  flex: 0 0 70%;
+`;

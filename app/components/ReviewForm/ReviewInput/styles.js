@@ -57,6 +57,10 @@ export const ReviewInputAction = styled.div`
   margin-left: .1em;
   i {
     font-size: 1.2em;
+    :hover {
+      cursor: pointer;
+      color: ${props => props.theme.colorStyled.ColorBgDefault}
+    }
   }
 `;
 
@@ -75,7 +79,7 @@ export const CommentInput = styled(InputStyled)`
 `;
 
 export const CommentAction = styled.div`
-  flex: 0 0 10%;
+  flex: 0 0 auto;
   button {
     height: 100%;
     width: 100%;
@@ -93,6 +97,7 @@ export const CommentDisplayWrapper = styled.div`
   border-top: 1px solid;
   padding: .5em 0px;
   position: relative;
+  flex: 0 0 93.5%;
   i {
     margin-right: .5em;
     cursor: unset;
@@ -100,7 +105,8 @@ export const CommentDisplayWrapper = styled.div`
   .comment-action {
     position: absolute;
     right: 0;
-    margin-right: .2em;
+    margin-right: .1em;
+    font-size: 1.4em;
     :hover {
       cursor: pointer;
       color: ${props => props.theme.colorStyled.ColorBgDefault}

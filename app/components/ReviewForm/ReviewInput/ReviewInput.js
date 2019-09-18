@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { Upload, Icon } from 'antd';
-import { any, string, bool } from 'prop-types';
+import {
+  any, string, bool, func,
+} from 'prop-types';
 import {
   ReviewInputValue, ReviewInputWrapper,
-  ReviewInputTitle, ReviewInputAction, ReviewInputValueWrapper, CommentWrapper, CommentInput, CommentAction, CommentInputWrapper, CommentDisplayWrapper,
+  ReviewInputTitle, ReviewInputAction, ReviewInputValueWrapper,
+  CommentWrapper, CommentInput, CommentAction, CommentDisplayWrapper,
 } from './styles';
 import { ButtonPrimary } from '../../../stylesheets/Button.style';
 
@@ -19,8 +22,11 @@ class ReviewInput extends Component {
 
   static propTypes = {
     label: string.isRequired,
+    name: string.isRequired,
     value: any.isRequired,
     isUpload: bool,
+    onAdd: func,
+    onRemove: func,
   }
 
   renderUpload = (value) => {
@@ -66,6 +72,13 @@ class ReviewInput extends Component {
       comment: value.trim(),
       isRequest: false,
     });
+    const { onAdd, name } = this.props;
+    if (onAdd) {
+      onAdd({
+        key: name,
+        value,
+      });
+    }
   }
 
   handelRemoveComment = () => {
@@ -73,6 +86,10 @@ class ReviewInput extends Component {
       comment: '',
       isRequest: false,
     });
+    const { onRemove, name } = this.props;
+    if (onRemove) {
+      onRemove(name);
+    }
   }
 
   renderFieldHasComment = () => {
@@ -85,11 +102,13 @@ class ReviewInput extends Component {
           <div>
             {isUpload ? this.renderUpload(value) : this.renderText(value)}
           </div>
-          <CommentDisplayWrapper>
-            <Icon type="message" theme="filled" />
-            {comment}
-            <Icon className="comment-action" type="delete" theme="filled" onClick={this.handelRemoveComment} />
-          </CommentDisplayWrapper>
+          <div>
+            <CommentDisplayWrapper>
+              <Icon type="message" theme="filled" />
+              {comment}
+              <Icon className="comment-action" type="delete" theme="filled" onClick={this.handelRemoveComment} />
+            </CommentDisplayWrapper>
+          </div>
         </ReviewInputValueWrapper>
       </ReviewInputWrapper>
     );
@@ -116,6 +135,7 @@ class ReviewInput extends Component {
               <CommentInput
                 ref={(commentField) => { this.comment = commentField; }}
                 placeholder="Comment..."
+                autoFocus
               />
               <CommentAction>
                 <ButtonPrimary onClick={this.handleSubmitComment}>

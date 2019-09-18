@@ -32,6 +32,11 @@ class ApplicationDetailInfoHeader extends PureComponent {
     actions.applicationReject({ _id: applicationId });
   }
 
+  handlePreview = () => {
+    const { applicationId, actions } = this.props;
+    actions.applicationReview({ _id: applicationId });
+  }
+
   render() {
     const {
       nickname, firstName, lastName, status,
@@ -55,15 +60,16 @@ class ApplicationDetailInfoHeader extends PureComponent {
         <AdminHeadActionGroup>
           {status === APPLICATION_STATUS.PENDING && [(
             <ButtonApprove
-              onClick={this.handleApprove}
+              onClick={this.handlePreview}
             >
               <i className="mia-check" />
-              <span>Approve</span>
+              <span>Review</span>
             </ButtonApprove>),
-          (<ButtonReject onClick={this.handleReject}>
-            <i className="mia-close" />
-            <span>Reject</span>
-          </ButtonReject>)]}
+            // (<ButtonReject onClick={this.handleReject}>
+            //   <i className="mia-close" />
+            //   <span>Reject</span>
+            // </ButtonReject>)
+          ]}
 
         </AdminHeadActionGroup>
       </TitleDetailsHead>

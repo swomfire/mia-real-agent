@@ -18,8 +18,8 @@ export const ReviewFormTitle = styled.div`
 export const ReviewFormRequestChangeWrapper = styled.div`
   flex: 0 0 40%;
   display: flex;
-  justify-content: flex-end;
-  padding-right: 1em;
+  justify-content: flex-start;
+  padding: 1em;
   align-items: center;
   .value {
     font-weight: 600;
@@ -44,11 +44,14 @@ export const ReviewFormActionGroupLeft = styled.div`
 `;
 
 export const ReviewFormActionGroupRight = styled.div`
+  flex: auto;
   display: flex;
+  align-items: center;
+  justify-content: flex-end;
   button {
     margin-right: .5em;
   }
   button:last-child {
-    margin-right: 1em;
+    margin-right: .5em;
   }
 `;

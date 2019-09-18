@@ -2,6 +2,7 @@ import moment from 'moment';
 import React from 'react';
 import _isEmpty from 'lodash/isEmpty';
 import _eq from 'lodash/eq';
+import _keyBy from 'lodash/keyBy';
 import { Trans } from 'react-i18next';
 import { ROLES, REPLY_TYPE } from '../../common/enums';
 
@@ -105,3 +106,15 @@ export const getHourMinutes = (durationInSecondInMinutes) => {
 
 export const getSeconds = durationInMinutes => Number
   .parseInt(durationInMinutes, 10) * 60;
+
+export const flatApplicationForm = (application, mapping) => _keyBy(
+  Object.keys(mapping).map((key) => {
+    const map = mapping[key];
+    const value = application[key];
+    return {
+      ...map,
+      key,
+      value,
+    };
+  }), 'key'
+);

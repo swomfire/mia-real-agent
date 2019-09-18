@@ -106,7 +106,7 @@ export const CommentDisplayWrapper = styled.div`
     position: absolute;
     right: 0;
     margin-right: .1em;
-    font-size: 1.4em;
+    font-size: 1.2em;
     :hover {
       cursor: pointer;
       color: ${props => props.theme.colorStyled.ColorBgDefault}

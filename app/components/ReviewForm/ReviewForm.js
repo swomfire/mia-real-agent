@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
-import { func, shape } from 'prop-types';
+import { func } from 'prop-types';
 import ReviewInput from './ReviewInput/ReviewInput';
 
 class ReviewForm extends Component {
   state = {
     // Number of requested change
     noRequestedChange: 0,
-    fields: this.props.defaultFields,
+    fields: {},
   }
 
   static propTypes = {
     onChange: func,
-    defaultFields: shape(),
+  }
+
+  setDefaultFields = (fields) => {
+    this.setState({ fields });
   }
 
   componentDidUpdate = (prevProps, prevState) => {

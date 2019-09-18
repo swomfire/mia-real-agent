@@ -66,7 +66,7 @@ class ReviewForm extends Component {
   renderReviewInput = (key) => {
     const { fields } = this.state;
     const {
-      label, value, isUpload,
+      label, value, type,
     } = fields[key];
     return (
       <ReviewInput
@@ -74,7 +74,7 @@ class ReviewForm extends Component {
         name={key}
         label={label}
         value={value}
-        isUpload={isUpload}
+        isUpload={type === 'upload'}
         onAdd={this.handleAddComment}
         onRemove={this.handleRemoveComment}
       />

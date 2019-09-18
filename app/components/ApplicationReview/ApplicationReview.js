@@ -19,12 +19,13 @@ const defaultForm = {
     fields: {
       fn: {
         label: 'FN',
+        type: 'text',
         value: 'ccc',
       },
       cv: {
         label: 'CV',
         value: ['https://mia-consult.s3-ap-southeast-1.amazonaws.com/Screenshot from 2019-07-23 11-42-51.png'],
-        isUpload: true,
+        type: 'upload',
       },
     },
     type: TYPE.START,
@@ -40,7 +41,7 @@ const defaultForm = {
       cv: {
         label: 'CV',
         value: ['https://mia-consult.s3-ap-southeast-1.amazonaws.com/Screenshot from 2019-07-23 11-42-51.png'],
-        isUpload: true,
+        type: 'upload',
       },
     },
     type: TYPE.MIDDLE,
@@ -56,7 +57,7 @@ const defaultForm = {
       cv: {
         label: 'CV',
         value: ['https://mia-consult.s3-ap-southeast-1.amazonaws.com/Screenshot from 2019-07-23 11-42-51.png'],
-        isUpload: true,
+        type: 'upload',
       },
     },
     type: TYPE.END,

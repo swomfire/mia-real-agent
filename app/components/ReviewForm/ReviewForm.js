@@ -4,7 +4,7 @@ import ShadowScrollbars from 'components/Scrollbar';
 import ReviewInput from './ReviewInput/ReviewInput';
 
 const scrollStyle = {
-  height: 'calc(100vh - 60px)',
+  height: 'calc(100vh - 150px)',
   width: '100%',
 };
 class ReviewForm extends Component {

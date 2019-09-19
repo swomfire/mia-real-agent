@@ -18,6 +18,7 @@ import agentsSaga from './agents';
 import cannedResponseSaga from './cannedResponse';
 import systemSaga from './system';
 import billingSaga from './billing';
+import reviewSaga from './review';
 import { FETCH_CURRENT_VERSION } from '../reducers/system';
 
 export default function* rootSagas() {
@@ -47,6 +48,7 @@ export default function* rootSagas() {
     cannedResponseSaga(),
     systemSaga(),
     billingSaga(),
+    reviewSaga(),
     put({
       type: FETCH_CURRENT_VERSION,
     }),

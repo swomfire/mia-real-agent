@@ -3,14 +3,12 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 // Form data:
 // {
-//   fields: {
-//     fieldName: {
-//       label,
-//       type,
-//       value,
-//       comment,
-//       validateSchema: 'APPLICATION.FORM_NAME.FIELD',
-//     },
+//   fieldName: {
+//     label,
+//     type,
+//     value,
+//     comment,
+//     validateSchema: 'APPLICATION.FORM_NAME.FIELD',
 //   },
 // }
 const reviewSchema = new Schema(

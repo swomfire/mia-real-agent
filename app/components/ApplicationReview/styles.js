@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const ReivewFormWrapper = styled.div`
-  width: 50%;
 `;
 
 export const ReviewFormHeader = styled.div`
@@ -52,6 +51,6 @@ export const ReviewFormActionGroupRight = styled.div`
     margin-right: .5em;
   }
   button:last-child {
-    margin-right: .5em;
+    margin-right: 1em;
   }
 `;

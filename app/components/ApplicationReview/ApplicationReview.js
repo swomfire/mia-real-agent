@@ -1,6 +1,7 @@
 import {
   func, string, bool, shape,
 } from 'prop-types';
+import _keyBy from 'lodash/keyBy';
 import React, { Component } from 'react';
 import ReviewForm from '../ReviewForm';
 import { ButtonPrimary, ButtonDefault } from '../../stylesheets/Button.style';
@@ -105,6 +106,8 @@ class ApplicationReview extends Component {
   static propTypes = {
     applicationId: string.isRequired,
     applicationDetail: shape().isRequired,
+    reviewSubmit: func.isRequired,
+    isSubmitting: bool.isRequired,
   }
 
   componentDidMount = () => {
@@ -133,23 +136,44 @@ class ApplicationReview extends Component {
     return Object.values(applicationReviewForms).filter(({ comment }) => comment).length;
   }
 
+  handleApprove = () => {
+
+  }
+
+  handleRequestChange = () => {
+    const { reviewSubmit, applicationId } = this.props;
+    const { applicationReviewForms } = this.state;
+    // Filter fields with comment
+    const filtered = _keyBy(
+      Object.keys(applicationReviewForms)
+        .map(key => ({ ...applicationReviewForms[key], name: key }))
+        .filter(({ comment }) => comment),
+      'name'
+    );
+    reviewSubmit(filtered, applicationId);
+  }
+
   renderActionGroup = () => {
     const totalRequest = this.getTotalRequestedChange();
     return (
       <ReviewFormActionGroupRight>
         <ButtonDefault>Reject</ButtonDefault>
-        <ButtonPrimary>{totalRequest > 0 ? 'Request Change' : 'Approve'}</ButtonPrimary>
+        <ButtonPrimary
+          onClick={totalRequest > 0 ? this.handleRequestChange : this.handleApprove}
+        >
+          {totalRequest > 0 ? 'Request Change' : 'Approve'}
+        </ButtonPrimary>
       </ReviewFormActionGroupRight>
     );
   }
 
   render() {
-    const { applicationDetail } = this.props;
+    const { applicationDetail, isSubmitting } = this.props;
     const { isLoading = false } = applicationDetail;
     const { applicationReviewForms } = this.state;
     return (
       <ReivewFormWrapper>
-        <LoadingSpin loading={isLoading}>
+        <LoadingSpin loading={isLoading || isSubmitting}>
           <ReviewFormHeader>
             {/* <ReviewFormTitle>{label}</ReviewFormTitle> */}
             <ReviewFormRequestChangeWrapper>

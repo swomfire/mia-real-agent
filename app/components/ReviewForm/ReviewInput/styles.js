@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { InputStyled } from '../../FormInput/styles';
 
 export const ReviewInputWrapper = styled.div`
-  width: 100%;
+  width: calc(100% - 15px);
   display: flex;
   padding: .5em;
   user-select: none;  
@@ -97,7 +97,7 @@ export const CommentDisplayWrapper = styled.div`
   border-top: 1px solid;
   padding: .5em 0px;
   position: relative;
-  flex: 0 0 93.5%;
+  flex: 0 0 92.5%;
   i {
     margin-right: .5em;
     cursor: unset;

@@ -148,6 +148,7 @@ class ApplicationReview extends Component {
     reviewSubmit: func.isRequired,
     applicationApprove: func.isRequired,
     applicationReject: func.isRequired,
+    toggleReview: func.isRequired,
     isSubmitting: bool.isRequired,
   }
 
@@ -164,6 +165,7 @@ class ApplicationReview extends Component {
     const { applicationReviewForms } = this.state;
     const form = this.reviewForm;
     const fields = form.getFields();
+    console.log(fields)
     this.setState({
       applicationReviewForms: {
         ...applicationReviewForms,
@@ -174,7 +176,14 @@ class ApplicationReview extends Component {
 
   getTotalRequestedChange = () => {
     const { applicationReviewForms } = this.state;
-    return Object.values(applicationReviewForms).filter(({ comment }) => comment).length;
+    const totalChange = Object.values(applicationReviewForms).filter(({ comment }) => comment).length;
+    const { toggleReview } = this.props;
+    if (totalChange > 0) {
+      toggleReview(true);
+    } else {
+      toggleReview(false);
+    }
+    return totalChange;
   }
 
   handleApprove = () => {

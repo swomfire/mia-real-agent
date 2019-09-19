@@ -477,6 +477,7 @@ const en = {
     APPLICATION_REVIEW_FORM_LIST_READING: 'Reading',
     APPLICATION_REVIEW_FORM_LIST_SPEAKING: 'Speaking',
     APPLICATION_REVIEW_FORM_LIST_OVERALL: 'Overall',
+    APPLICATION_REVIEW_FORM_PENDING_CHANGE: 'Are you sure cancel Review this application?',
   },
 };
 

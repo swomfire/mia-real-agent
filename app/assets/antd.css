@@ -23324,3 +23324,13 @@ html {
 .ant-upload-list-picture-card .ant-upload-list-item-name{
   color: #ff5402;
 }
+
+.ant-btn-primary, .ant-btn-primary:hover, .ant-btn-primary:focus{
+  background-color: #ff5402;
+  border-color: #ff5402;
+}
+
+.ant-btn-primary:active, .ant-btn-primary.active {
+  background-color: #a03400;
+  border-color: #a03400;
+}

@@ -16,6 +16,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   reviewSubmit: REVIEW_ACTIONS.submitAction,
+  toggleReview: actions.applicationToggleReview,
   applicationApprove: actions.applicationApprove,
   applicationReject: actions.applicationReject,
 };

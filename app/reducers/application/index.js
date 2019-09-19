@@ -49,7 +49,15 @@ export const APPLICATION_DETAIL_EDIT = 'application/APPLICATION_DETAIL_EDIT';
 export const APPLICATION_DETAIL_EDIT_COMPLETE = 'application/APPLICATION_DETAIL_EDIT_COMPLETE';
 export const APPLICATION_DETAIL_EDIT_FAIL = 'application/APPLICATION_DETAIL_EDIT_FAIL';
 
+export const APPLICATION_TOGGLE_REVIEW = 'application/APPLICATION_TOGGLE_REVIEW';
+
 // action creator
+
+const applicationToggleReview = toggle => ({
+  type: APPLICATION_TOGGLE_REVIEW,
+  toggle,
+});
+
 // Edit detail action
 const applicationDetailEditAction = application => ({
   type: APPLICATION_DETAIL_EDIT,
@@ -253,6 +261,8 @@ function fetchApplicationSingleComplete(payload) {
 }
 
 // selector
+const getApplicationIsReviewing = ({ application }) => application.get('isReviewing');
+
 const getApplicationIsSubmitting = ({ application }) => application.get('isSubmitting');
 const getApplicationSubmitError = ({ application }) => application.get('submitError');
 
@@ -288,10 +298,15 @@ const initialState = fromJS({
 
   isValidating: false,
   validateError: '',
+
+  isReviewing: false,
 });
 
 function applicationReducer(state = initialState, action) {
   switch (action.type) {
+    case APPLICATION_TOGGLE_REVIEW:
+      return state.set('isReviewing', action.toggle);
+
     case APPLICATION_FORM_VALIDATE_STEP:
       return state.set('isValidating', true)
         .set('validateError', '');
@@ -426,9 +441,13 @@ export const actions = {
   applicationPending,
   applicationPendingComplete,
   applicationPendingFail,
+
+  applicationToggleReview,
 };
 
 export const selectors = {
+  getApplicationIsReviewing,
+
   getApplicationIsSubmitting,
   getApplicationSubmitError,
 

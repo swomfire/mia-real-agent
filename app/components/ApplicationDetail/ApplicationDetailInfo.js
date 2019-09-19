@@ -38,6 +38,7 @@ class applicationDetailInfo extends PureComponent {
 
   render() {
     const {
+      isReviewing,
       applicationDetail,
       applicationApprove,
       applicationReject,
@@ -78,6 +79,7 @@ class applicationDetailInfo extends PureComponent {
           firstName={firstName}
           lastName={lastName}
           status={status}
+          isReviewing={isReviewing}
           actions={actions}
         />
         {status === APPLICATION_STATUS.REVIEWING ? (<ApplicationReview />) : (
@@ -109,6 +111,7 @@ class applicationDetailInfo extends PureComponent {
 applicationDetailInfo.propTypes = {
   applicationId: PropTypes.string.isRequired,
   fetchApplicationSingle: PropTypes.func.isRequired,
+  isReviewing: PropTypes.bool,
   applicationApprove: PropTypes.func.isRequired,
   applicationReject: PropTypes.func.isRequired,
   applicationReview: PropTypes.func.isRequired,

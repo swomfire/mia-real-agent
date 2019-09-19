@@ -113,18 +113,17 @@ export const CommentAction = styled.div`
 `;
 
 export const CommentDisplayWrapper = styled.div`
-  align-items: center;
   margin: .5em;
   border-top: 1px solid;
   padding: .5em 1em;
   position: relative;
   flex: 0 0 92.5%;
-  display: flex;
   max-width: 750px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   i {
+    float: left;
     height: 1em;
     width: 1em;
     margin-right: .8em;

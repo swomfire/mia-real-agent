@@ -172,7 +172,7 @@ class ReviewInput extends Component {
     if (onAdd) {
       onAdd({
         key: name,
-        inputComment,
+        value: inputComment.trim(),
       });
     }
   }

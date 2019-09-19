@@ -15,9 +15,14 @@ import {
   ButtonReject,
 } from '../../stylesheets/Button.style';
 import { APPLICATION_STATUS } from '../../../common/enums';
-import { Icon } from 'antd';
+import { Icon, Popconfirm } from 'antd';
+import { toI18n } from '../../utils/func-utils';
 
 class ApplicationDetailInfoHeader extends PureComponent {
+  state = {
+    visible: false,
+  }
+
   goToEditPage = () => {
     const { applicationId } = this.props;
     history.push(`/admin/applications/${applicationId}/edit`);
@@ -43,7 +48,22 @@ class ApplicationDetailInfoHeader extends PureComponent {
     actions.applicationPending({ _id: applicationId });
   }
 
+  handleVisibleChange = (visible) => {
+    if (!visible) {
+      this.setState({ visible });
+      return;
+    }
+    const { isReviewing } = this.props;
+    if (!isReviewing) {
+      this.handlePending();
+    } else {
+      this.setState({ visible });
+    }
+  };
+
+
   render() {
+    const { visible } = this.state;
     const {
       nickname, firstName, lastName, status,
     } = this.props;
@@ -51,7 +71,16 @@ class ApplicationDetailInfoHeader extends PureComponent {
       <TitleDetailsHead>
         <HeaderTextDetails>
           {status === APPLICATION_STATUS.REVIEWING && (
-            <Icon onClick={this.handlePending} type="left" />
+            <Popconfirm
+              title={toI18n('APPLICATION_REVIEW_FORM_PENDING_CHANGE')}
+              onVisibleChange={this.handleVisibleChange}
+              visible={visible}
+              onConfirm={this.handlePending}
+              okText={toI18n('FORM_YES')}
+              cancelText={toI18n('FORM_NO')}
+            >
+              <Icon type="left" />
+            </Popconfirm>
           )}
           <span>
             {nickname}
@@ -71,7 +100,6 @@ class ApplicationDetailInfoHeader extends PureComponent {
             <ButtonApprove
               onClick={this.handlePreview}
             >
-              <i className="mia-check" />
               <span>Review</span>
             </ButtonApprove>),
           ]}
@@ -89,6 +117,7 @@ ApplicationDetailInfoHeader.propTypes = {
   nickname: PropTypes.string.isRequired,
   firstName: PropTypes.string.isRequired,
   lastName: PropTypes.string.isRequired,
+  isReviewing: PropTypes.bool.isRequired,
 };
 
 export default ApplicationDetailInfoHeader;

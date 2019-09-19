@@ -209,6 +209,23 @@ class ApplicationReview extends Component {
     reviewSubmit(filtered, applicationId);
   }
 
+  handleApprove = () => {
+
+  }
+
+  handleRequestChange = () => {
+    const { reviewSubmit, applicationId } = this.props;
+    const { applicationReviewForms } = this.state;
+    // Filter fields with comment
+    const filtered = _keyBy(
+      Object.keys(applicationReviewForms)
+        .map(key => ({ ...applicationReviewForms[key], name: key }))
+        .filter(({ comment }) => comment),
+      'name'
+    );
+    reviewSubmit(filtered, applicationId);
+  }
+
   renderActionGroup = () => {
     const totalRequest = this.getTotalRequestedChange();
     return (

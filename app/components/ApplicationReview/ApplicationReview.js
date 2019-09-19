@@ -11,87 +11,126 @@ import {
   ReviewFormActionGroupRight,
 } from './styles';
 import LoadingSpin from '../Loading';
-import { flatApplicationForm } from '../../utils/func-utils';
+import { flatApplicationForm, toI18n } from '../../utils/func-utils';
 
 const mapping = {
   nickname: {
-    label: 'NK',
+    label: toI18n('APPLICATION_REVIEW_FORM_NICKNAME'),
     type: 'text',
   },
   firstName: {
-    label: 'FN',
+    label: toI18n('APPLICATION_REVIEW_FORM_FIRSTNAME'),
     type: 'text',
   },
   lastName: {
-    label: 'LN',
+    label: toI18n('APPLICATION_REVIEW_FORM_LASTNAME'),
+    type: 'text',
+  },
+  role: {
+    label: toI18n('APPLICATION_REVIEW_FORM_ROLE'),
     type: 'text',
   },
   email: {
-    label: 'EM',
+    label: toI18n('APPLICATION_REVIEW_FORM_EMAIL'),
     type: 'text',
   },
   country: {
-    label: 'CT',
+    label: toI18n('APPLICATION_REVIEW_FORM_COUNTRY'),
     type: 'text',
   },
   postcode: {
-    label: 'PS',
+    label: toI18n('APPLICATION_REVIEW_FORM_POSTCODE'),
     type: 'text',
   },
   address: {
-    label: 'AD',
+    label: toI18n('APPLICATION_REVIEW_FORM_ADDRESS'),
     type: 'text',
   },
   cv: {
-    label: 'CV',
+    label: toI18n('APPLICATION_REVIEW_FORM_CV'),
     type: 'upload',
   },
   categories: {
-    label: 'CT',
+    label: toI18n('APPLICATION_REVIEW_FORM_CATEGORIES'),
     type: 'text',
   },
   skills: {
-    label: 'SK',
+    label: toI18n('APPLICATION_REVIEW_FORM_SKILLS'),
     type: 'text',
   },
   workExperiences: {
-    label: 'Ex',
+    label: toI18n('APPLICATION_REVIEW_FORM_WORK_EXPERIENCES'),
     type: 'list',
     displayFields: {
       title: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_TITLE'),
         type: 'text',
         tooltip: 'roleDescription',
       },
       company: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_COMPANY'),
         type: 'text',
       },
       from: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_FROM'),
         type: 'date',
       },
       to: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_TO'),
         type: 'date',
         skip: 'isWorking',
-        replace: 'now',
+        replace: toI18n('APPLICATION_REVIEW_FORM_LIST_NOW'),
+      },
+    },
+  },
+  educations: {
+    label: toI18n('APPLICATION_REVIEW_FORM_EDUCATIONS'),
+    type: 'list',
+    displayFields: {
+      fieldOfstudy: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_FOS'),
+        type: 'text',
+      },
+      school: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_SCHOOL'),
+        type: 'text',
+      },
+      degree: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_DEGREE'),
+        type: 'text',
+      },
+      gpa: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_GPA'),
+        type: 'text',
+      },
+      certificate: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_CERTIFICATE'),
+        type: 'upload',
       },
     },
   },
   languages: {
-    label: 'Ex',
+    label: toI18n('APPLICATION_REVIEW_FORM_LANGUAGES'),
     type: 'list',
     displayFields: {
       name: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_NAME'),
         type: 'text',
       },
       writing: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_WRITING'),
         type: 'text',
       },
       reading: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_READING'),
         type: 'text',
       },
       speaking: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_SPEAKING'),
         type: 'text',
       },
       overall: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_OVERALL'),
         type: 'text',
       },
     },
@@ -157,11 +196,15 @@ class ApplicationReview extends Component {
     const totalRequest = this.getTotalRequestedChange();
     return (
       <ReviewFormActionGroupRight>
-        <ButtonDefault>Reject</ButtonDefault>
+        <ButtonDefault>
+          {toI18n('APPLICATION_REVIEW_REJECT')}
+        </ButtonDefault>
         <ButtonPrimary
           onClick={totalRequest > 0 ? this.handleRequestChange : this.handleApprove}
         >
-          {totalRequest > 0 ? 'Request Change' : 'Approve'}
+          {totalRequest > 0
+            ? toI18n('APPLICATION_REVIEW_REQUEST_CHANGE')
+            : toI18n('APPLICATION_REVIEW_APPROVE')}
         </ButtonPrimary>
       </ReviewFormActionGroupRight>
     );
@@ -177,7 +220,9 @@ class ApplicationReview extends Component {
           <ReviewFormHeader>
             {/* <ReviewFormTitle>{label}</ReviewFormTitle> */}
             <ReviewFormRequestChangeWrapper>
-              <span>Change Requested: </span>
+              <span>
+                {toI18n('APPLICATION_REVIEW_CHANGE_REQUESTED')}
+              </span>
               <span className="value">
                 {this.getTotalRequestedChange()}
               </span>

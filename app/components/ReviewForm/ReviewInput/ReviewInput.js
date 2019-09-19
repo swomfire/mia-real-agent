@@ -27,7 +27,7 @@ class ReviewInput extends Component {
   }
 
   static propTypes = {
-    label: string.isRequired,
+    label: shape().isRequired,
     name: string.isRequired,
     type: string.isRequired,
     value: any.isRequired,
@@ -63,6 +63,35 @@ class ReviewInput extends Component {
     );
   }
 
+  renderItemValue = (type, value) => {
+    switch (type) {
+      case 'upload': {
+        const fileList = value.map((link, index) => {
+          const path = link.split('/');
+          const fileName = path[path.length - 1];
+          return {
+            uid: index,
+            name: fileName,
+            status: 'done',
+            url: link,
+            thumbUrl: link,
+          };
+        });
+        return (
+          <Upload
+            disabled
+            listType="picture-card"
+            defaultFileList={fileList}
+          />
+        );
+      }
+      case 'date':
+        return moment(value).format(DATE_TIME_FORMAT.DATE);
+      case 'text':
+      default: return value;
+    }
+  }
+
   renderListItem = (value) => {
     const { displayFields } = this.props;
     const keys = Object.keys(value).filter(key => displayFields[key]);
@@ -70,16 +99,14 @@ class ReviewInput extends Component {
       <ListItemWrapper>
         {keys.map((key) => {
           const {
-            tooltip, skip, replace, type,
+            label, tooltip, skip, replace, type,
           } = displayFields[key];
-          const result = type === 'date'
-            ? moment(value[key]).format(DATE_TIME_FORMAT.DATE)
-            : value[key];
+          const result = this.renderItemValue(type, value[key]);
           return (
             <Row mutter={32}>
               <Tooltip title={value[tooltip]}>
                 <ListFieldLabel>
-                  {key}
+                  {label}
                 </ListFieldLabel>
                 <ListFieldValue>
                   {value[skip] ? replace : result}
@@ -97,7 +124,7 @@ class ReviewInput extends Component {
     const { isRequest, comment } = this.state;
 
     return (
-      <ReviewInputValue isRequest={isRequest || comment}>
+      <ReviewInputValue isRequest={isRequest || comment} isList>
         {value.map(this.renderListItem)}
       </ReviewInputValue>
     );

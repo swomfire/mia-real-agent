@@ -30,12 +30,30 @@ export const ReviewInputValue = styled.div`
   > div {
     width: fit-content;
     padding: .5em;
-    color: ${props => props.isRequest && !props.isUpload
-    ? props.theme.colorStyled.ColorWhite
-    : props.theme.colorStyled.ColorBlackGrey};
-    background-color: ${props => props.isRequest && !props.isUpload
-    ? props.theme.colorStyled.ColorBgDefault
-    : props.theme.colorStyled.ColorWhite};
+    color: ${(props) => {
+    if (props.isRequest) {
+      if (!props.isUpload && !props.isList) {
+        return props.theme.colorStyled.ColorWhite;
+      }
+    }
+    return props.theme.colorStyled.ColorBlackGrey;
+  }};
+    background-color: ${(props) => {
+    if (props.isRequest) {
+      if (!props.isUpload && !props.isList) {
+        return props.theme.colorStyled.ColorBgDefault;
+      }
+    }
+    return props.theme.colorStyled.ColorWhite;
+  }};
+    border-color: ${(props) => {
+    if (props.isRequest) {
+      if (props.isList) {
+        return props.theme.colorStyled.ColorBgDefault;
+      }
+    }
+    return props.theme.colorStyled.ColorWhite;
+  }};
     border-radius: .5em;
     .ant-upload-list-picture-card .ant-upload-list-item {
       border-color: ${props => props.isRequest && props.isUpload
@@ -129,4 +147,12 @@ export const ListFieldLabel = styled.div`
 
 export const ListFieldValue = styled.div`
   flex: 0 0 70%;
+  .ant-upload-list-item-info {
+    span {
+      flex-direction: column;
+    }
+    img {
+      margin-bottom: 0;
+    }
+  }
 `;

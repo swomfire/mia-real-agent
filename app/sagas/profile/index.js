@@ -47,6 +47,7 @@ function* checkPassword({ payload }) {
       error, 'response.data.message', error.message
     );
     yield put(actions.checkPasswordFailAction(message));
+    return;
   }
   const { data } = response;
   const { confirmed } = data;
@@ -88,6 +89,7 @@ function* updateProfileAvatar({ payload }) {
     );
     notification.error({ message });
     yield put(actions.updateAvatarFail(message));
+    return;
   }
   const { data } = response;
   notification.success({ message: toI18n('PROFILE_UPDATE_SUCCESS') });
@@ -95,20 +97,20 @@ function* updateProfileAvatar({ payload }) {
 }
 
 function* changePassword({ payload }) {
-  try {
-    const userId = yield select(getUserId);
-    const { currentPassword, newPassword } = payload;
-    const { response } = yield call(UserApi.changePassword, userId, currentPassword, newPassword);
-    const { data } = response;
-    const { token } = data;
-    notification.success({ message: toI18n('PROFILE_CHANGE_PASSWORD_FORM_SUCCESS') });
-    yield put(actions.changePasswordCompleteAction());
-    yield put(updateToken(token));
-  } catch (error) {
+  const userId = yield select(getUserId);
+  const { currentPassword, newPassword } = payload;
+  const { response, error } = yield call(UserApi.changePassword, userId, currentPassword, newPassword);
+  if (error) {
     const errMsg = _get(error, 'response.data.message', error.message);
-    yield put(actions.changePasswordFailAction(error));
     notification.error({ message: errMsg });
+    yield put(actions.changePasswordFailAction(errMsg));
+    return;
   }
+  const { data } = response;
+  const { token } = data;
+  notification.success({ message: toI18n('PROFILE_CHANGE_PASSWORD_FORM_SUCCESS') });
+  yield put(actions.changePasswordCompleteAction());
+  yield put(updateToken(token));
 }
 
 function* addCreditCard({ payload }) {

@@ -2,9 +2,11 @@ import React, { PureComponent } from 'react';
 import _get from 'lodash/get';
 import { Col } from 'antd';
 import { shape, string } from 'prop-types';
+import moment from 'moment';
 import { RowStyled, InputLabelStyled, InputStyled } from '../styles';
 import { ROLES, SIZE_OPTIONS } from '../../../../common/enums';
 import { toI18n } from '../../../utils/func-utils';
+import { DATE_TIME_FORMAT } from '../../../utils/constants';
 
 export class ProfileDetail extends PureComponent {
   static propTypes = {
@@ -60,10 +62,10 @@ export class ProfileDetail extends PureComponent {
         <RowStyled gutter={32}>
           <Col span={12}>
             <InputLabelStyled>
-              {toI18n('PROFILE_EDIT')}
+              {toI18n('PROFILE_DETAIL_DOB')}
               :
             </InputLabelStyled>
-            <InputStyled>{dateOfBirth}</InputStyled>
+            <InputStyled>{moment(dateOfBirth).format(DATE_TIME_FORMAT.DATE)}</InputStyled>
           </Col>
           <Col span={12}>
             <InputLabelStyled>

@@ -210,7 +210,13 @@ class ApplicationReview extends Component {
   }
 
   handleApprove = () => {
+    const { applicationApprove, applicationId } = this.props;
+    applicationApprove({ _id: applicationId });
+  }
 
+  handleReject = () => {
+    const { applicationReject, applicationId } = this.props;
+    applicationReject({ _id: applicationId });
   }
 
   handleRequestChange = () => {

@@ -29,6 +29,10 @@ export const APPLICATION_REVIEW = 'application/APPLICATION_REVIEW';
 export const APPLICATION_REVIEW_COMPLETE = 'application/APPLICATION_REVIEW_COMPLETE';
 export const APPLICATION_REVIEW_FAIL = 'application/APPLICATION_REVIEW_FAIL';
 
+export const APPLICATION_PENDING = 'application/APPLICATION_PENDING';
+export const APPLICATION_PENDING_COMPLETE = 'application/APPLICATION_PENDING_COMPLETE';
+export const APPLICATION_PENDING_FAIL = 'application/APPLICATION_PENDING_COMPLETE';
+
 export const APPLICATION_FETCH_SINGLE = 'application/APPLICATION_FETCH_SINGLE';
 export const APPLICATION_FETCH_SINGLE_COMPLETE = 'application/APPLICATION_FETCH_SINGLE_COMPLETE';
 export const APPLICATION_FETCH_SINGLE_FAIL = 'application/APPLICATION_FETCH_SINGLE_FAIL';
@@ -178,6 +182,21 @@ const applicationApproveComplete = application => ({
 
 const applicationApproveFail = errorMsg => ({
   type: APPLICATION_APPROVE_FAIL,
+  errorMsg,
+});
+
+const applicationPending = ({ _id }) => ({
+  type: APPLICATION_PENDING,
+  applicationId: _id,
+});
+
+const applicationPendingComplete = application => ({
+  type: APPLICATION_PENDING_COMPLETE,
+  application,
+});
+
+const applicationPendingFail = errorMsg => ({
+  type: APPLICATION_PENDING_FAIL,
   errorMsg,
 });
 
@@ -341,12 +360,14 @@ function applicationReducer(state = initialState, action) {
       return state.setIn(['applications', id], fromJS({ error: errorMsg }));
     }
     case APPLICATION_REVIEW:
+    case APPLICATION_PENDING:
     case APPLICATION_APPROVE:
     case APPLICATION_REJECT: {
       return state.setIn(['applications', action.applicationId, 'isLoading'], true);
     }
 
     case APPLICATION_REVIEW_COMPLETE:
+    case APPLICATION_PENDING_COMPLETE:
     case APPLICATION_REJECT_COMPLETE:
     case APPLICATION_APPROVE_COMPLETE: {
       const { application } = action;
@@ -401,6 +422,10 @@ export const actions = {
   applicationDetailEditAction,
   applicationDetailEditCompleteAction,
   applicationDetailEditFailAction,
+
+  applicationPending,
+  applicationPendingComplete,
+  applicationPendingFail,
 };
 
 export const selectors = {

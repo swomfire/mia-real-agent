@@ -83,6 +83,7 @@ export const HeaderTextDetails = styled.div`
     margin-left: 0.2em;
   }
   i{
+    margin-right: .5em;
     &:hover{
       color: ${props => props.theme.colorStyled.ColorBgDefault};
     }

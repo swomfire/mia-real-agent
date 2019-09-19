@@ -16,6 +16,7 @@ class ApplicationController extends BaseController {
     this.approveApplication = this.approveApplication.bind(this);
     this.rejectApplication = this.rejectApplication.bind(this);
     this.reviewApplication = this.reviewApplication.bind(this);
+    this.pendingApplication = this.pendingApplication.bind(this);
     this.updateStatus = this.updateStatus.bind(this);
     this.checkBasicInfomationExisted = this.checkBasicInfomationExisted.bind(this);
   }
@@ -68,6 +69,16 @@ class ApplicationController extends BaseController {
     try {
       const { model: application } = req;
       const result = await this.updateStatus(application, APPLICATION_STATUS.REVIEWING);
+      return res.status(httpStatus.OK).send(result);
+    } catch (error) {
+      return this.handleError(res, error);
+    }
+  }
+
+  async pendingApplication(req, res) {
+    try {
+      const { model: application } = req;
+      const result = await this.updateStatus(application, APPLICATION_STATUS.PENDING);
       return res.status(httpStatus.OK).send(result);
     } catch (error) {
       return this.handleError(res, error);

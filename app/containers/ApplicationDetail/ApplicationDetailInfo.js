@@ -14,6 +14,7 @@ const mapDispatchToProps = {
   applicationApprove: actions.applicationApprove,
   applicationReject: actions.applicationReject,
   applicationReview: actions.applicationReview,
+  applicationPending: actions.applicationPending,
 };
 
 export default connect(

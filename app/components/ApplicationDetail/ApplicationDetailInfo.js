@@ -42,6 +42,7 @@ class applicationDetailInfo extends PureComponent {
       applicationApprove,
       applicationReject,
       applicationReview,
+      applicationPending,
     } = this.props;
 
     if (_isEmpty(applicationDetail) || applicationDetail.isLoading) {
@@ -67,8 +68,8 @@ class applicationDetailInfo extends PureComponent {
       applicationApprove,
       applicationReject,
       applicationReview,
+      applicationPending,
     };
-    console.log(status)
     return (
       <AdminDetailsContainer>
         <ApplicationDetailInfoHeader
@@ -111,6 +112,7 @@ applicationDetailInfo.propTypes = {
   applicationApprove: PropTypes.func.isRequired,
   applicationReject: PropTypes.func.isRequired,
   applicationReview: PropTypes.func.isRequired,
+  applicationPending: PropTypes.func.isRequired,
   applicationDetail: PropTypes.object.isRequired,
 };
 

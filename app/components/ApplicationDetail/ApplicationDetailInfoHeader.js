@@ -15,6 +15,7 @@ import {
   ButtonReject,
 } from '../../stylesheets/Button.style';
 import { APPLICATION_STATUS } from '../../../common/enums';
+import { Icon } from 'antd';
 
 class ApplicationDetailInfoHeader extends PureComponent {
   goToEditPage = () => {
@@ -37,6 +38,11 @@ class ApplicationDetailInfoHeader extends PureComponent {
     actions.applicationReview({ _id: applicationId });
   }
 
+  handlePending = () => {
+    const { applicationId, actions } = this.props;
+    actions.applicationPending({ _id: applicationId });
+  }
+
   render() {
     const {
       nickname, firstName, lastName, status,
@@ -44,6 +50,9 @@ class ApplicationDetailInfoHeader extends PureComponent {
     return (
       <TitleDetailsHead>
         <HeaderTextDetails>
+          {status === APPLICATION_STATUS.REVIEWING && (
+            <Icon onClick={this.handlePending} type="left" />
+          )}
           <span>
             {nickname}
           </span>
@@ -65,10 +74,6 @@ class ApplicationDetailInfoHeader extends PureComponent {
               <i className="mia-check" />
               <span>Review</span>
             </ButtonApprove>),
-            // (<ButtonReject onClick={this.handleReject}>
-            //   <i className="mia-close" />
-            //   <span>Reject</span>
-            // </ButtonReject>)
           ]}
 
         </AdminHeadActionGroup>

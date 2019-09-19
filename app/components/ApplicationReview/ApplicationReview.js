@@ -146,6 +146,8 @@ class ApplicationReview extends Component {
     applicationId: string.isRequired,
     applicationDetail: shape().isRequired,
     reviewSubmit: func.isRequired,
+    applicationApprove: func.isRequired,
+    applicationReject: func.isRequired,
     isSubmitting: bool.isRequired,
   }
 
@@ -176,7 +178,13 @@ class ApplicationReview extends Component {
   }
 
   handleApprove = () => {
+    const { applicationApprove, applicationId } = this.props;
+    applicationApprove({ _id: applicationId });
+  }
 
+  handleReject = () => {
+    const { applicationReject, applicationId } = this.props;
+    applicationReject({ _id: applicationId });
   }
 
   handleRequestChange = () => {
@@ -196,7 +204,9 @@ class ApplicationReview extends Component {
     const totalRequest = this.getTotalRequestedChange();
     return (
       <ReviewFormActionGroupRight>
-        <ButtonDefault>
+        <ButtonDefault
+          onClick={this.handleReject}
+        >
           {toI18n('APPLICATION_REVIEW_REJECT')}
         </ButtonDefault>
         <ButtonPrimary

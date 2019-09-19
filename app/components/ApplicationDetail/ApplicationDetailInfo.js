@@ -68,6 +68,7 @@ class applicationDetailInfo extends PureComponent {
       applicationReject,
       applicationReview,
     };
+    console.log(status)
     return (
       <AdminDetailsContainer>
         <ApplicationDetailInfoHeader

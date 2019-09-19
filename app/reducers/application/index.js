@@ -340,26 +340,20 @@ function applicationReducer(state = initialState, action) {
       const { id, errorMsg } = action;
       return state.setIn(['applications', id], fromJS({ error: errorMsg }));
     }
+    case APPLICATION_REVIEW:
+    case APPLICATION_APPROVE:
+    case APPLICATION_REJECT: {
+      return state.setIn(['applications', action.applicationId, 'isLoading'], true);
+    }
 
+    case APPLICATION_REVIEW_COMPLETE:
+    case APPLICATION_REJECT_COMPLETE:
     case APPLICATION_APPROVE_COMPLETE: {
       const { application } = action;
       const { _id } = application;
       return state
         .setIn(['applications', _id], fromJS(application));
     }
-    case applicationRejectComplete: {
-      const { application } = action;
-      const { _id } = application;
-      return state
-        .setIn(['applications', _id], fromJS(application));
-    }
-    case APPLICATION_REVIEW_COMPLETE: {
-      const { application } = action;
-      const { _id } = application;
-      return state
-        .setIn(['applications', _id], fromJS(application));
-    }
-
     default: return state;
   }
 }

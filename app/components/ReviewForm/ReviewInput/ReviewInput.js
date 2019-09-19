@@ -15,10 +15,28 @@ import {
 } from './styles';
 import { ButtonPrimary } from '../../../stylesheets/Button.style';
 import { DATE_TIME_FORMAT } from '../../../utils/constants';
+import { toI18n } from '../../../utils/func-utils';
+
+const CommentIcon = () => (
+  <svg width="2em" height="2em" fill="currentColor" viewBox="0 0 1024 1024">
+    <g>
+      <g id="chat">
+        <g>
+          <path
+            d="M554.625,0H57.375C25.685,0,0,25.685,0,57.375v344.25C0,433.315,25.685,459,57.375,459h76.5v153L382.5,459h172.125
+          c31.69,0,57.375-25.685,57.375-57.375V57.375C612,25.685,586.315,0,554.625,0z M535.5,382.5H363.375l-153,95.625L191.25,382.5
+          H76.5v-306h459V382.5z"
+          />
+        </g>
+      </g>
+    </g>
+  </svg>
+);
 
 class ReviewInput extends Component {
   state = {
     isRequest: false,
+    inputComment: '',
     comment: '',
   }
 
@@ -144,16 +162,17 @@ class ReviewInput extends Component {
   }
 
   handleSubmitComment = () => {
-    const { value = '' } = this.comment.state;
+    const { inputComment = '' } = this.state;
     this.setState({
-      comment: value.trim(),
+      comment: inputComment.trim(),
+      inputComment: '',
       isRequest: false,
     });
     const { onAdd, name } = this.props;
     if (onAdd) {
       onAdd({
         key: name,
-        value,
+        inputComment,
       });
     }
   }
@@ -170,20 +189,22 @@ class ReviewInput extends Component {
   }
 
   renderFieldHasComment = () => {
-    const { comment } = this.state;
+    const { comment, isRequest } = this.state;
     const { label } = this.props;
     return (
-      <ReviewInputWrapper>
+      <ReviewInputWrapper isRequest={isRequest || comment}>
         <ReviewInputTitle>{label}</ReviewInputTitle>
         <ReviewInputValueWrapper>
           <div>
             {this.selectInputType()}
+            <ReviewInputAction>
+              <Icon className="review-input-action" type="delete" theme="filled" onClick={this.handelRemoveComment} />
+            </ReviewInputAction>
           </div>
           <div>
             <CommentDisplayWrapper>
-              <Icon type="message" theme="filled" />
+              <Icon component={CommentIcon} />
               {comment}
-              <Icon className="comment-action" type="delete" theme="filled" onClick={this.handelRemoveComment} />
             </CommentDisplayWrapper>
           </div>
         </ReviewInputValueWrapper>
@@ -202,47 +223,56 @@ class ReviewInput extends Component {
     }
   }
 
+  handleEnterComment = (e) => {
+    this.setState({
+      inputComment: e.target.value,
+    });
+  }
+
   render() {
-    const { isRequest, comment } = this.state;
+    const { isRequest, comment, inputComment } = this.state;
     const { label } = this.props;
     if (comment) {
       return this.renderFieldHasComment();
     }
     if (isRequest) {
       return (
-        <ReviewInputWrapper>
+        <ReviewInputWrapper isRequest={isRequest || comment} isCommenting>
           <ReviewInputTitle>{label}</ReviewInputTitle>
           <ReviewInputValueWrapper>
             <div>
               {this.selectInputType()}
+              <CommentAction>
+                <ButtonPrimary onClick={this.handleSubmitComment}>
+                  {toI18n('FORM_SAVE')}
+                </ButtonPrimary>
+              </CommentAction>
               <ReviewInputAction>
-                <Icon type="close" onClick={() => this.handleToggleRequest(false)} />
+                <Icon className="review-input-action" type="close" onClick={() => this.handleToggleRequest(false)} />
               </ReviewInputAction>
             </div>
             <CommentWrapper>
               <CommentInput
-                ref={(commentField) => { this.comment = commentField; }}
+                autosize={{ minRow: 1, maxRows: 3 }}
+                onPressEnter={this.handleSubmitComment}
+                value={inputComment}
+                onChange={this.handleEnterComment}
                 placeholder="Comment..."
                 autoFocus
               />
-              <CommentAction>
-                <ButtonPrimary onClick={this.handleSubmitComment}>
-                  <Icon type="check" />
-                </ButtonPrimary>
-              </CommentAction>
             </CommentWrapper>
           </ReviewInputValueWrapper>
         </ReviewInputWrapper>
       );
     }
     return (
-      <ReviewInputWrapper>
+      <ReviewInputWrapper isRequest={isRequest || comment}>
         <ReviewInputTitle>{label}</ReviewInputTitle>
         <ReviewInputValueWrapper>
           <div>
             {this.selectInputType()}
             <ReviewInputAction>
-              <Icon type="message" theme="filled" onClick={() => this.handleToggleRequest(true)} />
+              <Icon className="review-input-action" component={CommentIcon} onClick={() => this.handleToggleRequest(true)} />
             </ReviewInputAction>
           </div>
         </ReviewInputValueWrapper>

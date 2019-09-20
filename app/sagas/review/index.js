@@ -5,6 +5,7 @@ import _get from 'lodash/get';
 import {
   SUBMIT, actions, REVIEW_FETCH_SINGLE_BY_TOKEN,
 } from 'reducers/review';
+import { actions as APPLICATION_ACTIONS } from 'reducers/application';
 import { notification } from 'antd';
 import * as ReviewApi from '../../api/review';
 import { getUserId } from '../../reducers/auth';
@@ -31,6 +32,7 @@ function* submitReview({ payload }) {
   const { data } = response;
   notification.success({ message: 'Request change submitted' });
   yield put(actions.submitCompleteAction(data));
+  yield put(APPLICATION_ACTIONS.fetchApplicationSingle(applicationId));
 }
 
 function* getByToken({ payload }) {

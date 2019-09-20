@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   Row, Col, Form, Modal, Icon,
 } from 'antd';
-import * as Yup from 'yup';
 import { Formik, FieldArray } from 'formik';
 import { func } from 'prop-types';
 import FormInput from '../FormInput/FormInput';
@@ -17,6 +16,7 @@ import {
 import { ButtonCancel, ButtonSubmit, ArrayAddButton } from '../../stylesheets/Button.style';
 import { AGENT_SKILL, APPLICATION_LANGUAGE } from '../../../common/enums';
 import { toI18n } from '../../utils/func-utils';
+import { APPLICATION_FORM } from '../../utils/constants';
 
 const languageInititalValues = {
   name: '',
@@ -59,36 +59,6 @@ const LANGUAGE_OPTIONS = [
     value: APPLICATION_LANGUAGE.VIETNAMESE,
   },
 ];
-
-const languageValidationSchema = Yup.object().shape({
-  name: Yup.string().trim().required('Required'),
-  writing: Yup.number().min(1).max(5).required('Required'),
-  reading: Yup.number().min(1).max(5).required('Required'),
-  speaking: Yup.number().min(1).max(5).required('Required'),
-  overall: Yup.number().min(1).max(5).required('Required'),
-});
-
-const validationSchema = Yup.object().shape({
-  cv: Yup.array().of(Yup.object()).required('Required'),
-  skills: Yup.array().of(Yup.string()),
-  languages: Yup.array().of(Yup.object().shape({
-    name: Yup.string().trim().required('Required'),
-    writing: Yup.number().min(1).max(5).required('Required'),
-    reading: Yup.number().min(1).max(5).required('Required'),
-    speaking: Yup.number().min(1).max(5).required('Required'),
-    overall: Yup.number().min(1).max(5).required('Required'),
-  })),
-  social: Yup.object().shape({
-    linkedin: Yup.string().trim(),
-    facebook: Yup.string().trim(),
-    zalo: Yup.string().trim(),
-    github: Yup.string().trim(),
-    gitlab: Yup.string().trim(),
-    stackOverflows: Yup.string().trim(),
-    twitter: Yup.string().trim(),
-    websites: Yup.array().of(Yup.string()),
-  }),
-});
 
 export class AdditionalForm extends Component {
   state = {
@@ -153,7 +123,7 @@ export class AdditionalForm extends Component {
         <Formik
           ref={(formik) => { this.educationformik = formik; }}
           initialValues={languageInititalValues}
-          validationSchema={languageValidationSchema}
+          validationSchema={APPLICATION_FORM.LANGUAGE_VALIDATION_SCHEMA}
           onSubmit={this.handleAddLanguage}
         >
           {({ handleSubmit }) => (
@@ -340,7 +310,7 @@ export class AdditionalForm extends Component {
         <Formik
           ref={(formik) => { this.formik = formik; }}
           initialValues={initialValues}
-          validationSchema={validationSchema}
+          validationSchema={APPLICATION_FORM.ADDITIONAL_VALIDATION_SCHEMA}
           onSubmit={this.handleSubmit}
         >
           {({ handleSubmit, values }) => (

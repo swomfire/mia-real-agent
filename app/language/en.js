@@ -28,6 +28,8 @@ const en = {
     FORM_REQUIRED: 'Required',
     FORM_INVALID_MAIL: 'Invalid Email',
     FORM_PASSWORD_MUST_MATCH: 'Passwords must match',
+    FORM_PASSWORD_FROM_CANNOT_EXCEED_TO: 'From cannot exceed To',
+    FORM_PASSWORD_TO_CANNOT_LOWER_FORM: 'To cannot lower Form',
     // Form input
     FORM_INPUT_UPLOAD_PLACEHOLDER: 'Upload',
     FORM_INPUT_UPLOAD_MAX_SIZE: 'Upload file cannot exceed 10MB',
@@ -456,6 +458,7 @@ const en = {
     APPLICATION_REVIEW_FORM_COUNTRY: 'Country',
     APPLICATION_REVIEW_FORM_POSTCODE: 'Postcode',
     APPLICATION_REVIEW_FORM_ADDRESS: 'Address',
+    APPLICATION_REVIEW_FORM_PHONE: 'Phone No.',
     APPLICATION_REVIEW_FORM_CV: 'CV',
     APPLICATION_REVIEW_FORM_CATEGORIES: 'Categories',
     APPLICATION_REVIEW_FORM_SKILLS: 'Skills',

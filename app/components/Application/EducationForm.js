@@ -14,6 +14,7 @@ import {
 import { FIELD_OF_STUDY } from '../../../common/enums';
 import { toI18n } from '../../utils/func-utils';
 import { ButtonCancel, ButtonSubmit, ArrayAddButton } from '../../stylesheets/Button.style';
+import { APPLICATION_FORM } from '../../utils/constants';
 
 const educationInititalValues = {
   school: '',
@@ -26,17 +27,6 @@ const initialValues = {
   educations: [],
 };
 
-const educationValidationSchema = Yup.object().shape({
-  school: Yup.string().trim().required('Required'),
-  degree: Yup.string().trim().required('Required'),
-  certificate: Yup.array().of(Yup.object()).required('Required'),
-  fieldOfStudies: Yup.array().of(Yup.string()),
-  gpa: Yup.number().min(0).max(5),
-});
-
-const validationSchema = Yup.object().shape({
-  educations: Yup.array().of(educationValidationSchema),
-});
 export class EducationForm extends Component {
   state = {
     isEducationFormOpen: false,
@@ -95,7 +85,7 @@ export class EducationForm extends Component {
         <Formik
           ref={(formik) => { this.educationformik = formik; }}
           initialValues={educationInititalValues}
-          validationSchema={educationValidationSchema}
+          validationSchema={APPLICATION_FORM.EDUCATION_ITEM_VALIDATION_SCHEMA}
           onSubmit={this.handleAddExperience}
         >
           {({ handleSubmit }) => (
@@ -249,7 +239,7 @@ export class EducationForm extends Component {
         <Formik
           ref={(formik) => { this.formik = formik; }}
           initialValues={initialValues}
-          validationSchema={validationSchema}
+          validationSchema={APPLICATION_FORM.EDUCATION_VALIDATION_SCHEMA}
           onSubmit={this.handleSubmit}
         >
           {({ handleSubmit, values }) => (

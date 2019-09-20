@@ -23,6 +23,7 @@ class ReviewController extends BaseController {
       const domain = process.env.DOMAIN;
       const requestToken = jwt.sign({ _id }, process.env.SECRET_KEY_JWT,
         { expiresIn: 60 * 60 * 24 * 3 });
+      console.log(requestToken);
       sendEmailChangeRequest(email, requestToken, `${domain}/application-change`);
       await ApplicationService.update(applicationId, { status: APPLICATION_STATUS.REQUESTED_CHANGE });
       return res.status(httpStatus.OK).send(result);

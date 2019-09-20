@@ -17,6 +17,11 @@ class ChangeRequest extends Component {
     fetchReview(token);
   }
 
+  mapReviewFieldWithValidate = () => {
+    const { review } = this.props;
+    const { fields } = review;
+  }
+
   render() {
     const { isFetching = false, review } = this.props;
     console.log(review);

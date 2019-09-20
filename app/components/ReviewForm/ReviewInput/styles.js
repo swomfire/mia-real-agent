@@ -102,13 +102,19 @@ export const CommentInput = styled(TextArea)`
 
 export const CommentAction = styled.div`
   flex: 0 0 auto;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: .3em;
   button {
-    height: 100%;
     width: 100%;
     min-width: 1em;
     i {
       margin-right: 0;
     }
+  }
+  > i{
+    margin-left: .5em;
+    padding-bottom: .3em;
   }
 `;
 
@@ -165,5 +171,8 @@ export const ListFieldValue = styled.div`
     img {
       margin-bottom: 0;
     }
+  }
+  .ant-upload-list-item-thumbnail{
+    max-height: 55px;
   }
 `;

@@ -163,6 +163,7 @@ export const APPLICATION_STATUS = {
   PENDING: 'Pending',
   REJECTED: 'Rejected',
   REVIEWING: 'Reviewing',
+  REQUESTED_CHANGE: 'Requested Change',
   APPROVED: 'Approved',
 };
 

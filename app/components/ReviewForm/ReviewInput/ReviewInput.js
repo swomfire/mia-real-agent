@@ -246,10 +246,8 @@ class ReviewInput extends Component {
                 <ButtonPrimary onClick={this.handleSubmitComment}>
                   {toI18n('FORM_SAVE')}
                 </ButtonPrimary>
-              </CommentAction>
-              <ReviewInputAction>
                 <Icon className="review-input-action" type="close" onClick={() => this.handleToggleRequest(false)} />
-              </ReviewInputAction>
+              </CommentAction>
             </div>
             <CommentWrapper>
               <CommentInput

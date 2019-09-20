@@ -3,7 +3,60 @@ import { fromJS } from 'immutable';
 export const SUBMIT = 'review/SUBMIT';
 export const SUBMIT_SUCCESS = 'review/SUBMIT_SUCCESS';
 export const SUBMIT_FAIL = 'review/SUBMIT_FAIL';
+
+export const REVIEW_FETCH_SINGLE_BY_TOKEN = 'review/REVIEW_FETCH_SINGLE_BY_TOKEN';
+export const REVIEW_FETCH_SINGLE_BY_TOKEN_COMPLETE = 'review/REVIEW_FETCH_SINGLE_BY_TOKEN_COMPLETE';
+export const REVIEW_FETCH_SINGLE_BY_TOKEN_FAIL = 'review/REVIEW_FETCH_SINGLE_BY_TOKEN_FAIL';
+
+export const REVIEW_FETCH_SINGLE = 'review/REVIEW_FETCH_SINGLE';
+export const REVIEW_FETCH_SINGLE_COMPLETE = 'review/REVIEW_FETCH_SINGLE_COMPLETE';
+export const REVIEW_FETCH_SINGLE_FAIL = 'review/REVIEW_FETCH_SINGLE_FAIL';
+
 // action creator
+function fetchReviewSingleByToken(token) {
+  return {
+    type: REVIEW_FETCH_SINGLE_BY_TOKEN,
+    payload: {
+      token,
+    },
+  };
+}
+
+function fetchReviewSingleByTokenFail(errorMsg) {
+  return {
+    type: REVIEW_FETCH_SINGLE_BY_TOKEN_FAIL,
+    errorMsg,
+  };
+}
+
+function fetchReviewSingleByTokenComplete(payload) {
+  return {
+    type: REVIEW_FETCH_SINGLE_BY_TOKEN_COMPLETE,
+    payload,
+  };
+}
+
+function fetchReviewSingle(id) {
+  return {
+    type: REVIEW_FETCH_SINGLE,
+    id,
+  };
+}
+
+function fetchReviewSingleFail(id, errorMsg) {
+  return {
+    type: REVIEW_FETCH_SINGLE_COMPLETE,
+    errorMsg,
+    id,
+  };
+}
+
+function fetchReviewSingleComplete(payload) {
+  return {
+    type: REVIEW_FETCH_SINGLE_FAIL,
+    payload,
+  };
+}
 
 const submitAction = (review, applicationId) => ({
   type: SUBMIT,
@@ -30,13 +83,55 @@ const submitFailAction = errorMessage => ({
 const getReviewIsSubmitting = ({ review }) => review.get('isSubmitting');
 const getReviewSubmitError = ({ review }) => review.get('submitError');
 
+const getReviewIsFetching = ({ review }) => review.get('isFetching');
+const getReviewFetchedId = ({ review }) => review.get('fetchedId');
+const getReviewFetchError = ({ review }) => review.get('fetchError');
+
 const initialState = fromJS({
   isSubmitting: false,
   submitError: '',
+  reviews: {},
+  isFetching: false,
+  fetchedId: '',
+  fetchError: '',
 });
 
 function reviewReducer(state = initialState, action) {
   switch (action.type) {
+    case REVIEW_FETCH_SINGLE_BY_TOKEN:
+      return state.set('isFetching', true);
+
+    case REVIEW_FETCH_SINGLE_BY_TOKEN_COMPLETE: {
+      const { payload } = action;
+      const { _id } = payload;
+      return state
+        .set('isFetching', false)
+        .set('fetchedId', _id)
+        .setIn(['reviews', _id], fromJS(payload));
+    }
+
+    case REVIEW_FETCH_SINGLE_BY_TOKEN_FAIL: {
+      const { errorMsg } = action;
+      return state
+        .set('isFetching', false)
+        .set('fetchError', errorMsg);
+    }
+
+
+    case REVIEW_FETCH_SINGLE:
+      return state.setIn(['reviews', action.id, 'isLoading'], true);
+
+    case REVIEW_FETCH_SINGLE_COMPLETE: {
+      const { payload } = action;
+      const { _id } = payload;
+      return state.setIn(['reviews', _id], fromJS(payload));
+    }
+
+    case REVIEW_FETCH_SINGLE_FAIL: {
+      const { id, errorMsg } = action;
+      return state.setIn(['reviews', id], fromJS({ error: errorMsg }));
+    }
+
     case SUBMIT:
       return state.set('isSubmitting', true)
         .set('submitError', '');
@@ -56,9 +151,21 @@ export const actions = {
   submitAction,
   submitCompleteAction,
   submitFailAction,
+
+  fetchReviewSingle,
+  fetchReviewSingleComplete,
+  fetchReviewSingleFail,
+
+  fetchReviewSingleByToken,
+  fetchReviewSingleByTokenComplete,
+  fetchReviewSingleByTokenFail,
 };
 
 export const selectors = {
   getReviewIsSubmitting,
   getReviewSubmitError,
+
+  getReviewFetchedId,
+  getReviewIsFetching,
+  getReviewFetchError,
 };

@@ -3,7 +3,7 @@ import {
 } from 'redux-saga/effects';
 import _get from 'lodash/get';
 import {
-  SUBMIT, actions,
+  SUBMIT, actions, REVIEW_FETCH_SINGLE_BY_TOKEN,
 } from 'reducers/review';
 import { notification } from 'antd';
 import * as ReviewApi from '../../api/review';
@@ -33,8 +33,25 @@ function* submitReview({ payload }) {
   yield put(actions.submitCompleteAction(data));
 }
 
+function* getByToken({ payload }) {
+  const { token } = payload;
+  const { error, response } = yield call(ReviewApi.getByToken, token);
+  if (error) {
+    const message = _get(
+      error, 'response.data.message', error.message
+    );
+    notification.error({ message });
+    yield put(actions.fetchReviewSingleByTokenFail(message));
+    return;
+  }
+
+  const { data } = response;
+  yield put(actions.fetchReviewSingleByTokenComplete(data));
+}
+
 function* reviewFlow() {
   yield takeEvery(SUBMIT, submitReview);
+  yield takeEvery(REVIEW_FETCH_SINGLE_BY_TOKEN, getByToken);
 }
 
 export default reviewFlow;

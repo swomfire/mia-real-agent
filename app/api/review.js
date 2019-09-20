@@ -5,3 +5,8 @@ export const createReview = data => axios
   .post('review', data)
   .then(response => ({ response }))
   .catch(handleError);
+
+export const getByToken = token => axios
+  .post('review/token', { token })
+  .then(response => ({ response }))
+  .catch(handleError);

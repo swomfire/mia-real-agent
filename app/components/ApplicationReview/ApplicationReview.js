@@ -165,7 +165,6 @@ class ApplicationReview extends Component {
     const { applicationReviewForms } = this.state;
     const form = this.reviewForm;
     const fields = form.getFields();
-    console.log(fields)
     this.setState({
       applicationReviewForms: {
         ...applicationReviewForms,

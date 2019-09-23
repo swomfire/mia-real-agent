@@ -12,7 +12,35 @@ export const REVIEW_FETCH_SINGLE = 'review/REVIEW_FETCH_SINGLE';
 export const REVIEW_FETCH_SINGLE_COMPLETE = 'review/REVIEW_FETCH_SINGLE_COMPLETE';
 export const REVIEW_FETCH_SINGLE_FAIL = 'review/REVIEW_FETCH_SINGLE_FAIL';
 
+export const UPDATE_CHANGE_FOR_APPLICATION = 'review/UPDATE_CHANGE_FOR_APPLICATION';
+export const UPDATE_CHANGE_FOR_APPLICATION_COMPLETE = 'review/UPDATE_CHANGE_FOR_APPLICATION_COMPLETE';
+export const UPDATE_CHANGE_FOR_APPLICATION_FAIL = 'review/UPDATE_CHANGE_FOR_APPLICATION_FAIL';
+
 // action creator
+function updateChangeForApplication(token, application) {
+  return {
+    type: UPDATE_CHANGE_FOR_APPLICATION,
+    payload: {
+      token,
+      application,
+    },
+  };
+}
+
+function updateChangeForApplicationFail(errorMsg) {
+  return {
+    type: UPDATE_CHANGE_FOR_APPLICATION_FAIL,
+    errorMsg,
+  };
+}
+
+function updateChangeForApplicationComplete(payload) {
+  return {
+    type: UPDATE_CHANGE_FOR_APPLICATION_COMPLETE,
+    payload,
+  };
+}
+
 function fetchReviewSingleByToken(token) {
   return {
     type: REVIEW_FETCH_SINGLE_BY_TOKEN,
@@ -159,6 +187,10 @@ export const actions = {
   fetchReviewSingleByToken,
   fetchReviewSingleByTokenComplete,
   fetchReviewSingleByTokenFail,
+
+  updateChangeForApplication,
+  updateChangeForApplicationComplete,
+  updateChangeForApplicationFail,
 };
 
 export const selectors = {

@@ -5,6 +5,7 @@ class ReviewRouter extends BaseRouter {
   constructor(controller) {
     super(controller);
     this.router.post('/token', this.controller.getByToken);
+    this.router.post('/update', this.controller.updateApplication);
   }
 }
 

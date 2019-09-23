@@ -1,6 +1,7 @@
 import ls from 'local-storage';
 import * as Yup from 'yup';
 import { toI18n } from './func-utils';
+import { AGENT_SKILL, CATEGORY_OPTIONS } from '../../common/enums';
 export const RESTART_ON_REMOUNT = '@@saga-injector/restart-on-remount';
 export const DAEMON = '@@saga-injector/daemon';
 export const ONCE_TILL_UNMOUNT = '@@saga-injector/once-till-unmount';
@@ -258,12 +259,16 @@ export const APPLICATION_REVIEW_MAPPING = {
   },
   categories: {
     label: toI18n('APPLICATION_REVIEW_FORM_CATEGORIES'),
-    type: 'text',
+    type: 'select',
+    options: CATEGORY_OPTIONS,
+    mode: 'multiple',
     schema: 'EXPERIENCE_VALIDATION_SCHEMA',
   },
   skills: {
     label: toI18n('APPLICATION_REVIEW_FORM_SKILLS'),
-    type: 'text',
+    type: 'select',
+    options: AGENT_SKILL,
+    mode: 'multiple',
     schema: 'ADDITIONAL_VALIDATION_SCHEMA',
   },
   // workExperiences: {

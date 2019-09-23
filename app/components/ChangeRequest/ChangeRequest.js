@@ -17,6 +17,7 @@ const scrollStyle = {
 class ChangeRequest extends Component {
   static propTypes = {
     fetchReview: func.isRequired,
+    updateApplication: func.isRequired,
     isFetching: bool.isRequired,
     review: shape(),
     match: shape().isRequired,
@@ -62,6 +63,12 @@ class ChangeRequest extends Component {
     return _keyBy(mapped, 'name');
   };
 
+  handleUpdateApplication = (application) => {
+    const { updateApplication, match } = this.props;
+    const { params } = match;
+    const { token } = params;
+    updateApplication(token, application);
+  }
 
   render() {
     const { isFetching = false, review } = this.props;
@@ -77,6 +84,7 @@ class ChangeRequest extends Component {
           <LoadingSpin loading={isFetching}>
             <ChangeRequestForm
               scrollStyle={scrollStyle}
+              onSubmit={this.handleUpdateApplication}
               fields={this.mapReviewFieldWithValidate(review)}
             />
           </LoadingSpin>

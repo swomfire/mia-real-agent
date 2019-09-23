@@ -14,6 +14,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchReview: actions.fetchReviewSingleByToken,
+  updateApplication: actions.updateChangeForApplication,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChangeRequest);

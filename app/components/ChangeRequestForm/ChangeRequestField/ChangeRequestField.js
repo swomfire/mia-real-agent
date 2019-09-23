@@ -28,6 +28,8 @@ class ChangeRequestField extends Component {
     comment: string.isRequired,
     value: any.isRequired,
     label: shape(),
+    additional: shape(),
+    displayFields: shape(),
   }
 
   renderUpload = () => {
@@ -119,7 +121,7 @@ class ChangeRequestField extends Component {
 
   render() {
     const {
-      name, type, label, value, comment, ...rest
+      name, type, label, comment, additional,
     } = this.props;
     return (
       <ReviewInputWrapper>
@@ -138,7 +140,7 @@ class ChangeRequestField extends Component {
                 name={name}
                 type={type}
                 login={1}
-                {...rest}
+                {...additional}
               />
             </ChangeInputWrapper>
           </div>

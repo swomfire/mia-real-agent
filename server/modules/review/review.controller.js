@@ -11,6 +11,7 @@ class ReviewController extends BaseController {
   constructor() {
     super(ReviewService);
     this.getByToken = this.getByToken.bind(this);
+    this.updateApplication = this.updateApplication.bind(this);
   }
 
   async insert(req, res) {
@@ -41,6 +42,32 @@ class ReviewController extends BaseController {
       if (!review) {
         throw new APIError(TOKEN_NOT_MATCH, httpStatus.NOT_FOUND);
       }
+      return res.status(httpStatus.OK).send(review);
+    } catch (error) {
+      const { name } = error;
+      if (name === 'TokenExpiredError') {
+        return this.handleError(res, { ...error, message: TOKEN_EXPIRED });
+      }
+      return this.handleError(res, error);
+    }
+  }
+
+  async updateApplication(req, res) {
+    const { TOKEN_NOT_MATCH, TOKEN_EXPIRED } = ERROR_MESSAGE;
+    try {
+      const { token, application } = req.body;
+      const { _id } = jwt.verify(token, process.env.SECRET_KEY_JWT);
+      const review = await this.service.getOneByQuery({ _id });
+      if (!review) {
+        throw new APIError(TOKEN_NOT_MATCH, httpStatus.NOT_FOUND);
+      }
+      const { applicationId } = review;
+      // TODO: Validate nickname, email
+      await ApplicationService.update(
+        applicationId,
+        { ...application, status: APPLICATION_STATUS.PENDING }
+      );
+      // TODO: update status for review
       return res.status(httpStatus.OK).send(review);
     } catch (error) {
       const { name } = error;

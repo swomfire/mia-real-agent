@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { Form } from 'antd';
 import ShadowScrollbars from 'components/Scrollbar';
-import { shape } from 'prop-types';
+import { shape, func } from 'prop-types';
 import ChangeRequestField from './ChangeRequestField/ChangeRequestField';
 import { ChangeRequestFormHeader, ChangeRequestFormRequestChangeWrapper, ChangeRequestFormActionGroupRight } from './styles';
 import { ButtonPrimary } from '../../stylesheets/Button.style';
@@ -11,6 +11,7 @@ import { toI18n } from '../../utils/func-utils';
 
 class ChangeRequestForm extends Component {
   static propTypes = {
+    onSubmit: func.isRequired,
     fields: shape(),
     scrollStyle: shape(),
   }
@@ -46,7 +47,7 @@ class ChangeRequestForm extends Component {
     const { fields } = this.props;
     return Object.keys(fields).map((field) => {
       const {
-        label, comment, type, value,
+        label, comment, type, value, ...rest
       } = fields[field];
       return (
         <ChangeRequestField
@@ -55,6 +56,7 @@ class ChangeRequestForm extends Component {
           comment={comment}
           type={type}
           value={value}
+          additional={rest}
         />
       );
     });
@@ -70,6 +72,10 @@ class ChangeRequestForm extends Component {
     </ChangeRequestFormActionGroupRight>
   );
 
+  handleSubmit = (values) => {
+    const { onSubmit } = this.props;
+    onSubmit(values);
+  }
 
   render() {
     const { fields, scrollStyle } = this.props;

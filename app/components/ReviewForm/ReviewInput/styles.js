@@ -77,7 +77,7 @@ export const ReviewInputAction = styled.div`
   margin-left: .1em;
   color: ${props => props.theme.colorStyled.ColorGrey};
   .review-input-action {
-    font-size: 1.2em;
+    font-size: 1em;
     :hover {
       cursor: pointer;
       color: ${props => props.theme.colorStyled.ColorBgDefault};

@@ -7,7 +7,7 @@ import { shape, func } from 'prop-types';
 import ChangeRequestField from './ChangeRequestField/ChangeRequestField';
 import { ChangeRequestFormHeader, ChangeRequestFormRequestChangeWrapper, ChangeRequestFormActionGroupRight } from './styles';
 import { ButtonPrimary } from '../../stylesheets/Button.style';
-import { toI18n } from '../../utils/func-utils';
+import { toI18n, generateInitValue } from '../../utils/func-utils';
 
 class ChangeRequestForm extends Component {
   static propTypes = {
@@ -20,8 +20,8 @@ class ChangeRequestForm extends Component {
     const { fields } = this.props;
     let initialValues = {};
     Object.keys(fields).forEach((field) => {
-      const { ref } = fields[field];
-      initialValues = { ...initialValues, [field]: '' };
+      const { ref, type } = fields[field];
+      initialValues = { ...initialValues, [field]: generateInitValue(type) };
       if (ref) {
         Object.keys(ref).forEach(
           (key) => {
@@ -43,7 +43,7 @@ class ChangeRequestForm extends Component {
     return Yup.object().shape(validationSchema);
   }
 
-  renderFields = () => {
+  renderFields = (setFieldValue) => {
     const { fields } = this.props;
     return Object.keys(fields).map((field) => {
       const {
@@ -51,12 +51,14 @@ class ChangeRequestForm extends Component {
       } = fields[field];
       return (
         <ChangeRequestField
+          key={field}
           name={field}
           label={label}
           comment={comment}
           type={type}
           value={value}
           additional={rest}
+          setFieldValue={setFieldValue}
         />
       );
     });
@@ -87,7 +89,7 @@ class ChangeRequestForm extends Component {
         validationSchema={this.mapValidationSchema()}
         onSubmit={this.handleSubmit}
       >
-        {({ handleSubmit }) => (
+        {({ handleSubmit, setFieldValue }) => (
           <Form onSubmit={handleSubmit}>
             <ChangeRequestFormHeader>
               <ChangeRequestFormRequestChangeWrapper>
@@ -101,7 +103,7 @@ class ChangeRequestForm extends Component {
               {this.renderActionGroup()}
             </ChangeRequestFormHeader>
             <ShadowScrollbars autoHide style={scrollStyle}>
-              {this.renderFields()}
+              {this.renderFields(setFieldValue)}
             </ShadowScrollbars>
           </Form>
         )}

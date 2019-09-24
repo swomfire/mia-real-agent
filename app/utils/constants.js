@@ -275,6 +275,37 @@ export const APPLICATION_REVIEW_MAPPING = {
     label: toI18n('APPLICATION_REVIEW_FORM_WORK_EXPERIENCES'),
     type: 'list',
     schema: 'EXPERIENCE_WORK_ITEM_VALIDATION_SCHEMA',
+    fields: {
+      title: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_TITLE'),
+        type: 'text',
+      },
+      company: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_COMPANY'),
+        type: 'text',
+      },
+      location: {
+        label: toI18n('APPLICATION_EXPERIENCE_FORM_LOCATION'),
+        type: 'text',
+      },
+      from: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_FROM'),
+        type: 'date',
+      },
+      to: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_TO'),
+        type: 'date',
+        skip: 'isWorking',
+      },
+      isWorking: {
+        label: toI18n('APPLICATION_EXPERIENCE_FORM_CURRENT_WORKING'),
+        type: 'checkbox',
+      },
+      roleDescription: {
+        label: toI18n('APPLICATION_EXPERIENCE_FORM_ROLE_DESCRIPTION'),
+        type: 'textarea',
+      },
+    },
     displayFields: {
       title: {
         label: toI18n('APPLICATION_REVIEW_FORM_LIST_TITLE'),

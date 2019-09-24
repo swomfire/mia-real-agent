@@ -118,3 +118,18 @@ export const flatApplicationForm = (application, mapping) => _keyBy(
     };
   }), 'key'
 );
+
+export const generateInitValue = (type) => {
+  switch (type) {
+    case 'number':
+      return 0;
+    case 'list':
+      return [];
+    case 'checkbox':
+      return false;
+    case 'text':
+      return '';
+    default:
+      return null;
+  }
+};

@@ -39,17 +39,21 @@ class ChangeRequest extends Component {
     const { fields } = review;
     const mapped = Object.keys(fields).map((field) => {
       const {
-        type, schema, ...rest
+        type, schema, displayFields, ...rest
       } = APPLICATION_REVIEW_MAPPING[field];
+      const { ref, comment, value } = fields[field];
+
       if (type === 'list') {
         return {
           name: field,
           ...rest,
           type,
+          comment,
+          displayFields,
+          value,
           schema: Yup.array().of(APPLICATION_FORM[schema]),
         };
       }
-      const { ref, comment, value } = fields[field];
       return {
         name: field,
         ...rest,

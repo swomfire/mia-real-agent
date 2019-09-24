@@ -271,84 +271,84 @@ export const APPLICATION_REVIEW_MAPPING = {
     mode: 'multiple',
     schema: 'ADDITIONAL_VALIDATION_SCHEMA',
   },
-  // workExperiences: {
-  //   label: toI18n('APPLICATION_REVIEW_FORM_WORK_EXPERIENCES'),
-  //   type: 'list',
-  //   schema: 'EXPERIENCE_WORK_ITEM_VALIDATION_SCHEMA',
-  //   displayFields: {
-  //     title: {
-  //       label: toI18n('APPLICATION_REVIEW_FORM_LIST_TITLE'),
-  //       type: 'text',
-  //       tooltip: 'roleDescription',
-  //     },
-  //     company: {
-  //       label: toI18n('APPLICATION_REVIEW_FORM_LIST_COMPANY'),
-  //       type: 'text',
-  //     },
-  //     from: {
-  //       label: toI18n('APPLICATION_REVIEW_FORM_LIST_FROM'),
-  //       type: 'date',
-  //     },
-  //     to: {
-  //       label: toI18n('APPLICATION_REVIEW_FORM_LIST_TO'),
-  //       type: 'date',
-  //       skip: 'isWorking',
-  //       replace: toI18n('APPLICATION_REVIEW_FORM_LIST_NOW'),
-  //     },
-  //   },
-  // },
-  // educations: {
-  //   label: toI18n('APPLICATION_REVIEW_FORM_EDUCATIONS'),
-  //   type: 'list',
-  //   schema: 'EDUCATION_ITEM_VALIDATION_SCHEMA',
-  //   displayFields: {
-  //     fieldOfstudy: {
-  //       label: toI18n('APPLICATION_REVIEW_FORM_LIST_FOS'),
-  //       type: 'text',
-  //     },
-  //     school: {
-  //       label: toI18n('APPLICATION_REVIEW_FORM_LIST_SCHOOL'),
-  //       type: 'text',
-  //     },
-  //     degree: {
-  //       label: toI18n('APPLICATION_REVIEW_FORM_LIST_DEGREE'),
-  //       type: 'text',
-  //     },
-  //     gpa: {
-  //       label: toI18n('APPLICATION_REVIEW_FORM_LIST_GPA'),
-  //       type: 'text',
-  //     },
-  //     certificate: {
-  //       label: toI18n('APPLICATION_REVIEW_FORM_LIST_CERTIFICATE'),
-  //       type: 'upload',
-  //     },
-  //   },
-  // },
-  // languages: {
-  //   label: toI18n('APPLICATION_REVIEW_FORM_LANGUAGES'),
-  //   type: 'list',
-  //   schema: 'LANGUAGE_VALIDATION_SCHEMA',
-  //   displayFields: {
-  //     name: {
-  //       label: toI18n('APPLICATION_REVIEW_FORM_LIST_NAME'),
-  //       type: 'text',
-  //     },
-  //     writing: {
-  //       label: toI18n('APPLICATION_REVIEW_FORM_LIST_WRITING'),
-  //       type: 'text',
-  //     },
-  //     reading: {
-  //       label: toI18n('APPLICATION_REVIEW_FORM_LIST_READING'),
-  //       type: 'text',
-  //     },
-  //     speaking: {
-  //       label: toI18n('APPLICATION_REVIEW_FORM_LIST_SPEAKING'),
-  //       type: 'text',
-  //     },
-  //     overall: {
-  //       label: toI18n('APPLICATION_REVIEW_FORM_LIST_OVERALL'),
-  //       type: 'text',
-  //     },
-  //   },
-  // },
+  workExperiences: {
+    label: toI18n('APPLICATION_REVIEW_FORM_WORK_EXPERIENCES'),
+    type: 'list',
+    schema: 'EXPERIENCE_WORK_ITEM_VALIDATION_SCHEMA',
+    displayFields: {
+      title: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_TITLE'),
+        type: 'text',
+        tooltip: 'roleDescription',
+      },
+      company: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_COMPANY'),
+        type: 'text',
+      },
+      from: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_FROM'),
+        type: 'date',
+      },
+      to: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_TO'),
+        type: 'date',
+        skip: 'isWorking',
+        replace: toI18n('APPLICATION_REVIEW_FORM_LIST_NOW'),
+      },
+    },
+  },
+  educations: {
+    label: toI18n('APPLICATION_REVIEW_FORM_EDUCATIONS'),
+    type: 'list',
+    schema: 'EDUCATION_ITEM_VALIDATION_SCHEMA',
+    displayFields: {
+      fieldOfstudy: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_FOS'),
+        type: 'text',
+      },
+      school: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_SCHOOL'),
+        type: 'text',
+      },
+      degree: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_DEGREE'),
+        type: 'text',
+      },
+      gpa: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_GPA'),
+        type: 'text',
+      },
+      certificate: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_CERTIFICATE'),
+        type: 'upload',
+      },
+    },
+  },
+  languages: {
+    label: toI18n('APPLICATION_REVIEW_FORM_LANGUAGES'),
+    type: 'list',
+    schema: 'LANGUAGE_VALIDATION_SCHEMA',
+    displayFields: {
+      name: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_NAME'),
+        type: 'text',
+      },
+      writing: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_WRITING'),
+        type: 'text',
+      },
+      reading: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_READING'),
+        type: 'text',
+      },
+      speaking: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_SPEAKING'),
+        type: 'text',
+      },
+      overall: {
+        label: toI18n('APPLICATION_REVIEW_FORM_LIST_OVERALL'),
+        type: 'text',
+      },
+    },
+  },
 };

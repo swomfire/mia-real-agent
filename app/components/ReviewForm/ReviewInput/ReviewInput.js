@@ -48,7 +48,7 @@ class ReviewInput extends Component {
     label: shape().isRequired,
     name: string.isRequired,
     type: string.isRequired,
-    value: any.isRequired,
+    value: any,
     displayFields: shape(),
     onAdd: func,
     onRemove: func,

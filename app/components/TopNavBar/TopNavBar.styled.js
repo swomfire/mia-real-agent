@@ -147,6 +147,7 @@ export const ProfileStyled = styled.div.attrs({
 
 export const ProfileImageStyled = styled.img`
   height: 2.78em;
+  width: 2.78em;
   cursor: pointer;
   border-radius: 100%;
 `;
@@ -170,6 +171,9 @@ export const UserName = styled.div.attrs({
     &.type-user{
       font-weight: bold;
     }
+  }
+  @media (max-width: 1024px) {
+    font-size: 1em;
   }
 `;
 

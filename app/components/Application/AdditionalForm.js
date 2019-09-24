@@ -192,6 +192,7 @@ export class AdditionalForm extends Component {
                 <Col sm={24} xs={24}>
                   <ActionFormRegister>
                     <ButtonCancel
+                      type="button"
                       onClick={() => this.handleToggleLanguageModal(false)}
                     >
                       {toI18n('FORM_CANCEL')}

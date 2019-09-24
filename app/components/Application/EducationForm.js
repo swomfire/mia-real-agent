@@ -146,6 +146,7 @@ export class EducationForm extends Component {
                 <Col sm={24} xs={24}>
                   <ActionFormRegister>
                     <ButtonCancel
+                      type="button"
                       onClick={() => this.handleToggleEducationModal(false)}
                     >
                       {toI18n('FORM_CANCEL')}

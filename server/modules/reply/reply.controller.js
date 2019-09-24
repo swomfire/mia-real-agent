@@ -31,7 +31,6 @@ class ReplyController extends BaseController {
       // Get mia full fillment text
       const { data: { queryResult } } = miaReply;
       const { fulfillmentText, allRequiredParamsPresent, intent } = queryResult;
-
       if (allRequiredParamsPresent && !intent.isFallback) {
         const socket = userQueue.getUser(from);
         socket.emit(SOCKET_EMIT.FOUND_SOLUTION, { conversationId });

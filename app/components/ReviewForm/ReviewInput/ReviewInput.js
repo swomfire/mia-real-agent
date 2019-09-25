@@ -105,7 +105,10 @@ class ReviewInput extends Component {
       }
       case 'date':
         return moment(value).format(DATE_TIME_FORMAT.DATE);
-      case 'text':
+      case 'text': {
+        const result = value instanceof Array ? value.join(', ') : value;
+        return result;
+      }
       default: return value;
     }
   }
@@ -270,7 +273,7 @@ class ReviewInput extends Component {
           <div>
             {this.selectInputType()}
             <ReviewInputAction>
-              <Icon className="review-input-action" component={CommentIcon} onClick={() => this.handleToggleRequest(true)} />
+              <Icon className="comment-icon" component={CommentIcon} onClick={() => this.handleToggleRequest(true)} />
             </ReviewInputAction>
           </div>
         </ReviewInputValueWrapper>

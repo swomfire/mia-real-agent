@@ -125,7 +125,10 @@ class ChangeRequestField extends Component {
       }
       case 'date':
         return moment(value).format(DATE_TIME_FORMAT.DATE);
-      case 'text':
+      case 'text': {
+        const result = value instanceof Array ? value.join(', ') : value;
+        return result;
+      }
       default: return value;
     }
   }

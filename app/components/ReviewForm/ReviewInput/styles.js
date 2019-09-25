@@ -51,7 +51,7 @@ export const ReviewInputValue = styled.div.attrs({
 })`
   font-weight: 600;
   max-width: 750px;
-  width: ${props => props.isList && '75%'};
+  width: ${props => props.isList && '40%'};
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -76,14 +76,16 @@ export const ReviewInputAction = styled.div`
   padding: .5em;
   margin-left: .1em;
   color: ${props => props.theme.colorStyled.ColorGrey};
-  .review-input-action {
-    font-size: .8em;
-    svg {
-      margin-bottom: -.7em;
-    }
+  .review-input-action, .comment-icon {
     :hover {
       cursor: pointer;
       color: ${props => props.theme.colorStyled.ColorBgDefault};
+    }
+  }
+  .comment-icon {
+    font-size: .8em;
+    svg {
+      margin-bottom: -.7em;
     }
   }
 `;
@@ -132,10 +134,12 @@ export const CommentDisplayWrapper = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   i {
+    font-size: .8em;
     float: left;
     height: 1em;
     width: 1em;
     margin-right: .8em;
+    padding-top: .3em;
     cursor: unset;
   }
   .comment-action {
@@ -159,12 +163,13 @@ export const ListItemWrapper = styled.div`
 `;
 
 export const ListFieldLabel = styled.div`
-  flex: 0 0 30%;
+  flex: 0 0 25%;
   font-weight: 400;
 `;
 
 export const ListFieldValue = styled.div`
-  flex: 0 0 70%;
+  flex: 0 0 75%;
+  padding-left: 1.2em;
   text-overflow: ellipsis;
   font-weight: 600;
   overflow: hidden;

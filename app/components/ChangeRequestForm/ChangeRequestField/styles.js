@@ -26,8 +26,9 @@ export const ReviewInputWrapper = styled.div`
 `;
 
 export const ReviewInputValueWrapper = styled.div`
-  flex: 0 0 80%;
+  flex: auto;
   display: flex;
+  margin-right: -.5em;
   flex-direction: column;
   > div {
     display: flex;
@@ -40,7 +41,6 @@ export const ReviewInputValueWrapper = styled.div`
 `;
 
 export const ReviewInputTitle = styled.div`
-  font-weight: 600;
   padding: .5em;
   flex: 0 0 20%;
   border-right: 1px solid ${props => props.theme.colorStyled.ColorXXXLightGrey};
@@ -49,8 +49,8 @@ export const ReviewInputTitle = styled.div`
 export const ReviewInputValue = styled.div.attrs({
   className: 'review-input-value',
 })`
+  font-weight: 600;
   max-width: 750px;
-  width: ${props => props.isList && '75%'};
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -59,6 +59,20 @@ export const ReviewInputValue = styled.div.attrs({
   > div {
     width: fit-content;
     padding: .5em;
+    display: flex;
+    width: 100%;
+    > div > i, > i {
+      font-size: .7em;
+      color: ${props => props.theme.colorStyled.ColorBgDefault};
+      ${props => props.isList && {
+    marginLeft: '-7em',
+  }}
+      svg {
+        margin-bottom: -1.2em;
+        height: 3em;
+        margin-left: .5em;
+      }
+    }
   }
   .ant-upload-list-picture-card .ant-upload-list-item-info{
     width: 100%;
@@ -68,6 +82,9 @@ export const ReviewInputValue = styled.div.attrs({
   }
   ${props => props.isRequest && {
     fontWeight: 600,
+  }}
+  ${props => props.isList && {
+    width: '100%',
   }}
 `;
 
@@ -83,6 +100,7 @@ export const ReviewInputAction = styled.div`
       color: ${props => props.theme.colorStyled.ColorBgDefault};
     }
   }
+
 `;
 
 export const CommentWrapper = styled.div`
@@ -90,6 +108,15 @@ export const CommentWrapper = styled.div`
   margin-top: .2em;
   flex: 1;
   display: flex;
+  color: ${props => props.theme.colorStyled.ColorBgDefault};
+  i {
+    font-size: .7em;
+    margin-left: 0 !important;
+    svg {
+      margin-bottom: -.5em;
+      height: 3em;
+    }
+  }
 `;
 
 export const CommentDisplayWrapper = styled.div`
@@ -121,19 +148,28 @@ export const CommentDisplayWrapper = styled.div`
 
 export const ListItemWrapper = styled.div`
   width: 100% !important;
-  border-bottom: 1px solid ${props => props.theme.colorStyled.ColorXXXLightGrey};
   span {
     display: flex;
+  }
+  > div {
+    margin-bottom: 1em;
+    border-bottom: 1px solid ${props => props.theme.colorStyled.ColorXXXLightGrey};
+    padding-bottom: .2em;
+    width: 100%;
+    .ant-row{
+      margin-bottom: .2em;
+    }
   }
 `;
 
 export const ListFieldLabel = styled.div`
   flex: 0 0 30%;
-  font-weight: 600;
+  font-weight: 400;
 `;
 
 export const ListFieldValue = styled.div`
   flex: 0 0 70%;
+  font-weight: 600;
   text-overflow: ellipsis;
   overflow: hidden;
   .ant-upload-list-item-info {
@@ -150,6 +186,22 @@ export const ListFieldValue = styled.div`
 `;
 
 export const ChangeInputWrapper = styled.div`
-  padding: 0 1.2em;
+  padding-left: 1.2em;
   flex: auto;
+  button {
+    margin: .2em 0;
+    font-size: 1em;
+  }
+  .review-input-value{
+    padding-left: 0;
+    margin-left: -.5em;
+  }
+`;
+
+export const ListItemActionGroup = styled.div`
+  i {
+    font-size: 1.2em;
+    margin-left: .5em;
+    font-size: 1em;
+  }
 `;

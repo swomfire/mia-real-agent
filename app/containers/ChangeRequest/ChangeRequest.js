@@ -8,6 +8,7 @@ const mapStateToProps = (state) => {
   return {
     reviewId,
     isFetching: selectors.getReviewIsFetching(state),
+    isUpdating: selectors.getReviewIsUpdating(state),
     review: getReviewById(state, reviewId),
   };
 };

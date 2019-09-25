@@ -8,7 +8,7 @@ import {
 } from 'prop-types';
 import FormInput from '../../FormInput/FormInput';
 import { ButtonCancel, ButtonSubmit } from '../../../stylesheets/Button.style';
-import { toI18n } from '../../../utils/func-utils';
+import { toI18n, generateInitValue } from '../../../utils/func-utils';
 import { ActionGroup } from './styles';
 
 class ChangeRequestModal extends Component {
@@ -17,7 +17,6 @@ class ChangeRequestModal extends Component {
     schema: shape().isRequired,
     title: any.isRequired,
     isOpen: bool.isRequired,
-    isEdit: bool.isRequired,
     onCancel: func.isRequired,
     onSubmit: func.isRequired,
     onEdit: func.isRequired,
@@ -25,13 +24,20 @@ class ChangeRequestModal extends Component {
     initValue: shape(),
   }
 
+  componentDidUpdate = (prevProps) => {
+    const { isOpen, initValue } = this.props;
+    if (!prevProps.isOpen && isOpen && !!initValue) {
+      this.modalForm.getFormikContext().setValues(initValue);
+    }
+  }
+
   handleInitialValues = () => {
-    const { fields, initValue } = this.props;
+    const { fields } = this.props;
     let initialValues = {};
     Object.keys(fields).forEach((field) => {
-      initialValues = { ...initialValues, [field]: '' };
+      initialValues = { ...initialValues, [field]: generateInitValue(fields[field].type) };
     });
-    return initValue || initialValues;
+    return initialValues;
   }
 
   renderFormInput = (values) => {
@@ -66,11 +72,18 @@ class ChangeRequestModal extends Component {
       return;
     }
     onSubmit(values);
+    this.modalForm.getFormikContext().resetForm();
+  }
+
+  handleCancel = () => {
+    const { onCancel } = this.props;
+    onCancel();
+    this.modalForm.getFormikContext().resetForm();
   }
 
   render() {
     const {
-      isOpen, onCancel, title, schema, isEdit = false,
+      isOpen, title, schema, initValue,
     } = this.props;
     return (
       <Modal
@@ -82,10 +95,11 @@ class ChangeRequestModal extends Component {
           </span>
         )}
         visible={isOpen}
-        onCancel={onCancel}
+        onCancel={this.handleCancel}
         footer={null}
       >
         <Formik
+          ref={((modalForm) => { this.modalForm = modalForm; })}
           validationSchema={schema}
           initialValues={this.handleInitialValues()}
           onSubmit={this.handleSubmit}
@@ -97,12 +111,13 @@ class ChangeRequestModal extends Component {
                 <Col sm={24} xs={24}>
                   <ActionGroup>
                     <ButtonCancel
-                      onClick={onCancel}
+                      type="button"
+                      onClick={this.handleCancel}
                     >
                       {toI18n('FORM_CANCEL')}
                     </ButtonCancel>
-                    <ButtonSubmit type="submit">
-                      {isEdit >= 0 ? toI18n('FORM_SAVE') : toI18n('FORM_ADD')}
+                    <ButtonSubmit type="button" onClick={handleSubmit}>
+                      {initValue ? toI18n('FORM_SAVE') : toI18n('FORM_ADD')}
                     </ButtonSubmit>
                   </ActionGroup>
                 </Col>

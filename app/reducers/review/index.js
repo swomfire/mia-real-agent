@@ -111,6 +111,9 @@ const submitFailAction = errorMessage => ({
 const getReviewIsSubmitting = ({ review }) => review.get('isSubmitting');
 const getReviewSubmitError = ({ review }) => review.get('submitError');
 
+const getReviewIsUpdating = ({ review }) => review.get('isUpdating');
+const getReviewUpdateError = ({ review }) => review.get('updateError');
+
 const getReviewIsFetching = ({ review }) => review.get('isFetching');
 const getReviewFetchedId = ({ review }) => review.get('fetchedId');
 const getReviewFetchError = ({ review }) => review.get('fetchError');
@@ -122,6 +125,8 @@ const initialState = fromJS({
   isFetching: false,
   fetchedId: '',
   fetchError: '',
+  isUpdating: false,
+  updateError: '',
 });
 
 function reviewReducer(state = initialState, action) {
@@ -169,6 +174,15 @@ function reviewReducer(state = initialState, action) {
       return state.set('isSubmitting', false)
         .set('submitError', action.errorMessage);
 
+    case UPDATE_CHANGE_FOR_APPLICATION:
+      return state.set('isUpdating', true)
+        .set('updateError', '');
+    case UPDATE_CHANGE_FOR_APPLICATION_COMPLETE:
+      return state.set('isUpdating', false);
+    case UPDATE_CHANGE_FOR_APPLICATION_FAIL:
+      return state.set('isUpdating', false)
+        .set('updateError', action.errorMessage);
+
     default: return state;
   }
 }
@@ -200,4 +214,7 @@ export const selectors = {
   getReviewFetchedId,
   getReviewIsFetching,
   getReviewFetchError,
+
+  getReviewIsUpdating,
+  getReviewUpdateError,
 };

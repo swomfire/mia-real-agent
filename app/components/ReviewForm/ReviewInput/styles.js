@@ -41,7 +41,6 @@ export const ReviewInputValueWrapper = styled.div`
 `;
 
 export const ReviewInputTitle = styled.div`
-  font-weight: 600;
   padding: .5em;
   flex: 0 0 20%;
   border-right: 1px solid ${props => props.theme.colorStyled.ColorXXXLightGrey};
@@ -50,6 +49,7 @@ export const ReviewInputTitle = styled.div`
 export const ReviewInputValue = styled.div.attrs({
   className: 'review-input-value',
 })`
+  font-weight: 600;
   max-width: 750px;
   width: ${props => props.isList && '75%'};
   overflow: hidden;
@@ -77,7 +77,10 @@ export const ReviewInputAction = styled.div`
   margin-left: .1em;
   color: ${props => props.theme.colorStyled.ColorGrey};
   .review-input-action {
-    font-size: 1em;
+    font-size: .8em;
+    svg {
+      margin-bottom: -.7em;
+    }
     :hover {
       cursor: pointer;
       color: ${props => props.theme.colorStyled.ColorBgDefault};
@@ -157,12 +160,13 @@ export const ListItemWrapper = styled.div`
 
 export const ListFieldLabel = styled.div`
   flex: 0 0 30%;
-  font-weight: 600;
+  font-weight: 400;
 `;
 
 export const ListFieldValue = styled.div`
   flex: 0 0 70%;
   text-overflow: ellipsis;
+  font-weight: 600;
   overflow: hidden;
   .ant-upload-list-item-info {
     span {

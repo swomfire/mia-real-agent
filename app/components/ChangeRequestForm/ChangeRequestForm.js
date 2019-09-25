@@ -37,8 +37,13 @@ class ChangeRequestForm extends Component {
     const { fields } = this.props;
     let validationSchema = {};
     Object.keys(fields).forEach((field) => {
-      const { schema } = fields[field];
-      validationSchema = { ...validationSchema, [field]: schema };
+      const { schema, type } = fields[field];
+      validationSchema = {
+        ...validationSchema,
+        [field]: type === 'list'
+          ? Yup.array().of(schema)
+          : schema,
+      };
     });
     return Yup.object().shape(validationSchema);
   }
@@ -47,13 +52,14 @@ class ChangeRequestForm extends Component {
     const { fields } = this.props;
     return Object.keys(fields).map((field) => {
       const {
-        label, comment, type, value, ...rest
+        label, comment, type, value, schema, ...rest
       } = fields[field];
       return (
         <ChangeRequestField
           key={field}
           name={field}
           label={label}
+          schema={schema}
           comment={comment}
           type={type}
           value={value}

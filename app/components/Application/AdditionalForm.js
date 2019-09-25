@@ -14,7 +14,7 @@ import {
 
 } from './styles';
 import { ButtonCancel, ButtonSubmit, ArrayAddButton } from '../../stylesheets/Button.style';
-import { AGENT_SKILL, APPLICATION_LANGUAGE } from '../../../common/enums';
+import { AGENT_SKILL, APPLICATION_LANGUAGE, MARKS, LANGUAGE_OPTIONS } from '../../../common/enums';
 import { toI18n } from '../../utils/func-utils';
 import { APPLICATION_FORM } from '../../utils/constants';
 
@@ -33,32 +33,6 @@ const initialValues = {
   social: {},
 };
 
-const marks = {
-  1: '1',
-  2: '2',
-  3: '3',
-  4: '4',
-  5: '5',
-};
-
-const LANGUAGE_OPTIONS = [
-  {
-    label: APPLICATION_LANGUAGE.CHINESE,
-    value: APPLICATION_LANGUAGE.CHINESE,
-  },
-  {
-    label: APPLICATION_LANGUAGE.ENGLISH,
-    value: APPLICATION_LANGUAGE.ENGLISH,
-  },
-  {
-    label: APPLICATION_LANGUAGE.JANPANESE,
-    value: APPLICATION_LANGUAGE.JANPANESE,
-  },
-  {
-    label: APPLICATION_LANGUAGE.VIETNAMESE,
-    value: APPLICATION_LANGUAGE.VIETNAMESE,
-  },
-];
 
 export class AdditionalForm extends Component {
   state = {
@@ -145,7 +119,7 @@ export class AdditionalForm extends Component {
                   <FormInput
                     name="writing"
                     type="slider"
-                    marks={marks}
+                    marks={MARKS}
                     min={1}
                     max={5}
                     label={toI18n('APPLICATION_ADDTIONAL_FORM_WRITING')}
@@ -156,7 +130,7 @@ export class AdditionalForm extends Component {
                   <FormInput
                     name="reading"
                     type="slider"
-                    marks={marks}
+                    marks={MARKS}
                     min={1}
                     max={5}
                     label={toI18n('APPLICATION_ADDTIONAL_FORM_READING')}
@@ -169,7 +143,7 @@ export class AdditionalForm extends Component {
                   <FormInput
                     name="speaking"
                     type="slider"
-                    marks={marks}
+                    marks={MARKS}
                     min={1}
                     max={5}
                     label={toI18n('APPLICATION_ADDTIONAL_FORM_SPEAKING')}
@@ -180,7 +154,7 @@ export class AdditionalForm extends Component {
                   <FormInput
                     name="overall"
                     type="slider"
-                    marks={marks}
+                    marks={MARKS}
                     min={1}
                     max={5}
                     label={toI18n('APPLICATION_ADDTIONAL_FORM_OVERALL')}

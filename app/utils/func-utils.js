@@ -121,8 +121,11 @@ export const flatApplicationForm = (application, mapping) => _keyBy(
 
 export const generateInitValue = (type) => {
   switch (type) {
+    case 'slider':
     case 'number':
       return 0;
+    case 'select':
+    case 'upload':
     case 'list':
       return [];
     case 'checkbox':

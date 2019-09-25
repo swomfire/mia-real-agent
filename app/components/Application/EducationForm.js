@@ -19,7 +19,7 @@ import { APPLICATION_FORM } from '../../utils/constants';
 const educationInititalValues = {
   school: '',
   degree: '',
-  fieldOfStudies: [],
+  fieldOfStudy: [],
   gpa: 0,
 };
 
@@ -113,7 +113,7 @@ export class EducationForm extends Component {
               <Row gutter={32}>
                 <Col sm={24} xs={24}>
                   <FormInput
-                    name="fieldOfStudies"
+                    name="fieldOfStudy"
                     type="select"
                     mode="multiple"
                     options={FIELD_OF_STUDY}
@@ -166,7 +166,7 @@ export class EducationForm extends Component {
 
   renderEducation = (education, arrayHelpers, index) => {
     const {
-      school, degree, gpa, certificate, fieldOfStudies,
+      school, degree, gpa, certificate, fieldOfStudy,
     } = education;
     return (
       <ArrayTagWrapper key={index}>
@@ -177,7 +177,7 @@ export class EducationForm extends Component {
               <span>{degree}</span>
             </h2>
             <div className="GPA">
-              {fieldOfStudies.join(', ')}
+              {fieldOfStudy.join(', ')}
               <DescriptionNumber>
                 <span>{toI18n('APPLICATION_EDUCATION_RENDER_GPA')}</span>
                 {' : '}

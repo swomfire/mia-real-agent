@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { func, bool, shape } from 'prop-types';
-import * as Yup from 'yup';
 import _isEmpty from 'lodash/isEmpty';
 import _keyBy from 'lodash/keyBy';
 import LoadingSpin from '../Loading';
@@ -19,6 +18,7 @@ class ChangeRequest extends Component {
     fetchReview: func.isRequired,
     updateApplication: func.isRequired,
     isFetching: bool.isRequired,
+    isUpdating: bool.isRequired,
     review: shape(),
     match: shape().isRequired,
   }
@@ -51,7 +51,7 @@ class ChangeRequest extends Component {
           comment,
           displayFields,
           value,
-          schema: Yup.array().of(APPLICATION_FORM[schema]),
+          schema: APPLICATION_FORM[schema],
         };
       }
       return {
@@ -75,7 +75,7 @@ class ChangeRequest extends Component {
   }
 
   render() {
-    const { isFetching = false, review } = this.props;
+    const { isFetching = false, isUpdating = false, review } = this.props;
     return (
       <ChangeRequestWrapper>
         <ChangeRequestItem>
@@ -85,12 +85,14 @@ class ChangeRequest extends Component {
               {toI18n('REQUEST_CHANGE_LOGO')}
             </span>
           </ChangeRequestLogo>
-          <LoadingSpin loading={isFetching}>
-            <ChangeRequestForm
-              scrollStyle={scrollStyle}
-              onSubmit={this.handleUpdateApplication}
-              fields={this.mapReviewFieldWithValidate(review)}
-            />
+          <LoadingSpin loading={isFetching || isUpdating}>
+            {!isFetching && (
+              <ChangeRequestForm
+                scrollStyle={scrollStyle}
+                onSubmit={this.handleUpdateApplication}
+                fields={this.mapReviewFieldWithValidate(review)}
+              />
+            )}
           </LoadingSpin>
         </ChangeRequestItem>
       </ChangeRequestWrapper>

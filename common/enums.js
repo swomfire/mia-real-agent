@@ -646,3 +646,35 @@ export const BILLING_TYPE = {
   TOPUP: 'Top-up',
   TICKET_CHARGE: 'Ticket Charge',
 };
+
+export const LANGUAGE_OPTIONS = [
+  {
+    label: APPLICATION_LANGUAGE.CHINESE,
+    value: APPLICATION_LANGUAGE.CHINESE,
+  },
+  {
+    label: APPLICATION_LANGUAGE.ENGLISH,
+    value: APPLICATION_LANGUAGE.ENGLISH,
+  },
+  {
+    label: APPLICATION_LANGUAGE.JANPANESE,
+    value: APPLICATION_LANGUAGE.JANPANESE,
+  },
+  {
+    label: APPLICATION_LANGUAGE.VIETNAMESE,
+    value: APPLICATION_LANGUAGE.VIETNAMESE,
+  },
+];
+
+export const MARKS = {
+  1: '1',
+  2: '2',
+  3: '3',
+  4: '4',
+  5: '5',
+};
+
+export const REVIEW_STATUS = {
+  CLOSED: 'closed',
+  OPEN: 'open',
+};

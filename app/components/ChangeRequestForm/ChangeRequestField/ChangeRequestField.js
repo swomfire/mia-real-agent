@@ -2,20 +2,22 @@ import React, { Component } from 'react';
 import {
   string, shape, any, func,
 } from 'prop-types';
+import _isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
 import {
-  Icon, Row, Tooltip, Upload, Col,
+  Icon, Row, Tooltip, Col,
 } from 'antd';
 import FormInput from '../../FormInput/FormInput';
 import {
   ReviewInputWrapper, ReviewInputTitle,
-  ReviewInputValueWrapper, CommentDisplayWrapper,
+  ReviewInputValueWrapper,
   ReviewInputValue, ListItemWrapper, ListFieldLabel,
-  ListFieldValue, ChangeInputWrapper,
+  ListFieldValue, ChangeInputWrapper, ListItemActionGroup, CommentWrapper,
 } from './styles';
 import { DATE_TIME_FORMAT } from '../../../utils/constants';
 import { ButtonDefault } from '../../../stylesheets/Button.style';
 import ChangeRequestModal from '../ChangeRequestModal/ChangeRequestModal';
+import UploadInput from '../../FormInput/Upload';
 
 const CommentIcon = () => (
   <svg width="2em" height="2em" fill="currentColor" viewBox="0 0 1024 1024">
@@ -54,7 +56,7 @@ class ChangeRequestField extends Component {
   }
 
   renderUpload = () => {
-    const { value } = this.props;
+    const { value, comment } = this.props;
     const fileList = value.map((link, index) => {
       const path = link.split('/');
       const fileName = path[path.length - 1];
@@ -67,15 +69,27 @@ class ChangeRequestField extends Component {
       };
     });
     return (
-      <ReviewInputValue isUpload>
-        <div>
-          <Upload
-            disabled
-            listType="picture-card"
-            defaultFileList={fileList}
-          />
-        </div>
-      </ReviewInputValue>
+      <Tooltip
+        title={(
+          <span>
+            <Icon component={CommentIcon} />
+            {comment}
+          </span>
+        )}
+      >
+        <ReviewInputValue isUpload>
+          <div>
+            <UploadInput
+              disabled
+              listType="picture-card"
+              previewFile={null}
+              field={{ name: 'upload' }}
+              form={{ values: { upload: fileList } }}
+            />
+            <Icon component={CommentIcon} />
+          </div>
+        </ReviewInputValue>
+      </Tooltip>
     );
   }
 
@@ -83,6 +97,12 @@ class ChangeRequestField extends Component {
     switch (type) {
       case 'upload': {
         const fileList = value.map((link, index) => {
+          if (link instanceof Object) {
+            return {
+              ...link,
+              url: link.thumbUrl,
+            };
+          }
           const path = link.split('/');
           const fileName = path[path.length - 1];
           return {
@@ -94,10 +114,12 @@ class ChangeRequestField extends Component {
           };
         });
         return (
-          <Upload
+          <UploadInput
             disabled
             listType="picture-card"
-            defaultFileList={fileList}
+            previewFile={null}
+            field={{ name: 'upload' }}
+            form={{ values: { upload: fileList } }}
           />
         );
       }
@@ -114,25 +136,29 @@ class ChangeRequestField extends Component {
     const keys = Object.keys(value).filter(key => displayFields[key]);
     return (
       <ListItemWrapper key={index}>
-        {keys.map((key) => {
-          const {
-            label, tooltip, skip, replace, type,
-          } = displayFields[key];
-          const result = this.renderItemValue(type, value[key]);
-          return (
-            // eslint-disable-next-line react/no-array-index-key
-            <Row mutter={32} key={key}>
-              <Tooltip title={value[tooltip]}>
-                <ListFieldLabel>
-                  {label}
-                </ListFieldLabel>
-                <ListFieldValue>
-                  {value[skip] ? replace : result}
-                </ListFieldValue>
-              </Tooltip>
-            </Row>
-          );
-        })}
+        <Row mutter={32}>
+          <Col span={21}>
+            {keys.map((key) => {
+              const {
+                label, tooltip, skip, replace, type,
+              } = displayFields[key];
+              const result = this.renderItemValue(type, value[key]);
+              return (
+                // eslint-disable-next-line react/no-array-index-key
+                <Row mutter={32} key={key}>
+                  <Tooltip title={value[tooltip]}>
+                    <ListFieldLabel>
+                      {label}
+                    </ListFieldLabel>
+                    <ListFieldValue>
+                      {value[skip] ? replace : result}
+                    </ListFieldValue>
+                  </Tooltip>
+                </Row>
+              );
+            })}
+          </Col>
+        </Row>
       </ListItemWrapper>
     );
   }
@@ -141,7 +167,6 @@ class ChangeRequestField extends Component {
     const { list } = this.state;
     const newList = list;
     newList.splice(index, 1, values);
-    console.log(newList)
     this.setState({
       list: newList,
     });
@@ -180,14 +205,14 @@ class ChangeRequestField extends Component {
     return (
       <ListItemWrapper key={index}>
         <Row mutter={32}>
-          <Col span={18}>
+          <Col span={21}>
             {keys.map((key) => {
               const {
                 label, tooltip, skip, replace, type,
               } = displayFields[key];
               const result = this.renderItemValue(type, value[key]);
               return (
-              // eslint-disable-next-line react/no-array-index-key
+                // eslint-disable-next-line react/no-array-index-key
                 <Row mutter={32} key={key}>
                   <Tooltip title={value[tooltip]}>
                     <ListFieldLabel>
@@ -201,12 +226,14 @@ class ChangeRequestField extends Component {
               );
             })}
           </Col>
-          <Col span={6}>
-            <Icon type="close" onClick={() => this.handleRemoveItem(index)} />
-            <Icon
-              type="edit"
-              onClick={() => this.toggleAddItemModal(true, index)}
-            />
+          <Col span={3}>
+            <ListItemActionGroup>
+              <Icon type="close" onClick={() => this.handleRemoveItem(index)} />
+              <Icon
+                type="edit"
+                onClick={() => this.toggleAddItemModal(true, index)}
+              />
+            </ListItemActionGroup>
           </Col>
         </Row>
       </ListItemWrapper>
@@ -214,25 +241,36 @@ class ChangeRequestField extends Component {
   }
 
   renderListObject = () => {
-    const { isAddListItemModalOpen, list, selectedIndex } = this.state;
     const {
-      value, label, additional, schema,
+      value, comment,
     } = this.props;
-    const { fields } = additional;
     return (
       <ReviewInputValue isList>
-        {value.map(this.renderListItem)}
-        <ChangeRequestModal
-          fields={fields}
-          schema={schema}
-          initValue={selectedIndex ? list[selectedIndex] : null}
-          selectedIndex={selectedIndex}
-          title={label}
-          onSubmit={this.handleAddItem}
-          onEdit={this.handleEditItem}
-          onCancel={() => this.toggleAddItemModal(false)}
-          isOpen={isAddListItemModalOpen}
-        />
+        {!_isEmpty(value)
+          ? (
+            <Tooltip
+              title={(
+                <span>
+                  <Icon component={CommentIcon} />
+                  {comment}
+                </span>
+              )}
+            >
+              <Row mutter={32}>
+                <Col span={22}>
+                  {value.map(this.renderListItem)}
+                </Col>
+                <Icon component={CommentIcon} />
+              </Row>
+            </Tooltip>
+          )
+          : (
+            <CommentWrapper>
+              <Icon component={CommentIcon} />
+              {comment}
+            </CommentWrapper>
+          )
+        }
       </ReviewInputValue>
     );
   }
@@ -241,20 +279,44 @@ class ChangeRequestField extends Component {
     const { list } = this.state;
     return (
       <ReviewInputValue isList>
-        {list.map(this.renderListItemValue)}
+        <Row mutter={32}>
+          <Col span={22}>
+            {list.map(this.renderListItemValue)}
+          </Col>
+        </Row>
       </ReviewInputValue>
     );
   }
 
   renderText = () => {
-    const { value } = this.props;
+    const { value, comment } = this.props;
     const result = value instanceof Array ? value.join(', ') : value;
+    if (!result) {
+      return (
+        <ReviewInputValue>
+          <CommentWrapper>
+            <Icon component={CommentIcon} />
+            {comment}
+          </CommentWrapper>
+        </ReviewInputValue>
+      );
+    }
     return (
-      <ReviewInputValue>
-        <div>
-          {result}
-        </div>
-      </ReviewInputValue>
+      <Tooltip
+        title={(
+          <span>
+            <Icon component={CommentIcon} />
+            {comment}
+          </span>
+        )}
+      >
+        <ReviewInputValue>
+          <div>
+            {result}
+            <Icon component={CommentIcon} />
+          </div>
+        </ReviewInputValue>
+      </Tooltip>
     );
   }
 
@@ -277,19 +339,17 @@ class ChangeRequestField extends Component {
   }
 
   render() {
+    const { isAddListItemModalOpen, list, selectedIndex } = this.state;
     const {
-      name, type, label, comment, additional,
+      name, type, label, additional, schema,
     } = this.props;
+    const { fields = {} } = additional || {};
     return (
       <ReviewInputWrapper>
         <ReviewInputTitle>{label}</ReviewInputTitle>
         <ReviewInputValueWrapper>
           <div>
             {this.selectInputType()}
-            <CommentDisplayWrapper>
-              <Icon component={CommentIcon} />
-              {comment}
-            </CommentDisplayWrapper>
           </div>
           <div>
             <ChangeInputWrapper>
@@ -301,7 +361,7 @@ class ChangeRequestField extends Component {
                       onClick={() => this.toggleAddItemModal(true)}
                     >
                       <Icon type="plus" />
-                    Add
+                      Add
                       {' '}
                       {label}
                     </ButtonDefault>
@@ -312,12 +372,22 @@ class ChangeRequestField extends Component {
                   <FormInput
                     name={name}
                     type={type}
-                    login={1}
                     {...additional}
                   />
                 )}
             </ChangeInputWrapper>
           </div>
+          <ChangeRequestModal
+            fields={fields}
+            schema={schema}
+            initValue={list[selectedIndex]}
+            selectedIndex={selectedIndex}
+            title={label}
+            onSubmit={this.handleAddItem}
+            onEdit={this.handleEditItem}
+            onCancel={() => this.toggleAddItemModal(false)}
+            isOpen={isAddListItemModalOpen}
+          />
         </ReviewInputValueWrapper>
       </ReviewInputWrapper>
     );

@@ -1,7 +1,10 @@
 import ls from 'local-storage';
 import * as Yup from 'yup';
 import { toI18n } from './func-utils';
-import { AGENT_SKILL, CATEGORY_OPTIONS } from '../../common/enums';
+import {
+  AGENT_SKILL, CATEGORY_OPTIONS, FIELD_OF_STUDY,
+  MARKS, LANGUAGE_OPTIONS,
+} from '../../common/enums';
 export const RESTART_ON_REMOUNT = '@@saga-injector/restart-on-remount';
 export const DAEMON = '@@saga-injector/daemon';
 export const ONCE_TILL_UNMOUNT = '@@saga-injector/once-till-unmount';
@@ -166,8 +169,8 @@ export const APPLICATION_FORM = {
     school: Yup.string().trim().required(toI18n('FORM_REQUIRED')),
     degree: Yup.string().trim().required(toI18n('FORM_REQUIRED')),
     certificate: Yup.array().of(Yup.object()).required(toI18n('FORM_REQUIRED')),
-    fieldOfStudies: Yup.array().of(Yup.string()),
-    gpa: Yup.number().min(0).max(5),
+    fieldOfStudy: Yup.array().of(Yup.string()).required(toI18n('FORM_REQUIRED')),
+    gpa: Yup.number().min(0).max(5).required(toI18n('FORM_REQUIRED')),
   }),
   EDUCATION_VALIDATION_SCHEMA: Yup.object().shape({
     educations: Yup.array().of(
@@ -175,8 +178,8 @@ export const APPLICATION_FORM = {
         school: Yup.string().trim().required(toI18n('FORM_REQUIRED')),
         degree: Yup.string().trim().required(toI18n('FORM_REQUIRED')),
         certificate: Yup.array().of(Yup.object()).required(toI18n('FORM_REQUIRED')),
-        fieldOfStudies: Yup.array().of(Yup.string()),
-        gpa: Yup.number().min(0).max(5),
+        fieldOfStudy: Yup.array().of(Yup.string()).required(toI18n('FORM_REQUIRED')),
+        gpa: Yup.number().min(0).max(5).required(toI18n('FORM_REQUIRED')),
       })
     ),
   }),
@@ -332,8 +335,32 @@ export const APPLICATION_REVIEW_MAPPING = {
     label: toI18n('APPLICATION_REVIEW_FORM_EDUCATIONS'),
     type: 'list',
     schema: 'EDUCATION_ITEM_VALIDATION_SCHEMA',
+    fields: {
+      fieldOfStudy: {
+        label: toI18n('APPLICATION_EDUCATION_FORM_FOS'),
+        type: 'select',
+        mode: 'multiple',
+        options: FIELD_OF_STUDY,
+      },
+      school: {
+        label: toI18n('APPLICATION_EDUCATION_FORM_SCHOOL'),
+        type: 'text',
+      },
+      degree: {
+        label: toI18n('APPLICATION_EDUCATION_FORM_DEGREE'),
+        type: 'text',
+      },
+      gpa: {
+        label: toI18n('APPLICATION_EDUCATION_FORM_GPA'),
+        type: 'number',
+      },
+      certificate: {
+        label: toI18n('APPLICATION_EDUCATION_FORM_CERTIFICATE'),
+        type: 'upload',
+      },
+    },
     displayFields: {
-      fieldOfstudy: {
+      fieldOfStudy: {
         label: toI18n('APPLICATION_REVIEW_FORM_LIST_FOS'),
         type: 'text',
       },
@@ -359,6 +386,41 @@ export const APPLICATION_REVIEW_MAPPING = {
     label: toI18n('APPLICATION_REVIEW_FORM_LANGUAGES'),
     type: 'list',
     schema: 'LANGUAGE_VALIDATION_SCHEMA',
+    fields: {
+      name: {
+        label: toI18n('APPLICATION_ADDTIONAL_FORM_NAME'),
+        type: 'select',
+        options: LANGUAGE_OPTIONS,
+      },
+      writing: {
+        label: toI18n('APPLICATION_ADDTIONAL_FORM_WRITING'),
+        type: 'slider',
+        marks: MARKS,
+        min: 1,
+        max: 5,
+      },
+      reading: {
+        label: toI18n('APPLICATION_ADDTIONAL_FORM_READING'),
+        type: 'slider',
+        marks: MARKS,
+        min: 1,
+        max: 5,
+      },
+      speaking: {
+        label: toI18n('APPLICATION_ADDTIONAL_FORM_SPEAKING'),
+        type: 'slider',
+        marks: MARKS,
+        min: 1,
+        max: 5,
+      },
+      overall: {
+        label: toI18n('APPLICATION_ADDTIONAL_FORM_OVERALL'),
+        type: 'slider',
+        marks: MARKS,
+        min: 1,
+        max: 5,
+      },
+    },
     displayFields: {
       name: {
         label: toI18n('APPLICATION_REVIEW_FORM_LIST_NAME'),

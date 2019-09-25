@@ -46,6 +46,7 @@ function* getByToken({ payload }) {
     );
     notification.error({ message });
     yield put(actions.fetchReviewSingleByTokenFail(message));
+    history.push('/login');
     return;
   }
 
@@ -68,11 +69,27 @@ function* uploadApplicationFile(file) {
   };
 }
 
+function* handleExperienceCertificate(educations) {
+  const mappedEducations = [];
+  // eslint-disable-next-line no-restricted-syntax
+  for (const education of educations) {
+    const { certificate, ...rest } = education;
+    const certificateUrls = [];
+    // eslint-disable-next-line no-restricted-syntax
+    for (const certificateFile of certificate) {
+      const { url } = yield uploadApplicationFile(certificateFile);
+      certificateUrls.push(url);
+    }
+    mappedEducations.push({ ...rest, certificate: certificateUrls });
+  }
+  return mappedEducations;
+}
+
 
 function* updateChangeForApplication({ payload }) {
   const { token } = payload;
   let { application } = payload;
-  const { cv } = application;
+  const { cv, educations } = application;
   if (cv) {
     const cvUrls = [];
     // eslint-disable-next-line no-restricted-syntax
@@ -81,6 +98,11 @@ function* updateChangeForApplication({ payload }) {
       cvUrls.push(url);
     }
     application = { ...application, cv: cvUrls };
+  }
+
+  if (educations) {
+    const mappedEducations = yield handleExperienceCertificate(educations);
+    application = { ...application, educations: mappedEducations };
   }
 
   const { error, response } = yield call(

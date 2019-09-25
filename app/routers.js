@@ -38,6 +38,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import EditApplication from './containers/EditApplication/EditApplication';
 import System from './pages/System';
+import ApplicationReview from './containers/ApplicationReview';
 
 class Router extends React.PureComponent {
   static propTypes = {

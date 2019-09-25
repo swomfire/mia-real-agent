@@ -162,6 +162,7 @@ export const CATEGORY_OPTIONS = [
 export const APPLICATION_STATUS = {
   PENDING: 'Pending',
   REJECTED: 'Rejected',
+  REVIEWING: 'Reviewing',
   APPROVED: 'Approved',
 };
 

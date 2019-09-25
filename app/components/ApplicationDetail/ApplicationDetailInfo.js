@@ -11,6 +11,7 @@ import ApplicationDetailInfoContent from './ApplicationDetailInfoContent';
 import ApplicationDetailInfoHeader from './ApplicationDetailInfoHeader';
 import { APPLICATION_STATUS } from '../../../common/enums';
 import ApplicationDetailTicketTable from './ApplicationDetailTicketTable';
+import ApplicationReview from '../../containers/ApplicationReview';
 
 const { TabPane } = Tabs;
 
@@ -37,10 +38,12 @@ class applicationDetailInfo extends PureComponent {
 
   render() {
     const {
+      isReviewing,
       applicationDetail,
       applicationApprove,
       applicationReject,
       applicationReview,
+      applicationPending,
     } = this.props;
 
     if (_isEmpty(applicationDetail) || applicationDetail.isLoading) {
@@ -66,6 +69,7 @@ class applicationDetailInfo extends PureComponent {
       applicationApprove,
       applicationReject,
       applicationReview,
+      applicationPending,
     };
     return (
       <AdminDetailsContainer>
@@ -75,27 +79,30 @@ class applicationDetailInfo extends PureComponent {
           firstName={firstName}
           lastName={lastName}
           status={status}
+          isReviewing={isReviewing}
           actions={actions}
         />
-        <Tabs defaultActiveKey="1">
-          <TabPane tab="Detail" key="1">
-            <Scrollbar autoHide style={scrollStyle}>
-              <ApplicationDetailInfoContent applicationDetail={applicationDetail} />
-            </Scrollbar>
-          </TabPane>
-          {status === APPLICATION_STATUS.APPROVED && [
-            (
-              <TabPane tab="Ticket" key="2">
-                <Scrollbar autoHide style={scrollStyle}>
-                  <ApplicationDetailTicketTable tickets={tickets} />
-                </Scrollbar>
-              </TabPane>
-            ),
-            (<TabPane tab="Billing history" key="3">
-              <h2>Billing history</h2>
-            </TabPane>),
-          ]}
-        </Tabs>
+        {status === APPLICATION_STATUS.REVIEWING ? (<ApplicationReview />) : (
+          <Tabs defaultActiveKey="1">
+            <TabPane tab="Detail" key="1">
+              <Scrollbar autoHide style={scrollStyle}>
+                <ApplicationDetailInfoContent applicationDetail={applicationDetail} />
+              </Scrollbar>
+            </TabPane>
+            {status === APPLICATION_STATUS.APPROVED && [
+              (
+                <TabPane tab="Ticket" key="2">
+                  <Scrollbar autoHide style={scrollStyle}>
+                    <ApplicationDetailTicketTable tickets={tickets} />
+                  </Scrollbar>
+                </TabPane>
+              ),
+              (<TabPane tab="Billing history" key="3">
+                <h2>Billing history</h2>
+              </TabPane>),
+            ]}
+          </Tabs>
+        )}
       </AdminDetailsContainer>
     );
   }
@@ -104,9 +111,11 @@ class applicationDetailInfo extends PureComponent {
 applicationDetailInfo.propTypes = {
   applicationId: PropTypes.string.isRequired,
   fetchApplicationSingle: PropTypes.func.isRequired,
+  isReviewing: PropTypes.bool,
   applicationApprove: PropTypes.func.isRequired,
   applicationReject: PropTypes.func.isRequired,
   applicationReview: PropTypes.func.isRequired,
+  applicationPending: PropTypes.func.isRequired,
   applicationDetail: PropTypes.object.isRequired,
 };
 

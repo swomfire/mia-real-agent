@@ -7,7 +7,7 @@ import _pick from 'lodash/pick';
 import _pickBy from 'lodash/pickBy';
 import { notification } from 'antd';
 import {
-  SUBMIT, actions, APPLICATION_CHANGE_PAGE,
+  SUBMIT, actions, APPLICATION_CHANGE_PAGE, APPLICATION_PENDING,
   APPLICATION_ADMIN_GET_ALL, APPLICATION_SORTING,
   APPLICATION_APPROVE, APPLICATION_REJECT, APPLICATION_REVIEW,
   APPLICATION_FETCH_SINGLE, APPLICATION_DETAIL_EDIT,
@@ -182,6 +182,20 @@ function* reviewApplication(action) {
   yield put(actions.applicationReviewComplete(data));
 }
 
+function* pendingApplication(action) {
+  const { applicationId } = action;
+  const { response, error } = yield call(ApplicationApi.pendingApplication, applicationId);
+  if (error) {
+    const message = _get(
+      error, 'response.data.message', error.message
+    );
+    yield put(actions.applicationPendingFail(message));
+    return;
+  }
+  const { data } = response;
+  yield put(actions.applicationPendingComplete(data));
+}
+
 function* applicationFetchSingle({ id }) {
   const { response } = yield call(ApplicationApi.get, id);
   const error = _get(response, 'error');
@@ -258,6 +272,7 @@ function* ticketFlow() {
   yield takeEvery(APPLICATION_APPROVE, approveApplication);
   yield takeEvery(APPLICATION_REJECT, rejectApplication);
   yield takeEvery(APPLICATION_REVIEW, reviewApplication);
+  yield takeEvery(APPLICATION_PENDING, pendingApplication);
   yield takeEvery(APPLICATION_FETCH_SINGLE, applicationFetchSingle);
   yield takeEvery(APPLICATION_CHECK_INFO, checkBasicInfomation);
   yield takeEvery(APPLICATION_FORM_VALIDATE_STEP, validateFormStep);

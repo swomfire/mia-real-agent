@@ -13,6 +13,7 @@ import IntentRouter from './intent/intent.route';
 import ResponseRouter from './intentResponse/intentResponse.route';
 import SystemRouter from './system/system.route';
 import BillingRouter from './billing/billing.route';
+import ReviewRouter from './review/review.route';
 import CannedResponseRouter from './canned-response/canned-response.route';
 
 
@@ -33,5 +34,6 @@ export default () => {
   router.use('/canned-responses', CannedResponseRouter.router);
   router.use('/system', SystemRouter.router);
   router.use('/billing', BillingRouter.router);
+  router.use('/review', ReviewRouter.router);
   return router;
 };

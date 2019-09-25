@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { shape } from 'prop-types';
-import { Col, Row, Divider } from 'antd';
+import { Col, Row } from 'antd';
 import ProfileFormContainer from '../../containers/Profile/ProfileForm';
 import ChangePasswordFormContainer from '../../containers/Profile/ChangePasswordForm/ChangePasswordFormContainer';
 import { InputLabelStyled, ActionBar, RowStyled } from './styles';
@@ -8,6 +8,7 @@ import { toI18n } from '../../utils/func-utils';
 import { InputStyled } from '../FormInput/styles';
 import ProfileDetail from './ProfileDetail/ProfileDetail';
 import { ButtonPrimary } from '../../stylesheets/Button.style';
+import Avatar from 'containers/Avatar';
 
 class ProfileBasicInfo extends Component {
   state = {
@@ -50,24 +51,34 @@ class ProfileBasicInfo extends Component {
         role, username, email, profile,
       },
     } = this.props;
+    const { avatar } = profile || {};
     return (
       <div>
-        <RowStyled gutter={32}>
-          <Col span={12}>
-            <InputLabelStyled>
-              {toI18n('PROFILE_USERNAME')}
-              :
-            </InputLabelStyled>
-            <InputStyled value={username} />
+        <Row gutter={32}>
+          <Col span={4}>
+            <Avatar avatar={avatar} />
           </Col>
-          <Col span={12}>
-            <InputLabelStyled>
-              {toI18n('PROFILE_EMAIL')}
-              :
-            </InputLabelStyled>
-            <InputStyled value={email} />
+          <Col span={20}>
+            <RowStyled gutter={32}>
+              <Col span={24}>
+                <InputLabelStyled>
+                  {toI18n('PROFILE_USERNAME')}
+                  :
+                </InputLabelStyled>
+                <InputStyled value={username} />
+              </Col>
+            </RowStyled>
+            <RowStyled gutter={32}>
+              <Col span={24}>
+                <InputLabelStyled>
+                  {toI18n('PROFILE_EMAIL')}
+                  :
+                </InputLabelStyled>
+                <InputStyled value={email} />
+              </Col>
+            </RowStyled>
           </Col>
-        </RowStyled>
+        </Row>
         <ProfileDetail role={role} profile={profile} />
       </div>
     );

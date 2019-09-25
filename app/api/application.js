@@ -21,6 +21,11 @@ export const rejectApplication = id => axios
   .then(response => ({ response }))
   .catch(handleError);
 
+export const pendingApplication = id => axios
+  .post(`applications/${id}/pending`)
+  .then(response => ({ response }))
+  .catch(handleError);
+
 export const reviewApplication = id => axios
   .post(`applications/${id}/review`)
   .then(response => ({ response }))

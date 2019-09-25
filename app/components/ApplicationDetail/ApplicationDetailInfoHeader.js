@@ -15,8 +15,14 @@ import {
   ButtonReject,
 } from '../../stylesheets/Button.style';
 import { APPLICATION_STATUS } from '../../../common/enums';
+import { Icon, Popconfirm } from 'antd';
+import { toI18n } from '../../utils/func-utils';
 
 class ApplicationDetailInfoHeader extends PureComponent {
+  state = {
+    visible: false,
+  }
+
   goToEditPage = () => {
     const { applicationId } = this.props;
     history.push(`/admin/applications/${applicationId}/edit`);
@@ -32,13 +38,50 @@ class ApplicationDetailInfoHeader extends PureComponent {
     actions.applicationReject({ _id: applicationId });
   }
 
+  handlePreview = () => {
+    const { applicationId, actions } = this.props;
+    actions.applicationReview({ _id: applicationId });
+  }
+
+  handlePending = () => {
+    const { applicationId, actions } = this.props;
+    actions.applicationPending({ _id: applicationId });
+  }
+
+  handleVisibleChange = (visible) => {
+    if (!visible) {
+      this.setState({ visible });
+      return;
+    }
+    const { isReviewing } = this.props;
+    if (!isReviewing) {
+      this.handlePending();
+    } else {
+      this.setState({ visible });
+    }
+  };
+
+
   render() {
+    const { visible } = this.state;
     const {
       nickname, firstName, lastName, status,
     } = this.props;
     return (
       <TitleDetailsHead>
         <HeaderTextDetails>
+          {status === APPLICATION_STATUS.REVIEWING && (
+            <Popconfirm
+              title={toI18n('APPLICATION_REVIEW_FORM_PENDING_CHANGE')}
+              onVisibleChange={this.handleVisibleChange}
+              visible={visible}
+              onConfirm={this.handlePending}
+              okText={toI18n('FORM_YES')}
+              cancelText={toI18n('FORM_NO')}
+            >
+              <Icon type="left" />
+            </Popconfirm>
+          )}
           <span>
             {nickname}
           </span>
@@ -55,15 +98,11 @@ class ApplicationDetailInfoHeader extends PureComponent {
         <AdminHeadActionGroup>
           {status === APPLICATION_STATUS.PENDING && [(
             <ButtonApprove
-              onClick={this.handleApprove}
+              onClick={this.handlePreview}
             >
-              <i className="mia-check" />
-              <span>Approve</span>
+              <span>Review</span>
             </ButtonApprove>),
-          (<ButtonReject onClick={this.handleReject}>
-            <i className="mia-close" />
-            <span>Reject</span>
-          </ButtonReject>)]}
+          ]}
 
         </AdminHeadActionGroup>
       </TitleDetailsHead>
@@ -78,6 +117,7 @@ ApplicationDetailInfoHeader.propTypes = {
   nickname: PropTypes.string.isRequired,
   firstName: PropTypes.string.isRequired,
   lastName: PropTypes.string.isRequired,
+  isReviewing: PropTypes.bool.isRequired,
 };
 
 export default ApplicationDetailInfoHeader;

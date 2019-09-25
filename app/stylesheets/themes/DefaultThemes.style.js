@@ -77,5 +77,6 @@ export const DefaultThemes = {
     ColorComment: '#7a7a7a',
     ColorOverLay: '#1d1d1d70',
     ColorSusscess: '#05ca05',
+    ColorEdit: '#00000087',
   },
 };

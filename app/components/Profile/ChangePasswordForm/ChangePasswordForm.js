@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import {
   Modal, Row, Col,
-  Form, notification,
+  Form,
 } from 'antd';
 import { func, bool, string } from 'prop-types';
 import FormInput from '../../FormInput/FormInput';
@@ -12,11 +12,17 @@ import LoadingSpin from '../../Loading';
 import { ButtonPrimary, ButtonCancel } from '../../../stylesheets/Button.style';
 import { toI18n } from '../../../utils/func-utils';
 
+const initialValues = {
+  currentPassword: '',
+  newPassword: '',
+  confirmNewPassword: '',
+};
+
 const validationSchema = Yup.object().shape({
-  currentPassword: Yup.string().trim().required('Required'),
-  newPassword: Yup.string().trim().required('Required'),
-  confirmNewPassword: Yup.string().trim().required('Required')
-    .oneOf([Yup.ref('newPassword'), null], 'Confirm password not match'),
+  currentPassword: Yup.string().trim().required(toI18n('FORM_REQUIRED')),
+  newPassword: Yup.string().trim().required(toI18n('FORM_REQUIRED')),
+  confirmNewPassword: Yup.string().trim().required(toI18n('FORM_REQUIRED'))
+    .oneOf([Yup.ref('newPassword'), null], toI18n('FORM_PASSWORD_MUST_MATCH')),
 });
 
 export default class ChangePasswordForm extends PureComponent {
@@ -31,10 +37,7 @@ export default class ChangePasswordForm extends PureComponent {
   componentDidUpdate = (prevProps) => {
     const { isChangingPassword, changePasswordError } = this.props;
     if (prevProps.isChangingPassword && !isChangingPassword) {
-      if (changePasswordError) {
-        notification.error({ message: changePasswordError });
-      } else {
-        notification.success({ message: 'Password changed' });
+      if (!changePasswordError) {
         this.handleCancel();
       }
     }
@@ -48,6 +51,7 @@ export default class ChangePasswordForm extends PureComponent {
 
   handleCancel = () => {
     const { handleCancel } = this.props;
+    this.changePasswordForm.getFormikContext().resetForm();
     handleCancel();
   }
 
@@ -62,7 +66,9 @@ export default class ChangePasswordForm extends PureComponent {
       >
         <LoadingSpin loading={isChangingPassword}>
           <Formik
+            ref={(changePasswordForm) => { this.changePasswordForm = changePasswordForm; }}
             validationSchema={validationSchema}
+            initialValues={initialValues}
             onSubmit={this.handleSubmit}
           >
             {({ handleSubmit }) => (
@@ -96,10 +102,10 @@ export default class ChangePasswordForm extends PureComponent {
                 </Row>
                 <Row gutter={32}>
                   <ActionBar>
-                    <ButtonPrimary onClick={handleSubmit}>
+                    <ButtonPrimary type="submit">
                       {toI18n('FORM_SUBMIT')}
                     </ButtonPrimary>
-                    <ButtonCancel onClick={this.handleCancel}>
+                    <ButtonCancel type="button" onClick={this.handleCancel}>
                       {toI18n('FORM_RETURN')}
                     </ButtonCancel>
                   </ActionBar>

@@ -12,6 +12,10 @@ export const UPDATE_PROFILE = 'profile/UPDATE_PROFILE';
 export const UPDATE_PROFILE_SUCCESS = 'profile/UPDATE_PROFILE_SUCCESS';
 export const UPDATE_PROFILE_FAIL = 'profile/UPDATE_PROFILE_FAIL';
 
+export const UPDATE_PROFILE_AVATAR = 'profile/UPDATE_PROFILE_AVATAR';
+export const UPDATE_PROFILE_AVATAR_SUCCESS = 'profile/UPDATE_PROFILE_AVATAR_SUCCESS';
+export const UPDATE_PROFILE_AVATAR_FAIL = 'profile/UPDATE_PROFILE_AVATAR_FAIL';
+
 export const CHANGE_PASSWORD = 'profile/CHANGE_PASSWORD';
 export const CHANGE_PASSWORD_SUCCESS = 'profile/CHANGE_PASSWORD_SUCCESS';
 export const CHANGE_PASSWORD_FAIL = 'profile/CHANGE_PASSWORD_FAIL';
@@ -32,6 +36,29 @@ export const USER_TOP_UP_SUCCESS = 'profile/USER_TOP_UP_SUCCESS';
 export const USER_TOP_UP_FAIL = 'profile/USER_TOP_UP_FAIL';
 
 // action creator
+function updateAvatar(avatar) {
+  return {
+    type: UPDATE_PROFILE_AVATAR,
+    payload: {
+      avatar,
+    },
+  };
+}
+
+function updateAvatarSuccess(data) {
+  return {
+    type: UPDATE_PROFILE_AVATAR_SUCCESS,
+    payload: data,
+  };
+}
+
+function updateAvatarFail(errorMessage) {
+  return {
+    type: UPDATE_PROFILE_AVATAR_FAIL,
+    errorMessage,
+  };
+}
+
 function topUp(cardId, amount) {
   return {
     type: USER_TOP_UP,
@@ -269,12 +296,14 @@ function profileReducer(state = initialState, action) {
         .set('changePasswordError', action.errorMessage);
 
     case USER_TOP_UP:
+    case UPDATE_PROFILE_AVATAR:
     case USER_ADD_CREDIT_CARD:
     case USER_REMOVE_CREDIT_CARD:
       return state.set('isUpdating', true)
         .set('updateError', '');
 
     case USER_TOP_UP_SUCCESS:
+    case UPDATE_PROFILE_AVATAR_SUCCESS:
     case USER_REMOVE_CREDIT_CARD_SUCCESS:
     case USER_ADD_CREDIT_CARD_SUCCESS: {
       return state.set('isUpdating', false)
@@ -282,6 +311,7 @@ function profileReducer(state = initialState, action) {
     }
 
     case USER_TOP_UP_FAIL:
+    case UPDATE_PROFILE_AVATAR_FAIL:
     case USER_ADD_CREDIT_CARD_FAIL:
     case USER_REMOVE_CREDIT_CARD_FAIL:
       return state.set('isUpdating', false)
@@ -294,6 +324,10 @@ function profileReducer(state = initialState, action) {
 export default profileReducer;
 
 export const actions = {
+  updateAvatar,
+  updateAvatarSuccess,
+  updateAvatarFail,
+
   fetchDetailAction,
   fetchDetailCompleteAction,
   fetchDetailFailAction,

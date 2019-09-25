@@ -20,7 +20,7 @@ import { isAgent } from '../../utils/func-utils';
 
 export default class TopNavBar extends Component {
   static propTypes = {
-    profile: shape().isRequired,
+    user: shape().isRequired,
   };
 
   state = {
@@ -34,8 +34,8 @@ export default class TopNavBar extends Component {
   };
 
   renderLogo = () => {
-    const { profile } = this.props;
-    const { role } = profile;
+    const { user } = this.props;
+    const { role } = user;
     return (
       <Logo>
         <Link to="/dashboard">
@@ -55,8 +55,9 @@ export default class TopNavBar extends Component {
 
   render() {
     const { isUserInfoOpen } = this.state;
-    const { profile } = this.props;
-    const { email, role } = profile;
+    const { user } = this.props;
+    const { email, role, profile } = user;
+    const { avatar } = profile || {};
     return (
       <TopNavBarWrapper
         className={!isAgent(role) ? 'user-account' : 'agent-account'}
@@ -75,11 +76,7 @@ export default class TopNavBar extends Component {
         <TopbarRight>
           <ProfileStyled>
             <ProfileImageStyled
-              src={
-                !isAgent(role)
-                  ? '/assets/images/user-live.jpeg'
-                  : '/assets/images/user.svg'
-              }
+              src={avatar || '/assets/images/user.svg'}
               onClick={this.onToggleUserInfo}
             />
             {isUserInfoOpen && (

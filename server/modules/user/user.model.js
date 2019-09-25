@@ -43,6 +43,7 @@ const userSchema = new Schema(
       company: { type: String, trim: true },
       phone: { type: String, trim: true },
       address: { type: String, required: false },
+      avatar: { type: String, trim: true },
     },
     rating: {
       type: Number,

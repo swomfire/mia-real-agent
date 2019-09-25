@@ -29,6 +29,10 @@ export const APPLICATION_REVIEW = 'application/APPLICATION_REVIEW';
 export const APPLICATION_REVIEW_COMPLETE = 'application/APPLICATION_REVIEW_COMPLETE';
 export const APPLICATION_REVIEW_FAIL = 'application/APPLICATION_REVIEW_FAIL';
 
+export const APPLICATION_PENDING = 'application/APPLICATION_PENDING';
+export const APPLICATION_PENDING_COMPLETE = 'application/APPLICATION_PENDING_COMPLETE';
+export const APPLICATION_PENDING_FAIL = 'application/APPLICATION_PENDING_COMPLETE';
+
 export const APPLICATION_FETCH_SINGLE = 'application/APPLICATION_FETCH_SINGLE';
 export const APPLICATION_FETCH_SINGLE_COMPLETE = 'application/APPLICATION_FETCH_SINGLE_COMPLETE';
 export const APPLICATION_FETCH_SINGLE_FAIL = 'application/APPLICATION_FETCH_SINGLE_FAIL';
@@ -45,7 +49,15 @@ export const APPLICATION_DETAIL_EDIT = 'application/APPLICATION_DETAIL_EDIT';
 export const APPLICATION_DETAIL_EDIT_COMPLETE = 'application/APPLICATION_DETAIL_EDIT_COMPLETE';
 export const APPLICATION_DETAIL_EDIT_FAIL = 'application/APPLICATION_DETAIL_EDIT_FAIL';
 
+export const APPLICATION_TOGGLE_REVIEW = 'application/APPLICATION_TOGGLE_REVIEW';
+
 // action creator
+
+const applicationToggleReview = toggle => ({
+  type: APPLICATION_TOGGLE_REVIEW,
+  toggle,
+});
+
 // Edit detail action
 const applicationDetailEditAction = application => ({
   type: APPLICATION_DETAIL_EDIT,
@@ -181,6 +193,21 @@ const applicationApproveFail = errorMsg => ({
   errorMsg,
 });
 
+const applicationPending = ({ _id }) => ({
+  type: APPLICATION_PENDING,
+  applicationId: _id,
+});
+
+const applicationPendingComplete = application => ({
+  type: APPLICATION_PENDING_COMPLETE,
+  application,
+});
+
+const applicationPendingFail = errorMsg => ({
+  type: APPLICATION_PENDING_FAIL,
+  errorMsg,
+});
+
 const applicationReject = ({ _id }) => ({
   type: APPLICATION_REJECT,
   applicationId: _id,
@@ -234,6 +261,8 @@ function fetchApplicationSingleComplete(payload) {
 }
 
 // selector
+const getApplicationIsReviewing = ({ application }) => application.get('isReviewing');
+
 const getApplicationIsSubmitting = ({ application }) => application.get('isSubmitting');
 const getApplicationSubmitError = ({ application }) => application.get('submitError');
 
@@ -269,10 +298,15 @@ const initialState = fromJS({
 
   isValidating: false,
   validateError: '',
+
+  isReviewing: false,
 });
 
 function applicationReducer(state = initialState, action) {
   switch (action.type) {
+    case APPLICATION_TOGGLE_REVIEW:
+      return state.set('isReviewing', action.toggle);
+
     case APPLICATION_FORM_VALIDATE_STEP:
       return state.set('isValidating', true)
         .set('validateError', '');
@@ -340,26 +374,22 @@ function applicationReducer(state = initialState, action) {
       const { id, errorMsg } = action;
       return state.setIn(['applications', id], fromJS({ error: errorMsg }));
     }
+    case APPLICATION_REVIEW:
+    case APPLICATION_PENDING:
+    case APPLICATION_APPROVE:
+    case APPLICATION_REJECT: {
+      return state.setIn(['applications', action.applicationId, 'isLoading'], true);
+    }
 
+    case APPLICATION_REVIEW_COMPLETE:
+    case APPLICATION_PENDING_COMPLETE:
+    case APPLICATION_REJECT_COMPLETE:
     case APPLICATION_APPROVE_COMPLETE: {
       const { application } = action;
       const { _id } = application;
       return state
         .setIn(['applications', _id], fromJS(application));
     }
-    case applicationRejectComplete: {
-      const { application } = action;
-      const { _id } = application;
-      return state
-        .setIn(['applications', _id], fromJS(application));
-    }
-    case APPLICATION_REVIEW_COMPLETE: {
-      const { application } = action;
-      const { _id } = application;
-      return state
-        .setIn(['applications', _id], fromJS(application));
-    }
-
     default: return state;
   }
 }
@@ -407,9 +437,17 @@ export const actions = {
   applicationDetailEditAction,
   applicationDetailEditCompleteAction,
   applicationDetailEditFailAction,
+
+  applicationPending,
+  applicationPendingComplete,
+  applicationPendingFail,
+
+  applicationToggleReview,
 };
 
 export const selectors = {
+  getApplicationIsReviewing,
+
   getApplicationIsSubmitting,
   getApplicationSubmitError,
 

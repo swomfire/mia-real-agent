@@ -18,8 +18,8 @@ import agentsSaga from './agents';
 import cannedResponseSaga from './cannedResponse';
 import systemSaga from './system';
 import billingSaga from './billing';
+import reviewSaga from './review';
 import { FETCH_CURRENT_VERSION } from '../reducers/system';
-import { FETCH_DETAIL } from '../reducers/profile';
 
 export default function* rootSagas() {
   configAxios();
@@ -48,11 +48,9 @@ export default function* rootSagas() {
     cannedResponseSaga(),
     systemSaga(),
     billingSaga(),
+    reviewSaga(),
     put({
       type: FETCH_CURRENT_VERSION,
-    }),
-    put({
-      type: FETCH_DETAIL,
     }),
   ]);
 }

@@ -9,6 +9,7 @@ const en = {
     CLOSE: 'Close',
     CANCEL: 'Cancel',
     CLICK_HERE: 'Click here!',
+    ADD: 'Add ',
     // Form
     FORM_BACK: 'Back',
     FORM_NEXT: 'Next',

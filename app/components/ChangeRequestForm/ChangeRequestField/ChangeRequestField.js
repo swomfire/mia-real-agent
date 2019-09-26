@@ -18,6 +18,7 @@ import { DATE_TIME_FORMAT } from '../../../utils/constants';
 import { ButtonDefault } from '../../../stylesheets/Button.style';
 import ChangeRequestModal from '../ChangeRequestModal/ChangeRequestModal';
 import UploadInput from '../../FormInput/Upload';
+import { toI18n } from '../../../utils/func-utils';
 
 const CommentIcon = () => (
   <svg width="2em" height="2em" fill="currentColor" viewBox="0 0 1024 1024">
@@ -364,8 +365,7 @@ class ChangeRequestField extends Component {
                       onClick={() => this.toggleAddItemModal(true)}
                     >
                       <Icon type="plus" />
-                      Add
-                      {' '}
+                      {toI18n('ADD')}
                       {label}
                     </ButtonDefault>
                     {this.renderListValue()}

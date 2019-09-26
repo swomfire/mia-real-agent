@@ -91,7 +91,7 @@ export const ReviewInputAction = styled.div`
 `;
 
 export const CommentWrapper = styled.div`
-    padding: .5em 1em;
+  padding: .5em 1em;
   margin-top: .2em;
   flex: 1;
   display: flex;

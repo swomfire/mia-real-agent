@@ -10,9 +10,10 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import FormInput from '../FormInput/FormInput';
 import { toI18n } from '../../utils/func-utils';
-import { ModalStyled, ErrorMessage } from './styles';
+import { ModalStyled, ErrorMessage, ParameterValue, ParameterTitle, ParameterWrapper, ParameterFormActionGroup } from './styles';
+import { ButtonPrimary, ButtonDefault } from '../../stylesheets/Button.style';
 
-const initialValues = {
+const initialResponseValues = {
   response: {
     en: '',
     vn: '',
@@ -87,10 +88,13 @@ class ResponseFormModal extends Component {
 
   handleParameterOption = () => {
     const { selectedParameters } = this.state;
-    const { currentIntent } = this.props;
+    const { currentIntent, initialValues } = this.props;
+    const { parameters: editResponseParameters } = initialValues;
     const { parameters = [] } = currentIntent || {};
     const filtered = parameters.filter(
       ({ parameterId }) => !selectedParameters.find(
+        param => parameterId === param.parameterId
+      ) && !editResponseParameters.find(
         param => parameterId === param.parameterId
       )
     );
@@ -159,12 +163,15 @@ class ResponseFormModal extends Component {
       ({ parameterId, value }) => {
         const { displayName } = parameters.find(({ parameterId: itemId }) => parameterId === itemId);
         return (
-          <h2>
-            {`[${displayName}]: ${value}`}
-            <Button onClick={() => this.removeParameter(parameterId)}>
-              <Icon type="close" />
-            </Button>
-          </h2>
+          <ParameterWrapper>
+            <ParameterTitle>
+              {`[${displayName}]`}
+            </ParameterTitle>
+            <ParameterValue>
+              {value}
+            </ParameterValue>
+            <Icon onClick={() => this.removeParameter(parameterId)} type="close" />
+          </ParameterWrapper>
         );
       }
     );
@@ -200,8 +207,10 @@ class ResponseFormModal extends Component {
               />
             </Col>
             <Col sm={4} xs={4}>
-              <Button type="button" onClick={() => this.toggleAddParameter(false)}><Icon type="close" /></Button>
-              <Button onClick={handleSubmit}><Icon type="check" /></Button>
+              <ParameterFormActionGroup>
+                <Icon onClick={() => this.toggleAddParameter(false)} type="close" />
+                <Icon onClick={handleSubmit} type="check" />
+              </ParameterFormActionGroup>
             </Col>
           </Row>
         </Form>
@@ -228,7 +237,7 @@ class ResponseFormModal extends Component {
     return (
       <Formik
         ref={(formik) => { this.responseFormik = formik; }}
-        initialValues={reponse || initialValues}
+        initialValues={reponse || initialResponseValues}
         validationSchema={responseSchema}
         onSubmit={this.handleOnSubmit}
         confirmLoading={isSubmitting}

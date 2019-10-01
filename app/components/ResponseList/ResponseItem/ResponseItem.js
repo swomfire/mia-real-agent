@@ -3,7 +3,7 @@ import { shape, arrayOf, func } from 'prop-types';
 import { Tabs, Button, Icon } from 'antd';
 import {
   ResponseItemWrapper, ResponseParameterWrapper,
-  ResponseValueWrapper, ResponseActionWrapper,
+  ResponseValueWrapper, ResponseActionWrapper, ParameterWrapper, ParameterTitle, ParameterValue,
 } from './styles';
 
 const { TabPane } = Tabs;
@@ -36,7 +36,14 @@ export class ResponseItem extends Component {
     return item.parameters.map(({ parameterId, value }) => {
       const { displayName } = parameters.find(({ parameterId: itemId }) => itemId === parameterId) || {};
       return (
-        <h2 key={parameterId}>{`[${displayName}]: ${value}`}</h2>
+        <ParameterWrapper key={parameterId}>
+          <ParameterTitle>
+            {`[${displayName}]`}
+          </ParameterTitle>
+          <ParameterValue>
+            {value}
+          </ParameterValue>
+        </ParameterWrapper>
       );
     });
   }

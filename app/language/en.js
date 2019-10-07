@@ -327,7 +327,13 @@ const en = {
     ADMIN_RESPONSE_EDIT_TITLE: 'Edit Response for',
     ADMIN_RESPONSE_EDIT_SUCCESS: 'Response Editted',
     ADMIN_RESPONSE_REMOVE_SUCCESS: 'Response Removed',
-
+    // Admin dashboard
+    ADMIN_DASHBOARD_TICKETS_ACTIVITY: 'Tickets Activity',
+    ADMIN_DASHBOARD_TICKETS_DETAIL: 'Tickets Detail',
+    ADMIN_DASHBOARD_APPLICATIONS_SUMMARY: 'Applications Summary',
+    ADMIN_DASHBOARD_USERS_SUMMARY: 'Users Summary',
+    ADMIN_DASHBOARD_WAITING_FOR_REVIEW: 'Waiting for review',
+    ADMIN_DASHBOARD_REVIEWING: 'Reviewing',
     // Profile
     PROFILE_MISSING_USER_ID: 'Missing userId',
     PROFILE_USERNAME: 'Username',

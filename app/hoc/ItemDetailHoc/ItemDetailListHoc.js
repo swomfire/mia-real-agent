@@ -48,7 +48,6 @@ const ItemDetailListHoc = (ItemsDetailListItem) => {
       } = this.props;
 
       const size = items.length;
-
       return (
         <ItemDetailListWrapper>
           <HeaderContainer
@@ -75,7 +74,7 @@ const ItemDetailListHoc = (ItemsDetailListItem) => {
             shouldRenderPageInfo={false}
           >
             <ShadowScrollbars autoHide style={scrollStyle}>
-              {items.map(this.renderListItem)}
+              {!isLoading && items.map(this.renderListItem)}
             </ShadowScrollbars>
           </TableBorder>
         </ItemDetailListWrapper>

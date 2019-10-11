@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import TextArea from 'antd/lib/input/TextArea';
 
 export const ReviewInputWrapper = styled.div`
   display: flex;
@@ -27,8 +26,9 @@ export const ReviewInputWrapper = styled.div`
 `;
 
 export const ReviewInputValueWrapper = styled.div`
-  flex: 0 0 80%;
+  flex: auto;
   display: flex;
+  margin-right: -.5em;
   flex-direction: column;
   > div {
     display: flex;
@@ -51,14 +51,28 @@ export const ReviewInputValue = styled.div.attrs({
 })`
   font-weight: 600;
   max-width: 750px;
-  width: ${props => props.isList && '40%'};
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  font-weight: 600;
   padding-left: 1em;
   > div {
     width: fit-content;
     padding: .5em;
+    display: flex;
+    width: 100%;
+    > div > i, > i {
+      font-size: .7em;
+      color: ${props => props.theme.colorStyled.ColorBgDefault};
+      ${props => props.isList && {
+    marginLeft: '-7em',
+  }}
+      svg {
+        margin-bottom: -1.2em;
+        height: 3em;
+        margin-left: .5em;
+      }
+    }
   }
   .ant-upload-list-picture-card .ant-upload-list-item-info{
     width: 100%;
@@ -69,6 +83,9 @@ export const ReviewInputValue = styled.div.attrs({
   ${props => props.isRequest && {
     fontWeight: 600,
   }}
+  ${props => props.isList && {
+    width: '100%',
+  }}
 `;
 
 export const ReviewInputAction = styled.div`
@@ -76,18 +93,14 @@ export const ReviewInputAction = styled.div`
   padding: .5em;
   margin-left: .1em;
   color: ${props => props.theme.colorStyled.ColorGrey};
-  .review-input-action, .comment-icon {
+  .review-input-action {
+    font-size: 1em;
     :hover {
       cursor: pointer;
       color: ${props => props.theme.colorStyled.ColorBgDefault};
     }
   }
-  .comment-icon {
-    font-size: .8em;
-    svg {
-      margin-bottom: -.7em;
-    }
-  }
+
 `;
 
 export const CommentWrapper = styled.div`
@@ -95,51 +108,30 @@ export const CommentWrapper = styled.div`
   margin-top: .2em;
   flex: 1;
   display: flex;
-`;
-
-export const CommentInput = styled(TextArea)`
-  flex: 0 0 50%;
-  border: 1px solid ${props => props.theme.colorStyled.ColorXXXLightGrey};
-  padding: .5em;
-  box-shadow: none !important;
-  border-radius: .5em;
-`;
-
-export const CommentAction = styled.div`
-  flex: 0 0 auto;
-  display: flex;
-  align-items: flex-end;
-  padding-bottom: .3em;
-  button {
-    width: 100%;
-    min-width: 1em;
-    i {
-      margin-right: 0;
+  color: ${props => props.theme.colorStyled.ColorBgDefault};
+  i {
+    font-size: .7em;
+    margin-left: 0 !important;
+    svg {
+      margin-bottom: -.5em;
+      height: 3em;
     }
-  }
-  > i{
-    margin-left: .5em;
-    padding-bottom: .3em;
   }
 `;
 
 export const CommentDisplayWrapper = styled.div`
   margin: .5em;
-  border-top: 1px solid;
-  padding: .5em 1em;
   position: relative;
-  flex: 0 0 92.5%;
+  flex: 0 0 52.5%;
   max-width: 750px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   i {
-    font-size: .8em;
     float: left;
     height: 1em;
     width: 1em;
     margin-right: .8em;
-    padding-top: .3em;
     cursor: unset;
   }
   .comment-action {
@@ -156,22 +148,29 @@ export const CommentDisplayWrapper = styled.div`
 
 export const ListItemWrapper = styled.div`
   width: 100% !important;
-  border-bottom: 1px solid ${props => props.theme.colorStyled.ColorXXXLightGrey};
   span {
     display: flex;
+  }
+  > div {
+    margin-bottom: 1em;
+    border-bottom: 1px solid ${props => props.theme.colorStyled.ColorXXXLightGrey};
+    padding-bottom: .2em;
+    width: 100%;
+    .ant-row{
+      margin-bottom: .2em;
+    }
   }
 `;
 
 export const ListFieldLabel = styled.div`
-  flex: 0 0 25%;
+  flex: 0 0 30%;
   font-weight: 400;
 `;
 
 export const ListFieldValue = styled.div`
-  flex: 0 0 75%;
-  padding-left: 1.2em;
-  text-overflow: ellipsis;
+  flex: 0 0 70%;
   font-weight: 600;
+  text-overflow: ellipsis;
   overflow: hidden;
   .ant-upload-list-item-info {
     span {
@@ -183,5 +182,26 @@ export const ListFieldValue = styled.div`
   }
   .ant-upload-list-item-thumbnail{
     max-height: 55px;
+  }
+`;
+
+export const ChangeInputWrapper = styled.div`
+  padding-left: 1.2em;
+  flex: auto;
+  button {
+    margin: .2em 0;
+    font-size: 1em;
+  }
+  .review-input-value{
+    padding-left: 0;
+    margin-left: -.5em;
+  }
+`;
+
+export const ListItemActionGroup = styled.div`
+  i {
+    font-size: 1.2em;
+    margin-left: .5em;
+    font-size: 1em;
   }
 `;

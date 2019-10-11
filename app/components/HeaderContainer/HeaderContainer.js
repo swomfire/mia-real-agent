@@ -54,14 +54,14 @@ class HeaderContainer extends PureComponent {
     } = this.props;
     return (
       <HeaderActionWrapper>
-        <ButtonPrimary data-tip="Create Ticket">
+        {/* <ButtonPrimary data-tip="Create Ticket">
           <i className="mia-add" />
           <span>Add New</span>
         </ButtonPrimary>
         <ButtonPrimary data-tip="Export Excel">
           <i className="mia-hr-export" />
           <span>Export Excel</span>
-        </ButtonPrimary>
+        </ButtonPrimary> */}
       </HeaderActionWrapper>
     );
   };

@@ -62,6 +62,11 @@ const initialValues = {
   content: EditorState.createEmpty(),
 };
 
+const rating = {
+  score: 1,
+  comment: '',
+};
+
 export default class MessageBox extends Component {
   messagesEndRef = React.createRef();
 
@@ -108,6 +113,7 @@ export default class MessageBox extends Component {
     feedbackFormIsOpen: false,
     closeTicketModalIsOpen: false,
     isOpenCreateModal: false,
+    otherProfile: null,
   }
 
   toggleFeedbackForm = (toggle) => {
@@ -171,25 +177,23 @@ export default class MessageBox extends Component {
     </Translation>
   )
 
-  renderOtherUserMessageContent = (msgId, contents) => {
-    const { userRole } = this.props;
-    const src = isAgent(userRole) ? '/assets/images/user-live.jpeg' : '/assets/images/user.svg';
-    return otherChat(msgId, contents, src);
-  }
+  renderOtherUserMessageContent = (msgId, contents, from) => otherChat(msgId, contents, from.profile);
 
   renderOtherUserTypingContent = () => {
+    const { otherProfile } = this.state;
     const { otherUserTyping, conversationId } = this.props;
     const { conversationId: _id, messages = '' } = otherUserTyping || {};
     if (!_isEmpty(otherUserTyping)
       && _id === conversationId
       && !_isEmpty(messages.trim())
     ) {
-      return otherTyping(messages);
+      return otherTyping(messages, otherProfile);
     }
     return false;
   }
 
   renderMessageContent = () => {
+    const { otherProfile } = this.state;
     const {
       replyMessages, userId, userRole,
     } = this.props;
@@ -209,6 +213,11 @@ export default class MessageBox extends Component {
         case REPLY_TYPE.USER_NORMAL:
           if (from._id === userId) {
             return userChat(msgId, contents, false, isAgent(userRole));
+          }
+          if (!otherProfile) {
+            this.setState({
+              otherProfile: from.profile,
+            });
           }
           return this.renderOtherUserMessageContent(msgId, contents, from);
         default: return null;
@@ -372,37 +381,33 @@ export default class MessageBox extends Component {
     submitRating(_id, values);
   }
 
-  renderRating = () => {
-    const { currentConversation } = this.props;
-    const { rating } = currentConversation;
-    return (
-      <RatingWrapper>
-        <RatingContent>
-          <h2>
-            {toI18n('CONV_MESSAGE_BOX_RATE_YOUR_EXPERIENCE')}
-          </h2>
-          <Formik
-            ref={(formik) => { this.ratingFormik = formik; }}
-            initialValues={rating}
-            onSubmit={this.handleSubmitRating}
-          >
-            {({ handleSubmit }) => (
-              <Form
-                onSubmit={handleSubmit}
-                onChange={this.handleChangeValues}
-              >
-                <FormInput type="rate" name="score" />
-                <CommentInputWrapper>
-                  <MessageInput type="text" name="comment" placeholder="Type comment ..." autoComplete="off" />
-                  <InputAction onClick={handleSubmit} className="mia-enter" />
-                </CommentInputWrapper>
-              </Form>
-            )}
-          </Formik>
-        </RatingContent>
-      </RatingWrapper>
-    );
-  }
+  renderRating = () => (
+    <RatingWrapper>
+      <RatingContent>
+        <h2>
+          {toI18n('CONV_MESSAGE_BOX_RATE_YOUR_EXPERIENCE')}
+        </h2>
+        <Formik
+          ref={(formik) => { this.ratingFormik = formik; }}
+          initialValues={rating}
+          onSubmit={this.handleSubmitRating}
+        >
+          {({ handleSubmit }) => (
+            <Form
+              onSubmit={handleSubmit}
+              onChange={this.handleChangeValues}
+            >
+              <FormInput type="rate" name="score" />
+              <CommentInputWrapper>
+                <MessageInput type="text" name="comment" placeholder="Type comment ..." autoComplete="off" />
+                <InputAction onClick={handleSubmit} className="mia-enter" />
+              </CommentInputWrapper>
+            </Form>
+          )}
+        </Formik>
+      </RatingContent>
+    </RatingWrapper>
+  );
 
   renderMessageBoxFooter = () => {
     const {

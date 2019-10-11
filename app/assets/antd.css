@@ -23334,3 +23334,7 @@ html {
   background-color: #a03400;
   border-color: #a03400;
 }
+
+.ant-tooltip-inner svg{
+  margin-bottom: -12px;
+}

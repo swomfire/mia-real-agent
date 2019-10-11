@@ -118,3 +118,21 @@ export const flatApplicationForm = (application, mapping) => _keyBy(
     };
   }), 'key'
 );
+
+export const generateInitValue = (type) => {
+  switch (type) {
+    case 'slider':
+    case 'number':
+      return 0;
+    case 'select':
+    case 'upload':
+    case 'list':
+      return [];
+    case 'checkbox':
+      return false;
+    case 'text':
+      return '';
+    default:
+      return null;
+  }
+};

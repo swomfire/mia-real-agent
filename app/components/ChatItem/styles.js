@@ -147,8 +147,8 @@ export const IsTypingWrapper = styled.div`
 `;
 
 export const ProfileImageStyled = styled.img`
-  height: 2.78em;
-  width: 2.78em;
+  height: 2.2em;
+  width: 2.2em;
   cursor: pointer;
   border-radius: 100%;
 `;

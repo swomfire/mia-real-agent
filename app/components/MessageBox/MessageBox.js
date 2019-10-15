@@ -11,7 +11,6 @@ import CreatTicketFormContainer from 'containers/Chatbot/CreateTicket';
 import {
   MessageBoxWrapper,
   MessageBoxContent,
-  MessageBoxItem,
   ConversationHeaderTitle,
   MessageInput,
   InputAction,
@@ -21,8 +20,6 @@ import {
   CommentInputWrapper,
   TicketStatus,
   MessageBoxSystemNotification,
-  FindAgentButton,
-  FindAgentWrapper,
   ConversationHeaderWrapper,
   ConversationHeaderTitleBlock,
   MessageInputContent,
@@ -32,7 +29,6 @@ import LoadingSpin from '../Loading';
 import ConversationDetail from '../ConversationDetail/ConversationDetail';
 import {
   CLOSED_TICKET_STATUSES,
-  BOT_AVATAR,
 } from '../../../common/enums';
 import FormInput from '../FormInput/FormInput';
 import {
@@ -42,9 +38,9 @@ import {
 import { ButtonPrimary, ButtonDefault } from '../../stylesheets/Button.style';
 import CreateFeedbackForm from '../../containers/CreateFeedbackForm';
 import CloseTicketModal from './CloseTicketModal';
-import { ProfileImageStyled } from '../ChatItem/styles';
-import MessageInputForm from './MessageInputForm';
+import MessageInputForm from '../MessageInputForm';
 import MessageListContainer from '../../containers/MessageBox/MessageList';
+import SupportPanel from '../SupportPanel/SupportPanel';
 
 const initialRating = {
   score: 1,
@@ -60,7 +56,6 @@ export default class MessageBox extends Component {
     isFetchingReplies: PropTypes.bool,
     isFindingAgent: PropTypes.bool,
     fetchCannedResponseForUser: PropTypes.func.isRequired,
-    findAgentRequest: PropTypes.func.isRequired,
     sendReplyMessage: PropTypes.func.isRequired,
     setCurrentTicket: PropTypes.func.isRequired,
     joinConversation: PropTypes.func.isRequired,
@@ -119,27 +114,6 @@ export default class MessageBox extends Component {
     }
   }
 
-  renderFindAgentForSolution = () => (
-    <MessageBoxItem left key="solution">
-      <ProfileImageStyled
-        src={BOT_AVATAR}
-      />
-      <FindAgentWrapper>
-        <p key="solution">
-          {toI18n('CONV_MESSAGE_BOX_NOT_SATISFY')}
-        </p>
-        <FindAgentButton
-          key="button"
-          type="primary"
-          onClick={this.handleFindAgent}
-        >
-          <Icon type="search" />
-          {toI18n('CONV_MESSAGE_BOX_FIND_AGENT')}
-        </FindAgentButton>
-      </FindAgentWrapper>
-    </MessageBoxItem>
-  )
-
   handleChatSubmit = (content) => {
     const {
       sendReplyMessage, conversationId, userTyping, userRole,
@@ -148,12 +122,6 @@ export default class MessageBox extends Component {
     if (!isAgent(userRole)) {
       userTyping(conversationId, '');
     }
-  }
-
-  handleFindAgent = () => {
-    const { findAgentRequest, conversationId } = this.props;
-
-    findAgentRequest(conversationId);
   }
 
   handleTyping = (content) => {
@@ -316,6 +284,7 @@ export default class MessageBox extends Component {
     const { _id } = currentTicket || {};
     return (
       <LoadingSpin loading={isFetchingReplies || isFindingAgent}>
+        {isAgent(userRole) && (<SupportPanel />)}
         {this.renderMessageHeader()}
         <MessageBoxWrapper>
           <MessageBoxContent>

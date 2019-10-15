@@ -14,6 +14,7 @@ import {
   getSolution,
 } from 'reducers/conversations';
 import {
+  findAgentRequest,
   isFindingAgent,
 } from 'reducers/requests';
 
@@ -32,4 +33,9 @@ const mapStateToProps = (state) => {
     solutionFound,
   });
 };
-export default connect(mapStateToProps)(MessageList);
+
+const mapDispatchToProps = {
+  findAgentRequest,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessageList);

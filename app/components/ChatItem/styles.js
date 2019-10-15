@@ -16,9 +16,8 @@ export const MessageBoxItem = styled.div`
   }
   ${({ left }) => left && css`
     justify-content: flex-start;
-    padding-left: 10px;
     .ant-avatar {
-      margin-right: 10px;
+      margin-left: 10px;
     }
     p {
       float: left;
@@ -30,7 +29,7 @@ export const MessageBoxItem = styled.div`
     justify-content: flex-end;
     padding-right: 10px;
     .ant-avatar {
-      margin-left: 10px;
+      margin-right: 10px;
     }
     p {
       float: right;
@@ -109,7 +108,9 @@ export const MessageBoxSystemNotification = styled.span`
     margin-top: 1em;
   }
 `;
-export const LineDivider = styled.span`
+export const LineDivider = styled.span.attrs({
+  className: 'line-divider',
+})`
     display: flex;
     align-items: center;
     flex: 0 0 20%;
@@ -146,7 +147,9 @@ export const IsTypingWrapper = styled.div`
   }
 `;
 
-export const ProfileImageStyled = styled.img`
+export const ProfileImageStyled = styled.img.attrs({
+  className: 'ant-avatar',
+})`
   height: 2.2em;
   width: 2.2em;
   cursor: pointer;

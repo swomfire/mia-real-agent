@@ -43,9 +43,11 @@ export const userChat = (msgId, contents, isPending = false) => (
 
 export const otherChat = (msgId, contents, profile) => (
   <MessageBoxItem left key={msgId}>
-    <ProfileImageStyled
-      src={profile.avatar || DEFAULT_USER_AVATAR}
-    />
+    {profile && (
+      <ProfileImageStyled
+        src={profile.avatar || DEFAULT_USER_AVATAR}
+      />
+    )}
     <MessageText>
       {contents.map(({ _id, messages, sentAt }, index) => (
         <Tooltip key={`${_id}[${index}]`} placement="left" title={renderTime(sentAt)}>

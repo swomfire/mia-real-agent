@@ -44,6 +44,7 @@ export const DefaultThemes = {
   },
   colorStyled: {
     ColorWhite: '#ffffff',
+    ColorTransparentWhite: '#ffffff4f',
     ColorBlack: '#000000',
     ColorBlackGrey: '#5e615e',
     ColorBgDefault: '#ff5402',

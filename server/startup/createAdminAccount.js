@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken';
 import UserService from '../modules/user/user.service';
 import { ROLES } from '../../common/enums';
 import Logger from '../logger';
@@ -19,6 +20,10 @@ export default async function () {
       password,
       role: ROLES.ADMIN,
     });
+    const { _id } = newAdmin;
+    const token = jwt.sign({ _id }, process.env.SECRET_KEY_JWT);
+    newAdmin.set({ token });
+    await newAdmin.save();
     if (newAdmin) {
       Logger.success(`[STARTUP TASKS] SUCCESSFULLY CREATED ADMIN WITH ID: ${newAdmin._id}`);
       Logger.info('admin@miaconsult.com/admin');

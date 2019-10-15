@@ -22,7 +22,6 @@ import {
 } from '../../reducers/feedbacks';
 import {
   isFindingAgent,
-  findAgentRequest,
 } from '../../reducers/requests';
 import MessageBox from '../../components/MessageBox';
 import { getCannedResponsesForUser } from '../../selectors/cannedResponse';
@@ -45,7 +44,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   setCurrentTicket: actions.selectTicket,
   sendReplyMessage,
-  findAgentRequest,
   submitRating: actions.submitTicketRating,
   submitFeedback,
   joinConversation: CONVERSATION_ACTIONS.userJoinConversation,

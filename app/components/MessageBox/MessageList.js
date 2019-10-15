@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import _isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
 import ShadowScrollbars from 'components/Scrollbar';
+import { Icon } from 'antd';
 import {
   MessageEmpty,
   MessageBoxBlock,
+  MessageBoxItem,
+  FindAgentWrapper,
+  FindAgentButton,
 } from './styles';
 import {
   CLOSED_TICKET_STATUSES,
-  TICKET_STATUS, REPLY_TYPE,
+  TICKET_STATUS, REPLY_TYPE, BOT_AVATAR,
 } from '../../../common/enums';
 import {
   isAgent, toI18n, combineChat,
@@ -16,6 +20,7 @@ import {
 import {
   ticketStatus, userAction, botChat, ticketRating, userChat, otherChat, otherTyping,
 } from '../ChatItem';
+import { ProfileImageStyled } from '../ChatItem/styles';
 
 const scrollStyle = {
   flex: 'auto',
@@ -33,6 +38,7 @@ class MessageList extends Component {
     userId: PropTypes.string.isRequired,
     currentTicket: PropTypes.shape(),
     conversationId: PropTypes.string,
+    findAgentRequest: PropTypes.func.isRequired,
     replyMessages: PropTypes.arrayOf(PropTypes.shape()),
     sendingMessages: PropTypes.arrayOf(PropTypes.shape()),
     otherUserTyping: PropTypes.object,
@@ -61,6 +67,33 @@ class MessageList extends Component {
       this.scrollChatToBottom();
     }
   }
+
+  handleFindAgent = () => {
+    const { findAgentRequest, conversationId } = this.props;
+
+    findAgentRequest(conversationId);
+  }
+
+  renderFindAgentForSolution = () => (
+    <MessageBoxItem left key="solution">
+      <ProfileImageStyled
+        src={BOT_AVATAR}
+      />
+      <FindAgentWrapper>
+        <p key="solution">
+          {toI18n('CONV_MESSAGE_BOX_NOT_SATISFY')}
+        </p>
+        <FindAgentButton
+          key="button"
+          type="primary"
+          onClick={this.handleFindAgent}
+        >
+          <Icon type="search" />
+          {toI18n('CONV_MESSAGE_BOX_FIND_AGENT')}
+        </FindAgentButton>
+      </FindAgentWrapper>
+    </MessageBoxItem>
+  )
 
   renderOtherUserMessageContent = (msgId, contents, from) => otherChat(msgId, contents, from.profile);
 

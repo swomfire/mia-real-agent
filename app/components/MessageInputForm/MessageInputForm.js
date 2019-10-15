@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 import { EditorState } from 'draft-js';
 import { func, shape, arrayOf } from 'prop-types';
 import { Form } from 'antd';
-import { MessageInputWrapper, InputAction, MessageActionWrapper } from './styles';
+import { MessageInputWrapper, InputAction, MessageActionWrapper } from '../MessageBox/styles';
 import RichEditor from '../FormInput/RichEditor/RichEditor';
 import { clearEditorContent } from '../../api/utils';
 
@@ -52,12 +52,14 @@ export class MessageInputForm extends Component {
     this.setState({
       content,
     });
-    onChangeContent(content);
+    if (onChangeContent) {
+      onChangeContent(content);
+    }
   }
 
 
   render() {
-    const { cannedResponses } = this.props;
+    const { cannedResponses = [] } = this.props;
     const { content } = this.state;
     return (
       <Formik

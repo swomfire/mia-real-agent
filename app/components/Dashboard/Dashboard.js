@@ -7,6 +7,7 @@ import ShadowScrollbars from 'components/Scrollbar';
 import Activity from 'components/ActivityTab';
 import TicketTab from 'containers/TicketTab';
 import RequestTab from 'components/RequestTab';
+import SupportTab from 'components/SupportTab';
 import {
   DashboardContainer,
   DashboardItem,
@@ -24,12 +25,14 @@ const TAB = {
   // Activity: 'activity',
   Ticket: 'ticket',
   Requests: 'requests',
+  Supports: 'supports',
 };
 
 export default class Dashboard extends Component {
   static propTypes = {
     userRole: string.isRequired,
     totalRequest: number.isRequired,
+    totalSupport: number.isRequired,
   }
 
   state = {
@@ -94,6 +97,23 @@ export default class Dashboard extends Component {
     );
   }
 
+  renderSupportItem = () => {
+    const { totalSupport } = this.props;
+    return (
+      <TabPane
+        tab={(
+          <span>
+            {toI18n('DB_SUPPORT')}
+            {` (${totalSupport})`}
+          </span>
+        )}
+        key={TAB.Supports}
+      >
+        <SupportTab />
+      </TabPane>
+    );
+  }
+
   handleChangeTab = (activeTab) => {
     const { history } = this.props;
     history.push(`/dashboard/${activeTab}`);
@@ -118,7 +138,7 @@ export default class Dashboard extends Component {
                 >
                   {this.renderTicketItem()}
                   {/* {this.renderActivityItem()} */}
-                  {isAgent(userRole) && this.renderRequestItem()}
+                  {isAgent(userRole) && [this.renderRequestItem(), this.renderSupportItem()]}
                 </Tabs>
               </Col>
             </Row>

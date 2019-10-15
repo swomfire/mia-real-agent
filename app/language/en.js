@@ -37,6 +37,8 @@ const en = {
     FORM_INPUT_UPLOAD_FILE_TYPE: 'File type not supported',
     // Dashboard
     DB_REQUEST: 'Requests',
+    DB_SUPPORT: 'Supports',
+    DB_NO_REQUEST_AVAIABLE: 'No Request Avaiable',
     DB_TICKET: 'Ticket',
     DB_DASHBOARD: 'Dashboard',
     DB_TICKET_STATUS: 'Status',

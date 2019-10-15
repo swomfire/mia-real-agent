@@ -11,6 +11,7 @@ import {
   TICKET_STATUS, REPLY_TYPE, REPLY_USER_ACTION, CLOSED_TICKET_STATUSES,
 } from '../../../common/enums';
 import RequestQueue from '../queue/requestQueue';
+import SupportQueue from '../queue/supportQueue';
 import ReplyService from '../reply/reply.service';
 import { getHistoryTicketUpdate } from '../../utils/utils';
 
@@ -48,6 +49,20 @@ class TicketController extends BaseController {
       _.assign(ticket, { status: TICKET_STATUS.PENDING, history: newHistory });
 
       ticket.save({});
+      return res.status(httpStatus.OK).send();
+    } catch (error) {
+      return this.handleError(res, error);
+    }
+  }
+
+  async findAvailableSupportAgents(req, res) {
+    try {
+      const { model: ticket } = req;
+
+      const request = SupportQueue.addRequest(ticket);
+      if (!request) {
+        throw new APIError('Agent not found!', httpStatus.NOT_FOUND);
+      }
       return res.status(httpStatus.OK).send();
     } catch (error) {
       return this.handleError(res, error);

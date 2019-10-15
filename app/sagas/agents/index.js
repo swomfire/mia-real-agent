@@ -14,6 +14,10 @@ import {
   actions as REQUEST_ACTIONS,
 } from '../../reducers/requests';
 import {
+  AGENT_CONFIRM as AGENT_CONFIRM_SUPPORT,
+  actions as SUPPORT_ACTIONS,
+} from '../../reducers/supports';
+import {
   getConversationById,
   actions as CONVERSATION_ACTIONS,
   selectConversation,
@@ -60,14 +64,33 @@ export function* confirmRequest({ payload }) {
   yield put(CONVERSATION_ACTIONS.userJoinConversation(conversationId));
   if (isConfirm) {
     yield put(push(`/conversation/${conversationId}`));
-  } else {
-    yield put(REQUEST_ACTIONS.removeRequest(ticketId));
   }
+  yield put(REQUEST_ACTIONS.removeRequest(ticketId));
+}
+
+export function* confirmSupportRequest({ payload }) {
+  const {
+    conversationId,
+    ticketId,
+    isConfirm,
+  } = payload;
+  // const { error } = yield call(acceptAgent, conversationId, ticketId, isConfirm);
+  // if (error) {
+  //   const message = _get(
+  //     error, 'response.data.message', error.message
+  //   );
+  //   yield put(agentConfirmFailAction(message));
+  //   return;
+  // }
+  yield put(SUPPORT_ACTIONS.agentConfirmSuccessAction());
+  // Handle confirm ticket
+  yield put(SUPPORT_ACTIONS.removeSupport(ticketId));
 }
 
 function* agentFlow() {
   yield takeLatest(AGENTS_FIND, findAvailableAgent);
   yield takeLatest(AGENT_CONFIRM, confirmRequest);
+  yield takeLatest(AGENT_CONFIRM_SUPPORT, confirmSupportRequest);
 }
 
 export default agentFlow;

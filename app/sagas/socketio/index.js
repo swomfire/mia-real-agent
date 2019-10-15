@@ -13,6 +13,7 @@ import {
 import { addNewMessage, fetchReplyMessages } from '../../reducers/replies';
 import { actions as TICKET_ACTIONS } from '../../reducers/ticket';
 import { actions as REQUEST_ACTIONS } from '../../reducers/requests';
+import { actions as SUPPORT_ACTIONS } from '../../reducers/supports';
 import { actions as PROFILE_ACTIONS } from '../../reducers/profile';
 import {
   actions as CONVERSATION_ACTIONS, fetchConversation,
@@ -82,6 +83,17 @@ function* requestAgent() {
     const data = yield take(socketChannel);
     notification.success({ message: 'You got a new request' });
     yield put(REQUEST_ACTIONS.saveRequest(data));
+  }
+}
+
+function* requestSupportAgent() {
+  const socketChannel = yield call(createSocketChannel, socketConnection, SOCKET_EMIT.REQUEST_SUPPORT_AVAILABLE);
+
+  // watch message and relay the action
+  while (true) {
+    const data = yield take(socketChannel);
+    notification.success({ message: 'You got a new support request' });
+    yield put(SUPPORT_ACTIONS.saveSupport(data));
   }
 }
 
@@ -173,6 +185,7 @@ function* connectFlow() {
   yield all([
     handleNewMessage(),
     requestAgent(),
+    requestSupportAgent(),
     requestConfirm(),
     observeUserTypingConversation(),
     foundSolution(),

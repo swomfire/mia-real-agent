@@ -18,6 +18,7 @@ import conversations from './conversations';
 import feedbacks from './feedbacks';
 import replies from './replies';
 import requests from './requests';
+import supports from './supports';
 import response from './response';
 import intent from './intent';
 import billing from './billing';
@@ -46,6 +47,7 @@ export default function createReducer(injectedReducers = {}) {
     feedbacks,
     replies,
     requests,
+    supports,
     response,
     cannedResponse,
     billing,

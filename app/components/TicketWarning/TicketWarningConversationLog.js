@@ -1,6 +1,7 @@
+import React from 'react';
 import { REPLY_TYPE } from '../../../common/enums';
 import {
-  warningAction,
+  WarningMessages,
 } from '../ChatItem';
 import { combineChat } from '../../utils/func-utils';
 
@@ -12,7 +13,7 @@ export const conversationTranscript = (messages) => {
     } = message;
     switch (type) {
       case REPLY_TYPE.WARNING_ACTION:
-        return warningAction(_id, ownerMessage, contents, sentAt);
+        return <WarningMessages msgId={_id} user={ownerMessage} contents={contents} sentAt={sentAt} />;
       default: return null;
     }
   });

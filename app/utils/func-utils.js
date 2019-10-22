@@ -162,6 +162,9 @@ export const generateInitValue = (type) => {
 };
 
 export const calculateChargeTime = (ticket, user) => {
+  if (_isEmpty(ticket)) {
+    return null;
+  }
   const {
     processingDate, history,
   } = ticket;
@@ -172,7 +175,7 @@ export const calculateChargeTime = (ticket, user) => {
   );
   const openingTime = timeBeforeChat + calculateStatusTime(history, [TICKET_STATUS.OPEN]);
   const processingTime = calculateStatusTime(history, [TICKET_STATUS.PROCESSING]);
-  const { creditTime: userCreditTime } = user;
+  const { creditTime: userCreditTime = 0 } = user || {};
   // Calculate Used Credit Time
   const remainingOpeningTime = Math.max(0, openingTime - userCreditTime);
   let remainingCreditTime = Math.max(0, userCreditTime - openingTime);

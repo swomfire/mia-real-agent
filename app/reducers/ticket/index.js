@@ -325,7 +325,7 @@ function ticketReducer(state = initialState, action) {
 
     case TICKET_CREATE_FAIL:
       return state.set('isCreating', false)
-        .set('createError', action.errorMessage);
+        .set('createError', action.payload.errorMessage);
 
     case TICKET_GET_DETAIL:
       return state.set('isGetting', true)

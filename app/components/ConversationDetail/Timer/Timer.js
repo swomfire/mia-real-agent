@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { shape, arrayOf, string } from 'prop-types';
+import { shape } from 'prop-types';
 import Numeral from 'numeral';
 import { Translation } from 'react-i18next';
 import {
@@ -8,18 +8,17 @@ import {
   TimerTitle, TimerValue,
 } from './Timer.styled';
 import { TICKET_STATUS } from '../../../../common/enums';
-import { getHourMinutes, calculateStatusTime } from '../../../utils/func-utils';
+import { getHourMinutes, calculateStatusTime, calculateChargeTime } from '../../../utils/func-utils';
 
 const TIME_TO_FORCE_UPDATE = 60000;
 
 class TimerWrapper extends React.PureComponent {
   static propTypes = {
-    history: arrayOf(shape()),
-    processingDate: string,
+    ticket: shape(),
   }
 
   static defaultProps = {
-    history: [],
+    ticket: {},
   }
 
   state = {}
@@ -36,31 +35,29 @@ class TimerWrapper extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval);
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   }
 
   render() {
-    const { history, processingDate } = this.props;
-    const firstOpen = history[0] || {};
-    const timeBeforeChat = moment(firstOpen.startTime).diff(
-      moment(processingDate), 'minutes'
-    );
+    const { ticket } = this.props;
+    const { history = [] } = ticket || {};
+    const {
+      openingTime: openingMinutes = 0,
+      processingTime: processingMinutes = 0,
+    } = calculateChargeTime(ticket) || {};
     const openingTime = getHourMinutes(calculateStatusTime(history, [TICKET_STATUS.OPEN]));
     const pendingTime = getHourMinutes(calculateStatusTime(history, [TICKET_STATUS.PENDING]));
-    const processingTime = getHourMinutes(calculateStatusTime(history, [TICKET_STATUS.PROCESSING]));
-    const billableTime = processingDate
-      ? getHourMinutes(
-        timeBeforeChat + calculateStatusTime(
-          history, [TICKET_STATUS.OPEN, TICKET_STATUS.PROCESSING]
-        )
-      )
-      : getHourMinutes(0);
+    const processingTime = getHourMinutes(processingMinutes);
+    const billableTime = getHourMinutes(
+      openingMinutes + processingMinutes
+    );
     const holdTime = getHourMinutes(calculateStatusTime(history, [TICKET_STATUS.IDLE, TICKET_STATUS.OFFLINE]));
     const totalTime = {
       hours: openingTime.hours + pendingTime.hours + processingTime.hours + holdTime.hours,
       minutes: openingTime.minutes + pendingTime.minutes + processingTime.minutes + holdTime.minutes,
     };
-
 
     return (
       <Translation>

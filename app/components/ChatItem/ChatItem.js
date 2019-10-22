@@ -1,7 +1,11 @@
+/* eslint-disable react/no-unused-prop-types */
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
 import moment from 'moment';
 import { Tooltip, Icon } from 'antd';
+import {
+  string, arrayOf, shape, bool,
+} from 'prop-types';
 import {
   MessageBoxItem, MessageText,
   UserMessage, ProfileImageStyled,
@@ -27,8 +31,15 @@ const renderTime = (time) => {
   return moment(time).format('MMMM D hh:mm YYYY');
 };
 
+const defaultPropTypes = {
+  msgId: string.isRequired,
+  contents: arrayOf(shape()),
+  params: shape(),
+  user: shape(),
+  sentAt: string,
+};
 
-export const userChat = (msgId, contents, isPending = false) => (
+export const SenderMessages = ({ msgId, contents, isPending = false }) => (
   <MessageBoxItem right key={msgId}>
     <MessageText>
       {contents.map(({ _id, messages, sentAt }, index) => (
@@ -41,12 +52,16 @@ export const userChat = (msgId, contents, isPending = false) => (
     </MessageText>
   </MessageBoxItem>
 );
+SenderMessages.propTypes = {
+  ...defaultPropTypes,
+  isPending: bool,
+};
 
-export const otherChat = (msgId, contents, profile) => (
+export const ReceiverMessages = ({ msgId, contents, user }) => (
   <MessageBoxItem left key={msgId}>
-    {profile && (
+    {user && (
       <ProfileImageStyled
-        src={profile.avatar || DEFAULT_USER_AVATAR}
+        src={user.avatar || DEFAULT_USER_AVATAR}
       />
     )}
     <MessageText>
@@ -60,14 +75,17 @@ export const otherChat = (msgId, contents, profile) => (
     </MessageText>
   </MessageBoxItem>
 );
+ReceiverMessages.propTypes = defaultPropTypes;
 
-export const otherAction = (msgId, contents, params, profile) => {
+export const ActionMessages = ({
+  msgId, contents, params, user,
+}) => {
   const { actions = [] } = params;
   return (
     <MessageBoxItem left key={msgId}>
-      {profile && (
+      {user && (
         <ProfileImageStyled
-          src={profile.avatar || DEFAULT_USER_AVATAR}
+          src={user.avatar || DEFAULT_USER_AVATAR}
         />
       )}
       <MessageActionText>
@@ -89,8 +107,9 @@ export const otherAction = (msgId, contents, params, profile) => {
     </MessageBoxItem>
   );
 };
+ActionMessages.propTypes = defaultPropTypes;
 
-export const botChat = (msgId, contents) => (
+export const BotMessages = ({ msgId, contents }) => (
   <MessageBoxItem left key={msgId}>
     <ProfileImageStyled
       src={BOT_AVATAR}
@@ -106,8 +125,9 @@ export const botChat = (msgId, contents) => (
     </MessageText>
   </MessageBoxItem>
 );
+BotMessages.propTypes = defaultPropTypes;
 
-export const otherTyping = (messages, profile = {}) => (
+export const ReceiverTypingMessages = ({ messages, profile = {} }) => (
   <MessageBoxItemIsTyping left key="UserTyping">
     <ProfileImageStyled
       src={profile.avatar || DEFAULT_USER_AVATAR}
@@ -118,8 +138,12 @@ export const otherTyping = (messages, profile = {}) => (
     </MessageText>
   </MessageBoxItemIsTyping>
 );
+ReceiverTypingMessages.propTypes = {
+  messages: string,
+  profile: shape(),
+};
 
-export const ticketStatus = (msgId, params, sentAt) => {
+export const TicketStatusUpdateMessages = ({ msgId, params, sentAt }) => {
   const { status } = params;
   return (
     <MessageBoxSystemNotification key={`status${msgId}`}>
@@ -133,12 +157,15 @@ export const ticketStatus = (msgId, params, sentAt) => {
     </MessageBoxSystemNotification>
   );
 };
+TicketStatusUpdateMessages.propTypes = defaultPropTypes;
 
-export const userAction = (msgId, from, params, sentAt) => {
+export const UserActionMessages = ({
+  msgId, user, params, sentAt,
+}) => {
   const { action } = params;
   let messageOwner = '';
   // eslint-disable-next-line no-underscore-dangle
-  const { role, username, application } = from;
+  const { role, username, application } = user;
   const { nickname } = application || {};
   messageOwner = isAgent(role) ? nickname : username;
   return (
@@ -156,11 +183,14 @@ export const userAction = (msgId, from, params, sentAt) => {
     </MessageBoxSystemNotification>
   );
 };
+UserActionMessages.propTypes = defaultPropTypes;
 
-export const warningAction = (msgId, from, contents, sentAt) => {
+export const WarningMessages = ({
+  msgId, user, contents, sentAt,
+}) => {
+  const { username, role } = user;
   // eslint-disable-next-line no-underscore-dangle
-  const { username } = from;
-  if (isAgent(from.role)) {
+  if (isAgent(role)) {
     return (
       <MessageBoxItem left key={msgId}>
         <MessageText>
@@ -198,10 +228,17 @@ export const warningAction = (msgId, from, contents, sentAt) => {
     </MessageBoxItem>
   );
 };
+WarningMessages.propTypes = {
+  ...defaultPropTypes,
+  username: string,
+  role: string,
+};
 
-export const ticketRating = (msgId, from, params, sentAt) => {
+export const TicketRatingMessages = ({
+  msgId, user, params, sentAt,
+}) => {
+  const { profile = {}, role } = user;
   const { score, comment } = params;
-  const { role, profile = {} } = from;
   const { firstName, lastName, company = 'N/A' } = profile;
   let messageOwner = '';
   switch (role) {
@@ -234,4 +271,8 @@ export const ticketRating = (msgId, from, params, sentAt) => {
       <LineDivider />
     </MessageBoxSystemNotification>
   );
+};
+TicketRatingMessages.propTypes = {
+  ...defaultPropTypes,
+  role: string,
 };

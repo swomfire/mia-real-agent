@@ -38,11 +38,11 @@ class SupportChatHolder extends Component {
     const { conversations, requestEndSupport } = this.props;
     return conversations.map(({ _id }) => {
       const actions = {
-        findAnother: {
+        solve: {
           label: toI18n('SOLVE'),
           onClick: () => { requestEndSupport(_id, CONVERSATION_STATUS.SUPPORT_FULLFIL); },
         },
-        CLose: {
+        unsolve: {
           label: toI18n('UNSOLVE'),
           onClick: () => { requestEndSupport(_id, CONVERSATION_STATUS.SUPPORT_UNFULLFIL); },
         },

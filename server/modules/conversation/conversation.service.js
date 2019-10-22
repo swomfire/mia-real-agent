@@ -73,10 +73,6 @@ class ConversationService extends BaseService {
       deletedAt: null,
     })
       .populate({
-        path: 'owner',
-        select: ['_id', 'rating', 'profile'],
-      })
-      .populate({
         path: 'members.member',
         select: ['_id', 'rating', 'application'],
         populate: ({ path: 'application', select: ['nickname'] }),

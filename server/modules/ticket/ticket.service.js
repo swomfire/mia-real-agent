@@ -1,4 +1,5 @@
 import _isEmpty from 'lodash/isEmpty';
+import httpStatus from 'http-status';
 import ticketCollection from './ticket.model';
 import BaseService from '../base/base.service';
 import { TICKET_STATUS, REPLY_TYPE, BILLING_TYPE } from '../../../common/enums';
@@ -11,9 +12,15 @@ import { sendEmailTrascript } from '../../mail-sparkpost/sparkpost';
 import UserService from '../user/user.service';
 import BillingService from '../billing/billing.service';
 import { conversationTranscript } from '../../mail-sparkpost/dynamicTemplate';
-import { ticketAdminAggregration, ticketWarningAdminAggregration, directChargeTicket, totalTicketWarningAggregration } from './ticket.utils';
+import {
+  ticketAdminAggregration,
+  ticketWarningAdminAggregration,
+  directChargeTicket, totalTicketWarningAggregration,
+} from './ticket.utils';
 import { MIA_RATE } from '../../../app/utils/constants';
 import { calculateChargeTime } from '../../../app/utils/func-utils';
+import APIError, { ERROR_MESSAGE } from '../../utils/APIError';
+import ConversationService from '../conversation/conversation.service';
 
 class TicketService extends BaseService {
   constructor(collection) {
@@ -22,6 +29,7 @@ class TicketService extends BaseService {
     this.getByCondition = this.getByCondition.bind(this);
     this.sendTransciptConverstion = this.sendTransciptConverstion.bind(this);
     this.handleTicketUpdateStatus(collection);
+    this.handleTicketUpdateprocessingDate(collection);
   }
 
   getByCondition(condition) {
@@ -203,6 +211,9 @@ class TicketService extends BaseService {
     const { _id: userId } = owner;
     const user = await UserService.getById(userId);
     const { creditCard, stripeCustomerId } = user;
+    if (_isEmpty(creditCard) || !stripeCustomerId) {
+      throw new APIError(ERROR_MESSAGE.MISSING_CREDIT_CARD_DETAIL, httpStatus.NOT_FOUND);
+    }
     const {
       timeBeforeChat,
       openingTime,
@@ -225,8 +236,7 @@ class TicketService extends BaseService {
       const { application } = assigneeData;
       agentRate = (await ApplicationService.get(application)).billingRate;
     }
-    if ((remainingOpeningTime > 0 || remainingProcessingTime > 0)
-      && (!_isEmpty(creditCard) && stripeCustomerId)) {
+    if (remainingOpeningTime > 0 || remainingProcessingTime > 0) {
       needDirectCharge = true;
       // Convert usedTime to $
       if (remainingOpeningTime > 0) {
@@ -246,10 +256,10 @@ class TicketService extends BaseService {
       || !needDirectCharge) {
       // Update user credit time
       if (userCreditTime !== remainingCreditTime) {
-        await UserService.update(userId, { creditTime: remainingCreditTime });
+        UserService.update(userId, { creditTime: remainingCreditTime });
       }
       // Save charge history
-      await BillingService.ticketChargeBilling(
+      BillingService.ticketChargeBilling(
         userId,
         {
           userCreditTime,
@@ -269,9 +279,11 @@ class TicketService extends BaseService {
       );
       if (processingTime > 0) {
         const { credit } = assigneeData;
+        const { supportConversationId } = ticket;
         // Add billing for agent
-        const agentPayout = Number(agentRate * processingTime / 60).toFixed(2);
-        await BillingService.insert(
+        const totalProcessPayout = Number(agentRate * processingTime / 60).toFixed(2);
+        const agentPayout = supportConversationId ? totalProcessPayout * 3 / 5 : totalProcessPayout;
+        BillingService.insert(
           {
             userId: assigneeId,
             type: BILLING_TYPE.TICKET_FULFILL,
@@ -281,11 +293,41 @@ class TicketService extends BaseService {
               agentRate,
             },
             total: {
+              totalProcessPayout,
               agentFee: agentPayout,
             },
           }
         );
-        await UserService.update(
+        if (supportConversationId) {
+          const supportConversation = await ConversationService.get(supportConversationId);
+          if (supportConversation) {
+            const { members } = supportConversation;
+            const supporter = members.filter(({
+              member,
+              // eslint-disable-next-line no-underscore-dangle
+            }) => member._id.toString() !== assigneeId.toString())[0];
+            if (supporter) {
+              const { _id: supporterId } = supporter.member;
+              const supportFee = supportConversationId ? totalProcessPayout * 2 / 5 : totalProcessPayout;
+              BillingService.insert(
+                {
+                  userId: supporterId,
+                  type: BILLING_TYPE.TICKET_SUPPORT,
+                  content: {
+                    ticketId: _id,
+                    processingTime,
+                    agentRate,
+                  },
+                  total: {
+                    totalProcessPayout,
+                    supportFee,
+                  },
+                }
+              );
+            }
+          }
+        }
+        UserService.update(
           assigneeId,
           { credit: +credit + +agentPayout }
         );
@@ -360,6 +402,22 @@ class TicketService extends BaseService {
             params: { status },
             sentAt: updatedAt,
           });
+          // Emit Update ticket for user in conversation room
+          ConversationRoomQueue.ticketUpdateNotification(conversationId, _id);
+        }
+      }
+    });
+  }
+
+  handleTicketUpdateprocessingDate(collection) {
+    collection.watch().on('change', async (change) => {
+      const { updateDescription, documentKey } = change;
+      if (updateDescription) {
+        const { updatedFields } = updateDescription;
+        const { processingDate } = updatedFields;
+        if (processingDate) {
+          const { _id } = documentKey;
+          const { conversationId } = await this.collection.findOne(_id);
           // Emit Update ticket for user in conversation room
           ConversationRoomQueue.ticketUpdateNotification(conversationId, _id);
         }

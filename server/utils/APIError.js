@@ -11,6 +11,7 @@ export const ERROR_MESSAGE = {
   PASSWORD_INCORRECT: 'Current password is not correct',
   UNAUTHORIZED: 'Unauthorized',
   INSUFFICIENT_FUNDS: 'Insufficient funds',
+  MISSING_CREDIT_CARD_DETAIL: 'User missing credit card detail',
 
   // tax
   ZIP_CODE_NOT_FOUND:

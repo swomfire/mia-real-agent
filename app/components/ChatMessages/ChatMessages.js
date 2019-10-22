@@ -2,10 +2,13 @@ import ShadowScrollbars from 'components/Scrollbar';
 import _isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { toI18n, isAgent, combineChat } from '../../utils/func-utils';
+import { toI18n, combineChat } from '../../utils/func-utils';
 import { EmptyMessageNotify, ChatMessageWrapper } from './styles';
 import { REPLY_TYPE } from '../../../common/enums';
-import { userAction, userChat, otherChat, otherAction } from '../ChatItem';
+import {
+  UserActionMessages,
+  SenderMessages, ReceiverMessages,
+} from '../ChatItem';
 
 const scrollStyle = {
   flex: 'auto',
@@ -22,7 +25,6 @@ class ChatMessages extends Component {
   static propTypes = {
     userId: PropTypes.string.isRequired,
     messages: PropTypes.arrayOf(PropTypes.shape()),
-    userRole: PropTypes.string.isRequired,
   }
 
   scrollChatToBottom = () => {
@@ -49,11 +51,9 @@ class ChatMessages extends Component {
     }
   }
 
-  renderOtherUserMessageContent = (msgId, contents) => otherChat(msgId, contents);
-
   renderMessageContent() {
     const {
-      messages, userId, userRole,
+      messages, userId,
     } = this.props;
     const refinedMessages = combineChat(messages);
     return [refinedMessages.map(({
@@ -62,14 +62,12 @@ class ChatMessages extends Component {
       const id = `message[${msgId}]`;
       switch (type) {
         case REPLY_TYPE.USER_ACTION:
-          return userAction(id, from, params, sentAt);
-        case REPLY_TYPE.USER_ACTION_BUTTON:
-          return otherAction(id, contents, params);
+          return <UserActionMessages msgId={id} user={from} params={params} sentAt={sentAt} />;
         case REPLY_TYPE.USER_NORMAL:
           if (from._id === userId) {
-            return userChat(id, contents, false, isAgent(userRole));
+            return <SenderMessages msgId={id} contents={contents} />;
           }
-          return this.renderOtherUserMessageContent(id, contents);
+          return <ReceiverMessages msgId={id} contents={contents} user={from} />;
         default: return null;
       }
     }),

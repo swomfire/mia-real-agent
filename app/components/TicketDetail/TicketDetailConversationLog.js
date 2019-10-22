@@ -1,6 +1,8 @@
+import React from 'react';
 import { REPLY_TYPE } from '../../../common/enums';
 import {
-  ticketStatus, userAction, botChat, userChat, ticketRating, otherChat, warningAction,
+  TicketStatusUpdateMessages, UserActionMessages, BotMessages,
+  SenderMessages, TicketRatingMessages, ReceiverMessages, WarningMessages,
 } from '../ChatItem';
 import { combineChat, isAgent } from '../../utils/func-utils';
 
@@ -11,26 +13,24 @@ export const conversationTranscript = (messages) => {
       from: ownerMessage, contents,
     } = message;
     switch (type) {
-      case REPLY_TYPE.TICKET_STATUS: {
-        return ticketStatus(_id, params, sentAt);
-      }
-      case REPLY_TYPE.USER_ACTION: {
-        return userAction(_id, ownerMessage, params, sentAt);
-      }
-      case REPLY_TYPE.BOT_RESPONSE: {
-        return botChat(_id, contents);
-      }
+      case REPLY_TYPE.TICKET_STATUS:
+        return <TicketStatusUpdateMessages msgId={_id} params={params} sentAt={sentAt} />;
+
+      case REPLY_TYPE.USER_ACTION:
+        return <UserActionMessages msgId={_id} user={ownerMessage} params={params} sentAt={sentAt} />;
+      case REPLY_TYPE.BOT_RESPONSE:
+        return <BotMessages msgId={_id} contents={contents} />;
       case REPLY_TYPE.USER_NORMAL: {
         const { role } = ownerMessage;
         if (isAgent(role)) {
-          return otherChat(_id, contents, ownerMessage.profile);
+          return <SenderMessages msgId={_id} contents={contents} />;
         }
-        return userChat(_id, contents);
+        return <ReceiverMessages msgId={_id} contents={contents} user={ownerMessage} />;
       }
       case REPLY_TYPE.RATING_ACTION:
-        return ticketRating(_id, ownerMessage, params, sentAt);
+        return <TicketRatingMessages msgId={_id} user={ownerMessage} params={params} sentAt={sentAt} />;
       case REPLY_TYPE.WARNING_ACTION:
-        return warningAction(_id, ownerMessage, contents, sentAt);
+        return <WarningMessages msgId={_id} user={ownerMessage} contents={contents} sentAt={sentAt} />;
       default: return null;
     }
   });

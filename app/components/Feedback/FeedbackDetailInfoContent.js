@@ -29,7 +29,7 @@ class FeedbackDetailInfoContent extends PureComponent {
     } = this.props;
     const {
       _id: ticketId,
-      title: ticketTitle, status: ticketStatus, category,
+      title: ticketTitle, status: renderTicketStatusUpdateMessages, category,
       description, createdAt: ticketCreateAt,
       owner, assignee,
     } = ticket;
@@ -38,7 +38,7 @@ class FeedbackDetailInfoContent extends PureComponent {
         <OverviewTitle>{toI18n('ADMIN_FEEDBACK_DETAIL_TICKET_DETAILS')}</OverviewTitle>
         {this.renderOverviewInfo(toI18n('ADMIN_FEEDBACK_DETAIL_TICKET_ID'), ticketId, true)}
         {this.renderOverviewInfo(toI18n('ADMIN_TICKET_DETAIL_TITLE'), ticketTitle)}
-        {this.renderOverviewInfo(toI18n('ADMIN_TICKET_DETAIL_STATUS'), ticketStatus)}
+        {this.renderOverviewInfo(toI18n('ADMIN_TICKET_DETAIL_STATUS'), renderTicketStatusUpdateMessages)}
         {this.renderOverviewInfo(toI18n('ADMIN_TICKET_DETAIL_CATEGORY'), category)}
         {this.renderOverviewInfo(toI18n('ADMIN_TICKET_DETAIL_DESCRIPTION'), description)}
         {this.renderOverviewInfo(toI18n('ADMIN_TICKET_DETAIL_CREATED_AT'), moment(ticketCreateAt).format(DATE_TIME_FORMAT.DATE))}

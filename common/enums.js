@@ -683,6 +683,7 @@ export const BILLING_TYPE = {
   TOPUP: 'Top-up',
   TICKET_CHARGE: 'Ticket Charge',
   TICKET_FULFILL: 'Ticket Fulfill',
+  TICKET_SUPPORT: 'Ticket Support',
 };
 
 export const LANGUAGE_OPTIONS = [

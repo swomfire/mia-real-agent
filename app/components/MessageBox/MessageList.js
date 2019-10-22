@@ -18,7 +18,9 @@ import {
   isAgent, toI18n, combineChat,
 } from '../../utils/func-utils';
 import {
-  ticketStatus, userAction, botChat, ticketRating, userChat, otherChat, otherTyping,
+  TicketStatusUpdateMessages, UserActionMessages, BotMessages,
+  TicketRatingMessages, SenderMessages,
+  ReceiverMessages, ReceiverTypingMessages,
 } from '../ChatItem';
 import { ProfileImageStyled } from '../ChatItem/styles';
 
@@ -99,19 +101,16 @@ class MessageList extends Component {
     </MessageBoxItem>
   )
 
-  renderOtherUserMessageContent = (msgId, contents, from) => otherChat(msgId, contents, from.profile);
-
   renderOtherUserTypingContent = () => {
     const { otherUserTyping, conversationId, conversation } = this.props;
     const { conversationId: _id, messages = '' } = otherUserTyping || {};
     const { onwer } = conversation || {};
-    const { profile } = onwer || {};
     if (!_isEmpty(otherUserTyping)
       && _id === conversationId
       && !_isEmpty(messages.trim())
     ) {
       this.scrollChatToBottom();
-      return otherTyping(messages, profile);
+      return <ReceiverTypingMessages messages={messages} user={onwer} />;
     }
     return false;
   }
@@ -120,12 +119,14 @@ class MessageList extends Component {
     const { sendingMessages } = this.props;
     if (!sendingMessages || !sendingMessages.length) return null;
 
-    return combineChat(sendingMessages).map(({ id: msgId, contents }) => userChat(msgId, contents, true));
+    return combineChat(sendingMessages).map(({
+      id: msgId, contents,
+    }) => <SenderMessages msgId={msgId} contents={contents} isPending />);
   }
 
   renderMessageContent() {
     const {
-      replyMessages, userId, userRole,
+      replyMessages, userId,
     } = this.props;
     const refinedMessages = combineChat(replyMessages);
     return [refinedMessages.map(({
@@ -134,18 +135,18 @@ class MessageList extends Component {
       const id = `message[${msgId}]`;
       switch (type) {
         case REPLY_TYPE.TICKET_STATUS:
-          return ticketStatus(id, params, sentAt);
+          return <TicketStatusUpdateMessages msgId={id} params={params} sentAt={sentAt} />;
         case REPLY_TYPE.USER_ACTION:
-          return userAction(id, from, params, sentAt);
+          return <UserActionMessages msgId={id} user={from} params={params} sentAt={sentAt} />;
         case REPLY_TYPE.BOT_RESPONSE:
-          return botChat(id, contents);
+          return <BotMessages msgId={id} contents={contents} />;
         case REPLY_TYPE.RATING_ACTION:
-          return ticketRating(id, from, params, sentAt);
+          return <TicketRatingMessages msgId={id} user={from} params={params} sentAt={sentAt} />;
         case REPLY_TYPE.USER_NORMAL:
           if (from._id === userId) {
-            return userChat(id, contents, false, isAgent(userRole));
+            return <SenderMessages msgId={id} contents={contents} />;
           }
-          return this.renderOtherUserMessageContent(id, contents, from);
+          return <ReceiverMessages msgId={id} contents={contents} user={from} />;
         default: return null;
       }
     }),

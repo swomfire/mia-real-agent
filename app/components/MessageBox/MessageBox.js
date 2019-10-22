@@ -188,7 +188,7 @@ export default class MessageBox extends Component {
               <Icon type="form" />
               {toI18n('CONV_HEADER_FEEDBACK')}
             </ButtonDefault>
-            {!CLOSED_TICKET_STATUSES.includes(status) && (
+            {(!CLOSED_TICKET_STATUSES.includes(status) && !isAgent(userRole)) && (
               <ButtonPrimary
                 type="primary"
                 onClick={() => this.handleToggleCloseModal(true)}

@@ -74,11 +74,11 @@ export default class ConversationDetail extends Component {
       );
     }
     const {
-      title, description, status, assignee, history, processingDate,
+      title, description, status, assignee,
     } = ticket;
     return (
       <ConversationInfoWrapper>
-        <TimerWrapper history={history} processingDate={processingDate} />
+        <TimerWrapper ticket={ticket} />
         <Descriptions column={_isEmpty(assignee) ? 4 : 5}>
           <Descriptions.Item label={toI18n('CONV_MESSAGE_BOX_DETAIL_STATUS')}>
             <TicketStatus status={status} />

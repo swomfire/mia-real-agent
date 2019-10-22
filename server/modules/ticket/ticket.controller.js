@@ -1,6 +1,7 @@
 import httpStatus from 'http-status';
 import _ from 'lodash';
 import _get from 'lodash/get';
+import _isEmpty from 'lodash/isEmpty';
 import BaseController from '../base/base.controller';
 import TicketService from './ticket.service';
 import UserService from '../user/user.service';
@@ -140,6 +141,10 @@ class TicketController extends BaseController {
       const condition = { owner };
       const totalCount = await this.service.countDocument(condition);
 
+      const { creditCard, stripeCustomerId } = user;
+      if (_isEmpty(creditCard) || !stripeCustomerId) {
+        throw new APIError(ERROR_MESSAGE.MISSING_CREDIT_CARD_DETAIL, httpStatus.NOT_FOUND);
+      }
       const newData = {
         ...data,
         ticketId: totalCount + 1,

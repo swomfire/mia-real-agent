@@ -29,7 +29,9 @@ class TicketReceipt extends React.Component {
 
 
   componentWillUnmount() {
-    clearInterval(this.interval);
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   }
 
   renderReceiptRow = (item) => {

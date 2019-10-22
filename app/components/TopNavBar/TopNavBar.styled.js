@@ -120,7 +120,7 @@ export const MenuItem = styled(Menu.Item).attrs({
 })`
   padding: 0px 15px;
   text-transform: uppercase;
-  border-bottom: 2px solid transparent;
+  border-bottom: 2px solid transparent !important;
   transition: all 400ms ease;
   font-weight: 700;
   letter-spacing: 1px;

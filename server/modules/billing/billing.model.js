@@ -14,6 +14,7 @@ const billingSchema = new Schema(
         BILLING_TYPE.TOPUP,
         BILLING_TYPE.TICKET_CHARGE,
         BILLING_TYPE.TICKET_FULFILL,
+        BILLING_TYPE.TICKET_SUPPORT,
       ],
     },
     userId: {

@@ -14,7 +14,7 @@ const initialValues = {
 export class MessageInputForm extends Component {
   static propTypes = {
     onSubmit: func.isRequired,
-    onChangeContent: func.isRequired,
+    onChangeContent: func,
     cannedResponses: arrayOf(shape()),
   }
 

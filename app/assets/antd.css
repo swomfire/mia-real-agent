@@ -16663,7 +16663,7 @@ textarea.ant-input-number {
           flex: 0 0 auto;
 }
 .ant-layout-header {
-  height: 64px;
+  height: 56px !important;
   padding: 0 50px;
   line-height: 64px;
   background: #001529;
@@ -23342,4 +23342,8 @@ html {
 .ant-dropdown-menu-item-selected, .ant-dropdown-menu-submenu-title-selected, .ant-dropdown-menu-item-selected > a, .ant-dropdown-menu-submenu-title-selected > a{
   color: #ff2700;
   background-color: #fff2e6;
+}
+
+.ant-menu-horizontal > .ant-menu-item:hover, .ant-menu-horizontal > .ant-menu-submenu:hover, .ant-menu-horizontal > .ant-menu-item-active, .ant-menu-horizontal > .ant-menu-submenu-active, .ant-menu-horizontal > .ant-menu-item-open, .ant-menu-horizontal > .ant-menu-submenu-open, .ant-menu-horizontal > .ant-menu-item-selected, .ant-menu-horizontal > .ant-menu-submenu-selected{
+  border-bottom: 0;
 }

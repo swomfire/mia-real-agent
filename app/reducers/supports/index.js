@@ -6,9 +6,9 @@ export const SAVE_SUPPORT = 'supports/SAVE_SUPPORT';
 export const REMOVE_SUPPORT = 'supports/REMOVE_SUPPORT';
 
 
-export const AGENTS_FIND = 'supports/AGENTS_FIND';
-export const AGENTS_FIND_SUCCESS = 'supports/AGENTS_FIND_SUCCESS';
-export const AGENTS_FIND_FAILED = 'supports/AGENTS_FIND_FAILED';
+export const AGENTS_FIND_SUPPORT = 'supports/AGENTS_FIND_SUPPORT';
+export const AGENTS_FIND_SUPPORT_SUCCESS = 'supports/AGENTS_FIND_SUPPORT_SUCCESS';
+export const AGENTS_FIND_SUPPORT_FAILED = 'supports/AGENTS_FIND_SUPPORT_FAILED';
 
 export const AGENT_NEW_SUPPORT = 'chat/AGENT_NEW_SUPPORT';
 
@@ -16,7 +16,58 @@ export const AGENT_CONFIRM = 'supports/AGENT_CONFIRM_SUPPORT';
 export const AGENT_CONFIRM_SUCCESS = 'supports/AGENT_CONFIRM_SUPPORT_SUCCESS';
 export const AGENT_CONFIRM_FAIL = 'supports/AGENT_CONFIRM_SUPPORT_FAIL';
 
+export const REQUEST_END_SUPPORT = 'supports/REQUEST_END_SUPPORT';
+export const REQUEST_END_SUPPORT_SUCCESS = 'supports/REQUEST_END_SUPPORT_SUCCESS';
+export const REQUEST_END_SUPPORT_FAIL = 'supports/REQUEST_END_SUPPORT_FAIL';
+
+export const CONFIRM_END_SUPPORT = 'supports/CONFIRM_END_SUPPORT';
+export const CONFIRM_END_SUPPORT_SUCCESS = 'supports/CONFIRM_END_SUPPORT_SUCCESS';
+export const CONFIRM_END_SUPPORT_FAIL = 'supports/CONFIRM_END_SUPPORT_FAIL';
+
 // action creator
+export const requestEndSupport = (conversationId, status) => ({
+  type: REQUEST_END_SUPPORT,
+  payload: {
+    conversationId,
+    status,
+  },
+});
+
+export const requestEndSupportSuccess = conversationId => ({
+  type: REQUEST_END_SUPPORT_SUCCESS,
+  payload: {
+    conversationId,
+  },
+});
+
+export const requestEndSupportFailed = error => ({
+  type: REQUEST_END_SUPPORT_FAIL,
+  payload: {
+    error,
+  },
+});
+
+export const confirmEndSupport = (conversationId, status) => ({
+  type: CONFIRM_END_SUPPORT,
+  payload: {
+    conversationId,
+    status,
+  },
+});
+
+export const confirmEndSupportSuccess = conversationId => ({
+  type: CONFIRM_END_SUPPORT_SUCCESS,
+  payload: {
+    conversationId,
+  },
+});
+
+export const confirmEndSupportFailed = error => ({
+  type: CONFIRM_END_SUPPORT_FAIL,
+  payload: {
+    error,
+  },
+});
 
 export const removeSupport = ticketId => ({
   type: REMOVE_SUPPORT,
@@ -25,25 +76,24 @@ export const removeSupport = ticketId => ({
   },
 });
 
-export const findAgentSupport = (conversationId, isConfirm) => ({
-  type: AGENTS_FIND,
+export const findAgentSupport = ticketId => ({
+  type: AGENTS_FIND_SUPPORT,
   payload: {
-    conversationId,
-    isConfirm,
+    ticketId,
   },
 });
 
-export const findAgentSupportSuccess = conversationId => ({
-  type: AGENTS_FIND_SUCCESS,
+export const findAgentSupportSuccess = ticketId => ({
+  type: AGENTS_FIND_SUPPORT_SUCCESS,
   payload: {
-    conversationId,
+    ticketId,
   },
 });
 
-export const findAgentSupportFailed = (conversationId, error) => ({
-  type: AGENTS_FIND_FAILED,
+export const findAgentSupportFailed = (ticketId, error) => ({
+  type: AGENTS_FIND_SUPPORT_FAILED,
   payload: {
-    conversationId,
+    ticketId,
     error,
   },
 });
@@ -55,10 +105,9 @@ export const agentNewSupport = data => ({
   },
 });
 
-export const agentConfirmAction = (conversationId, ticketId, isConfirm) => ({
+export const agentConfirmAction = (ticketId, isConfirm) => ({
   type: AGENT_CONFIRM,
   payload: {
-    conversationId,
     ticketId,
     isConfirm,
   },
@@ -97,18 +146,18 @@ export const getSupportList = ({ supports }) => {
   return allIds.map(id => byId[id]);
 };
 
-export const getErrorMessage = ({ supports }, conversationId) => {
-  if (!conversationId) return '';
-  const error = supports.getIn(['error', conversationId]);
+export const getErrorMessage = ({ supports }, ticketId) => {
+  if (!ticketId) return '';
+  const error = supports.getIn(['error', ticketId]);
   if (!error) return '';
 
   return error;
 };
 
-export const isFindingAgent = ({ supports }, conversationId) => {
-  if (!conversationId) return false;
+export const isFindingAgent = ({ supports }, ticketId) => {
+  if (!ticketId) return false;
   const isSupportingList = supports.get('isSupportingList');
-  return isSupportingList.has(conversationId);
+  return isSupportingList.has(ticketId);
 };
 
 export const isWaitingForComfirm = ({ supports }) => supports.get('isWaitingForComfirm');
@@ -151,28 +200,28 @@ function repliesReducer(state = initialState, action) {
         .set('total', newAllIds.length);
     }
 
-    case AGENTS_FIND: {
-      const { conversationId } = action.payload;
-      const isSupportingList = state.get('isSupportingList').add(conversationId);
-      const error = state.get('error').delete(conversationId);
+    case AGENTS_FIND_SUPPORT: {
+      const { ticketId } = action.payload;
+      const isSupportingList = state.get('isSupportingList').add(ticketId);
+      const error = state.get('error').delete(ticketId);
 
       return state
         .set('isSupportingList', isSupportingList)
         .set('error', error);
     }
 
-    case AGENTS_FIND_SUCCESS: {
-      const { conversationId } = action.payload;
-      const isSupportingList = state.get('isSupportingList').remove(conversationId);
+    case AGENTS_FIND_SUPPORT_SUCCESS: {
+      const { ticketId } = action.payload;
+      const isSupportingList = state.get('isSupportingList').remove(ticketId);
 
       return state
         .set('isSupportingList', isSupportingList);
     }
 
-    case AGENTS_FIND_FAILED: {
-      const { error: errorMsg, conversationId } = action.payload;
-      const isSupportingList = state.get('isSupportingList').remove(conversationId);
-      const error = state.get('error').set(conversationId, errorMsg);
+    case AGENTS_FIND_SUPPORT_FAILED: {
+      const { error: errorMsg, ticketId } = action.payload;
+      const isSupportingList = state.get('isSupportingList').remove(ticketId);
+      const error = state.get('error').set(ticketId, errorMsg);
 
       return state
         .set('isSupportingList', isSupportingList)
@@ -223,6 +272,14 @@ export const actions = {
   agentConfirmAction,
   agentConfirmSuccessAction,
   agentConfirmFailAction,
+
+  requestEndSupport,
+  requestEndSupportFailed,
+  requestEndSupportSuccess,
+
+  confirmEndSupport,
+  confirmEndSupportFailed,
+  confirmEndSupportSuccess,
 };
 
 export const selectors = {

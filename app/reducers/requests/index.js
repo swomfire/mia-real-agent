@@ -26,11 +26,10 @@ export const removeRequest = ticketId => ({
   },
 });
 
-export const findAgentRequest = (conversationId, isConfirm) => ({
+export const findAgentRequest = conversationId => ({
   type: AGENTS_FIND,
   payload: {
     conversationId,
-    isConfirm,
   },
 });
 

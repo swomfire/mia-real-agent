@@ -8,10 +8,11 @@ import {
   MessageBoxSystemNotification, LineDivider,
   MessageBoxItemIsTyping, IsTypingWrapper,
   TicketActionStatus, UserAction, TicketActionStatusTitle,
-  TicketRatingScore, CommentWrapper, UserLabelWarning,
+  TicketRatingScore, CommentWrapper, UserLabelWarning, MessageActionText,
 } from './styles';
 import { ROLES, BOT_AVATAR, DEFAULT_USER_AVATAR } from '../../../common/enums';
 import { toI18n, isAgent } from '../../utils/func-utils';
+import { ButtonTransparent } from '../../stylesheets/Button.style';
 
 const renderTime = (time) => {
   if (moment().diff(time, 'days') === 0) {
@@ -59,6 +60,35 @@ export const otherChat = (msgId, contents, profile) => (
     </MessageText>
   </MessageBoxItem>
 );
+
+export const otherAction = (msgId, contents, params, profile) => {
+  const { actions = [] } = params;
+  return (
+    <MessageBoxItem left key={msgId}>
+      {profile && (
+        <ProfileImageStyled
+          src={profile.avatar || DEFAULT_USER_AVATAR}
+        />
+      )}
+      <MessageActionText>
+        <Tooltip key={msgId} placement="left" title={renderTime(new Date())}>
+          {contents.map(({ messages }) => (
+            <p>
+              {messages}
+            </p>
+          ))}
+        </Tooltip>
+        {
+          actions.map(({ label, action }) => (
+            <div className="message-action-button">
+              <ButtonTransparent onClick={action}>{label}</ButtonTransparent>
+            </div>
+          ))
+        }
+      </MessageActionText>
+    </MessageBoxItem>
+  );
+};
 
 export const botChat = (msgId, contents) => (
   <MessageBoxItem left key={msgId}>

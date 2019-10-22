@@ -1,15 +1,19 @@
 import {
-  takeLatest, call, put, select,
+  takeLatest, call, put, select, takeEvery,
 } from 'redux-saga/effects';
 import _get from 'lodash/get';
 import _isEmpty from 'lodash/isEmpty';
-import { getConversation, getConversationMessage } from '../../api/conversation';
+import {
+  getConversation, getConversationMessage, getOpenSupportConversation,
+  requestEndSupport, confirmEndSupport,
+} from '../../api/conversation';
 import {
   CONVERSATION_FETCH,
   actions,
   CONVERSATION_SET_CURRENT,
   getConverationById,
   fetchConversation as fetchConversationAction,
+  CONVERSATION_FETCH_ALL_OPEN_SUPPORT,
 } from '../../reducers/conversations';
 import {
   REPLIES_FETCH,
@@ -18,6 +22,7 @@ import {
   getReplyMessagesByConversationId,
   fetchReplyMessages,
 } from '../../reducers/replies';
+import { REQUEST_END_SUPPORT, CONFIRM_END_SUPPORT, actions as SUPPORT_ACTION } from '../../reducers/supports';
 
 function* fetchConversationMessages({ payload }) {
   const { conversationId } = payload;
@@ -60,10 +65,52 @@ function* fetchConversation({ payload }) {
   }
 }
 
+function* fetchAllOpenSupportConversation() {
+  try {
+    const { response, error } = yield call(getOpenSupportConversation);
+    if (error) throw new Error(error);
+    const data = _get(response, 'data', {});
+
+    yield put(actions.fetchOpenSupportConversationSuccess(data));
+  } catch (error) {
+    console.log('[CONVERSATION SAGA - fetchConversation] ERROR:', error.message);
+    yield put(actions.fetchOpenSupportConversationFailed(error.message || error));
+  }
+}
+
+function* requestEndSupportFlow({ payload }) {
+  const { conversationId, status } = payload;
+  try {
+    const { response, error } = yield call(requestEndSupport, conversationId, status);
+    if (error) throw new Error(error);
+    const data = _get(response, 'data', {});
+
+    yield put(SUPPORT_ACTION.requestEndSupportSuccess(data));
+  } catch (error) {
+    yield put(SUPPORT_ACTION.requestEndSupportFailed(error.message || error));
+  }
+}
+
+function* confirmEndSupportFlow({ payload }) {
+  const { conversationId, status } = payload;
+  try {
+    const { response, error } = yield call(confirmEndSupport, conversationId, status);
+    if (error) throw new Error(error);
+    const data = _get(response, 'data', {});
+
+    yield put(SUPPORT_ACTION.confirmEndSupportSuccess(data));
+  } catch (error) {
+    yield put(SUPPORT_ACTION.confirmEndSupportFailed(error.message || error));
+  }
+}
+
 function* conversationFlow() {
   yield takeLatest(CONVERSATION_FETCH, fetchConversation);
+  yield takeLatest(CONVERSATION_FETCH_ALL_OPEN_SUPPORT, fetchAllOpenSupportConversation);
   yield takeLatest(CONVERSATION_SET_CURRENT, setCurrentConversation);
-  yield takeLatest(REPLIES_FETCH, fetchConversationMessages);
+  yield takeEvery(REPLIES_FETCH, fetchConversationMessages);
+  yield takeLatest(REQUEST_END_SUPPORT, requestEndSupportFlow);
+  yield takeLatest(CONFIRM_END_SUPPORT, confirmEndSupportFlow);
 }
 
 export default conversationFlow;

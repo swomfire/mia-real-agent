@@ -8,6 +8,10 @@ class AgentRouter {
       '/accept',
       controller.acceptRequest,
     );
+    this.router.post(
+      '/accept-support',
+      controller.acceptSupportRequest,
+    );
   }
 }
 

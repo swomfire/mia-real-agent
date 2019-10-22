@@ -6,6 +6,10 @@ class ConversationRouter extends BaseRouter {
     super(controller);
 
     this.router.get('/:id/replies', this.controller.getReplyMessages);
+    this.router.get('/support/open', this.controller.getAllOpenSupport);
+
+    this.router.post('/:id/end-support', this.controller.requestEndSupport);
+    this.router.post('/:id/confirm-end', this.controller.confirmEndSupport);
   }
 }
 

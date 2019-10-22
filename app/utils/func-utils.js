@@ -31,6 +31,7 @@ export const combineChat = (replyMessages = []) => {
       || type === REPLY_TYPE.USER_ACTION
       || type === REPLY_TYPE.RATING_ACTION
       || type === REPLY_TYPE.WARNING_ACTION
+      || type === REPLY_TYPE.USER_ACTION_BUTTON
     ) {
       combined.push({
         _id: combined.length, type, contents: [{ _id, messages, sentAt }], from, params, sentAt,
@@ -40,7 +41,12 @@ export const combineChat = (replyMessages = []) => {
     if (combined.length > 0) {
       const lastCombined = combined[combined.length - 1];
       const { from: last, contents = [], type: lastType } = lastCombined;
-      if (lastType === REPLY_TYPE.TICKET_STATUS || lastType === REPLY_TYPE.USER_ACTION) {
+      if (lastType === REPLY_TYPE.TICKET_STATUS
+        || lastType === REPLY_TYPE.USER_ACTION
+        || type === REPLY_TYPE.RATING_ACTION
+        || type === REPLY_TYPE.WARNING_ACTION
+        || type === REPLY_TYPE.USER_ACTION_BUTTON
+      ) {
         combined.push({
           _id: combined.length, type, from, contents: [{ _id, messages, sentAt }],
         });

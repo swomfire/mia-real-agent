@@ -3,7 +3,7 @@ class AgentQueue {
 
   get = () => this.queue;
 
-  getAgent = agentId => this.queue.find(({ _id }) => agentId === _id);
+  getAgent = agentId => this.queue.find(({ _id }) => agentId.toString() === _id.toString());
 
   add = (agent) => {
     this.queue = this.queue.concat(agent);

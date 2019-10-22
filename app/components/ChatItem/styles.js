@@ -55,6 +55,30 @@ export const MessageText = styled.div`
   }
 `;
 
+export const MessageActionText = styled(MessageText)`
+  p {
+    border-bottom-left-radius: 0;
+  }
+  .message-action-button {
+    font-size: 1.4em;
+    border: 1px solid ${props => props.theme.colorStyled.ColorPrimary};
+    margin-left: .53em;
+    border-bottom: 0;
+    :first-of-type{
+      margin-top: .15em;
+      border-top-right-radius:  15px;
+    }
+    :last-of-type{
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
+      border-bottom: 1px solid ${props => props.theme.colorStyled.ColorPrimary};
+    }
+    button {
+      width: 100%;
+    }
+  }
+`;
+
 export const UserMessage = styled.p`
   /* margin-right: 10px; */
   background-color: ${({ pending, theme }) => pending && `${theme.colorStyled.ColorIcon} !important`};
@@ -169,3 +193,4 @@ export const UserLabelWarning = styled.div`
   width: 100%;
   text-align: ${({ user }) => user ? 'end' : 'start'};
 `;
+

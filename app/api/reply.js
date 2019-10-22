@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { handleError } from './utils';
 
-export const sendReplyMessage = (from, to, conversationId, messages) => axios
+export const sendReplyMessage = (from, conversationId, messages) => axios
   .post('/reply', {
-    from, to, conversationId, messages,
+    from, conversationId, messages,
   })
   .then(response => ({ response }))
   .catch(handleError);

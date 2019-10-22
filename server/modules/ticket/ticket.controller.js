@@ -51,7 +51,7 @@ class TicketController extends BaseController {
       ticket.save({});
       return res.status(httpStatus.OK).send();
     } catch (error) {
-      return this.handleError(res, error);
+      return super.handleError(res, error);
     }
   }
 
@@ -65,7 +65,7 @@ class TicketController extends BaseController {
       }
       return res.status(httpStatus.OK).send();
     } catch (error) {
-      return this.handleError(res, error);
+      return super.handleError(res, error);
     }
   }
 
@@ -76,7 +76,7 @@ class TicketController extends BaseController {
 
       return res.status(httpStatus.OK).send(result);
     } catch (error) {
-      return this.handleError(res, error);
+      return super.handleError(res, error);
     }
   }
 
@@ -123,7 +123,7 @@ class TicketController extends BaseController {
       req.model = model;
       return next();
     } catch (error) {
-      return this.handleError(res, error);
+      return super.handleError(res, error);
     }
   }
 
@@ -183,7 +183,7 @@ class TicketController extends BaseController {
       const createdTicket = await this.service.getByCondition({ _id: ticketId });
       return res.status(httpStatus.OK).send(createdTicket);
     } catch (error) {
-      return this.handleError(res, error);
+      return super.handleError(res, error);
     }
   }
 
@@ -223,7 +223,7 @@ class TicketController extends BaseController {
 
       return res.status(httpStatus.OK).send(result);
     } catch (error) {
-      return this.handleError(res, error);
+      return super.handleError(res, error);
     }
   }
 

@@ -31,18 +31,16 @@ class SupportItem extends PureComponent {
     const { support, onAccept } = this.props;
     const {
       _id: ticketId,
-      conversationId,
     } = support;
-    onAccept(conversationId, ticketId);
+    onAccept(ticketId);
   }
 
   handleCancel = () => {
     const { support, onCancel } = this.props;
     const {
       _id: ticketId,
-      conversationId,
     } = support;
-    onCancel(conversationId, ticketId);
+    onCancel(ticketId);
   }
 
 
@@ -68,7 +66,7 @@ class SupportItem extends PureComponent {
       <DashboardTitle>
         <DashboardRightBlock>
           <DashboardSubTitle>
-            <DashboardLinkTitle>
+            <DashboardLinkTitle to="">
               {`${title} [ ${categoriesDisplay} ]`}
             </DashboardLinkTitle>
           </DashboardSubTitle>

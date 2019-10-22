@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export function configAxios() {
-  axios.defaults.baseURL = '/api';
+  axios.defaults.baseURL = `${process.env.REACT_APP_DOMAIN}/api`;
   axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
   // axios.defaults.headers.post['Content-Type'] = 'application/json';
 }

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { CONVERSATION_TYPE, CONVERSATION_STATUS } from '../../../common/enums';
 const { Schema } = mongoose;
 
 const conversationSchema = new Schema(
@@ -7,16 +8,30 @@ const conversationSchema = new Schema(
       type: Schema.Types.ObjectId,
       required: true,
     },
+    type: {
+      type: String,
+      required: true,
+      default: CONVERSATION_TYPE.TICKET_CONVERSATION,
+    },
     owner: {
       type: Schema.Types.ObjectId,
       required: true,
+      ref: 'User',
     },
     members: {
-      type: [Schema.Types.ObjectId],
+      type: [{ member: { type: Schema.Types.ObjectId, ref: 'User' } }],
       required: true,
       default: [],
     },
-    status: String,
+    status: {
+      type: String,
+      required: true,
+      default: CONVERSATION_STATUS.OPEN,
+      enum: [
+        CONVERSATION_STATUS.OPEN,
+        CONVERSATION_STATUS.CLOSE,
+      ],
+    },
     createdAt: {
       type: Date,
       default: () => new Date(),

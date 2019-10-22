@@ -104,6 +104,39 @@ class ConversationRoomQueue {
     );
   }
 
+  removeConversationById = (conversationId) => {
+    const room = this.getRoom(conversationId);
+    if (_isEmpty(room)) {
+      return;
+    }
+    const { [conversationId]: removeConversation, ...rest } = this.queue;
+    this.queue = rest;
+  }
+
+  sendConfirmEndSupportRequest = (conversationId, userId, status) => {
+    const room = this.getRoom(conversationId);
+    if (_isEmpty(room)) {
+      return;
+    }
+    const socket = room[userId];
+    if (socket) {
+      socket.emit(SOCKET_EMIT.REQUEST_SUPPORT_END, { conversationId, status });
+    }
+  }
+
+  sendEndSupport = (conversationId, status) => {
+    const room = this.getRoom(conversationId);
+    if (_isEmpty(room)) {
+      return;
+    }
+    Object.keys(room).forEach((userId) => {
+      const socket = room[userId];
+      if (socket) {
+        socket.emit(SOCKET_EMIT.CONFIRM_END_SUPPORT, { conversationId, status });
+      }
+    });
+  }
+
   removeUserFromConversation = (conversationId, userId) => {
     const room = this.getRoom(conversationId);
     if (_isEmpty(room)) {

@@ -109,7 +109,7 @@ class SocketIOServer {
   }
 }
 
-export const getSocketByUser = (user) => {
+export const getSocketByUser = (user = {}) => {
   const { socketId } = user;
   const { connected } = socketIO.sockets;
   return connected[socketId];

@@ -17,10 +17,11 @@ import { actions as SUPPORT_ACTIONS } from '../../reducers/supports';
 import { actions as PROFILE_ACTIONS } from '../../reducers/profile';
 import {
   actions as CONVERSATION_ACTIONS, fetchConversation,
-  USER_JOIN_CONVERSATION, USER_TYPING, getCurrentConveration, USER_LEFT_CONVERSATION,
+  USER_JOIN_CONVERSATION, USER_TYPING, getCurrentConveration, USER_LEFT_CONVERSATION, getConversationById,
 } from '../../reducers/conversations';
 import { SOCKET_EMIT, REPLY_TYPE, TICKET_STATUS } from '../../../common/enums';
 import history from '../../utils/history';
+import { toI18n } from '../../utils/func-utils';
 
 
 let socketConnection;
@@ -38,7 +39,7 @@ function createSocketChannel(socket, type) {
 
 function createSocketConnection(token) {
   // const endpoint = process.env.SOCKETIO_ENDPOINT;
-  const socket = socketIOClient('/', {
+  const socket = socketIOClient(process.env.REACT_APP_DOMAIN, {
     path: '/chat',
     upgradeTimeout: 30000, // 5 minutes
   });
@@ -81,7 +82,7 @@ function* requestAgent() {
   // watch message and relay the action
   while (true) {
     const data = yield take(socketChannel);
-    notification.success({ message: 'You got a new request' });
+    notification.success({ message: toI18n('NEW_REQUEST') });
     yield put(REQUEST_ACTIONS.saveRequest(data));
   }
 }
@@ -92,7 +93,7 @@ function* requestSupportAgent() {
   // watch message and relay the action
   while (true) {
     const data = yield take(socketChannel);
-    notification.success({ message: 'You got a new support request' });
+    notification.success({ message: toI18n('SUPPORT_NEW_SUPPORT_REQUEST') });
     yield put(SUPPORT_ACTIONS.saveSupport(data));
   }
 }
@@ -102,17 +103,49 @@ function* requestConfirm() {
 
   // watch message and relay the action
   while (true) {
-    const { ticketId, isConfirm } = yield take(socketChannel);
-    if (isConfirm) {
-      const conversationId = yield select(getCurrentConveration);
-      notification.success({ message: `The Agent had accepted ticket: #${ticketId}` });
-      yield put(TICKET_ACTIONS.getAction(ticketId));
-      // Update conversation
-      yield put(fetchConversation(conversationId));
-      yield put(CONVERSATION_ACTIONS.userJoinConversation(conversationId));
-    } else {
-      notification.error({ message: 'The Agent had declined the request' });
-    }
+    const { ticketId } = yield take(socketChannel);
+    const conversationId = yield select(getCurrentConveration);
+    notification.success({ message: `An Agent had accepted ticket: #${ticketId}` });
+    yield put(TICKET_ACTIONS.getAction(ticketId));
+    // Update conversation
+    yield put(fetchConversation(conversationId));
+    yield put(CONVERSATION_ACTIONS.userJoinConversation(conversationId));
+  }
+}
+
+function* requestEndSupport() {
+  const socketChannel = yield call(createSocketChannel, socketConnection, SOCKET_EMIT.REQUEST_SUPPORT_END);
+
+  // watch message and relay the action
+  while (true) {
+    const { conversationId, status } = yield take(socketChannel);
+    yield put(CONVERSATION_ACTIONS.confirmRequested(conversationId, status));
+  }
+}
+
+function* confirmEndSupport() {
+  const socketChannel = yield call(createSocketChannel, socketConnection, SOCKET_EMIT.CONFIRM_END_SUPPORT);
+
+  // watch message and relay the action
+  while (true) {
+    const { conversationId, status } = yield take(socketChannel);
+    notification.success({ message: toI18n('SUPPORT_CONVERSATION_CLOSED') });
+    yield put(CONVERSATION_ACTIONS.removeSupportConversation(conversationId, status));
+  }
+}
+
+function* requestSupportConfirm() {
+  const socketChannel = yield call(createSocketChannel, socketConnection, SOCKET_EMIT.REQUEST_SUPPORT_CONFIRM);
+
+  // watch message and relay the action
+  while (true) {
+    const { ticketId, conversationId } = yield take(socketChannel);
+    notification.success({ message: toI18n('SUPPORT_AGENT_ACCEPTED_SUPPORT') });
+    yield put(TICKET_ACTIONS.getAction(ticketId));
+    // Update conversation
+    yield put(fetchConversation(conversationId));
+    yield put(fetchReplyMessages(conversationId));
+    yield put(CONVERSATION_ACTIONS.userJoinConversation(conversationId));
   }
 }
 
@@ -186,7 +219,10 @@ function* connectFlow() {
     handleNewMessage(),
     requestAgent(),
     requestSupportAgent(),
+    requestEndSupport(),
+    confirmEndSupport(),
     requestConfirm(),
+    requestSupportConfirm(),
     observeUserTypingConversation(),
     foundSolution(),
     removeRequest(),

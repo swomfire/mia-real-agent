@@ -330,6 +330,8 @@ export const actions = {
   fetchReplyMessagesSuccess,
   fetchReplyMessagesFailed,
 
+  sendReplyMessage,
+
   sendReplyWarning,
   sendReplyWarningSuccess,
   sendReplyWarningFailed,

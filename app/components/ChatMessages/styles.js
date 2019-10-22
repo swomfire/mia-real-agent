@@ -7,7 +7,7 @@ export const EmptyMessageNotify = styled.div`
   justify-content: center;
 `;
 
-export const SupportChatMessageWrapper = styled.div`
+export const ChatMessageWrapper = styled.div`
   background: ${props => props.theme.colorStyled.ColorWhite};
   .line-divider{
     flex: 0 0 10%;

@@ -7,8 +7,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  onAccept: (conversationId, ticketId) => actions.agentConfirmAction(conversationId, ticketId, true),
-  onCancel: (conversationId, ticketId) => actions.agentConfirmAction(conversationId, ticketId, false),
+  onAccept: ticketId => actions.agentConfirmAction(ticketId, true),
+  onCancel: ticketId => actions.agentConfirmAction(ticketId, false),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SupportList);

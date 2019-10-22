@@ -148,6 +148,13 @@ export const ButtonPrimary = styled(Button)`
     margin-right: .35em;
   }
 `;
+
+export const ButtonTransparent = styled(ButtonPrimary)`
+  background: ${props => props.theme.colorStyled.ColorTransparent};
+  border: 0;
+  color:  ${props => props.theme.colorStyled.ColorPrimary}; 
+`;
+
 export const ButtonApprove = styled(ButtonPrimary)`
   background: ${props => props.theme.colorStyled.ColorBgDefault};
   color:  ${props => props.theme.colorStyled.ColorWhite}; 

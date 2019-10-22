@@ -11,6 +11,9 @@ export const TopNavBarWrapper = styled(Header)`
   position: relative;
   z-index: 1;
   color: #fff;
+  .ant-menu-horizontal{
+    border: 0 !important;
+  }
   &.user-account {
     background-color: ${props => props.theme.colorStyled.ColorBgUser};   
     .menu-top-nav-bar{
@@ -21,9 +24,9 @@ export const TopNavBarWrapper = styled(Header)`
            } 
          }
          a {
-          color: ${props => props.theme.colorStyled.ColorWhite};
+          color: ${props => props.theme.colorStyled.ColorWhite} !important;
           &:hover{
-            color: ${props => props.theme.colorStyled.ColorWhite};        
+            color: ${props => props.theme.colorStyled.ColorWhite} !important;        
           }
         }
       }
@@ -79,8 +82,8 @@ export const MenuTopNavBar = styled(Menu).attrs({
   align-items: center;
   height: 100%;
   flex: 1;
-  background-color: ${props => props.theme.colorStyled.ColorTransparent};
-  border-color: ${props => props.theme.colorStyled.ColorTransparent};
+  background: ${props => props.theme.colorStyled.ColorTransparent} !important;
+  border-color: ${props => props.theme.colorStyled.ColorTransparent} !important;
   .menu-items-top{
     &:active{
       background: ${props => props.theme.colorStyled.ColorTransparent};
@@ -88,7 +91,6 @@ export const MenuTopNavBar = styled(Menu).attrs({
     &.ant-menu-item-active{
       background: ${props => props.theme.colorStyled.ColorTransparent}!important;
       color: ${props => props.theme.colorStyled.ColorBgDefault};
-      border-bottom: ${props => props.theme.colorStyled.ColorTransparent};
       position: relative;
       &:after{
         content: '';
@@ -96,20 +98,19 @@ export const MenuTopNavBar = styled(Menu).attrs({
         height: 2px;
         background-color: ${props => props.theme.colorStyled.ColorBgDefault};        
         position: absolute;
-        bottom: -19px;
+        bottom: -11px;
         left: 0;
       }     
     }
     a {
-      color: ${props => props.theme.colorStyled.ColorWhite};
+      color: ${props => props.theme.colorStyled.ColorWhite} !important;
       &:hover{
-        color: ${props => props.theme.colorStyled.ColorBgDefault};        
+        color: ${props => props.theme.colorStyled.ColorPrimary} !important;        
       }
     }
     &:hover{
       color: ${props => props.theme.colorStyled.ColorBgDefaultHover};
-      border-bottom: ${props => props.theme.colorStyled.ColorTransparent};
-    
+      border-bottom: ${props => props.theme.colorStyled.ColorTransparent} !important;
     }
   }
 `;

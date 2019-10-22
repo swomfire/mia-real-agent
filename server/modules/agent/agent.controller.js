@@ -1,26 +1,22 @@
 import httpStatus from 'http-status';
-import { TICKET_STATUS, SOCKET_EMIT, REPLY_USER_ACTION } from '../../../common/enums';
+import { TICKET_STATUS, SOCKET_EMIT, REPLY_USER_ACTION, CONVERSATION_TYPE } from '../../../common/enums';
 import TicketService from '../ticket/ticket.service';
 import ConversationService from '../conversation/conversation.service';
 import AgentQueue from '../queue/agentQueue';
 import UserQueue from '../queue/userQueue';
 import IdleQueue from '../queue/idleQueue';
-import Logger from '../../logger';
 import APIError, { ERROR_MESSAGE } from '../../utils/APIError';
 import RequestQueue from '../queue/requestQueue';
+import SupportQueue from '../queue/supportQueue';
 import ReplyService from '../reply/reply.service';
 import { getHistoryTicketUpdate } from '../../utils/utils';
+import { getSocketByUser } from '../../socketio';
+import BaseController from '../base/base.controller';
 
-class AgentController {
+class AgentController extends BaseController {
   constructor() {
-    this.handleError = this.handleError.bind(this);
+    super();
     this.acceptRequest = this.acceptRequest.bind(this);
-  }
-
-  handleError(res, error) {
-    Logger.error(error.message);
-    const status = error.status || httpStatus.INTERNAL_SERVER_ERROR;
-    return res.status(status).send(error.message);
   }
 
   async acceptRequest(req, res) {
@@ -57,9 +53,9 @@ class AgentController {
           const agentIdStr = agentId.toString();
           const shouldAdd = !conversation.members.some(member => member.toString() === agentIdStr);
 
-          if (shouldAdd) conversation.members.push(agentId);
+          if (shouldAdd) conversation.members.push({ member: agentId });
         } else {
-          conversation.members = [agentId];
+          conversation.members = [{ member: agentId }];
         }
         await Promise.all([
           ticket.save(),
@@ -67,17 +63,62 @@ class AgentController {
         ]);
         const { owner } = ticket;
         const ownerSocket = UserQueue.getUser(owner);
-        ownerSocket.emit(SOCKET_EMIT.REQUEST_CONFIRM, {
-          isConfirm,
-          ticketId,
-        });
+        if (ownerSocket) {
+          ownerSocket.emit(SOCKET_EMIT.REQUEST_CONFIRM, {
+            isConfirm,
+            ticketId,
+          });
+        }
         RequestQueue.acceptRequest(ticketId);
         IdleQueue.addTimer(ticketId);
         ReplyService.logUserAction(conversationId, agentId, REPLY_USER_ACTION.ACCEPT_REQUEST);
       }
       return res.status(httpStatus.OK).send();
     } catch (error) {
-      return this.handleError(res, error);
+      return super.handleError(res, error);
+    }
+  }
+
+  async acceptSupportRequest(req, res) {
+    try {
+      const { user: agent } = req;
+      const { ticketId, isConfirm } = req.body;
+      const ticket = await TicketService.get(ticketId);
+      // eslint-disable-next-line no-underscore-dangle
+      const agentId = agent._id;
+      if (
+        !ticket
+      ) {
+        throw new APIError(ERROR_MESSAGE.BAD_REQUEST, httpStatus.BAD_REQUEST);
+      }
+      if (isConfirm) {
+        // update assign and members for tickets and conversations
+        const { assignee } = ticket;
+        const conversation = await ConversationService.insert({
+          type: CONVERSATION_TYPE.SUPPORT,
+          ticketId,
+          owner: assignee,
+          members: [{ member: assignee }, { member: agentId }],
+        });
+        const { _id: conversationId } = conversation;
+        ticket.supportConversationId = conversationId;
+        await Promise.all([
+          ticket.save(),
+          conversation.save(),
+        ]);
+        const agentInQueue = AgentQueue.getAgent(assignee);
+        const assigneeSocket = getSocketByUser(agentInQueue);
+        if (assigneeSocket) {
+          assigneeSocket.emit(SOCKET_EMIT.REQUEST_SUPPORT_CONFIRM, {
+            ticketId,
+            conversationId,
+          });
+        }
+        SupportQueue.acceptRequest(ticketId);
+      }
+      return res.status(httpStatus.OK).send();
+    } catch (error) {
+      return super.handleError(res, error);
     }
   }
 }

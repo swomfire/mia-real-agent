@@ -23,11 +23,14 @@ class RequestQueue {
   getRequest = ticketId => this.queue[ticketId];
 
   addRequest = (ticket) => {
-    const { _id: ticketId, category: ticketCategories } = ticket;
+    const { _id: ticketId, category: ticketCategories, assignee } = ticket;
     // Emit request to UI
     const queue = AgentQueue.get();
     const agents = queue.filter(
-      ({ categories }) => {
+      ({ _id, categories }) => {
+        if (_id.toString() === assignee._id.toString()) {
+          return false;
+        }
         if (!categories) {
           return false;
         }
@@ -59,7 +62,7 @@ class RequestQueue {
     agents.forEach((agent) => {
       const socket = getSocketByUser(agent);
       if (socket) {
-        socket.emit(SOCKET_EMIT.REMOVE_REQUEST, { ticketId });
+        socket.emit(SOCKET_EMIT.REMOVE_REQUEST_SUPPORT, { ticketId });
       }
     });
     this.removeRequest(ticketId);

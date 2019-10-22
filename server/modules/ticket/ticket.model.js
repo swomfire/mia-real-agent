@@ -10,6 +10,10 @@ const ticketSchema = new Schema(
       type: Schema.Types.ObjectId,
       required: false,
     },
+    supportConversationId: {
+      type: Schema.Types.ObjectId,
+      required: false,
+    },
     title: { type: String, trim: true },
     description: { type: String, trim: true },
     status: {

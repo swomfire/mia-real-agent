@@ -7,7 +7,7 @@ export const LanguageWrapper = styled.div`
   border-left: 1px solid ${props => props.theme.colorStyled.ColorTransparentWhite};
   border-right: 1px solid ${props => props.theme.colorStyled.ColorTransparentWhite};
   padding: 0 .8em;
-  line-height: 3em;
+  line-height: 2.7em;
 `;
 
 export const LanguageValue = styled.span`

@@ -40,7 +40,7 @@ import CreateFeedbackForm from '../../containers/CreateFeedbackForm';
 import CloseTicketModal from './CloseTicketModal';
 import MessageInputForm from '../MessageInputForm';
 import MessageListContainer from '../../containers/MessageBox/MessageList';
-import SupportPanel from '../SupportPanel/SupportPanel';
+import SupportPanel from '../../containers/SupportPanel';
 
 const initialRating = {
   score: 1,
@@ -284,7 +284,7 @@ export default class MessageBox extends Component {
     const { _id } = currentTicket || {};
     return (
       <LoadingSpin loading={isFetchingReplies || isFindingAgent}>
-        {isAgent(userRole) && (<SupportPanel />)}
+        {isAgent(userRole) && (<SupportPanel ticketId={_id} />)}
         {this.renderMessageHeader()}
         <MessageBoxWrapper>
           <MessageBoxContent>

@@ -1,12 +1,15 @@
 import httpStatus from 'http-status';
 import axios from 'axios';
+import _isEmpty from 'lodash/isEmpty';
 import BaseController from '../base/base.controller';
 import ReplyService from './reply.service';
 import Logger from '../../logger';
 import IdleQueue from '../queue/idleQueue';
 import ConversationService from '../conversation/conversation.service';
 import TicketService from '../ticket/ticket.service';
-import { TICKET_STATUS, SOCKET_EMIT, REPLY_TYPE } from '../../../common/enums';
+import {
+  TICKET_STATUS, SOCKET_EMIT, REPLY_TYPE, CONVERSATION_TYPE,
+} from '../../../common/enums';
 import userQueue from '../queue/userQueue';
 
 class ReplyController extends BaseController {
@@ -56,19 +59,21 @@ class ReplyController extends BaseController {
       // Get number of reply
       const noReply = await this.service.countDocument({ conversationId });
       const result = await this.service.insert(reply);
-      const { ticketId } = await ConversationService.getOneByQuery({ _id: conversationId });
-      // For processing time
-      if (
-        noReply === 2 // Skip first status log and welcome
-      ) {
-        TicketService.updateProcessingTime(ticketId);
-      }
-      // For idle queue
-      IdleQueue.resetTimer(ticketId);
-      if (reply.to) {
-        TicketService.updateStatus(ticketId, TICKET_STATUS.PROCESSING);
-      } else {
-        setTimeout(() => this.getResponseFromMia(reply), 0);
+      const { type, ticketId, members } = await ConversationService.getOneByQuery({ _id: conversationId });
+      if (type === CONVERSATION_TYPE.TICKET_CONVERSATION) {
+        // For processing time
+        if (
+          noReply === 2 // Skip first status log and welcome
+        ) {
+          TicketService.updateProcessingTime(ticketId);
+        }
+        // For idle queue
+        IdleQueue.resetTimer(ticketId);
+        if (!_isEmpty(members)) {
+          TicketService.updateStatus(ticketId, TICKET_STATUS.PROCESSING);
+        } else {
+          setTimeout(() => this.getResponseFromMia(reply), 0);
+        }
       }
       return res.status(httpStatus.OK).send({ reply: result });
     } catch (error) {

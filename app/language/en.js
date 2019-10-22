@@ -1,6 +1,7 @@
 const en = {
   translation: {
     // General
+    CONFIRM: 'Confirm',
     CREATE: 'Create',
     SEARCH: 'Search',
     USER: 'User',
@@ -10,6 +11,8 @@ const en = {
     CANCEL: 'Cancel',
     CLICK_HERE: 'Click here!',
     ADD: 'Add ',
+    SOLVE: 'Solve',
+    UNSOLVE: 'Unsolve',
     // Form
     FORM_BACK: 'Back',
     FORM_NEXT: 'Next',
@@ -511,6 +514,16 @@ const en = {
     TICKET_RECEIPT_REMAIN: 'Remaining Credit time',
     TICKET_RECEIPT_BOT_FEE: 'Charge for MIA',
     TICKET_RECEIPT_AGENT_FEE: 'Charge for Agent',
+
+    NEW_REQUEST: 'You got a new request',
+
+    SUPPORT_HAVING_TROUBLE: 'Having trouble?',
+    SUPPORT_FIND_SUPPORT: 'Find Support',
+    SUPPORT_NEW_SUPPORT_REQUEST: 'You got a new support request',
+    SUPPORT_CONVERSATION_CLOSED: 'Support Conversation Closed',
+    SUPPORT_AGENT_ACCEPTED_SUPPORT: 'An Agent had accepted support',
+    SUPPORT_SUPPORTER_COMPLETE: 'Supporter want to complete conversation',
+    SUPPORT_SUPPORTER_EXIT: 'Supporter want to exit conversation',
   },
 };
 

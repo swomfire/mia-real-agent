@@ -68,7 +68,7 @@ class RequestItem extends PureComponent {
       <DashboardTitle>
         <DashboardRightBlock>
           <DashboardSubTitle>
-            <DashboardLinkTitle>
+            <DashboardLinkTitle to="">
               {`${title} [ ${categoriesDisplay} ]`}
             </DashboardLinkTitle>
           </DashboardSubTitle>

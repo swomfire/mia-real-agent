@@ -24,16 +24,15 @@ function* sendReplyMessage({ payload }) {
     messages,
     localMessageId,
   } = payload;
-  const { owner, members, ticketId } = yield select(getConverationById, conversationId);
+  const { ticketId } = yield select(getConverationById, conversationId);
   const userId = yield select(getUserId);
-  const to = userId !== owner ? owner : members[0];
   // Validate messages
   if (validateMessage(messages)) {
     yield put(sendWarningAction(conversationId, messages));
   }
   // from, to, conversation, message
   try {
-    const { response, error } = yield call(ReplyMessageAPI.sendReplyMessage, userId, to, conversationId, messages);
+    const { response, error } = yield call(ReplyMessageAPI.sendReplyMessage, userId, conversationId, messages);
     if (error) throw new Error(error);
     const { reply } = get(response, 'data', {});
     const { username, role } = yield select(getAuthenticatedData);
@@ -45,7 +44,7 @@ function* sendReplyMessage({ payload }) {
         role,
       },
     }, localMessageId));
-    yield put(TICKET_ACTIONS.getAction(ticketId));
+    // yield put(TICKET_ACTIONS.getAction(ticketId));
   } catch (error) {
     console.log('[REPLY SAGA] ERROR: ', error.message || error);
     yield put(sendReplyMessageFailed(conversationId, error.message || error, localMessageId));

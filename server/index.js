@@ -97,10 +97,12 @@ app.use('/api', middlewares, router);
 
 
 // In production we need to pass these values in instead of relying on webpack
-setup(app, {
+const client = setup(app, {
   outputPath: resolve(process.cwd(), 'build'),
   publicPath: '/',
 });
+
+client.listen(process.env.PORT);
 
 
 // get the intended host and port number, use localhost and port 3000 if not provided

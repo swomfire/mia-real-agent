@@ -20,9 +20,11 @@ export class RequestList extends PureComponent {
           <NoRequestNotify>
             {toI18n('DB_NO_REQUEST_AVAIABLE')}
           </NoRequestNotify>
-        ) : requestList.map(support => (
+        ) : requestList.map((request, index) => (
           <RequestItem
-            support={support}
+            // eslint-disable-next-line react/no-array-index-key
+            key={index}
+            request={request}
             onAccept={onAccept}
             onCancel={onCancel}
           />

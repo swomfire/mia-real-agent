@@ -5,6 +5,10 @@ export const CONVERSATION_FETCH = 'conversations/CONVERSATION_FETCH';
 export const CONVERSATION_FETCH_SUCCESS = 'conversations/CONVERSATION_FETCH_SUCCESS';
 export const CONVERSATION_FETCH_FAILED = 'conversations/CONVERSATION_FETCH_FAILED';
 
+export const CONVERSATION_FETCH_ALL_OPEN_SUPPORT = 'conversations/CONVERSATION_FETCH_ALL_OPEN_SUPPORT';
+export const CONVERSATION_FETCH_ALL_OPEN_SUPPORT_SUCCESS = 'conversations/CONVERSATION_FETCH_ALL_OPEN_SUPPORT_SUCCESS';
+export const CONVERSATION_FETCH_ALL_OPEN_SUPPORT_FAILED = 'conversations/CONVERSATION_FETCH_ALL_OPEN_SUPPORT_FAILED';
+
 export const CONVERSATION_GET_DETAIL = 'conversations/CONVERSATION_GET_DETAIL';
 export const CONVERSATION_GET_DETAIL_SUCCESS = 'conversations/CONVERSATION_GET_DETAIL_SUCCESS';
 export const CONVERSATION_GET_DETAIL_FAILED = 'conversations/CONVERSATION_GET_DETAIL_FAILED';
@@ -23,7 +27,27 @@ export const SYSTEM_MESSAGE = 'conversations/SYSTEM_MESSAGE';
 
 export const FOUND_SOLUTION = 'chat/FOUND_SOLUTION';
 
+export const CONFIRM_REQUESTED = 'chat/CONFIRM_REQUESTED';
+
+export const REMOVE_SUPPORT_CONVERSATION = 'conversations/REMOVE_SUPPORT_CONVERSATION';
+
 // action creator
+export const removeSupportConversation = (conversationId, status) => ({
+  type: REMOVE_SUPPORT_CONVERSATION,
+  payload: {
+    conversationId,
+    status,
+  },
+});
+
+export const confirmRequested = (conversationId, status) => ({
+  type: CONFIRM_REQUESTED,
+  payload: {
+    conversationId,
+    status,
+  },
+});
+
 export const foundSolution = conversationId => ({
   type: FOUND_SOLUTION,
   payload: {
@@ -87,6 +111,27 @@ export const fetchConversationSuccess = conversation => ({
 
 export const fetchConversationFailed = error => ({
   type: CONVERSATION_FETCH_FAILED,
+  payload: {
+    error,
+  },
+});
+// FETCH ALL OPEN SUPPORT CONVERSATION
+
+export const fetchOpenSupportConversation = () => ({
+  type: CONVERSATION_FETCH_ALL_OPEN_SUPPORT,
+});
+
+// payload: {
+//   result: [],
+//   total,
+// }
+export const fetchOpenSupportConversationSuccess = payload => ({
+  type: CONVERSATION_FETCH_ALL_OPEN_SUPPORT_SUCCESS,
+  payload,
+});
+
+export const fetchOpenSupportConversationFailed = error => ({
+  type: CONVERSATION_FETCH_ALL_OPEN_SUPPORT_FAILED,
   payload: {
     error,
   },
@@ -158,6 +203,12 @@ export const getOtherUserTyping = ({ conversations }) => conversations.get('othe
 
 export const getSolution = ({ conversations }) => conversations.get('solution').toJS();
 
+export const getSupportConversations = ({ conversations }) => conversations.get('supportConversations').toJS();
+
+export const getIsFetchingOpenSupport = ({ conversations }) => conversations.get('isFetchingOpenSupport');
+
+export const getConfirmMessagesById = ({ conversations }, conversationId) => conversations.getIn(['confirmMessages', conversationId]);
+
 const initialState = fromJS({
   byId: {},
   allIds: new ISet(),
@@ -169,6 +220,10 @@ const initialState = fromJS({
   systemMessage: {},
   otherUserTyping: {},
   solution: [],
+  supportConversations: [],
+  isFetchingOpenSupport: false,
+  fetchOpenSupportError: '',
+  confirmMessages: {},
 });
 
 function conversationReducer(state = initialState, action) {
@@ -178,6 +233,28 @@ function conversationReducer(state = initialState, action) {
       const solution = state.get('solution').push(conversationId);
       return state
         .set('solution', fromJS(solution));
+    }
+
+    case REMOVE_SUPPORT_CONVERSATION: {
+      const { conversationId, status } = action.payload;
+      const supportConversations = state.get('supportConversations').toJS();
+      let newState = state;
+      const conversation = state.getIn(['byId', conversationId]);
+      if (conversation) {
+        newState = newState.setIn(['byId', conversationId], {
+          ...conversation,
+          status,
+        });
+      }
+      return newState
+        .set('supportConversations', fromJS(supportConversations.filter(({ _id }) => _id.toString() !== conversationId.toString())));
+    }
+
+    case CONFIRM_REQUESTED: {
+      const { conversationId, status } = action.payload;
+      const confirmMessages = state.get('confirmMessages');
+      return state
+        .set('confirmMessages', fromJS({ ...confirmMessages, [conversationId]: status }));
     }
 
     case SYSTEM_MESSAGE: {
@@ -246,6 +323,34 @@ function conversationReducer(state = initialState, action) {
         .set('total', state.get('total') + 1);
     }
 
+    case CONVERSATION_FETCH_ALL_OPEN_SUPPORT:
+      return state
+        .set('isFetchingOpenSupport', true)
+        .set('supportConversations', fromJS([]))
+        .set('fetchOpenSupportError', '');
+    case CONVERSATION_FETCH_ALL_OPEN_SUPPORT_SUCCESS: {
+      const { result } = action.payload;
+      let newState = state;
+      let allIds = newState.get('allIds');
+
+      result.forEach((conversation) => {
+        allIds = allIds.add(conversation._id);
+        newState = newState.setIn(['byId', conversation._id], conversation);
+      });
+
+      return newState
+        .set('isFetchingOpenSupport', false)
+        .set('allIds', allIds)
+        .set('supportConversations', fromJS(result));
+    }
+    case CONVERSATION_FETCH_ALL_OPEN_SUPPORT_FAILED: {
+      const { error } = action.payload;
+      return state
+        .set('isFetchingOpenSupport', false)
+        .set('fetchOpenSupportError', error);
+    }
+
+
     default: {
       return state;
     }
@@ -268,6 +373,13 @@ export const actions = {
   userTyping,
   notifiSystemMessage,
   otherUserTyping,
+
+  fetchOpenSupportConversation,
+  fetchOpenSupportConversationSuccess,
+  fetchOpenSupportConversationFailed,
+
+  removeSupportConversation,
+  confirmRequested,
 };
 
 export const selectors = {
@@ -276,4 +388,7 @@ export const selectors = {
   getErrorMessage,
   isFetchingList,
   isFetchingSingleItem,
+  getSupportConversations,
+  getIsFetchingOpenSupport,
+  getConfirmMessagesById,
 };

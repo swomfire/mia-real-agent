@@ -10,6 +10,7 @@ import {
 } from 'selectors/ticket';
 import {
   getCurrentConveration,
+  getConversationById,
   getOtherUserTyping,
   getSolution,
 } from 'reducers/conversations';
@@ -23,6 +24,7 @@ const mapStateToProps = (state) => {
   const solutionFound = getSolution(state).includes(conversationId);
   return ({
     conversationId,
+    conversation: getConversationById(state, conversationId),
     userId: getUserId(state),
     currentTicket: getTicketById(state, getCurrentTicket(state)),
     replyMessages: getReplyMessagesByConversationId(state, conversationId),

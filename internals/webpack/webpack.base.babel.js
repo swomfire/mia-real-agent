@@ -48,6 +48,16 @@ module.exports = options => ({
         use: ['style-loader', 'css-loader'],
       },
       {
+        test: /\.(less)$/,
+        include: /node_modules.*antd/,
+        use: ['style-loader', 'css-loader', {
+          loader: 'less-loader',
+          options: {
+            javascriptEnabled: true,
+          },
+        }],
+      },
+      {
         test: /\.(eot|otf|ttf|woff|woff2)$/,
         use: 'file-loader',
       },
@@ -121,6 +131,7 @@ module.exports = options => ({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         REACT_APP_STRIPE_KEY: JSON.stringify(process.env.REACT_APP_STRIPE_KEY),
+        REACT_APP_DOMAIN: JSON.stringify(process.env.REACT_APP_DOMAIN),
       },
     }),
   ]),

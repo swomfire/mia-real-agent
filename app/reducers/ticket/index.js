@@ -322,6 +322,7 @@ function ticketReducer(state = initialState, action) {
         .setIn(['tickets', _id], fromJS(payload))
         .set('visibleTicketIds', fromJS(newVisibleTicketIds));
     }
+
     case TICKET_CREATE_FAIL:
       return state.set('isCreating', false)
         .set('createError', action.errorMessage);

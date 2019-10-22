@@ -28,15 +28,16 @@ const scrollStyle = {
 };
 
 class MessageList extends Component {
-  messagesAnchor = React.createRef();
-
   state = {
-    otherProfile: null,
+    needScroll: false,
   }
+
+  messagesAnchor = React.createRef();
 
   static propTypes = {
     userId: PropTypes.string.isRequired,
     currentTicket: PropTypes.shape(),
+    conversation: PropTypes.shape(),
     conversationId: PropTypes.string,
     findAgentRequest: PropTypes.func.isRequired,
     replyMessages: PropTypes.arrayOf(PropTypes.shape()),
@@ -61,10 +62,13 @@ class MessageList extends Component {
     const {
       replyMessages, sendingMessages,
     } = this.props;
-
+    const { needScroll } = this.state;
+    if (needScroll) {
+      this.scrollChatToBottom();
+    }
     if (prevProps.replyMessages.length !== replyMessages.length
       || prevProps.sendingMessages.length !== sendingMessages.length) {
-      this.scrollChatToBottom();
+      this.setState({ needScroll: true });
     }
   }
 
@@ -98,15 +102,16 @@ class MessageList extends Component {
   renderOtherUserMessageContent = (msgId, contents, from) => otherChat(msgId, contents, from.profile);
 
   renderOtherUserTypingContent = () => {
-    const { otherProfile } = this.state;
-    const { otherUserTyping, conversationId } = this.props;
+    const { otherUserTyping, conversationId, conversation } = this.props;
     const { conversationId: _id, messages = '' } = otherUserTyping || {};
+    const { onwer } = conversation || {};
+    const { profile } = onwer || {};
     if (!_isEmpty(otherUserTyping)
       && _id === conversationId
       && !_isEmpty(messages.trim())
     ) {
       this.scrollChatToBottom();
-      return otherTyping(messages, otherProfile);
+      return otherTyping(messages, profile);
     }
     return false;
   }
@@ -119,7 +124,6 @@ class MessageList extends Component {
   }
 
   renderMessageContent() {
-    const { otherProfile } = this.state;
     const {
       replyMessages, userId, userRole,
     } = this.props;
@@ -140,11 +144,6 @@ class MessageList extends Component {
         case REPLY_TYPE.USER_NORMAL:
           if (from._id === userId) {
             return userChat(id, contents, false, isAgent(userRole));
-          }
-          if (!otherProfile) {
-            this.setState({
-              otherProfile: from.profile,
-            });
           }
           return this.renderOtherUserMessageContent(id, contents, from);
         default: return null;

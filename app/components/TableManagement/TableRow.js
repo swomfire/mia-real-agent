@@ -126,6 +126,11 @@ class TableRow extends React.PureComponent {
     return value || '-';
   };
 
+  renderValueColum = (column) => {
+    const { value } = column;
+    return value || '-';
+  }
+
   renderConstantColumn = (column) => {
     const { item } = this.props;
     const { dataKey, constant } = column;
@@ -204,8 +209,9 @@ class TableRow extends React.PureComponent {
       case COLUMN_TYPE.UPPERCASE:
         return this.renderUppercaseColumn(column);
       case COLUMN_TYPE.TEXT:
-      default:
         return this.renderTextColumn(column);
+      default:
+        return this.renderValueColum(column);
     }
   };
 

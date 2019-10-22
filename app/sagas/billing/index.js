@@ -17,6 +17,8 @@ import {
 import {
   actions, BILLING_GET_ALL, BILLING_SORTING, BILLING_CHANGE_PAGE,
   BILLING_FETCH_SINGLE,
+  BILLING_ADMIN_GET_ALL,
+  BILLING_ADMIN_CHANGE_PAGE,
 } from '../../reducers/billing';
 import {
   AUTH_LOGIN_SUCCESS, getUserId,
@@ -37,6 +39,7 @@ function* queryBillings(action) {
       }
       break;
     case BILLING_CHANGE_PAGE:
+    case BILLING_ADMIN_CHANGE_PAGE:
       {
         const { pageIndex, sizePerPage } = action;
         const { skip, limit } = getSkipLimit(pageIndex, sizePerPage);
@@ -46,8 +49,50 @@ function* queryBillings(action) {
     default:
       break;
   }
+  switch (type) {
+    case BILLING_ADMIN_CHANGE_PAGE:
+      yield put(actions.billingAdminGetAll(billingPayload));
+      break;
+    default:
+      yield put(actions.billingGetAll(billingPayload));
+      break;
+  }
+}
 
-  yield put(actions.billingGetAll(billingPayload));
+function* adminGetAllBilling({ payload }) {
+  const selectedPage = yield select(getSelectedPage);
+  const sizePerPage = yield select(getSizePerPage);
+  const sorting = yield select(reselectSorting);
+
+  const { skip, limit } = getSkipLimit(selectedPage, sizePerPage);
+  const { field, order } = sorting;
+  const sort = { [field]: order };
+
+  const actionParam = _pickBy(
+    _pick(payload, ['skip', 'limit', 'sort']),
+    v => v !== null && v !== undefined,
+  );
+
+  const params = {
+    sort,
+    skip,
+    limit,
+    ...actionParam,
+  };
+
+  const { response, error } = yield call(BillingApi.adminGetAllBilling, params);
+  if (error) {
+    const message = _get(
+      error, 'response.data.message', error.message
+    );
+    yield put(actions.billingGetAllFail(message));
+    return;
+  }
+
+  const data = _get(response, 'data', {});
+  const { result, totalRecord } = data;
+
+  yield put(actions.billingGetAllComplete(result, totalRecord));
 }
 
 function* getAllBilling({ payload }) {
@@ -105,8 +150,9 @@ function* billingFetchSingle({ id }) {
 function* billingFlow() {
   yield take(AUTH_LOGIN_SUCCESS);
   yield all([
-    takeLatest([BILLING_CHANGE_PAGE, BILLING_SORTING], queryBillings),
+    takeLatest([BILLING_CHANGE_PAGE, BILLING_SORTING, BILLING_ADMIN_CHANGE_PAGE], queryBillings),
     takeLatest([BILLING_GET_ALL, USER_TOP_UP_SUCCESS], getAllBilling),
+    takeLatest(BILLING_ADMIN_GET_ALL, adminGetAllBilling),
     takeLatest(BILLING_FETCH_SINGLE, billingFetchSingle),
   ]);
 }

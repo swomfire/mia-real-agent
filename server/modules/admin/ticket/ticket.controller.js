@@ -4,7 +4,7 @@ import _get from 'lodash/get';
 import APIError, { ERROR_MESSAGE } from '../../../utils/APIError';
 import BaseController from '../../base/base.controller';
 import TicketService from '../../ticket/ticket.service';
-import { TICKET_STATUS, CLOSED_TICKET_STATUSES } from '../../../../common/enums';
+import { TICKET_STATUS } from '../../../../common/enums';
 const { CONTENT_NOT_FOUND } = ERROR_MESSAGE;
 const emptyObjString = '{}';
 

@@ -35,6 +35,8 @@ export const DATE_TIME_FORMAT = (i18nextLng === 'vn') ? {
 
 
 export const COLUMN_TYPE = {
+  BILLING_TITLE: 'billingTitle',
+  BILLING_AMOUNT: 'billingAmount',
   TEXT: 'text',
   LINK: 'link',
   IMAGE: 'image',

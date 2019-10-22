@@ -10,11 +10,18 @@ export const BILLING_FETCH_SINGLE_SUCCESS = 'billing/BILLING_FETCH_SINGLE_SUCCES
 export const BILLING_FETCH_SINGLE_FAIL = 'billing/BILLING_FETCH_SINGLE_FAIL';
 
 export const BILLING_CHANGE_PAGE = 'billing/BILLING_CHANGE_PAGE';
+export const BILLING_ADMIN_CHANGE_PAGE = 'billing/BILLING_ADMIN_CHANGE_PAGE';
+export const BILLING_ADMIN_GET_ALL = 'billing/BILLING_ADMIN_GET_ALL';
 export const BILLING_GET_ALL = 'billing/BILLING_GET_ALL';
 export const BILLING_GET_ALL_SUCCESS = 'billing/BILLING_GET_ALL_SUCCESS';
 export const BILLING_GET_ALL_FAIL = 'billing/BILLING_GET_ALL_FAIL';
 
 // action creator
+
+const billingAdminGetAll = payload => ({
+  type: BILLING_ADMIN_GET_ALL,
+  payload,
+});
 
 const billingGetAll = payload => ({
   type: BILLING_GET_ALL,
@@ -45,6 +52,12 @@ const filterBilling = payload => ({
 
 const changePage = (pageIndex, sizePerPage) => ({
   type: BILLING_CHANGE_PAGE,
+  pageIndex,
+  sizePerPage,
+});
+
+const changeAdminPage = (pageIndex, sizePerPage) => ({
+  type: BILLING_ADMIN_CHANGE_PAGE,
   pageIndex,
   sizePerPage,
 });
@@ -122,6 +135,7 @@ function billingReducer(state = initialState, action) {
       return state.set('fetching', fromJS({ isFetching: false, errorMsg: action.errorMsg }));
 
     case BILLING_CHANGE_PAGE:
+    case BILLING_ADMIN_CHANGE_PAGE:
       return state
         .set('fetching', fromJS({ isFetching: true, errorMsg: '' }))
         .setIn(['pagination', 'selectedPage'], action.pageIndex);
@@ -148,6 +162,7 @@ function billingReducer(state = initialState, action) {
 export default billingReducer;
 
 export const actions = {
+  billingAdminGetAll,
   billingGetAll,
   billingGetAllComplete,
   billingGetAllFail,
@@ -160,4 +175,5 @@ export const actions = {
   fetchBillingSingleSuccess,
 
   changePage,
+  changeAdminPage,
 };

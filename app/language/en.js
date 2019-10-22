@@ -198,6 +198,7 @@ const en = {
     ADMIN_LEFT_NAV_FEEDBACK: 'Feedback',
     ADMIN_LEFT_NAV_APPLICATIONS: 'Applications',
     ADMIN_LEFT_NAV_USERS: 'Users',
+    ADMIN_LEFT_NAV_BILLINGS: 'Billings',
     ADMIN_LEFT_NAV_INTENTS: 'Intents',
     ADMIN_LEFT_NAV_CANNED_RESPONDE: 'Canned Responses',
     ADMIN_LEFT_NAV_System: 'System',
@@ -280,6 +281,9 @@ const en = {
     ADMIN_APPLICATION_DETAIL_EDIT_TITLE: 'Edit Application',
     ADMIN_APPLICATION_DETAIL_EDIT_RATE: 'Billing Rate',
     ADMIN_APPLICATION_DETAIL_EDIT_COMPLETE: 'Application Editted',
+    // Admin billing table
+    ADMIN_TICKET_TABLE_ALL_BILLINGS: 'All Billings',
+    ADMIN_TICKET_TABLE_USERNAME: 'Username',
     // Admin ticket table
     ADMIN_TICKET_TABLE_ALL_TICKETS: 'All Tickets',
     ADMIN_TICKET_TABLE_TICKET_ID: 'Ticket Id',

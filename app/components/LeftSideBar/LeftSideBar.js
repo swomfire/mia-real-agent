@@ -4,7 +4,7 @@ import _find from 'lodash/find';
 import _reduce from 'lodash/reduce';
 import _startsWith from 'lodash/startsWith';
 import SidebarItem from './SideBarItem';
-import AdminTopNavBar from '../../components/AdminTopNavBar';
+import AdminTopNavBar from '../AdminTopNavBar';
 import {
   LeftSideBarAdmin,
   SidebarToggleButton,
@@ -58,6 +58,13 @@ const TABS_MENU = [
     label: toI18n('ADMIN_LEFT_NAV_USERS'),
     icon: 'mia-user',
     link: '/admin/user',
+  },
+  {
+    key: 'billings',
+    type: 'container',
+    label: toI18n('ADMIN_LEFT_NAV_BILLINGS'),
+    icon: 'mia-promotion',
+    link: '/admin/billings',
   },
   {
     key: 'intents',

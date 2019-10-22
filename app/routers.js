@@ -10,6 +10,7 @@ import LoadingScreen from './components/LoadingScreen';
 import AuthenticatedRoute from './containers/Route/AuthenticatedRoute';
 import AdminMainLayout from './containers/AdminMainLayout';
 import UserManagement from './containers/UserManagement';
+import BillingAdminManagement from './containers/BillingAdminManagement';
 import UserDetail from './containers/UserDetail';
 import UnauthRoute from './containers/Route/UnauthenticateRoute';
 import { RegistrationIndividual, RegistrationBusiness } from './containers/Registration';
@@ -38,7 +39,6 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import EditApplication from './containers/EditApplication/EditApplication';
 import System from './pages/System';
-import ApplicationReview from './containers/ApplicationReview';
 import ChangeRequest from './pages/ChangeRequest';
 
 class Router extends React.PureComponent {
@@ -72,6 +72,7 @@ class Router extends React.PureComponent {
               <AdminRoute path="/admin/feedbacks/:id?" component={FeedbackManagement} />
               <AdminRoute exact path="/admin/user" component={UserManagement} />
               <AdminRoute path="/admin/user/:id" component={UserDetail} />
+              <AdminRoute exact path="/admin/billings" component={BillingAdminManagement} />
               <AdminRoute path="/admin/canned-responses" component={CannedResponseManagement} />
               <AdminRoute path="/admin/system" component={System} />
               <AdminRoute exact path="/admin" component={() => <Redirect to="/admin/user" />} />

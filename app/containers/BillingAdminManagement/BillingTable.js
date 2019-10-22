@@ -18,7 +18,16 @@ const billingColumns = [
     dataKey: 'title',
     columnAttr: {
       value: toI18n('BILLING_INFO_ROW_BILLING'),
-      percent: 60,
+      percent: 40,
+      className: 'text-bold billing-Id',
+    },
+  },
+  {
+    type: COLUMN_TYPE.TEXT,
+    dataKey: 'userId.username',
+    columnAttr: {
+      value: toI18n('ADMIN_TICKET_TABLE_USERNAME'),
+      percent: 20,
       className: 'text-bold billing-Id',
     },
   },
@@ -45,8 +54,8 @@ const billingColumns = [
 ];
 
 const mapDispatchToProps = {
-  fetchList: actions.billingGetAll,
-  changePage: actions.changePage,
+  fetchList: actions.billingAdminGetAll,
+  changePage: actions.changeAdminPage,
 };
 
 const structureSelectorFunc = createStructuredSelector({

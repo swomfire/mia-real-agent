@@ -29,7 +29,10 @@ class BillingService extends BaseService {
   }
 
   getByCondition(condition) {
-    return this.collection.findOne(condition);
+    return this.collection.findOne(condition).populate({
+      path: 'userId',
+      select: ['_id', 'username'],
+    });
   }
 
   countDocument(filter) {
@@ -50,6 +53,10 @@ class BillingService extends BaseService {
 
     const resultPromise = this.collection
       .find(queryCondition, null, options)
+      .populate({
+        path: 'userId',
+        select: ['_id', 'username'],
+      })
       .sort(sort)
       .skip(+skip)
       .limit(+limit || 10)

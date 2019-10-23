@@ -69,7 +69,7 @@ function* adminGetAllBilling({ payload }) {
   const sort = { [field]: order };
 
   const actionParam = _pickBy(
-    _pick(payload, ['skip', 'limit', 'sort']),
+    _pick(payload, ['skip', 'limit', 'sort', 'query']),
     v => v !== null && v !== undefined,
   );
 

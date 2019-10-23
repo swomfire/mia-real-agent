@@ -529,6 +529,12 @@ const en = {
     SUPPORT_AGENT_ACCEPTED_SUPPORT: 'An Agent had accepted support',
     SUPPORT_SUPPORTER_COMPLETE: 'Supporter want to complete conversation',
     SUPPORT_SUPPORTER_EXIT: 'Supporter want to exit conversation',
+
+    BILLING_FILTER_TYPE: 'Type',
+    BILLING_FILTER_TYPE_TICKET_CHARGE: 'Ticket charge',
+    BILLING_FILTER_TYPE_TICKET_SUPPORT: 'Ticket support',
+    BILLING_FILTER_TYPE_TICKET_FULFILL: 'Ticket fulfill',
+    BILLING_FILTER_TYPE_TOPUP: 'Topup',
   },
 };
 

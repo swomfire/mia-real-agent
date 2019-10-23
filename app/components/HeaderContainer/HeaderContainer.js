@@ -10,8 +10,10 @@ import {
   TitleAdminHead,
   HeaderActionWrapper,
   TitleAdminMain,
+  ActionStyledWrapper,
 } from '../Generals/TableHeader.styled';
 import { ButtonPrimary } from '../../stylesheets/Button.style';
+import FilterPopover from './FilterPopover';
 
 class HeaderContainer extends PureComponent {
   state = {
@@ -51,10 +53,15 @@ class HeaderContainer extends PureComponent {
   renderHeaderAction = () => {
     const {
       url = '',
+      handleFilter,
+      filterItems,
       onClickAddButton,
     } = this.props;
     return (
       <HeaderActionWrapper>
+        <ActionStyledWrapper>
+          <FilterPopover onFilterChange={handleFilter} options={filterItems} />
+        </ActionStyledWrapper>
         {onClickAddButton && (
           <ButtonPrimary data-tip="Create Ticket" onClick={onClickAddButton}>
             <i className="mia-add" />
@@ -87,6 +94,8 @@ HeaderContainer.propTypes = {
   ]),
   openModal: PropTypes.func,
   onClickAddButton: PropTypes.func,
+  handleFilter: PropTypes.func,
+  filterItems: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 export default HeaderContainer;

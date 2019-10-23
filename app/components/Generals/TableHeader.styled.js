@@ -110,3 +110,9 @@ export const TableHeaderFilterWrapper = styled(TableHeaderSortWrapper)`
     position: absolute;
   }
 `;
+
+export const ActionStyledWrapper = styled.div`
+  margin-right: .5em;
+  font-size: 1.3em;
+  color: ${props => props.theme.colorStyled.ColorPrimary};
+`;

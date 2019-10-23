@@ -58,6 +58,12 @@ class UserService extends BaseService {
     return savedModel;
   }
 
+  async updateUserCredit(userId, incomingCredit) {
+    return this.collection.updateOne(
+      { _id: userId }, { $inc: { credit: incomingCredit } }
+    ).exec();
+  }
+
   async createPassword(user, password) {
     const hash = await hashFunc(password);
     const newUpdate = { password: hash };

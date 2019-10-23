@@ -87,6 +87,36 @@ export class BillingRow extends TableRow {
     ].map(this.renderBillingColumn);
   }
 
+  renderSupport = () => {
+    const { item } = this.props;
+    const { createdAt, total, content } = item;
+    const { supportFee } = total;
+    const { ticketId } = content;
+    // const time = getHourMinutes(amount * exchangeRate);
+    return [
+      {
+        value: (<span>
+          {toI18n('BILLING_INFO_ROW_CREDIT_FOR_SUPPORT_TICKET')}
+          <BoldText>
+            (
+            {ticketId}
+            )
+          </BoldText>
+        </span>),
+        percent: 60,
+      },
+      {
+        value: moment(createdAt).format(DATE_TIME_FORMAT.DATE_TIME),
+        percent: 25,
+      },
+      {
+        value: (<AddText>{`+ ${Numeral(supportFee).format(NUMERAL_MONEY_FORMAT)}`}</AddText>),
+        percent: 15,
+        justify: 'flex-end',
+      },
+    ].map(this.renderBillingColumn);
+  }
+
   renderCharge = () => {
     const { item } = this.props;
     const { createdAt, total, content } = item;
@@ -153,6 +183,16 @@ export class BillingRow extends TableRow {
     const { isPointer, item } = this.props;
     const { type } = item;
     switch (type) {
+      case BILLING_TYPE.TICKET_SUPPORT:
+        return (
+          <TableContentWrapper>
+            <TableContentItem onClick={this.onClick}>
+              <TableContentItemGroup isPointer={isPointer}>
+                {this.renderSupport()}
+              </TableContentItemGroup>
+            </TableContentItem>
+          </TableContentWrapper>
+        );
       case BILLING_TYPE.TICKET_FULFILL:
         return (
           <TableContentWrapper>

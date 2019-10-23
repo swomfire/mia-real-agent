@@ -278,7 +278,6 @@ class TicketService extends BaseService {
         }
       );
       if (processingTime > 0) {
-        const { credit } = assigneeData;
         const { supportConversationId } = ticket;
         // Add billing for agent
         const totalProcessPayout = Number(agentRate * processingTime / 60).toFixed(2);
@@ -324,12 +323,16 @@ class TicketService extends BaseService {
                   },
                 }
               );
+              UserService.updateUserCredit(
+                supporterId,
+                supportFee,
+              );
             }
           }
         }
-        UserService.update(
+        UserService.updateUserCredit(
           assigneeId,
-          { credit: +credit + +agentPayout }
+          agentPayout,
         );
       }
       return true;

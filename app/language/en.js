@@ -460,6 +460,7 @@ const en = {
     BILLING_INFO_ROW_TOPUP: 'Top-up',
     BILLING_INFO_ROW_TIME_FOR_TICKET: 'Time for ticket',
     BILLING_INFO_ROW_CREDIT_FOR_TICKET: 'Credit for ticket',
+    BILLING_INFO_ROW_CREDIT_FOR_SUPPORT_TICKET: 'Credit for support ticket',
     BILLING_INFO_ROW_CHARGED_FOR_TICKET: 'Charged for ticket',
     // APPLICATION REVIEW
     APPLICATION_REVIEW_REQUEST_CHANGE: 'Request Change',
